@@ -1,4 +1,4 @@
-/*
+(*
  * This file is part of FFmpeg.
  *
  * FFmpeg is free software; you can redistribute it and/or
@@ -14,16 +14,16 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with FFmpeg; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
- */
+ *)
 
 #ifndef AVCODEC_VERSION_H
 #define AVCODEC_VERSION_H
 
-/**
+(**
  * @file
  * @ingroup libavc
  * Libavcodec version macros.
- */
+ *)
 
 #include "libavutil/version.h"
 
@@ -41,7 +41,7 @@
 
 #define LIBAVCODEC_IDENT        "Lavc" AV_STRINGIFY(LIBAVCODEC_VERSION)
 
-/**
+(**
  * FF_API_* defines may be placed below to indicate public API that will be
  * dropped at a future version bump. The defines themselves are not part of
  * the public API and may change, break or disappear at any time.
@@ -49,7 +49,7 @@
  * @note, when bumping the major version it is recommended to manually
  * disable each FF_API_* in its own commit instead of disabling them all
  * at once through the bump. This improves the git bisect-ability of the change.
- */
+ *)
 
 #ifndef FF_API_VIMA_DECODER
 #define FF_API_VIMA_DECODER     (LIBAVCODEC_VERSION_MAJOR < 58)
@@ -148,7 +148,7 @@
 #define FF_API_AFD               (LIBAVCODEC_VERSION_MAJOR < 58)
 #endif
 #ifndef FF_API_VISMV
-/* XXX: don't forget to drop the -vismv documentation */
+(* XXX: don't forget to drop the -vismv documentation *)
 #define FF_API_VISMV             (LIBAVCODEC_VERSION_MAJOR < 58)
 #endif
 #ifndef FF_API_AUDIOENC_DELAY
@@ -240,4 +240,4 @@
 #endif
 
 
-#endif /* AVCODEC_VERSION_H */
+#endif (* AVCODEC_VERSION_H *)

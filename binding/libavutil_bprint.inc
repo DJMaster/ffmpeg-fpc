@@ -1,4 +1,4 @@
-/*
+(*
  * Copyright (c) 2012 Nicolas George
  *
  * This file is part of FFmpeg.
@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with FFmpeg; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
- */
+ *)
 
 #ifndef AVUTIL_BPRINT_H
 #define AVUTIL_BPRINT_H
@@ -26,10 +26,10 @@
 #include "attributes.h"
 #include "avstring.h"
 
-/**
+(**
  * Define a structure with extra padding to a fixed size
  * This helps ensuring binary compatibility with future versions.
- */
+ *)
 
 #define FF_PAD_STRUCTURE(name, size, ...) \
 struct ff_pad_helper_##name { __VA_ARGS__ }; \
@@ -38,7 +38,7 @@ typedef struct name { \
     char reserved_padding[size - sizeof(struct ff_pad_helper_##name)]; \
 } name;
 
-/**
+(**
  * Buffer to print data progressively
  *
  * The string buffer grows as necessary and is always 0-terminated.
@@ -77,25 +77,25 @@ typedef struct name { \
  * structure itself, thus ensuring no dynamic memory allocation. The
  * internal buffer is large enough to hold a reasonable paragraph of text,
  * such as the current paragraph.
- */
+ *)
 
 FF_PAD_STRUCTURE(AVBPrint, 1024,
-    char *str;         /**< string so far */
-    unsigned len;      /**< length so far */
-    unsigned size;     /**< allocated memory */
-    unsigned size_max; /**< maximum allocated memory */
+    char *str;         (**< string so far *)
+    unsigned len;      (**< length so far *)
+    unsigned size;     (**< allocated memory *)
+    unsigned size_max; (**< maximum allocated memory *)
     char reserved_internal_buffer[1];
 )
 
-/**
+(**
  * Convenience macros for special values for av_bprint_init() size_max
  * parameter.
- */
+ *)
 #define AV_BPRINT_SIZE_UNLIMITED  ((unsigned)-1)
 #define AV_BPRINT_SIZE_AUTOMATIC  1
 #define AV_BPRINT_SIZE_COUNT_ONLY 0
 
-/**
+(**
  * Init a print buffer.
  *
  * @param buf        buffer to init
@@ -107,10 +107,10 @@ FF_PAD_STRUCTURE(AVBPrint, 1024,
  *                   reallocated as needed up to that limit; -1 is converted to
  *                   UINT_MAX, the largest limit possible.
  *                   Check also AV_BPRINT_SIZE_* macros.
- */
+ *)
 void av_bprint_init(AVBPrint *buf, unsigned size_init, unsigned size_max);
 
-/**
+(**
  * Init a print buffer using a pre-existing buffer.
  *
  * The buffer will not be reallocated.
@@ -118,35 +118,35 @@ void av_bprint_init(AVBPrint *buf, unsigned size_init, unsigned size_max);
  * @param buf     buffer structure to init
  * @param buffer  byte buffer to use for the string data
  * @param size    size of buffer
- */
+ *)
 void av_bprint_init_for_buffer(AVBPrint *buf, char *buffer, unsigned size);
 
-/**
+(**
  * Append a formatted string to a print buffer.
- */
+ *)
 void av_bprintf(AVBPrint *buf, const char *fmt, ...) av_printf_format(2, 3);
 
-/**
+(**
  * Append a formatted string to a print buffer.
- */
+ *)
 void av_vbprintf(AVBPrint *buf, const char *fmt, va_list vl_arg);
 
-/**
+(**
  * Append char c n times to a print buffer.
- */
+ *)
 void av_bprint_chars(AVBPrint *buf, char c, unsigned n);
 
-/**
+(**
  * Append data to a print buffer.
  *
  * param buf  bprint buffer to use
  * param data pointer to data
  * param size size of data
- */
+ *)
 void av_bprint_append_data(AVBPrint *buf, const char *data, unsigned size);
 
 struct tm;
-/**
+(**
  * Append a formatted date and time to a print buffer.
  *
  * param buf  bprint buffer to use
@@ -156,10 +156,10 @@ struct tm;
  * @note due to poor design of the standard strftime function, it may
  * produce poor results if the format string expands to a very long text and
  * the bprint buffer is near the limit stated by the size_max option.
- */
+ *)
 void av_bprint_strftime(AVBPrint *buf, const char *fmt, const struct tm *tm);
 
-/**
+(**
  * Allocate bytes in the buffer for external use.
  *
  * @param[in]  buf          buffer structure
@@ -167,27 +167,27 @@ void av_bprint_strftime(AVBPrint *buf, const char *fmt, const struct tm *tm);
  * @param[out] mem          pointer to the memory area
  * @param[out] actual_size  size of the memory area after allocation;
  *                          can be larger or smaller than size
- */
+ *)
 void av_bprint_get_buffer(AVBPrint *buf, unsigned size,
                           unsigned char **mem, unsigned *actual_size);
 
-/**
+(**
  * Reset the string to "" but keep internal allocated data.
- */
+ *)
 void av_bprint_clear(AVBPrint *buf);
 
-/**
+(**
  * Test if the print buffer is complete (not truncated).
  *
  * It may have been truncated due to a memory allocation failure
  * or the size_max limit (compare size and size_max if necessary).
- */
+ *)
 static inline int av_bprint_is_complete(const AVBPrint *buf)
 {
     return buf->len < buf->size;
 }
 
-/**
+(**
  * Finalize a print buffer.
  *
  * The print buffer can no longer be used afterwards,
@@ -197,10 +197,10 @@ static inline int av_bprint_is_complete(const AVBPrint *buf)
  *                    buffer contents, or NULL if memory allocation fails;
  *                    if NULL, the buffer is discarded and freed
  * @return  0 for success or error code (probably AVERROR(ENOMEM))
- */
+ *)
 int av_bprint_finalize(AVBPrint *buf, char **ret_str);
 
-/**
+(**
  * Escape the content in src and append it to dstbuf.
  *
  * @param dstbuf        already inited destination bprint buffer
@@ -212,8 +212,8 @@ int av_bprint_finalize(AVBPrint *buf, char **ret_str);
  *                      AV_ESCAPE_MODE_BACKSLASH, but this behaviour can change without
  *                      notice.
  * @param flags         flags which control how to escape, see AV_ESCAPE_FLAG_* macros
- */
+ *)
 void av_bprint_escape(AVBPrint *dstbuf, const char *src, const char *special_chars,
                       enum AVEscapeMode mode, int flags);
 
-#endif /* AVUTIL_BPRINT_H */
+#endif (* AVUTIL_BPRINT_H *)

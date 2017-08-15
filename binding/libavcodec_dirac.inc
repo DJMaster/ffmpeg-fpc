@@ -1,4 +1,4 @@
-/*
+(*
  * Copyright (C) 2007 Marco Gerards <marco@gnu.org>
  * Copyright (C) 2009 David Conrad
  * Copyright (C) 2011 Jordi Ortiz
@@ -18,22 +18,22 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with FFmpeg; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
- */
+ *)
 
 #ifndef AVCODEC_DIRAC_H
 #define AVCODEC_DIRAC_H
 
-/**
+(**
  * @file
  * Interface to Dirac Decoder/Encoder
  * @author Marco Gerards <marco@gnu.org>
  * @author David Conrad
  * @author Jordi Ortiz
- */
+ *)
 
 #include "avcodec.h"
 
-/**
+(**
  * The spec limits the number of wavelet decompositions to 4 for both
  * level 1 (VC-2) and 128 (long-gop default).
  * 5 decompositions is the maximum before >16-bit buffers are needed.
@@ -41,10 +41,10 @@
  * the others to 4 decompositions (or 3 for the fidelity filter).
  *
  * We use this instead of MAX_DECOMPOSITIONS to save some memory.
- */
+ *)
 #define MAX_DWT_LEVELS 5
 
-/**
+(**
  * Parse code values:
  *
  * Dirac Specification ->
@@ -52,7 +52,7 @@
  *
  * VC-2 Specification  ->
  * 10.4.1 Table 10.1
- */
+ *)
 
 enum DiracParseCodes {
     DIRAC_PCODE_SEQ_HEADER      = 0x00,
@@ -113,7 +113,7 @@ typedef struct AVDiracSeqHeader {
     int bit_depth;
 } AVDiracSeqHeader;
 
-/**
+(**
  * Parse a Dirac sequence header.
  *
  * @param dsh this function will allocate and fill an AVDiracSeqHeader struct
@@ -123,9 +123,9 @@ typedef struct AVDiracSeqHeader {
  * @param buf_size the size of the data buffer in bytes
  * @param log_ctx if non-NULL, this function will log errors here
  * @return 0 on success, a negative AVERROR code on failure
- */
+ *)
 int av_dirac_parse_sequence_header(AVDiracSeqHeader **dsh,
                                    const uint8_t *buf, size_t buf_size,
                                    void *log_ctx);
 
-#endif /* AVCODEC_DIRAC_H */
+#endif (* AVCODEC_DIRAC_H *)

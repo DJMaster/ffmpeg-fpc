@@ -1,4 +1,4 @@
-/*
+(*
  * copyright (c) 2006 Michael Niedermayer <michaelni@gmx.at>
  *
  * This file is part of FFmpeg.
@@ -16,12 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with FFmpeg; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
- */
+ *)
 
-/**
+(**
  * @file
  * Macro definitions for various function/variable attributes
- */
+ *)
 
 #ifndef AVUTIL_ATTRIBUTES_H
 #define AVUTIL_ATTRIBUTES_H
@@ -98,11 +98,11 @@
 #    define attribute_deprecated
 #endif
 
-/**
+(**
  * Disable warnings about deprecated features
  * This is useful for sections of code kept for backward compatibility and
  * scheduled for removal.
- */
+ *)
 #ifndef AV_NOWARN_DEPRECATED
 #if AV_GCC_VERSION_AT_LEAST(4,6)
 #    define AV_NOWARN_DEPRECATED(code) \
@@ -127,11 +127,11 @@
 #    define av_unused
 #endif
 
-/**
+(**
  * Mark a variable as used and prevent the compiler from optimizing it
  * away.  This is useful for variables accessed only from inline
  * assembler without the compiler being aware.
- */
+ *)
 #if AV_GCC_VERSION_AT_LEAST(3,1) || defined(__clang__)
 #    define av_used __attribute__((used))
 #else
@@ -164,4 +164,4 @@
 #    define av_noreturn
 #endif
 
-#endif /* AVUTIL_ATTRIBUTES_H */
+#endif (* AVUTIL_ATTRIBUTES_H *)

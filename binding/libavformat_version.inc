@@ -1,4 +1,4 @@
-/*
+(*
  * Version macros.
  *
  * This file is part of FFmpeg.
@@ -16,16 +16,16 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with FFmpeg; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
- */
+ *)
 
 #ifndef AVFORMAT_VERSION_H
 #define AVFORMAT_VERSION_H
 
-/**
+(**
  * @file
  * @ingroup libavf
  * Libavformat version macros
- */
+ *)
 
 #include "libavutil/version.h"
 
@@ -45,7 +45,7 @@
 
 #define LIBAVFORMAT_IDENT       "Lavf" AV_STRINGIFY(LIBAVFORMAT_VERSION)
 
-/**
+(**
  * FF_API_* defines may be placed below to indicate public API that will be
  * dropped at a future version bump. The defines themselves are not part of
  * the public API and may change, break or disappear at any time.
@@ -54,7 +54,7 @@
  * disable each FF_API_* in its own commit instead of disabling them all
  * at once through the bump. This improves the git bisect-ability of the change.
  *
- */
+ *)
 #ifndef FF_API_LAVF_BITEXACT
 #define FF_API_LAVF_BITEXACT            (LIBAVFORMAT_VERSION_MAJOR < 58)
 #endif
@@ -102,4 +102,4 @@
 #ifndef FF_API_R_FRAME_RATE
 #define FF_API_R_FRAME_RATE            1
 #endif
-#endif /* AVFORMAT_VERSION_H */
+#endif (* AVFORMAT_VERSION_H *)

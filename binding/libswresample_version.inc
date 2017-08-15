@@ -1,4 +1,4 @@
-/*
+(*
  * Version macros.
  *
  * This file is part of libswresample
@@ -16,15 +16,15 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with libswresample; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
- */
+ *)
 
 #ifndef SWRESAMPLE_VERSION_H
 #define SWRESAMPLE_VERSION_H
 
-/**
+(**
  * @file
  * Libswresample version macros
- */
+ *)
 
 #include "libavutil/avutil.h"
 
@@ -42,4 +42,4 @@
 
 #define LIBSWRESAMPLE_IDENT        "SwR" AV_STRINGIFY(LIBSWRESAMPLE_VERSION)
 
-#endif /* SWRESAMPLE_VERSION_H */
+#endif (* SWRESAMPLE_VERSION_H *)

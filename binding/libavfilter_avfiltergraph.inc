@@ -1,4 +1,4 @@
-/*
+(*
  * Filter graphs
  * copyright (c) 2007 Bobby Bingham
  *
@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with FFmpeg; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
- */
+ *)
 
 #ifndef AVFILTER_AVFILTERGRAPH_H
 #define AVFILTER_AVFILTERGRAPH_H
@@ -25,4 +25,4 @@
 #include "avfilter.h"
 #include "libavutil/log.h"
 
-#endif /* AVFILTER_AVFILTERGRAPH_H */
+#endif (* AVFILTER_AVFILTERGRAPH_H *)

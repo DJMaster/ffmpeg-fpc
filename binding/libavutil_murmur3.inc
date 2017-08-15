@@ -1,4 +1,4 @@
-/*
+(*
  * Copyright (C) 2013 Reimar Döffinger <Reimar.Doeffinger@gmx.de>
  *
  * This file is part of FFmpeg.
@@ -16,20 +16,20 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with FFmpeg; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
- */
+ *)
 
-/**
+(**
  * @file
  * @ingroup lavu_murmur3
  * Public header for MurmurHash3 hash function implementation.
- */
+ *)
 
 #ifndef AVUTIL_MURMUR3_H
 #define AVUTIL_MURMUR3_H
 
 #include <stdint.h>
 
-/**
+(**
  * @defgroup lavu_murmur3 Murmur3
  * @ingroup lavu_hash
  * MurmurHash3 hash function implementation.
@@ -56,16 +56,16 @@
  * this hash function -- if you are supplying one yourself, that is.
  *
  * @{
- */
+ *)
 
-/**
+(**
  * Allocate an AVMurMur3 hash context.
  *
  * @return Uninitialized hash context or `NULL` in case of error
- */
+ *)
 struct AVMurMur3 *av_murmur3_alloc(void);
 
-/**
+(**
  * Initialize or reinitialize an AVMurMur3 hash context with a seed.
  *
  * @param[out] c    Hash context
@@ -74,10 +74,10 @@ struct AVMurMur3 *av_murmur3_alloc(void);
  * @see av_murmur3_init()
  * @see @ref lavu_murmur3_seedinfo "Detailed description" on a discussion of
  * seeds for MurmurHash3.
- */
+ *)
 void av_murmur3_init_seeded(struct AVMurMur3 *c, uint64_t seed);
 
-/**
+(**
  * Initialize or reinitialize an AVMurMur3 hash context.
  *
  * Equivalent to av_murmur3_init_seeded() with a built-in seed.
@@ -87,28 +87,28 @@ void av_murmur3_init_seeded(struct AVMurMur3 *c, uint64_t seed);
  * @see av_murmur3_init_seeded()
  * @see @ref lavu_murmur3_seedinfo "Detailed description" on a discussion of
  * seeds for MurmurHash3.
- */
+ *)
 void av_murmur3_init(struct AVMurMur3 *c);
 
-/**
+(**
  * Update hash context with new data.
  *
  * @param[out] c    Hash context
  * @param[in]  src  Input data to update hash with
  * @param[in]  len  Number of bytes to read from `src`
- */
+ *)
 void av_murmur3_update(struct AVMurMur3 *c, const uint8_t *src, int len);
 
-/**
+(**
  * Finish hashing and output digest value.
  *
  * @param[in,out] c    Hash context
  * @param[out]    dst  Buffer where output digest value is stored
- */
+ *)
 void av_murmur3_final(struct AVMurMur3 *c, uint8_t dst[16]);
 
-/**
+(**
  * @}
- */
+ *)
 
-#endif /* AVUTIL_MURMUR3_H */
+#endif (* AVUTIL_MURMUR3_H *)

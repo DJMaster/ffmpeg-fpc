@@ -1,4 +1,4 @@
-/*
+(*
  * Copyright (c) 2014 Vittorio Giovara <vittorio.giovara@gmail.com>
  *
  * This file is part of FFmpeg.
@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with FFmpeg; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
- */
+ *)
 
 #ifndef AVUTIL_DISPLAY_H
 #define AVUTIL_DISPLAY_H
@@ -24,7 +24,7 @@
 #include <stdint.h>
 #include "common.h"
 
-/**
+(**
  * The display transformation matrix specifies an affine transformation that
  * should be applied to video frames for correct presentation. It is compatible
  * with the matrices stored in the ISO/IEC 14496-12 container format.
@@ -50,9 +50,9 @@
  *   p' = (a * p + c * q + x) / z;
  *   q' = (b * p + d * q + y) / z;
  *   z  =  u * p + v * q + w
- */
+ *)
 
-/**
+(**
  * Extract the rotation component of the transformation matrix.
  *
  * @param matrix the transformation matrix
@@ -62,26 +62,26 @@
  *
  * @note floating point numbers are inherently inexact, so callers are
  *       recommended to round the return value to nearest integer before use.
- */
+ *)
 double av_display_rotation_get(const int32_t matrix[9]);
 
-/**
+(**
  * Initialize a transformation matrix describing a pure counterclockwise
  * rotation by the specified angle (in degrees).
  *
  * @param matrix an allocated transformation matrix (will be fully overwritten
  *               by this function)
  * @param angle rotation angle in degrees.
- */
+ *)
 void av_display_rotation_set(int32_t matrix[9], double angle);
 
-/**
+(**
  * Flip the input matrix horizontally and/or vertically.
  *
  * @param matrix an allocated transformation matrix
  * @param hflip whether the matrix should be flipped horizontally
  * @param vflip whether the matrix should be flipped vertically
- */
+ *)
 void av_display_matrix_flip(int32_t matrix[9], int hflip, int vflip);
 
-#endif /* AVUTIL_DISPLAY_H */
+#endif (* AVUTIL_DISPLAY_H *)

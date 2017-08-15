@@ -1,4 +1,4 @@
-/*
+(*
  * Version macros.
  *
  * This file is part of FFmpeg.
@@ -16,15 +16,15 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with FFmpeg; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
- */
+ *)
 
 #ifndef POSTPROC_VERSION_H
 #define POSTPROC_VERSION_H
 
-/**
+(**
  * @file
  * Libpostproc version macros
- */
+ *)
 
 #include "libavutil/avutil.h"
 
@@ -46,4 +46,4 @@
 #define FF_API_QP_TYPE     (LIBPOSTPROC_VERSION_MAJOR < 55)
 #endif
 
-#endif /* POSTPROC_VERSION_H */
+#endif (* POSTPROC_VERSION_H *)

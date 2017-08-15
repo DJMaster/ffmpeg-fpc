@@ -1,4 +1,4 @@
-/*
+(*
  * Version macros.
  *
  * This file is part of FFmpeg.
@@ -16,16 +16,16 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with FFmpeg; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
- */
+ *)
 
 #ifndef AVFILTER_VERSION_H
 #define AVFILTER_VERSION_H
 
-/**
+(**
  * @file
  * @ingroup lavfi
  * Libavfilter version macros
- */
+ *)
 
 #include "libavutil/version.h"
 
@@ -43,11 +43,11 @@
 
 #define LIBAVFILTER_IDENT       "Lavfi" AV_STRINGIFY(LIBAVFILTER_VERSION)
 
-/**
+(**
  * FF_API_* defines may be placed below to indicate public API that will be
  * dropped at a future version bump. The defines themselves are not part of
  * the public API and may change, break or disappear at any time.
- */
+ *)
 
 #ifndef FF_API_OLD_FILTER_OPTS
 #define FF_API_OLD_FILTER_OPTS              (LIBAVFILTER_VERSION_MAJOR < 7)
@@ -71,4 +71,4 @@
 #define FF_API_LAVR_OPTS                    (LIBAVFILTER_VERSION_MAJOR < 7)
 #endif
 
-#endif /* AVFILTER_VERSION_H */
+#endif (* AVFILTER_VERSION_H *)

@@ -1,4 +1,4 @@
-/*
+(*
  * Copyright (c) 2000, 2001, 2002 Fabrice Bellard
  *
  * This file is part of FFmpeg.
@@ -16,16 +16,16 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with FFmpeg; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
- */
+ *)
 
 #ifndef AVUTIL_CPU_H
 #define AVUTIL_CPU_H
 
 #include "attributes.h"
 
-#define AV_CPU_FLAG_FORCE    0x80000000 /* force usage of selected flags (OR) */
+#define AV_CPU_FLAG_FORCE    0x80000000 (* force usage of selected flags (OR) *)
 
-    /* lower 16 bits - CPU features */
+    (* lower 16 bits - CPU features *)
 #define AV_CPU_FLAG_MMX          0x0001 ///< standard MMX
 #define AV_CPU_FLAG_MMXEXT       0x0002 ///< SSE integer functions or AMD MMX ext
 #define AV_CPU_FLAG_MMX2         0x0002 ///< SSE integer functions or AMD MMX ext
@@ -68,28 +68,28 @@
 #define AV_CPU_FLAG_VFP_VM       (1 << 7) ///< VFPv2 vector mode, deprecated in ARMv7-A and unavailable in various CPUs implementations
 #define AV_CPU_FLAG_SETEND       (1 <<16)
 
-/**
+(**
  * Return the flags which specify extensions supported by the CPU.
  * The returned value is affected by av_force_cpu_flags() if that was used
  * before. So av_get_cpu_flags() can easily be used in an application to
  * detect the enabled cpu flags.
- */
+ *)
 int av_get_cpu_flags(void);
 
-/**
+(**
  * Disables cpu detection and forces the specified flags.
  * -1 is a special case that disables forcing of specific flags.
- */
+ *)
 void av_force_cpu_flags(int flags);
 
-/**
+(**
  * Set a mask on flags returned by av_get_cpu_flags().
  * This function is mainly useful for testing.
  * Please use av_force_cpu_flags() and av_get_cpu_flags() instead which are more flexible
- */
+ *)
 attribute_deprecated void av_set_cpu_flags_mask(int mask);
 
-/**
+(**
  * Parse CPU flags from a string.
  *
  * The returned flags contain the specified flags as well as related unspecified flags.
@@ -97,20 +97,20 @@ attribute_deprecated void av_set_cpu_flags_mask(int mask);
  * This function exists only for compatibility with libav.
  * Please use av_parse_cpu_caps() when possible.
  * @return a combination of AV_CPU_* flags, negative on error.
- */
+ *)
 attribute_deprecated
 int av_parse_cpu_flags(const char *s);
 
-/**
+(**
  * Parse CPU caps from a string and update the given AV_CPU_* flags based on that.
  *
  * @return negative on error.
- */
+ *)
 int av_parse_cpu_caps(unsigned *flags, const char *s);
 
-/**
+(**
  * @return the number of logical CPU cores present.
- */
+ *)
 int av_cpu_count(void);
 
-#endif /* AVUTIL_CPU_H */
+#endif (* AVUTIL_CPU_H *)

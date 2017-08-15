@@ -1,4 +1,4 @@
-/*
+(*
  * copyright (c) 2003 Fabrice Bellard
  *
  * This file is part of FFmpeg.
@@ -16,20 +16,20 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with FFmpeg; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
- */
+ *)
 
-/**
+(**
  * @file
  * @ingroup lavu
  * Libavutil version macros
- */
+ *)
 
 #ifndef AVUTIL_VERSION_H
 #define AVUTIL_VERSION_H
 
 #include "macros.h"
 
-/**
+(**
  * @addtogroup version_utils
  *
  * Useful to check and match library version in order to maintain
@@ -51,32 +51,32 @@
  * versions.
  *
  * @{
- */
+ *)
 
 #define AV_VERSION_INT(a, b, c) ((a)<<16 | (b)<<8 | (c))
 #define AV_VERSION_DOT(a, b, c) a ##.## b ##.## c
 #define AV_VERSION(a, b, c) AV_VERSION_DOT(a, b, c)
 
-/**
+(**
  * Extract version components from the full ::AV_VERSION_INT int as returned
  * by functions like ::avformat_version() and ::avcodec_version()
- */
+ *)
 #define AV_VERSION_MAJOR(a) ((a) >> 16)
 #define AV_VERSION_MINOR(a) (((a) & 0x00FF00) >> 8)
 #define AV_VERSION_MICRO(a) ((a) & 0xFF)
 
-/**
+(**
  * @}
- */
+ *)
 
-/**
+(**
  * @defgroup lavu_ver Version and Build diagnostics
  *
  * Macros and function useful to check at compiletime and at runtime
  * which version of libavutil is in use.
  *
  * @{
- */
+ *)
 
 #define LIBAVUTIL_VERSION_MAJOR  55
 #define LIBAVUTIL_VERSION_MINOR  58
@@ -92,7 +92,7 @@
 
 #define LIBAVUTIL_IDENT         "Lavu" AV_STRINGIFY(LIBAVUTIL_VERSION)
 
-/**
+(**
  * @defgroup lavu_depr_guards Deprecation Guards
  * FF_API_* defines may be placed below to indicate public API that will be
  * dropped at a future version bump. The defines themselves are not part of
@@ -103,7 +103,7 @@
  * at once through the bump. This improves the git bisect-ability of the change.
  *
  * @{
- */
+ *)
 
 #ifndef FF_API_VDPAU
 #define FF_API_VDPAU                    (LIBAVUTIL_VERSION_MAJOR < 56)
@@ -137,9 +137,9 @@
 #endif
 
 
-/**
+(**
  * @}
  * @}
- */
+ *)
 
-#endif /* AVUTIL_VERSION_H */
+#endif (* AVUTIL_VERSION_H *)

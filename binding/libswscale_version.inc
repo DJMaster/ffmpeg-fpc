@@ -1,4 +1,4 @@
-/*
+(*
  * This file is part of FFmpeg.
  *
  * FFmpeg is free software; you can redistribute it and/or
@@ -14,15 +14,15 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with FFmpeg; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
- */
+ *)
 
 #ifndef SWSCALE_VERSION_H
 #define SWSCALE_VERSION_H
 
-/**
+(**
  * @file
  * swscale version macros
- */
+ *)
 
 #include "libavutil/version.h"
 
@@ -40,14 +40,14 @@
 
 #define LIBSWSCALE_IDENT        "SwS" AV_STRINGIFY(LIBSWSCALE_VERSION)
 
-/**
+(**
  * FF_API_* defines may be placed below to indicate public API that will be
  * dropped at a future version bump. The defines themselves are not part of
  * the public API and may change, break or disappear at any time.
- */
+ *)
 
 #ifndef FF_API_SWS_VECTOR
 #define FF_API_SWS_VECTOR            (LIBSWSCALE_VERSION_MAJOR < 6)
 #endif
 
-#endif /* SWSCALE_VERSION_H */
+#endif (* SWSCALE_VERSION_H *)

@@ -1,4 +1,4 @@
-/*
+(*
  * Copyright (C) 2001-2003 Michael Niedermayer (michaelni@gmx.at)
  *
  * This file is part of FFmpeg.
@@ -16,39 +16,39 @@
  * You should have received a copy of the GNU General Public License
  * along with FFmpeg; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
- */
+ *)
 
 #ifndef POSTPROC_POSTPROCESS_H
 #define POSTPROC_POSTPROCESS_H
 
-/**
+(**
  * @file
  * @ingroup lpp
  * external API header
- */
+ *)
 
-/**
+(**
  * @defgroup lpp libpostproc
  * Video postprocessing library.
  *
  * @{
- */
+ *)
 
 #include "libpostproc/version.h"
 
-/**
+(**
  * Return the LIBPOSTPROC_VERSION_INT constant.
- */
+ *)
 unsigned postproc_version(void);
 
-/**
+(**
  * Return the libpostproc build-time configuration.
- */
+ *)
 const char *postproc_configuration(void);
 
-/**
+(**
  * Return the libpostproc license.
- */
+ *)
 const char *postproc_license(void);
 
 #define PP_QUALITY_MAX 6
@@ -77,12 +77,12 @@ void  pp_postprocess(const uint8_t * src[3], const int srcStride[3],
                      pp_mode *mode, pp_context *ppContext, int pict_type);
 
 
-/**
+(**
  * Return a pp_mode or NULL if an error occurred.
  *
  * @param name    the string after "-pp" on the command line
  * @param quality a number from 0 to PP_QUALITY_MAX
- */
+ *)
 pp_mode *pp_get_mode_by_name_and_quality(const char *name, int quality);
 void pp_free_mode(pp_mode *mode);
 
@@ -104,8 +104,8 @@ void pp_free_context(pp_context *ppContext);
 
 #define PP_PICT_TYPE_QP2  0x00000010 ///< MPEG2 style QScale
 
-/**
+(**
  * @}
- */
+ *)
 
-#endif /* POSTPROC_POSTPROCESS_H */
+#endif (* POSTPROC_POSTPROCESS_H *)

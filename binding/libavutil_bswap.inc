@@ -1,4 +1,4 @@
-/*
+(*
  * copyright (c) 2006 Michael Niedermayer <michaelni@gmx.at>
  *
  * This file is part of FFmpeg.
@@ -16,12 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with FFmpeg; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
- */
+ *)
 
-/**
+(**
  * @file
  * byte swapping routines
- */
+ *)
 
 #ifndef AVUTIL_BSWAP_H
 #define AVUTIL_BSWAP_H
@@ -46,7 +46,7 @@
 #   include "x86/bswap.h"
 #endif
 
-#endif /* HAVE_AV_CONFIG_H */
+#endif (* HAVE_AV_CONFIG_H *)
 
 #define AV_BSWAP16C(x) (((x) << 8 & 0xff00)  | ((x) >> 8 & 0x00ff))
 #define AV_BSWAP32C(x) (AV_BSWAP16C(x) << 16 | AV_BSWAP16C((x) >> 16))
@@ -106,4 +106,4 @@ static inline uint64_t av_const av_bswap64(uint64_t x)
 #define AV_LE2NE32C(x) AV_LE2NEC(32, x)
 #define AV_LE2NE64C(x) AV_LE2NEC(64, x)
 
-#endif /* AVUTIL_BSWAP_H */
+#endif (* AVUTIL_BSWAP_H *)

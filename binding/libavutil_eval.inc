@@ -1,4 +1,4 @@
-/*
+(*
  * Copyright (c) 2002 Michael Niedermayer <michaelni@gmx.at>
  *
  * This file is part of FFmpeg.
@@ -16,12 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with FFmpeg; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
- */
+ *)
 
-/**
+(**
  * @file
  * simple arithmetic expression evaluator
- */
+ *)
 
 #ifndef AVUTIL_EVAL_H
 #define AVUTIL_EVAL_H
@@ -30,7 +30,7 @@
 
 typedef struct AVExpr AVExpr;
 
-/**
+(**
  * Parse and evaluate an expression.
  * Note, this is significantly slower than av_expr_eval().
  *
@@ -47,14 +47,14 @@ typedef struct AVExpr AVExpr;
  * @param log_ctx parent logging context
  * @return >= 0 in case of success, a negative value corresponding to an
  * AVERROR code otherwise
- */
+ *)
 int av_expr_parse_and_eval(double *res, const char *s,
                            const char * const *const_names, const double *const_values,
                            const char * const *func1_names, double (* const *funcs1)(void *, double),
                            const char * const *func2_names, double (* const *funcs2)(void *, double, double),
                            void *opaque, int log_offset, void *log_ctx);
 
-/**
+(**
  * Parse an expression.
  *
  * @param expr a pointer where is put an AVExpr containing the parsed
@@ -70,28 +70,28 @@ int av_expr_parse_and_eval(double *res, const char *s,
  * @param log_ctx parent logging context
  * @return >= 0 in case of success, a negative value corresponding to an
  * AVERROR code otherwise
- */
+ *)
 int av_expr_parse(AVExpr **expr, const char *s,
                   const char * const *const_names,
                   const char * const *func1_names, double (* const *funcs1)(void *, double),
                   const char * const *func2_names, double (* const *funcs2)(void *, double, double),
                   int log_offset, void *log_ctx);
 
-/**
+(**
  * Evaluate a previously parsed expression.
  *
  * @param const_values a zero terminated array of values for the identifiers from av_expr_parse() const_names
  * @param opaque a pointer which will be passed to all functions from funcs1 and funcs2
  * @return the value of the expression
- */
+ *)
 double av_expr_eval(AVExpr *e, const double *const_values, void *opaque);
 
-/**
+(**
  * Free a parsed expression previously created with av_expr_parse().
- */
+ *)
 void av_expr_free(AVExpr *e);
 
-/**
+(**
  * Parse the string in numstr and return its value as a double. If
  * the string is empty, contains only whitespaces, or does not contain
  * an initial substring that has the expected syntax for a
@@ -107,7 +107,7 @@ void av_expr_free(AVExpr *e);
  * allows using for example 'KB', 'MiB', 'G' and 'B' as postfix.
  * @param tail if non-NULL puts here the pointer to the char next
  * after the last parsed character
- */
+ *)
 double av_strtod(const char *numstr, char **tail);
 
-#endif /* AVUTIL_EVAL_H */
+#endif (* AVUTIL_EVAL_H *)

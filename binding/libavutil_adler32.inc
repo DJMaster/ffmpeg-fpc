@@ -1,4 +1,4 @@
-/*
+(*
  * copyright (c) 2006 Mans Rullgard
  *
  * This file is part of FFmpeg.
@@ -16,13 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with FFmpeg; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
- */
+ *)
 
-/**
+(**
  * @file
  * @ingroup lavu_adler32
  * Public header for Adler-32 hash function implementation.
- */
+ *)
 
 #ifndef AVUTIL_ADLER32_H
 #define AVUTIL_ADLER32_H
@@ -30,15 +30,15 @@
 #include <stdint.h>
 #include "attributes.h"
 
-/**
+(**
  * @defgroup lavu_adler32 Adler-32
  * @ingroup lavu_hash
  * Adler-32 hash function implementation.
  *
  * @{
- */
+ *)
 
-/**
+(**
  * Calculate the Adler32 checksum of a buffer.
  *
  * Passing the return value to a subsequent av_adler32_update() call
@@ -49,12 +49,12 @@
  * @param buf   pointer to input buffer
  * @param len   size of input buffer
  * @return      updated checksum
- */
+ *)
 unsigned long av_adler32_update(unsigned long adler, const uint8_t *buf,
                                 unsigned int len) av_pure;
 
-/**
+(**
  * @}
- */
+ *)
 
-#endif /* AVUTIL_ADLER32_H */
+#endif (* AVUTIL_ADLER32_H *)

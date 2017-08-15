@@ -1,4 +1,4 @@
-/*
+(*
  * AES-CTR cipher
  * Copyright (c) 2015 Eran Kornblau <erankor at gmail dot com>
  *
@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with FFmpeg; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
- */
+ *)
 
 #ifndef AVUTIL_AES_CTR_H
 #define AVUTIL_AES_CTR_H
@@ -32,52 +32,52 @@
 
 struct AVAESCTR;
 
-/**
+(**
  * Allocate an AVAESCTR context.
- */
+ *)
 struct AVAESCTR *av_aes_ctr_alloc(void);
 
-/**
+(**
  * Initialize an AVAESCTR context.
  * @param key encryption key, must have a length of AES_CTR_KEY_SIZE
- */
+ *)
 int av_aes_ctr_init(struct AVAESCTR *a, const uint8_t *key);
 
-/**
+(**
  * Release an AVAESCTR context.
- */
+ *)
 void av_aes_ctr_free(struct AVAESCTR *a);
 
-/**
+(**
  * Process a buffer using a previously initialized context.
  * @param dst destination array, can be equal to src
  * @param src source array, can be equal to dst
  * @param size the size of src and dst
- */
+ *)
 void av_aes_ctr_crypt(struct AVAESCTR *a, uint8_t *dst, const uint8_t *src, int size);
 
-/**
+(**
  * Get the current iv
- */
+ *)
 const uint8_t* av_aes_ctr_get_iv(struct AVAESCTR *a);
 
-/**
+(**
  * Generate a random iv
- */
+ *)
 void av_aes_ctr_set_random_iv(struct AVAESCTR *a);
 
-/**
+(**
  * Forcefully change the iv
- */
+ *)
 void av_aes_ctr_set_iv(struct AVAESCTR *a, const uint8_t* iv);
 
-/**
+(**
  * Increment the top 64 bit of the iv (performed after each frame)
- */
+ *)
 void av_aes_ctr_increment_iv(struct AVAESCTR *a);
 
-/**
+(**
  * @}
- */
+ *)
 
-#endif /* AVUTIL_AES_CTR_H */
+#endif (* AVUTIL_AES_CTR_H *)
