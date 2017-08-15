@@ -24,6 +24,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
+unit avresample;
+
+{$mode objfpc}{$H+}
+
+interface
+
 // #ifndef AVRESAMPLE_AVRESAMPLE_H
 // #define AVRESAMPLE_AVRESAMPLE_H
 
@@ -507,3 +513,10 @@ int avresample_config(AVAudioResampleContext *avr, AVFrame *out, AVFrame *in);
  *)
 
 // #endif (* AVRESAMPLE_AVRESAMPLE_H *)
+
+
+implementation
+
+
+end.
+

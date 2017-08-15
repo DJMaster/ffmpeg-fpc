@@ -24,6 +24,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
+unit swresample;
+
+{$mode objfpc}{$H+}
+
+interface
+
 // #ifndef SWRESAMPLE_SWRESAMPLE_H
 // #define SWRESAMPLE_SWRESAMPLE_H
 
@@ -587,3 +593,10 @@ int swr_config_frame(SwrContext *swr, const AVFrame *out, const AVFrame *in);
  *)
 
 // #endif (* SWRESAMPLE_SWRESAMPLE_H *)
+
+
+implementation
+
+
+end.
+

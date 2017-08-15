@@ -24,6 +24,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
+unit postprocess;
+
+{$mode objfpc}{$H+}
+
+interface
+
 // #ifndef POSTPROC_POSTPROCESS_H
 // #define POSTPROC_POSTPROCESS_H
 
@@ -115,3 +121,10 @@ void pp_free_context(pp_context *ppContext);
  *)
 
 // #endif (* POSTPROC_POSTPROCESS_H *)
+
+
+implementation
+
+
+end.
+

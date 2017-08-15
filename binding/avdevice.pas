@@ -22,6 +22,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
+unit avdevice;
+
+{$mode objfpc}{$H+}
+
+interface
+
 // #ifndef AVDEVICE_AVDEVICE_H
 // #define AVDEVICE_AVDEVICE_H
 
@@ -518,3 +524,10 @@ int avdevice_list_output_sinks(struct AVOutputFormat *device, const char *device
  *)
 
 // #endif (* AVDEVICE_AVDEVICE_H *)
+
+
+implementation
+
+
+end.
+

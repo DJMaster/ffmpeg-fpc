@@ -24,6 +24,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
+unit swscale;
+
+{$mode objfpc}{$H+}
+
+interface
+
 // #ifndef SWSCALE_SWSCALE_H
 // #define SWSCALE_SWSCALE_H
 
@@ -340,3 +346,10 @@ const AVClass *sws_get_class(void);
  *)
 
 // #endif (* SWSCALE_SWSCALE_H *)
+
+
+implementation
+
+
+end.
+

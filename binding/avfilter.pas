@@ -25,6 +25,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
+unit avfilter;
+
+{$mode objfpc}{$H+}
+
+interface
+
 // #ifndef AVFILTER_AVFILTER_H
 // #define AVFILTER_AVFILTER_H
 
@@ -1186,3 +1192,10 @@ int avfilter_graph_request_oldest(AVFilterGraph *graph);
  *)
 
 // #endif (* AVFILTER_AVFILTER_H *)
+
+
+implementation
+
+
+end.
+

@@ -24,6 +24,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
+unit avutil;
+
+{$mode objfpc}{$H+}
+
+interface
+
 // #ifndef AVUTIL_AVUTIL_H
 // #define AVUTIL_AVUTIL_H
 
@@ -369,3 +375,10 @@ char *av_fourcc_make_string(char *buf, uint32_t fourcc);
  *)
 
 // #endif (* AVUTIL_AVUTIL_H *)
+
+
+implementation
+
+
+end.
+

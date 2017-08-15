@@ -24,6 +24,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
+unit avcodec;
+
+{$mode objfpc}{$H+}
+
+interface
+
 // #ifndef AVCODEC_AVCODEC_H
 // #define AVCODEC_AVCODEC_H
 
@@ -6346,3 +6352,10 @@ AVCPBProperties *av_cpb_properties_alloc(size_t *size);
  *)
 
 // #endif (* AVCODEC_AVCODEC_H *)
+
+
+implementation
+
+
+end.
+
