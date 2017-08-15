@@ -22,8 +22,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVCODEC_AVDCT_H
-#define AVCODEC_AVDCT_H
+// #ifndef AVCODEC_AVDCT_H
+// #define AVCODEC_AVDCT_H
 
 #include "libavutil/opt.h"
 
@@ -87,4 +87,4 @@ int avcodec_dct_init(AVDCT *);
 
 const AVClass *avcodec_dct_get_class(void);
 
-#endif (* AVCODEC_AVDCT_H *)
+// #endif (* AVCODEC_AVDCT_H *)

@@ -27,8 +27,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVCODEC_D3D11VA_H
-#define AVCODEC_D3D11VA_H
+// #ifndef AVCODEC_D3D11VA_H
+// #define AVCODEC_D3D11VA_H
 
 (**
  * @file
@@ -115,4 +115,4 @@ AVD3D11VAContext *av_d3d11va_alloc_context(void);
  * @}
  *)
 
-#endif (* AVCODEC_D3D11VA_H *)
+// #endif (* AVCODEC_D3D11VA_H *)

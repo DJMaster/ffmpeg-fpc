@@ -24,8 +24,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVUTIL_MASTERING_DISPLAY_METADATA_H
-#define AVUTIL_MASTERING_DISPLAY_METADATA_H
+// #ifndef AVUTIL_MASTERING_DISPLAY_METADATA_H
+// #define AVUTIL_MASTERING_DISPLAY_METADATA_H
 
 #include "frame.h"
 #include "rational.h"
@@ -92,4 +92,4 @@ AVMasteringDisplayMetadata *av_mastering_display_metadata_alloc(void);
  *)
 AVMasteringDisplayMetadata *av_mastering_display_metadata_create_side_data(AVFrame *frame);
 
-#endif (* AVUTIL_MASTERING_DISPLAY_METADATA_H *)
+// #endif (* AVUTIL_MASTERING_DISPLAY_METADATA_H *)

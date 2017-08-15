@@ -26,8 +26,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVCODEC_VDA_H
-#define AVCODEC_VDA_H
+// #ifndef AVCODEC_VDA_H
+// #define AVCODEC_VDA_H
 
 (**
  * @file
@@ -233,4 +233,4 @@ void av_vda_default_free(AVCodecContext *avctx);
  * @}
  *)
 
-#endif (* AVCODEC_VDA_H *)
+// #endif (* AVCODEC_VDA_H *)

@@ -25,8 +25,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVUTIL_OPT_H
-#define AVUTIL_OPT_H
+// #ifndef AVUTIL_OPT_H
+// #define AVUTIL_OPT_H
 
 (**
  * @file
@@ -869,4 +869,4 @@ int av_opt_serialize(void *obj, int opt_flags, int flags, char **buffer,
  * @}
  *)
 
-#endif (* AVUTIL_OPT_H *)
+// #endif (* AVUTIL_OPT_H *)

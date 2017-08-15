@@ -24,8 +24,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVCODEC_QSV_H
-#define AVCODEC_QSV_H
+// #ifndef AVCODEC_QSV_H
+// #define AVCODEC_QSV_H
 
 #include <mfx/mfxvideo.h>
 
@@ -110,4 +110,4 @@ typedef struct AVQSVContext {
  *)
 AVQSVContext *av_qsv_alloc_context(void);
 
-#endif (* AVCODEC_QSV_H *)
+// #endif (* AVCODEC_QSV_H *)

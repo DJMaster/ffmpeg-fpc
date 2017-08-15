@@ -30,8 +30,8 @@
  * Audio FIFO Buffer
  *)
 
-#ifndef AVUTIL_AUDIO_FIFO_H
-#define AVUTIL_AUDIO_FIFO_H
+// #ifndef AVUTIL_AUDIO_FIFO_H
+// #define AVUTIL_AUDIO_FIFO_H
 
 #include "avutil.h"
 #include "fifo.h"
@@ -190,4 +190,4 @@ int av_audio_fifo_space(AVAudioFifo *af);
  * @}
  *)
 
-#endif (* AVUTIL_AUDIO_FIFO_H *)
+// #endif (* AVUTIL_AUDIO_FIFO_H *)

@@ -26,8 +26,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVCODEC_MEDIACODEC_H
-#define AVCODEC_MEDIACODEC_H
+// #ifndef AVCODEC_MEDIACODEC_H
+// #define AVCODEC_MEDIACODEC_H
 
 #include "libavcodec/avcodec.h"
 
@@ -91,4 +91,4 @@ typedef struct MediaCodecBuffer AVMediaCodecBuffer;
  *)
 int av_mediacodec_release_buffer(AVMediaCodecBuffer *buffer, int render);
 
-#endif (* AVCODEC_MEDIACODEC_H *)
+// #endif (* AVCODEC_MEDIACODEC_H *)

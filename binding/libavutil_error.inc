@@ -27,8 +27,8 @@
  * error code definitions
  *)
 
-#ifndef AVUTIL_ERROR_H
-#define AVUTIL_ERROR_H
+// #ifndef AVUTIL_ERROR_H
+// #define AVUTIL_ERROR_H
 
 #include <errno.h>
 #include <stddef.h>
@@ -129,4 +129,4 @@ static inline char *av_make_error_string(char *errbuf, size_t errbuf_size, int e
  * @}
  *)
 
-#endif (* AVUTIL_ERROR_H *)
+// #endif (* AVUTIL_ERROR_H *)

@@ -22,8 +22,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVUTIL_HWCONTEXT_QSV_H
-#define AVUTIL_HWCONTEXT_QSV_H
+// #ifndef AVUTIL_HWCONTEXT_QSV_H
+// #define AVUTIL_HWCONTEXT_QSV_H
 
 #include <mfx/mfxvideo.h>
 
@@ -55,5 +55,4 @@ typedef struct AVQSVFramesContext {
     int frame_type;
 } AVQSVFramesContext;
 
-#endif (* AVUTIL_HWCONTEXT_QSV_H *)
-
+// #endif (* AVUTIL_HWCONTEXT_QSV_H *)

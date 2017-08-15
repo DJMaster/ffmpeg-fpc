@@ -22,8 +22,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVUTIL_REPLAYGAIN_H
-#define AVUTIL_REPLAYGAIN_H
+// #ifndef AVUTIL_REPLAYGAIN_H
+// #define AVUTIL_REPLAYGAIN_H
 
 #include <stdint.h>
 
@@ -53,4 +53,4 @@ typedef struct AVReplayGain {
     uint32_t album_peak;
 } AVReplayGain;
 
-#endif (* AVUTIL_REPLAYGAIN_H *)
+// #endif (* AVUTIL_REPLAYGAIN_H *)

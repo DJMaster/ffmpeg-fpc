@@ -25,8 +25,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVUTIL_AES_CTR_H
-#define AVUTIL_AES_CTR_H
+// #ifndef AVUTIL_AES_CTR_H
+// #define AVUTIL_AES_CTR_H
 
 #include <stdint.h>
 
@@ -86,4 +86,4 @@ void av_aes_ctr_increment_iv(struct AVAESCTR *a);
  * @}
  *)
 
-#endif (* AVUTIL_AES_CTR_H *)
+// #endif (* AVUTIL_AES_CTR_H *)

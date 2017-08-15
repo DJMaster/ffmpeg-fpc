@@ -22,8 +22,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVCODEC_DV_PROFILE_H
-#define AVCODEC_DV_PROFILE_H
+// #ifndef AVCODEC_DV_PROFILE_H
+// #define AVCODEC_DV_PROFILE_H
 
 #include <stdint.h>
 
@@ -86,4 +86,4 @@ const AVDVProfile *av_dv_codec_profile(int width, int height, enum AVPixelFormat
  *)
 const AVDVProfile *av_dv_codec_profile2(int width, int height, enum AVPixelFormat pix_fmt, AVRational frame_rate);
 
-#endif (* AVCODEC_DV_PROFILE_H *)
+// #endif (* AVCODEC_DV_PROFILE_H *)

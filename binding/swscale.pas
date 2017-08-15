@@ -24,8 +24,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef SWSCALE_SWSCALE_H
-#define SWSCALE_SWSCALE_H
+// #ifndef SWSCALE_SWSCALE_H
+// #define SWSCALE_SWSCALE_H
 
 (**
  * @file
@@ -339,4 +339,4 @@ const AVClass *sws_get_class(void);
  * @}
  *)
 
-#endif (* SWSCALE_SWSCALE_H *)
+// #endif (* SWSCALE_SWSCALE_H *)

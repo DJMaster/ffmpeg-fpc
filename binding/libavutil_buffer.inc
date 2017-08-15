@@ -28,8 +28,8 @@
  * refcounted data buffer API
  *)
 
-#ifndef AVUTIL_BUFFER_H
-#define AVUTIL_BUFFER_H
+// #ifndef AVUTIL_BUFFER_H
+// #define AVUTIL_BUFFER_H
 
 #include <stdint.h>
 
@@ -294,4 +294,4 @@ AVBufferRef *av_buffer_pool_get(AVBufferPool *pool);
  * @}
  *)
 
-#endif (* AVUTIL_BUFFER_H *)
+// #endif (* AVUTIL_BUFFER_H *)

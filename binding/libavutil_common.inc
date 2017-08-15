@@ -29,8 +29,8 @@
  * common internal and external API header
  *)
 
-#ifndef AVUTIL_COMMON_H
-#define AVUTIL_COMMON_H
+// #ifndef AVUTIL_COMMON_H
+// #define AVUTIL_COMMON_H
 
 #if defined(__cplusplus) && !defined(__STDC_CONSTANT_MACROS) && !defined(UINT64_C)
 #error missing -D__STDC_CONSTANT_MACROS / #define __STDC_CONSTANT_MACROS
@@ -473,7 +473,7 @@ static av_always_inline av_const int av_parity_c(uint32_t v)
 #    include "internal.h"
 #endif (* HAVE_AV_CONFIG_H *)
 
-#endif (* AVUTIL_COMMON_H *)
+// #endif (* AVUTIL_COMMON_H *)
 
 (*
  * The following definitions are outside the multiple inclusion guard

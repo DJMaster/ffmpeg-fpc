@@ -24,8 +24,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVUTIL_RC4_H
-#define AVUTIL_RC4_H
+// #ifndef AVUTIL_RC4_H
+// #define AVUTIL_RC4_H
 
 #include <stdint.h>
 
@@ -69,4 +69,4 @@ void av_rc4_crypt(struct AVRC4 *d, uint8_t *dst, const uint8_t *src, int count, 
  * @}
  *)
 
-#endif (* AVUTIL_RC4_H *)
+// #endif (* AVUTIL_RC4_H *)

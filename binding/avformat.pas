@@ -24,8 +24,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVFORMAT_AVFORMAT_H
-#define AVFORMAT_AVFORMAT_H
+// #ifndef AVFORMAT_AVFORMAT_H
+// #define AVFORMAT_AVFORMAT_H
 
 (**
  * @file
@@ -3011,4 +3011,4 @@ AVRational av_stream_get_codec_timebase(const AVStream *st);
  * @}
  *)
 
-#endif (* AVFORMAT_AVFORMAT_H *)
+// #endif (* AVFORMAT_AVFORMAT_H *)

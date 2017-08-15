@@ -22,8 +22,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVUTIL_MOTION_VECTOR_H
-#define AVUTIL_MOTION_VECTOR_H
+// #ifndef AVUTIL_MOTION_VECTOR_H
+// #define AVUTIL_MOTION_VECTOR_H
 
 #include <stdint.h>
 
@@ -60,4 +60,4 @@ typedef struct AVMotionVector {
     uint16_t motion_scale;
 } AVMotionVector;
 
-#endif (* AVUTIL_MOTION_VECTOR_H *)
+// #endif (* AVUTIL_MOTION_VECTOR_H *)

@@ -24,8 +24,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVUTIL_STEREO3D_H
-#define AVUTIL_STEREO3D_H
+// #ifndef AVUTIL_STEREO3D_H
+// #define AVUTIL_STEREO3D_H
 
 #include <stdint.h>
 
@@ -173,4 +173,4 @@ const char *av_stereo3d_type_name(unsigned int type);
  *)
 int av_stereo3d_from_name(const char *name);
 
-#endif (* AVUTIL_STEREO3D_H *)
+// #endif (* AVUTIL_STEREO3D_H *)

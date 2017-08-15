@@ -30,8 +30,8 @@
  * Timecode helpers header
  *)
 
-#ifndef AVUTIL_TIMECODE_H
-#define AVUTIL_TIMECODE_H
+// #ifndef AVUTIL_TIMECODE_H
+// #define AVUTIL_TIMECODE_H
 
 #include <stdint.h>
 #include "rational.h"
@@ -143,4 +143,4 @@ int av_timecode_init_from_string(AVTimecode *tc, AVRational rate, const char *st
  *)
 int av_timecode_check_frame_rate(AVRational rate);
 
-#endif (* AVUTIL_TIMECODE_H *)
+// #endif (* AVUTIL_TIMECODE_H *)

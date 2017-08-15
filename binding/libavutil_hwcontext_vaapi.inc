@@ -22,8 +22,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVUTIL_HWCONTEXT_VAAPI_H
-#define AVUTIL_HWCONTEXT_VAAPI_H
+// #ifndef AVUTIL_HWCONTEXT_VAAPI_H
+// #define AVUTIL_HWCONTEXT_VAAPI_H
 
 #include <va/va.h>
 
@@ -113,4 +113,4 @@ typedef struct AVVAAPIHWConfig {
     VAConfigID config_id;
 } AVVAAPIHWConfig;
 
-#endif (* AVUTIL_HWCONTEXT_VAAPI_H *)
+// #endif (* AVUTIL_HWCONTEXT_VAAPI_H *)

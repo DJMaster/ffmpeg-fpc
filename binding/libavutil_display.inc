@@ -24,8 +24,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVUTIL_DISPLAY_H
-#define AVUTIL_DISPLAY_H
+// #ifndef AVUTIL_DISPLAY_H
+// #define AVUTIL_DISPLAY_H
 
 #include <stdint.h>
 #include "common.h"
@@ -90,4 +90,4 @@ void av_display_rotation_set(int32_t matrix[9], double angle);
  *)
 void av_display_matrix_flip(int32_t matrix[9], int hflip, int vflip);
 
-#endif (* AVUTIL_DISPLAY_H *)
+// #endif (* AVUTIL_DISPLAY_H *)

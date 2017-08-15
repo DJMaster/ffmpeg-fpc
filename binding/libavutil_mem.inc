@@ -30,8 +30,8 @@
  * Memory handling functions
  *)
 
-#ifndef AVUTIL_MEM_H
-#define AVUTIL_MEM_H
+// #ifndef AVUTIL_MEM_H
+// #define AVUTIL_MEM_H
 
 #include <limits.h>
 #include <stdint.h>
@@ -702,4 +702,4 @@ void av_max_alloc(size_t max);
  * @}
  *)
 
-#endif (* AVUTIL_MEM_H *)
+// #endif (* AVUTIL_MEM_H *)

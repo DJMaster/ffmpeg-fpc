@@ -30,8 +30,8 @@
  * Public header for CRC hash function implementation.
  *)
 
-#ifndef AVUTIL_CRC_H
-#define AVUTIL_CRC_H
+// #ifndef AVUTIL_CRC_H
+// #define AVUTIL_CRC_H
 
 #include <stdint.h>
 #include <stddef.h>
@@ -106,4 +106,4 @@ uint32_t av_crc(const AVCRC *ctx, uint32_t crc,
  * @}
  *)
 
-#endif (* AVUTIL_CRC_H *)
+// #endif (* AVUTIL_CRC_H *)

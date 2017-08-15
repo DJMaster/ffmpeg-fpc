@@ -27,8 +27,8 @@
  * a very simple circular buffer FIFO implementation
  *)
 
-#ifndef AVUTIL_FIFO_H
-#define AVUTIL_FIFO_H
+// #ifndef AVUTIL_FIFO_H
+// #define AVUTIL_FIFO_H
 
 #include <stdint.h>
 #include "avutil.h"
@@ -182,4 +182,4 @@ static inline uint8_t *av_fifo_peek2(const AVFifoBuffer *f, int offs)
     return ptr;
 }
 
-#endif (* AVUTIL_FIFO_H *)
+// #endif (* AVUTIL_FIFO_H *)

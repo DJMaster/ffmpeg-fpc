@@ -25,8 +25,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVUTIL_TWOFISH_H
-#define AVUTIL_TWOFISH_H
+// #ifndef AVUTIL_TWOFISH_H
+// #define AVUTIL_TWOFISH_H
 
 #include <stdint.h>
 
@@ -73,4 +73,5 @@ void av_twofish_crypt(struct AVTWOFISH *ctx, uint8_t *dst, const uint8_t *src, i
 (**
  * @}
  *)
-#endif (* AVUTIL_TWOFISH_H *)
+
+// #endif (* AVUTIL_TWOFISH_H *)

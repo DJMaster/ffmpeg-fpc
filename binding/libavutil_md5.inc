@@ -30,8 +30,8 @@
  * Public header for MD5 hash function implementation.
  *)
 
-#ifndef AVUTIL_MD5_H
-#define AVUTIL_MD5_H
+// #ifndef AVUTIL_MD5_H
+// #define AVUTIL_MD5_H
 
 #include <stdint.h>
 
@@ -92,4 +92,4 @@ void av_md5_sum(uint8_t *dst, const uint8_t *src, const int len);
  * @}
  *)
 
-#endif (* AVUTIL_MD5_H *)
+// #endif (* AVUTIL_MD5_H *)

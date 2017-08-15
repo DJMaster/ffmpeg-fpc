@@ -24,8 +24,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef SWRESAMPLE_SWRESAMPLE_H
-#define SWRESAMPLE_SWRESAMPLE_H
+// #ifndef SWRESAMPLE_SWRESAMPLE_H
+// #define SWRESAMPLE_SWRESAMPLE_H
 
 (**
  * @file
@@ -586,4 +586,4 @@ int swr_config_frame(SwrContext *swr, const AVFrame *out, const AVFrame *in);
  * @}
  *)
 
-#endif (* SWRESAMPLE_SWRESAMPLE_H *)
+// #endif (* SWRESAMPLE_SWRESAMPLE_H *)

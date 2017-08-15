@@ -30,8 +30,8 @@
  * @author Michael Niedermayer <michaelni@gmx.at>
  *)
 
-#ifndef AVUTIL_AVASSERT_H
-#define AVUTIL_AVASSERT_H
+// #ifndef AVUTIL_AVASSERT_H
+// #define AVUTIL_AVASSERT_H
 
 #include <stdlib.h>
 #include "avutil.h"
@@ -78,4 +78,4 @@
  *)
 void av_assert0_fpu(void);
 
-#endif (* AVUTIL_AVASSERT_H *)
+// #endif (* AVUTIL_AVASSERT_H *)

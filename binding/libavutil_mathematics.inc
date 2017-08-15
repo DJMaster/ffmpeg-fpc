@@ -30,8 +30,8 @@
  * Mathematical utilities for working with timestamp and time base.
  *)
 
-#ifndef AVUTIL_MATHEMATICS_H
-#define AVUTIL_MATHEMATICS_H
+// #ifndef AVUTIL_MATHEMATICS_H
+// #define AVUTIL_MATHEMATICS_H
 
 #include <stdint.h>
 #include <math.h>
@@ -245,4 +245,4 @@ int64_t av_add_stable(AVRational ts_tb, int64_t ts, AVRational inc_tb, int64_t i
  * @}
  *)
 
-#endif (* AVUTIL_MATHEMATICS_H *)
+// #endif (* AVUTIL_MATHEMATICS_H *)

@@ -31,8 +31,8 @@
  * Public header for RIPEMD hash function implementation.
  *)
 
-#ifndef AVUTIL_RIPEMD_H
-#define AVUTIL_RIPEMD_H
+// #ifndef AVUTIL_RIPEMD_H
+// #define AVUTIL_RIPEMD_H
 
 #include <stdint.h>
 
@@ -86,4 +86,4 @@ void av_ripemd_final(struct AVRIPEMD* context, uint8_t *digest);
  * @}
  *)
 
-#endif (* AVUTIL_RIPEMD_H *)
+// #endif (* AVUTIL_RIPEMD_H *)

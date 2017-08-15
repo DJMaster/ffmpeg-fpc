@@ -22,8 +22,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVUTIL_HWCONTEXT_H
-#define AVUTIL_HWCONTEXT_H
+// #ifndef AVUTIL_HWCONTEXT_H
+// #define AVUTIL_HWCONTEXT_H
 
 #include "buffer.h"
 #include "frame.h"
@@ -526,4 +526,4 @@ int av_hwframe_ctx_create_derived(AVBufferRef **derived_frame_ctx,
                                   AVBufferRef *source_frame_ctx,
                                   int flags);
 
-#endif (* AVUTIL_HWCONTEXT_H *)
+// #endif (* AVUTIL_HWCONTEXT_H *)

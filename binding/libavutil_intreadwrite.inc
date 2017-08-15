@@ -22,8 +22,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVUTIL_INTREADWRITE_H
-#define AVUTIL_INTREADWRITE_H
+// #ifndef AVUTIL_INTREADWRITE_H
+// #define AVUTIL_INTREADWRITE_H
 
 #include <stdint.h>
 #include "libavutil/avconfig.h"
@@ -637,4 +637,4 @@ union unaligned_16 { uint16_t l; } __attribute__((packed)) av_alias;
     } while(0)
 #endif
 
-#endif (* AVUTIL_INTREADWRITE_H *)
+// #endif (* AVUTIL_INTREADWRITE_H *)

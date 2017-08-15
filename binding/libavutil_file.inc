@@ -22,8 +22,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVUTIL_FILE_H
-#define AVUTIL_FILE_H
+// #ifndef AVUTIL_FILE_H
+// #define AVUTIL_FILE_H
 
 #include <stdint.h>
 
@@ -72,4 +72,4 @@ void av_file_unmap(uint8_t *bufptr, size_t size);
  *)
 int av_tempfile(const char *prefix, char **filename, int log_offset, void *log_ctx);
 
-#endif (* AVUTIL_FILE_H *)
+// #endif (* AVUTIL_FILE_H *)

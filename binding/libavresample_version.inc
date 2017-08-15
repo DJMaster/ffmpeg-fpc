@@ -22,8 +22,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVRESAMPLE_VERSION_H
-#define AVRESAMPLE_VERSION_H
+// #ifndef AVRESAMPLE_VERSION_H
+// #define AVRESAMPLE_VERSION_H
 
 (**
  * @file
@@ -53,4 +53,4 @@
  * the public API and may change, break or disappear at any time.
  *)
 
-#endif (* AVRESAMPLE_VERSION_H *)
+// #endif (* AVRESAMPLE_VERSION_H *)

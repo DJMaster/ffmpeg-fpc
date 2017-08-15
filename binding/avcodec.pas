@@ -24,8 +24,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVCODEC_AVCODEC_H
-#define AVCODEC_AVCODEC_H
+// #ifndef AVCODEC_AVCODEC_H
+// #define AVCODEC_AVCODEC_H
 
 (**
  * @file
@@ -6345,4 +6345,4 @@ AVCPBProperties *av_cpb_properties_alloc(size_t *size);
  * @}
  *)
 
-#endif (* AVCODEC_AVCODEC_H *)
+// #endif (* AVCODEC_AVCODEC_H *)

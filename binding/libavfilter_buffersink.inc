@@ -22,8 +22,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVFILTER_BUFFERSINK_H
-#define AVFILTER_BUFFERSINK_H
+// #ifndef AVFILTER_BUFFERSINK_H
+// #define AVFILTER_BUFFERSINK_H
 
 (**
  * @file
@@ -168,4 +168,4 @@ int av_buffersink_get_samples(AVFilterContext *ctx, AVFrame *frame, int nb_sampl
  * @}
  *)
 
-#endif (* AVFILTER_BUFFERSINK_H *)
+// #endif (* AVFILTER_BUFFERSINK_H *)

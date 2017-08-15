@@ -22,8 +22,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVUTIL_SAMPLEFMT_H
-#define AVUTIL_SAMPLEFMT_H
+// #ifndef AVUTIL_SAMPLEFMT_H
+// #define AVUTIL_SAMPLEFMT_H
 
 #include <stdint.h>
 
@@ -275,4 +275,5 @@ int av_samples_set_silence(uint8_t **audio_data, int offset, int nb_samples,
  * @}
  * @}
  *)
-#endif (* AVUTIL_SAMPLEFMT_H *)
+
+// #endif (* AVUTIL_SAMPLEFMT_H *)

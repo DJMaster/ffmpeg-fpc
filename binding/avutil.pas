@@ -24,8 +24,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVUTIL_AVUTIL_H
-#define AVUTIL_AVUTIL_H
+// #ifndef AVUTIL_AVUTIL_H
+// #define AVUTIL_AVUTIL_H
 
 (**
  * @file
@@ -368,4 +368,4 @@ char *av_fourcc_make_string(char *buf, uint32_t fourcc);
  * @}
  *)
 
-#endif (* AVUTIL_AVUTIL_H *)
+// #endif (* AVUTIL_AVUTIL_H *)

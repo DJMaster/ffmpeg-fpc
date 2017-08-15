@@ -25,8 +25,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVUTIL_CAMELLIA_H
-#define AVUTIL_CAMELLIA_H
+// #ifndef AVUTIL_CAMELLIA_H
+// #define AVUTIL_CAMELLIA_H
 
 #include <stdint.h>
 
@@ -73,4 +73,5 @@ void av_camellia_crypt(struct AVCAMELLIA *ctx, uint8_t *dst, const uint8_t *src,
 (**
  * @}
  *)
-#endif (* AVUTIL_CAMELLIA_H *)
+
+// #endif (* AVUTIL_CAMELLIA_H *)

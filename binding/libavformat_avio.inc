@@ -23,8 +23,8 @@
  * License along with FFmpeg; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
-#ifndef AVFORMAT_AVIO_H
-#define AVFORMAT_AVIO_H
+// #ifndef AVFORMAT_AVIO_H
+// #define AVFORMAT_AVIO_H
 
 (**
  * @file
@@ -830,4 +830,5 @@ int avio_accept(AVIOContext *s, AVIOContext **c);
  *           < 0 for an AVERROR code
  *)
 int avio_handshake(AVIOContext *c);
-#endif (* AVFORMAT_AVIO_H *)
+
+// #endif (* AVFORMAT_AVIO_H *)

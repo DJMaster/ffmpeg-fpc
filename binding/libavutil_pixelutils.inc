@@ -22,8 +22,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVUTIL_PIXELUTILS_H
-#define AVUTIL_PIXELUTILS_H
+// #ifndef AVUTIL_PIXELUTILS_H
+// #define AVUTIL_PIXELUTILS_H
 
 #include <stddef.h>
 #include <stdint.h>
@@ -55,4 +55,4 @@ typedef int (*av_pixelutils_sad_fn)(const uint8_t *src1, ptrdiff_t stride1,
 av_pixelutils_sad_fn av_pixelutils_get_sad_fn(int w_bits, int h_bits,
                                               int aligned, void *log_ctx);
 
-#endif (* AVUTIL_PIXELUTILS_H *)
+// #endif (* AVUTIL_PIXELUTILS_H *)

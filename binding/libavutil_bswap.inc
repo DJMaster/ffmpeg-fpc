@@ -29,8 +29,8 @@
  * byte swapping routines
  *)
 
-#ifndef AVUTIL_BSWAP_H
-#define AVUTIL_BSWAP_H
+// #ifndef AVUTIL_BSWAP_H
+// #define AVUTIL_BSWAP_H
 
 #include <stdint.h>
 #include "libavutil/avconfig.h"
@@ -112,4 +112,4 @@ static inline uint64_t av_const av_bswap64(uint64_t x)
 #define AV_LE2NE32C(x) AV_LE2NEC(32, x)
 #define AV_LE2NE64C(x) AV_LE2NEC(64, x)
 
-#endif (* AVUTIL_BSWAP_H *)
+// #endif (* AVUTIL_BSWAP_H *)

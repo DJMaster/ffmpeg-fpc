@@ -23,8 +23,8 @@
  *)
 
 
-#ifndef AVUTIL_HWCONTEXT_CUDA_H
-#define AVUTIL_HWCONTEXT_CUDA_H
+// #ifndef AVUTIL_HWCONTEXT_CUDA_H
+// #define AVUTIL_HWCONTEXT_CUDA_H
 
 #ifndef CUDA_VERSION
 #include <cuda.h>
@@ -54,4 +54,4 @@ typedef struct AVCUDADeviceContext {
  * AVHWFramesContext.hwctx is currently not used
  *)
 
-#endif (* AVUTIL_HWCONTEXT_CUDA_H *)
+// #endif (* AVUTIL_HWCONTEXT_CUDA_H *)

@@ -24,8 +24,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVUTIL_HMAC_H
-#define AVUTIL_HMAC_H
+// #ifndef AVUTIL_HMAC_H
+// #define AVUTIL_HMAC_H
 
 #include <stdint.h>
 
@@ -103,4 +103,4 @@ int av_hmac_calc(AVHMAC *ctx, const uint8_t *data, unsigned int len,
  * @}
  *)
 
-#endif (* AVUTIL_HMAC_H *)
+// #endif (* AVUTIL_HMAC_H *)

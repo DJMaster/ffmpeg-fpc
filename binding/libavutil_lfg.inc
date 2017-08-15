@@ -25,8 +25,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVUTIL_LFG_H
-#define AVUTIL_LFG_H
+// #ifndef AVUTIL_LFG_H
+// #define AVUTIL_LFG_H
 
 #include <stdint.h>
 
@@ -74,4 +74,4 @@ static inline unsigned int av_mlfg_get(AVLFG *c){
  *)
 void av_bmg_get(AVLFG *lfg, double out[2]);
 
-#endif (* AVUTIL_LFG_H *)
+// #endif (* AVUTIL_LFG_H *)

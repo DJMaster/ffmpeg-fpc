@@ -29,8 +29,8 @@
  * Spherical video
  *)
 
-#ifndef AVUTIL_SPHERICAL_H
-#define AVUTIL_SPHERICAL_H
+// #ifndef AVUTIL_SPHERICAL_H
+// #define AVUTIL_SPHERICAL_H
 
 #include <stddef.h>
 #include <stdint.h>
@@ -235,4 +235,4 @@ int av_spherical_from_name(const char *name);
  * @}
  *)
 
-#endif (* AVUTIL_SPHERICAL_H *)
+// #endif (* AVUTIL_SPHERICAL_H *)

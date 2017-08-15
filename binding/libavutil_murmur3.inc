@@ -30,8 +30,8 @@
  * Public header for MurmurHash3 hash function implementation.
  *)
 
-#ifndef AVUTIL_MURMUR3_H
-#define AVUTIL_MURMUR3_H
+// #ifndef AVUTIL_MURMUR3_H
+// #define AVUTIL_MURMUR3_H
 
 #include <stdint.h>
 
@@ -117,4 +117,4 @@ void av_murmur3_final(struct AVMurMur3 *c, uint8_t dst[16]);
  * @}
  *)
 
-#endif (* AVUTIL_MURMUR3_H *)
+// #endif (* AVUTIL_MURMUR3_H *)

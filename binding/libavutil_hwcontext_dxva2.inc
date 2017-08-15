@@ -23,8 +23,8 @@
  *)
 
 
-#ifndef AVUTIL_HWCONTEXT_DXVA2_H
-#define AVUTIL_HWCONTEXT_DXVA2_H
+// #ifndef AVUTIL_HWCONTEXT_DXVA2_H
+// #define AVUTIL_HWCONTEXT_DXVA2_H
 
 (**
  * @file
@@ -75,4 +75,4 @@ typedef struct AVDXVA2FramesContext {
     IDirectXVideoDecoder *decoder_to_release;
 } AVDXVA2FramesContext;
 
-#endif (* AVUTIL_HWCONTEXT_DXVA2_H *)
+// #endif (* AVUTIL_HWCONTEXT_DXVA2_H *)

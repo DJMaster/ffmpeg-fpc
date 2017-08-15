@@ -22,8 +22,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVFILTER_BUFFERSRC_H
-#define AVFILTER_BUFFERSRC_H
+// #ifndef AVFILTER_BUFFERSRC_H
+// #define AVFILTER_BUFFERSRC_H
 
 (**
  * @file
@@ -204,4 +204,4 @@ int av_buffersrc_add_frame_flags(AVFilterContext *buffer_src,
  * @}
  *)
 
-#endif (* AVFILTER_BUFFERSRC_H *)
+// #endif (* AVFILTER_BUFFERSRC_H *)

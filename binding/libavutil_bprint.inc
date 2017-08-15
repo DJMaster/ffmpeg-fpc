@@ -24,8 +24,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVUTIL_BPRINT_H
-#define AVUTIL_BPRINT_H
+// #ifndef AVUTIL_BPRINT_H
+// #define AVUTIL_BPRINT_H
 
 #include <stdarg.h>
 
@@ -222,4 +222,4 @@ int av_bprint_finalize(AVBPrint *buf, char **ret_str);
 void av_bprint_escape(AVBPrint *dstbuf, const char *src, const char *special_chars,
                       enum AVEscapeMode mode, int flags);
 
-#endif (* AVUTIL_BPRINT_H *)
+// #endif (* AVUTIL_BPRINT_H *)

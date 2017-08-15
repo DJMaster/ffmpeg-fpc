@@ -24,8 +24,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVUTIL_LOG_H
-#define AVUTIL_LOG_H
+// #ifndef AVUTIL_LOG_H
+// #define AVUTIL_LOG_H
 
 #include <stdarg.h>
 #include "avutil.h"
@@ -379,4 +379,4 @@ int av_log_get_flags(void);
  * @}
  *)
 
-#endif (* AVUTIL_LOG_H *)
+// #endif (* AVUTIL_LOG_H *)

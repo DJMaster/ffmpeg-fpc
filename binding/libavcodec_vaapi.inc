@@ -27,8 +27,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVCODEC_VAAPI_H
-#define AVCODEC_VAAPI_H
+// #ifndef AVCODEC_VAAPI_H
+// #define AVCODEC_VAAPI_H
 
 (**
  * @file
@@ -198,4 +198,4 @@ struct attribute_deprecated vaapi_context {
 
 #endif (* FF_API_STRUCT_VAAPI_CONTEXT *)
 
-#endif (* AVCODEC_VAAPI_H *)
+// #endif (* AVCODEC_VAAPI_H *)

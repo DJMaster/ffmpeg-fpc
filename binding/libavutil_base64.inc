@@ -24,8 +24,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVUTIL_BASE64_H
-#define AVUTIL_BASE64_H
+// #ifndef AVUTIL_BASE64_H
+// #define AVUTIL_BASE64_H
 
 #include <stdint.h>
 
@@ -75,4 +75,4 @@ char *av_base64_encode(char *out, int out_size, const uint8_t *in, int in_size);
   * @}
   *)
 
-#endif (* AVUTIL_BASE64_H *)
+// #endif (* AVUTIL_BASE64_H *)

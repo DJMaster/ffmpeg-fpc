@@ -25,8 +25,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVUTIL_XTEA_H
-#define AVUTIL_XTEA_H
+// #ifndef AVUTIL_XTEA_H
+// #define AVUTIL_XTEA_H
 
 #include <stdint.h>
 
@@ -97,4 +97,4 @@ void av_xtea_le_crypt(struct AVXTEA *ctx, uint8_t *dst, const uint8_t *src,
  * @}
  *)
 
-#endif (* AVUTIL_XTEA_H *)
+// #endif (* AVUTIL_XTEA_H *)

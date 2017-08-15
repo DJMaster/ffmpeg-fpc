@@ -24,8 +24,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVUTIL_AVSTRING_H
-#define AVUTIL_AVSTRING_H
+// #ifndef AVUTIL_AVSTRING_H
+// #define AVUTIL_AVSTRING_H
 
 #include <stddef.h>
 #include <stdint.h>
@@ -405,4 +405,4 @@ int av_match_list(const char *name, const char *list, char separator);
  * @}
  *)
 
-#endif (* AVUTIL_AVSTRING_H *)
+// #endif (* AVUTIL_AVSTRING_H *)

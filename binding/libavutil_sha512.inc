@@ -31,8 +31,8 @@
  * Public header for SHA-512 implementation.
  *)
 
-#ifndef AVUTIL_SHA512_H
-#define AVUTIL_SHA512_H
+// #ifndef AVUTIL_SHA512_H
+// #define AVUTIL_SHA512_H
 
 #include <stdint.h>
 
@@ -95,4 +95,4 @@ void av_sha512_final(struct AVSHA512* context, uint8_t *digest);
  * @}
  *)
 
-#endif (* AVUTIL_SHA512_H *)
+// #endif (* AVUTIL_SHA512_H *)

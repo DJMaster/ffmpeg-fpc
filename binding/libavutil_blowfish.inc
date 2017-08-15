@@ -25,8 +25,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVUTIL_BLOWFISH_H
-#define AVUTIL_BLOWFISH_H
+// #ifndef AVUTIL_BLOWFISH_H
+// #define AVUTIL_BLOWFISH_H
 
 #include <stdint.h>
 
@@ -85,4 +85,4 @@ void av_blowfish_crypt(struct AVBlowfish *ctx, uint8_t *dst, const uint8_t *src,
  * @}
  *)
 
-#endif (* AVUTIL_BLOWFISH_H *)
+// #endif (* AVUTIL_BLOWFISH_H *)

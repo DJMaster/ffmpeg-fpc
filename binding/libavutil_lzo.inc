@@ -25,8 +25,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVUTIL_LZO_H
-#define AVUTIL_LZO_H
+// #ifndef AVUTIL_LZO_H
+// #define AVUTIL_LZO_H
 
 (**
  * @defgroup lavu_lzo LZO
@@ -69,4 +69,4 @@ int av_lzo1x_decode(void *out, int *outlen, const void *in, int *inlen);
  * @}
  *)
 
-#endif (* AVUTIL_LZO_H *)
+// #endif (* AVUTIL_LZO_H *)

@@ -26,8 +26,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVCODEC_DXVA2_H
-#define AVCODEC_DXVA2_H
+// #ifndef AVCODEC_DXVA2_H
+// #define AVCODEC_DXVA2_H
 
 (**
  * @file
@@ -96,4 +96,4 @@ struct dxva_context {
  * @}
  *)
 
-#endif (* AVCODEC_DXVA2_H *)
+// #endif (* AVCODEC_DXVA2_H *)

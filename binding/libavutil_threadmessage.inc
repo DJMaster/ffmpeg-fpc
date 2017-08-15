@@ -22,8 +22,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVUTIL_THREADMESSAGE_H
-#define AVUTIL_THREADMESSAGE_H
+// #ifndef AVUTIL_THREADMESSAGE_H
+// #define AVUTIL_THREADMESSAGE_H
 
 typedef struct AVThreadMessageQueue AVThreadMessageQueue;
 
@@ -110,4 +110,4 @@ void av_thread_message_queue_set_free_func(AVThreadMessageQueue *mq,
  *)
 void av_thread_message_flush(AVThreadMessageQueue *mq);
 
-#endif (* AVUTIL_THREADMESSAGE_H *)
+// #endif (* AVUTIL_THREADMESSAGE_H *)

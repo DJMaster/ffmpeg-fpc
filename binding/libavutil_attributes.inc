@@ -29,8 +29,8 @@
  * Macro definitions for various function/variable attributes
  *)
 
-#ifndef AVUTIL_ATTRIBUTES_H
-#define AVUTIL_ATTRIBUTES_H
+// #ifndef AVUTIL_ATTRIBUTES_H
+// #define AVUTIL_ATTRIBUTES_H
 
 #ifdef __GNUC__
 #    define AV_GCC_VERSION_AT_LEAST(x,y) (__GNUC__ > (x) || __GNUC__ == (x) && __GNUC_MINOR__ >= (y))
@@ -170,4 +170,4 @@
 #    define av_noreturn
 #endif
 
-#endif (* AVUTIL_ATTRIBUTES_H *)
+// #endif (* AVUTIL_ATTRIBUTES_H *)

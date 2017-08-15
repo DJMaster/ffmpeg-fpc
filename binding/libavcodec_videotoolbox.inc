@@ -26,8 +26,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVCODEC_VIDEOTOOLBOX_H
-#define AVCODEC_VIDEOTOOLBOX_H
+// #ifndef AVCODEC_VIDEOTOOLBOX_H
+// #define AVCODEC_VIDEOTOOLBOX_H
 
 (**
  * @file
@@ -130,4 +130,4 @@ void av_videotoolbox_default_free(AVCodecContext *avctx);
  * @}
  *)
 
-#endif (* AVCODEC_VIDEOTOOLBOX_H *)
+// #endif (* AVCODEC_VIDEOTOOLBOX_H *)

@@ -25,8 +25,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVUTIL_CHANNEL_LAYOUT_H
-#define AVUTIL_CHANNEL_LAYOUT_H
+// #ifndef AVUTIL_CHANNEL_LAYOUT_H
+// #define AVUTIL_CHANNEL_LAYOUT_H
 
 #include <stdint.h>
 
@@ -235,4 +235,4 @@ int av_get_standard_channel_layout(unsigned index, uint64_t *layout,
  * @}
  *)
 
-#endif (* AVUTIL_CHANNEL_LAYOUT_H *)
+// #endif (* AVUTIL_CHANNEL_LAYOUT_H *)

@@ -24,8 +24,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVUTIL_DOWNMIX_INFO_H
-#define AVUTIL_DOWNMIX_INFO_H
+// #ifndef AVUTIL_DOWNMIX_INFO_H
+// #define AVUTIL_DOWNMIX_INFO_H
 
 #include "frame.h"
 
@@ -118,4 +118,4 @@ AVDownmixInfo *av_downmix_info_update_side_data(AVFrame *frame);
  * @}
  *)
 
-#endif (* AVUTIL_DOWNMIX_INFO_H *)
+// #endif (* AVUTIL_DOWNMIX_INFO_H *)

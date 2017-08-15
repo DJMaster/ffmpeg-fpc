@@ -26,8 +26,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVCODEC_DIRAC_H
-#define AVCODEC_DIRAC_H
+// #ifndef AVCODEC_DIRAC_H
+// #define AVCODEC_DIRAC_H
 
 (**
  * @file
@@ -134,4 +134,4 @@ int av_dirac_parse_sequence_header(AVDiracSeqHeader **dsh,
                                    const uint8_t *buf, size_t buf_size,
                                    void *log_ctx);
 
-#endif (* AVCODEC_DIRAC_H *)
+// #endif (* AVCODEC_DIRAC_H *)

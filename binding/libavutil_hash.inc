@@ -30,8 +30,8 @@
  * Generic hashing API
  *)
 
-#ifndef AVUTIL_HASH_H
-#define AVUTIL_HASH_H
+// #ifndef AVUTIL_HASH_H
+// #define AVUTIL_HASH_H
 
 #include <stdint.h>
 
@@ -266,4 +266,4 @@ void av_hash_freep(struct AVHashContext **ctx);
  * @}
  *)
 
-#endif (* AVUTIL_HASH_H *)
+// #endif (* AVUTIL_HASH_H *)

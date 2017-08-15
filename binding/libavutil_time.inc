@@ -24,8 +24,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVUTIL_TIME_H
-#define AVUTIL_TIME_H
+// #ifndef AVUTIL_TIME_H
+// #define AVUTIL_TIME_H
 
 #include <stdint.h>
 
@@ -59,4 +59,4 @@ int av_gettime_relative_is_monotonic(void);
  *)
 int av_usleep(unsigned usec);
 
-#endif (* AVUTIL_TIME_H *)
+// #endif (* AVUTIL_TIME_H *)

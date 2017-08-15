@@ -25,8 +25,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVUTIL_PIXDESC_H
-#define AVUTIL_PIXDESC_H
+// #ifndef AVUTIL_PIXDESC_H
+// #define AVUTIL_PIXDESC_H
 
 #include <inttypes.h>
 
@@ -402,4 +402,4 @@ int av_get_pix_fmt_loss(enum AVPixelFormat dst_pix_fmt,
 enum AVPixelFormat av_find_best_pix_fmt_of_2(enum AVPixelFormat dst_pix_fmt1, enum AVPixelFormat dst_pix_fmt2,
                                              enum AVPixelFormat src_pix_fmt, int has_alpha, int *loss_ptr);
 
-#endif (* AVUTIL_PIXDESC_H *)
+// #endif (* AVUTIL_PIXDESC_H *)

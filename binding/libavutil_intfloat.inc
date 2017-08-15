@@ -24,8 +24,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVUTIL_INTFLOAT_H
-#define AVUTIL_INTFLOAT_H
+// #ifndef AVUTIL_INTFLOAT_H
+// #define AVUTIL_INTFLOAT_H
 
 #include <stdint.h>
 #include "attributes.h"
@@ -80,4 +80,4 @@ static av_always_inline uint64_t av_double2int(double f)
     return v.i;
 }
 
-#endif (* AVUTIL_INTFLOAT_H *)
+// #endif (* AVUTIL_INTFLOAT_H *)

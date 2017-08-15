@@ -25,10 +25,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVFILTER_AVFILTERGRAPH_H
-#define AVFILTER_AVFILTERGRAPH_H
+// #ifndef AVFILTER_AVFILTERGRAPH_H
+// #define AVFILTER_AVFILTERGRAPH_H
 
 #include "avfilter.h"
 #include "libavutil/log.h"
 
-#endif (* AVFILTER_AVFILTERGRAPH_H *)
+// #endif (* AVFILTER_AVFILTERGRAPH_H *)

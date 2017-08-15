@@ -27,8 +27,8 @@
  * timestamp utils, mostly useful for debugging/logging purposes
  *)
 
-#ifndef AVUTIL_TIMESTAMP_H
-#define AVUTIL_TIMESTAMP_H
+// #ifndef AVUTIL_TIMESTAMP_H
+// #define AVUTIL_TIMESTAMP_H
 
 #include "common.h"
 
@@ -81,4 +81,4 @@ static inline char *av_ts_make_time_string(char *buf, int64_t ts, AVRational *tb
  *)
 #define av_ts2timestr(ts, tb) av_ts_make_time_string((char[AV_TS_MAX_STRING_SIZE]){0}, ts, tb)
 
-#endif (* AVUTIL_TIMESTAMP_H *)
+// #endif (* AVUTIL_TIMESTAMP_H *)

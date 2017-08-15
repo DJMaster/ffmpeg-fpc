@@ -22,8 +22,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVUTIL_PARSEUTILS_H
-#define AVUTIL_PARSEUTILS_H
+// #ifndef AVUTIL_PARSEUTILS_H
+// #define AVUTIL_PARSEUTILS_H
 
 #include <time.h>
 
@@ -196,4 +196,4 @@ char *av_small_strptime(const char *p, const char *fmt, struct tm *dt);
  *)
 time_t av_timegm(struct tm *tm);
 
-#endif (* AVUTIL_PARSEUTILS_H *)
+// #endif (* AVUTIL_PARSEUTILS_H *)

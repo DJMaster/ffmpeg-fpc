@@ -29,8 +29,8 @@
  * simple arithmetic expression evaluator
  *)
 
-#ifndef AVUTIL_EVAL_H
-#define AVUTIL_EVAL_H
+// #ifndef AVUTIL_EVAL_H
+// #define AVUTIL_EVAL_H
 
 #include "avutil.h"
 
@@ -116,4 +116,4 @@ void av_expr_free(AVExpr *e);
  *)
 double av_strtod(const char *numstr, char **tail);
 
-#endif (* AVUTIL_EVAL_H *)
+// #endif (* AVUTIL_EVAL_H *)

@@ -28,8 +28,8 @@
  * Utility Preprocessor macros
  *)
 
-#ifndef AVUTIL_MACROS_H
-#define AVUTIL_MACROS_H
+// #ifndef AVUTIL_MACROS_H
+// #define AVUTIL_MACROS_H
 
 (**
  * @addtogroup preproc_misc Preprocessor String Macros
@@ -53,4 +53,4 @@
 
 #define FFALIGN(x, a) (((x)+(a)-1)&~((a)-1))
 
-#endif (* AVUTIL_MACROS_H *)
+// #endif (* AVUTIL_MACROS_H *)

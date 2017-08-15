@@ -28,8 +28,8 @@
  * reference-counted frame API
  *)
 
-#ifndef AVUTIL_FRAME_H
-#define AVUTIL_FRAME_H
+// #ifndef AVUTIL_FRAME_H
+// #define AVUTIL_FRAME_H
 
 #include <stdint.h>
 
@@ -749,4 +749,4 @@ const char *av_frame_side_data_name(enum AVFrameSideDataType type);
  * @}
  *)
 
-#endif (* AVUTIL_FRAME_H *)
+// #endif (* AVUTIL_FRAME_H *)

@@ -25,8 +25,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVUTIL_DES_H
-#define AVUTIL_DES_H
+// #ifndef AVUTIL_DES_H
+// #define AVUTIL_DES_H
 
 #include <stdint.h>
 
@@ -80,4 +80,4 @@ void av_des_mac(struct AVDES *d, uint8_t *dst, const uint8_t *src, int count);
  * @}
  *)
 
-#endif (* AVUTIL_DES_H *)
+// #endif (* AVUTIL_DES_H *)

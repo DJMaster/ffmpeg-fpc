@@ -26,8 +26,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVCODEC_JNI_H
-#define AVCODEC_JNI_H
+// #ifndef AVCODEC_JNI_H
+// #define AVCODEC_JNI_H
 
 (*
  * Manually set a Java virtual machine which will be used to retrieve the JNI
@@ -49,4 +49,4 @@ int av_jni_set_java_vm(void *vm, void *log_ctx);
  *)
 void *av_jni_get_java_vm(void *log_ctx);
 
-#endif (* AVCODEC_JNI_H *)
+// #endif (* AVCODEC_JNI_H *)

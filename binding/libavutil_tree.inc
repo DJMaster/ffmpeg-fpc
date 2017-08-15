@@ -30,8 +30,8 @@
  * @author Michael Niedermayer <michaelni@gmx.at>
  *)
 
-#ifndef AVUTIL_TREE_H
-#define AVUTIL_TREE_H
+// #ifndef AVUTIL_TREE_H
+// #define AVUTIL_TREE_H
 
 #include "attributes.h"
 #include "version.h"
@@ -141,4 +141,4 @@ void av_tree_enumerate(struct AVTreeNode *t, void *opaque,
  * @}
  *)
 
-#endif (* AVUTIL_TREE_H *)
+// #endif (* AVUTIL_TREE_H *)

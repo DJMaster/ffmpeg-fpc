@@ -24,8 +24,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVCODEC_XVMC_H
-#define AVCODEC_XVMC_H
+// #ifndef AVCODEC_XVMC_H
+// #define AVCODEC_XVMC_H
 
 (**
  * @file
@@ -173,4 +173,4 @@ struct attribute_deprecated xvmc_pix_fmt {
  * @}
  *)
 
-#endif (* AVCODEC_XVMC_H *)
+// #endif (* AVCODEC_XVMC_H *)

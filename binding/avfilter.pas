@@ -25,8 +25,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVFILTER_AVFILTER_H
-#define AVFILTER_AVFILTER_H
+// #ifndef AVFILTER_AVFILTER_H
+// #define AVFILTER_AVFILTER_H
 
 (**
  * @file
@@ -1185,4 +1185,4 @@ int avfilter_graph_request_oldest(AVFilterGraph *graph);
  * @}
  *)
 
-#endif (* AVFILTER_AVFILTER_H *)
+// #endif (* AVFILTER_AVFILTER_H *)

@@ -30,8 +30,8 @@
  * Public header for SHA-1 & SHA-256 hash function implementations.
  *)
 
-#ifndef AVUTIL_SHA_H
-#define AVUTIL_SHA_H
+// #ifndef AVUTIL_SHA_H
+// #define AVUTIL_SHA_H
 
 #include <stdint.h>
 
@@ -93,4 +93,4 @@ void av_sha_final(struct AVSHA* context, uint8_t *digest);
  * @}
  *)
 
-#endif (* AVUTIL_SHA_H *)
+// #endif (* AVUTIL_SHA_H *)

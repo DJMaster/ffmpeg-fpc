@@ -32,8 +32,8 @@
  * @author Michael Niedermayer <michaelni@gmx.at>
  *)
 
-#ifndef AVUTIL_RATIONAL_H
-#define AVUTIL_RATIONAL_H
+// #ifndef AVUTIL_RATIONAL_H
+// #define AVUTIL_RATIONAL_H
 
 #include <stdint.h>
 #include <limits.h>
@@ -217,4 +217,4 @@ uint32_t av_q2intfloat(AVRational q);
  * @}
  *)
 
-#endif (* AVUTIL_RATIONAL_H *)
+// #endif (* AVUTIL_RATIONAL_H *)

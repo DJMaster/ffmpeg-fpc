@@ -24,8 +24,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVUTIL_AES_H
-#define AVUTIL_AES_H
+// #ifndef AVUTIL_AES_H
+// #define AVUTIL_AES_H
 
 #include <stdint.h>
 
@@ -68,4 +68,4 @@ void av_aes_crypt(struct AVAES *a, uint8_t *dst, const uint8_t *src, int count, 
  * @}
  *)
 
-#endif (* AVUTIL_AES_H *)
+// #endif (* AVUTIL_AES_H *)

@@ -24,8 +24,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVUTIL_CPU_H
-#define AVUTIL_CPU_H
+// #ifndef AVUTIL_CPU_H
+// #define AVUTIL_CPU_H
 
 #include "attributes.h"
 
@@ -119,4 +119,4 @@ int av_parse_cpu_caps(unsigned *flags, const char *s);
  *)
 int av_cpu_count(void);
 
-#endif (* AVUTIL_CPU_H *)
+// #endif (* AVUTIL_CPU_H *)

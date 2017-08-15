@@ -22,8 +22,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVUTIL_IMGUTILS_H
-#define AVUTIL_IMGUTILS_H
+// #ifndef AVUTIL_IMGUTILS_H
+// #define AVUTIL_IMGUTILS_H
 
 (**
  * @file
@@ -248,5 +248,4 @@ int av_image_check_sar(unsigned int w, unsigned int h, AVRational sar);
  * @}
  *)
 
-
-#endif (* AVUTIL_IMGUTILS_H *)
+// #endif (* AVUTIL_IMGUTILS_H *)
