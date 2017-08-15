@@ -1,3 +1,9 @@
+//
+// swscale.h header binding for the Free Pascal Compiler aka FPC
+//
+// Binaries and demos available at http://www.djmaster.com/
+//
+
 (*
  * This file is part of FFmpeg.
  *

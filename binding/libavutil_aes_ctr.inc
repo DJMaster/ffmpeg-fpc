@@ -1,3 +1,9 @@
+//
+// avutil.h header binding for the Free Pascal Compiler aka FPC
+//
+// Binaries and demos available at http://www.djmaster.com/
+//
+
 (*
  * AES-CTR cipher
  * Copyright (c) 2015 Eran Kornblau <erankor at gmail dot com>

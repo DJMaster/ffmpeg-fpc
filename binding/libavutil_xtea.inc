@@ -1,3 +1,9 @@
+//
+// avutil.h header binding for the Free Pascal Compiler aka FPC
+//
+// Binaries and demos available at http://www.djmaster.com/
+//
+
 (*
  * A 32-bit implementation of the XTEA algorithm
  * Copyright (c) 2012 Samuel Pitoiset

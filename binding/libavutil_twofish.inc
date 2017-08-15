@@ -1,3 +1,9 @@
+//
+// avutil.h header binding for the Free Pascal Compiler aka FPC
+//
+// Binaries and demos available at http://www.djmaster.com/
+//
+
 (*
  * An implementation of the TwoFish algorithm
  * Copyright (c) 2015 Supraja Meedinti

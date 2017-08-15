@@ -1,3 +1,9 @@
+//
+// avutil.h header binding for the Free Pascal Compiler aka FPC
+//
+// Binaries and demos available at http://www.djmaster.com/
+//
+
 (*
  * An implementation of the CAMELLIA algorithm as mentioned in RFC3713
  * Copyright (c) 2014 Supraja Meedinti

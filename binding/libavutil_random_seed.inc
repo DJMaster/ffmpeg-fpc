@@ -1,3 +1,9 @@
+//
+// avutil.h header binding for the Free Pascal Compiler aka FPC
+//
+// Binaries and demos available at http://www.djmaster.com/
+//
+
 (*
  * Copyright (c) 2009 Baptiste Coudurier <baptiste.coudurier@gmail.com>
  *

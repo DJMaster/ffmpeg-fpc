@@ -1,3 +1,9 @@
+//
+// avcodec.h header binding for the Free Pascal Compiler aka FPC
+//
+// Binaries and demos available at http://www.djmaster.com/
+//
+
 (*
  * Intel MediaSDK QSV public API
  *

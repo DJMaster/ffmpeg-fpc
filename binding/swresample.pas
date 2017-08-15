@@ -1,3 +1,9 @@
+//
+// swresample.h header binding for the Free Pascal Compiler aka FPC
+//
+// Binaries and demos available at http://www.djmaster.com/
+//
+
 (*
  * Copyright (C) 2011-2013 Michael Niedermayer (michaelni@gmx.at)
  *

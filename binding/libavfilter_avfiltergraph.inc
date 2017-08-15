@@ -1,3 +1,9 @@
+//
+// avfilter.h header binding for the Free Pascal Compiler aka FPC
+//
+// Binaries and demos available at http://www.djmaster.com/
+//
+
 (*
  * Filter graphs
  * copyright (c) 2007 Bobby Bingham

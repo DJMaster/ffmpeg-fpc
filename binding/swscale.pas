@@ -1,3 +1,9 @@
+//
+// swscale.h header binding for the Free Pascal Compiler aka FPC
+//
+// Binaries and demos available at http://www.djmaster.com/
+//
+
 (*
  * Copyright (C) 2001-2011 Michael Niedermayer <michaelni@gmx.at>
  *

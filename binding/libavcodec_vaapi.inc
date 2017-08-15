@@ -1,3 +1,9 @@
+//
+// avcodec.h header binding for the Free Pascal Compiler aka FPC
+//
+// Binaries and demos available at http://www.djmaster.com/
+//
+
 (*
  * Video Acceleration API (shared data between FFmpeg and the video player)
  * HW decode acceleration for MPEG-2, MPEG-4, H.264 and VC-1

@@ -1,3 +1,9 @@
+//
+// avcodec.h header binding for the Free Pascal Compiler aka FPC
+//
+// Binaries and demos available at http://www.djmaster.com/
+//
+
 (*
  * The Video Decode and Presentation API for UNIX (VDPAU) is used for
  * hardware-accelerated decoding of MPEG-1/2, H.264 and VC-1.
