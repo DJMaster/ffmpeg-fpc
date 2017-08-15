@@ -24,8 +24,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef POSTPROC_VERSION_H
-#define POSTPROC_VERSION_H
+// #ifndef POSTPROC_VERSION_H
+// #define POSTPROC_VERSION_H
 
 (**
  * @file
@@ -34,9 +34,10 @@
 
 #include "libavutil/avutil.h"
 
-#define LIBPOSTPROC_VERSION_MAJOR  54
-#define LIBPOSTPROC_VERSION_MINOR   5
-#define LIBPOSTPROC_VERSION_MICRO 100
+const
+  LIBPOSTPROC_VERSION_MAJOR = 54;
+  LIBPOSTPROC_VERSION_MINOR = 5;
+  LIBPOSTPROC_VERSION_MICRO = 100;
 
 #define LIBPOSTPROC_VERSION_INT AV_VERSION_INT(LIBPOSTPROC_VERSION_MAJOR, \
                                                LIBPOSTPROC_VERSION_MINOR, \
@@ -52,4 +53,4 @@
 #define FF_API_QP_TYPE     (LIBPOSTPROC_VERSION_MAJOR < 55)
 #endif
 
-#endif (* POSTPROC_VERSION_H *)
+// #endif (* POSTPROC_VERSION_H *)

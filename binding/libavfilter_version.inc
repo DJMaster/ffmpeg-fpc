@@ -24,8 +24,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVFILTER_VERSION_H
-#define AVFILTER_VERSION_H
+// #ifndef AVFILTER_VERSION_H
+// #define AVFILTER_VERSION_H
 
 (**
  * @file
@@ -35,9 +35,10 @@
 
 #include "libavutil/version.h"
 
-#define LIBAVFILTER_VERSION_MAJOR   6
-#define LIBAVFILTER_VERSION_MINOR  82
-#define LIBAVFILTER_VERSION_MICRO 100
+const
+  LIBAVFILTER_VERSION_MAJOR = 6;
+  LIBAVFILTER_VERSION_MINOR = 82;
+  LIBAVFILTER_VERSION_MICRO = 100;
 
 #define LIBAVFILTER_VERSION_INT AV_VERSION_INT(LIBAVFILTER_VERSION_MAJOR, \
                                                LIBAVFILTER_VERSION_MINOR, \
@@ -77,4 +78,4 @@
 #define FF_API_LAVR_OPTS                    (LIBAVFILTER_VERSION_MAJOR < 7)
 #endif
 
-#endif (* AVFILTER_VERSION_H *)
+// #endif (* AVFILTER_VERSION_H *)

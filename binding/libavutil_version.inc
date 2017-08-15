@@ -30,8 +30,8 @@
  * Libavutil version macros
  *)
 
-#ifndef AVUTIL_VERSION_H
-#define AVUTIL_VERSION_H
+// #ifndef AVUTIL_VERSION_H
+// #define AVUTIL_VERSION_H
 
 #include "macros.h"
 
@@ -84,9 +84,10 @@
  * @{
  *)
 
-#define LIBAVUTIL_VERSION_MAJOR  55
-#define LIBAVUTIL_VERSION_MINOR  58
-#define LIBAVUTIL_VERSION_MICRO 100
+const
+  LIBAVUTIL_VERSION_MAJOR = 55;
+  LIBAVUTIL_VERSION_MINOR = 58;
+  LIBAVUTIL_VERSION_MICRO = 100;
 
 #define LIBAVUTIL_VERSION_INT   AV_VERSION_INT(LIBAVUTIL_VERSION_MAJOR, \
                                                LIBAVUTIL_VERSION_MINOR, \
@@ -148,4 +149,4 @@
  * @}
  *)
 
-#endif (* AVUTIL_VERSION_H *)
+// #endif (* AVUTIL_VERSION_H *)

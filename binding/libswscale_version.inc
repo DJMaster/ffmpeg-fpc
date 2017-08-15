@@ -22,8 +22,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef SWSCALE_VERSION_H
-#define SWSCALE_VERSION_H
+// #ifndef SWSCALE_VERSION_H
+// #define SWSCALE_VERSION_H
 
 (**
  * @file
@@ -32,9 +32,10 @@
 
 #include "libavutil/version.h"
 
-#define LIBSWSCALE_VERSION_MAJOR   4
-#define LIBSWSCALE_VERSION_MINOR   6
-#define LIBSWSCALE_VERSION_MICRO 100
+const
+  LIBSWSCALE_VERSION_MAJOR = 4;
+  LIBSWSCALE_VERSION_MINOR = 6;
+  LIBSWSCALE_VERSION_MICRO = 100;
 
 #define LIBSWSCALE_VERSION_INT  AV_VERSION_INT(LIBSWSCALE_VERSION_MAJOR, \
                                                LIBSWSCALE_VERSION_MINOR, \
@@ -56,4 +57,4 @@
 #define FF_API_SWS_VECTOR            (LIBSWSCALE_VERSION_MAJOR < 6)
 #endif
 
-#endif (* SWSCALE_VERSION_H *)
+// #endif (* SWSCALE_VERSION_H *)

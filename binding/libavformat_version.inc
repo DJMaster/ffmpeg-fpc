@@ -24,8 +24,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVFORMAT_VERSION_H
-#define AVFORMAT_VERSION_H
+// #ifndef AVFORMAT_VERSION_H
+// #define AVFORMAT_VERSION_H
 
 (**
  * @file
@@ -37,9 +37,10 @@
 
 // Major bumping may affect Ticket5467, 5421, 5451(compatibility with Chromium)
 // Also please add any ticket numbers that you believe might be affected here
-#define LIBAVFORMAT_VERSION_MAJOR  57
-#define LIBAVFORMAT_VERSION_MINOR  71
-#define LIBAVFORMAT_VERSION_MICRO 100
+const
+  LIBAVFORMAT_VERSION_MAJOR = 57;
+  LIBAVFORMAT_VERSION_MINOR = 71;
+  LIBAVFORMAT_VERSION_MICRO = 100;
 
 #define LIBAVFORMAT_VERSION_INT AV_VERSION_INT(LIBAVFORMAT_VERSION_MAJOR, \
                                                LIBAVFORMAT_VERSION_MINOR, \
@@ -108,4 +109,5 @@
 #ifndef FF_API_R_FRAME_RATE
 #define FF_API_R_FRAME_RATE            1
 #endif
-#endif (* AVFORMAT_VERSION_H *)
+
+// #endif (* AVFORMAT_VERSION_H *)

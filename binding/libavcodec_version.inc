@@ -22,8 +22,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVCODEC_VERSION_H
-#define AVCODEC_VERSION_H
+// #ifndef AVCODEC_VERSION_H
+// #define AVCODEC_VERSION_H
 
 (**
  * @file
@@ -33,9 +33,10 @@
 
 #include "libavutil/version.h"
 
-#define LIBAVCODEC_VERSION_MAJOR  57
-#define LIBAVCODEC_VERSION_MINOR  89
-#define LIBAVCODEC_VERSION_MICRO 100
+const
+  LIBAVCODEC_VERSION_MAJOR = 57;
+  LIBAVCODEC_VERSION_MINOR = 89;
+  LIBAVCODEC_VERSION_MICRO = 100;
 
 #define LIBAVCODEC_VERSION_INT  AV_VERSION_INT(LIBAVCODEC_VERSION_MAJOR, \
                                                LIBAVCODEC_VERSION_MINOR, \
@@ -245,5 +246,4 @@
 #define FF_API_TAG_STRING        (LIBAVCODEC_VERSION_MAJOR < 59)
 #endif
 
-
-#endif (* AVCODEC_VERSION_H *)
+// #endif (* AVCODEC_VERSION_H *)
