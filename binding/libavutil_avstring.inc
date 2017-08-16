@@ -237,7 +237,7 @@ static inline av_const int av_isspace(int c)
 static inline av_const int av_toupper(int c)
 {
     if (c >= 'a' && c <= 'z')
-        c ^= 0x20;
+        c ^= $20;
     return c;
 }
 
@@ -247,7 +247,7 @@ static inline av_const int av_toupper(int c)
 static inline av_const int av_tolower(int c)
 {
     if (c >= 'A' && c <= 'Z')
-        c ^= 0x20;
+        c ^= $20;
     return c;
 }
 

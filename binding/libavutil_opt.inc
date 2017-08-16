@@ -842,8 +842,8 @@ int av_opt_is_set_to_default(void *obj, const AVOption *o);
 int av_opt_is_set_to_default_by_name(void *obj, const char *name, int search_flags);
 
 
-  AV_OPT_SERIALIZE_SKIP_DEFAULTS = 0x00000001  ///< Serialize options that are not set to default values only.
-  AV_OPT_SERIALIZE_OPT_FLAGS_EXACT = 0x00000002  ///< Serialize options that exactly match opt_flags only.
+  AV_OPT_SERIALIZE_SKIP_DEFAULTS = $00000001  ///< Serialize options that are not set to default values only.
+  AV_OPT_SERIALIZE_OPT_FLAGS_EXACT = $00000002  ///< Serialize options that exactly match opt_flags only.
 
 (**
  * Serialize object's options.

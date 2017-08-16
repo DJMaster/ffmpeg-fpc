@@ -175,7 +175,7 @@ static av_always_inline av_const uint8_t av_clip_uint8_c(int a)
  *)
 static av_always_inline av_const int8_t av_clip_int8_c(int a)
 {
-    if ((a+0x80U) & ~0xFF) return (a>>31) ^ 0x7F;
+    if ((a+0x80U) & ~0xFF) return (a>>31) ^ $7F;
     else                  return a;
 }
 
@@ -368,7 +368,7 @@ static av_always_inline av_const int av_parity_c(uint32_t v)
     val= (GET_BYTE);\
     {\
         uint32_t top = (val & 128) >> 1;\
-        if ((val & 0xc0) == 0x80 || val >= 0xFE)\
+        if ((val & 0xc0) == $80 || val >= $FE)\
             ERROR\
         while (val & top) {\
             int tmp= (GET_BYTE) - 128;\
@@ -431,7 +431,7 @@ static av_always_inline av_const int av_parity_c(uint32_t v)
             PUT_BYTE\
             while (shift >= 6) {\
                 shift -= 6;\
-                tmp = 0x80 | ((in >> shift) & 0x3f);\
+                tmp = $80 | ((in >> shift) & 0x3f);\
                 PUT_BYTE\
             }\
         }\
@@ -458,9 +458,9 @@ static av_always_inline av_const int av_parity_c(uint32_t v)
             tmp = in;\
             PUT_16BIT\
         } else {\
-            tmp = 0xD800 | ((in - 0x10000) >> 10);\
+            tmp = $D800 | ((in - 0x10000) >> 10);\
             PUT_16BIT\
-            tmp = 0xDC00 | ((in - 0x10000) & 0x3FF);\
+            tmp = $DC00 | ((in - 0x10000) & 0x3FF);\
             PUT_16BIT\
         }\
     }\

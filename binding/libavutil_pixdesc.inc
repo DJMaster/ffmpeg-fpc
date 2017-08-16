@@ -352,12 +352,12 @@ void av_write_image_line(const uint16_t *src, uint8_t *data[4],
  *)
 enum AVPixelFormat av_pix_fmt_swap_endianness(enum AVPixelFormat pix_fmt);
 
-  FF_LOSS_RESOLUTION = 0x0001 (**< loss due to resolution change *)
-  FF_LOSS_DEPTH = 0x0002 (**< loss due to color depth change *)
-  FF_LOSS_COLORSPACE = 0x0004 (**< loss due to color space conversion *)
-  FF_LOSS_ALPHA = 0x0008 (**< loss of alpha bits *)
-  FF_LOSS_COLORQUANT = 0x0010 (**< loss due to color quantization *)
-  FF_LOSS_CHROMA = 0x0020 (**< loss of chroma (e.g. RGB to gray conversion) *)
+  FF_LOSS_RESOLUTION = $0001 (**< loss due to resolution change *)
+  FF_LOSS_DEPTH = $0002 (**< loss due to color depth change *)
+  FF_LOSS_COLORSPACE = $0004 (**< loss due to color space conversion *)
+  FF_LOSS_ALPHA = $0008 (**< loss of alpha bits *)
+  FF_LOSS_COLORQUANT = $0010 (**< loss due to color quantization *)
+  FF_LOSS_CHROMA = $0020 (**< loss of chroma (e.g. RGB to gray conversion) *)
 
 (**
  * Compute what kind of losses will occur when converting from one specific

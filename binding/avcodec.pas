@@ -424,7 +424,7 @@ enum AVCodecID {
     AV_CODEC_ID_SCREENPRESSO,
     AV_CODEC_ID_RSCC,
 
-    AV_CODEC_ID_Y41P = 0x8000,
+    AV_CODEC_ID_Y41P = $8000,
     AV_CODEC_ID_AVRP,
     AV_CODEC_ID_012V,
     AV_CODEC_ID_AVUI,
@@ -456,8 +456,8 @@ enum AVCodecID {
     AV_CODEC_ID_AV1,
 
     (* various PCM "codecs" *)
-    AV_CODEC_ID_FIRST_AUDIO = 0x10000,     ///< A dummy id pointing at the start of audio codecs
-    AV_CODEC_ID_PCM_S16LE = 0x10000,
+    AV_CODEC_ID_FIRST_AUDIO = $10000,     ///< A dummy id pointing at the start of audio codecs
+    AV_CODEC_ID_PCM_S16LE = $10000,
     AV_CODEC_ID_PCM_S16BE,
     AV_CODEC_ID_PCM_U16LE,
     AV_CODEC_ID_PCM_U16BE,
@@ -489,13 +489,13 @@ enum AVCodecID {
     AV_CODEC_ID_PCM_S32LE_PLANAR,
     AV_CODEC_ID_PCM_S16BE_PLANAR,
 
-    AV_CODEC_ID_PCM_S64LE = 0x10800,
+    AV_CODEC_ID_PCM_S64LE = $10800,
     AV_CODEC_ID_PCM_S64BE,
     AV_CODEC_ID_PCM_F16LE,
     AV_CODEC_ID_PCM_F24LE,
 
     (* various ADPCM codecs *)
-    AV_CODEC_ID_ADPCM_IMA_QT = 0x11000,
+    AV_CODEC_ID_ADPCM_IMA_QT = $11000,
     AV_CODEC_ID_ADPCM_IMA_WAV,
     AV_CODEC_ID_ADPCM_IMA_DK3,
     AV_CODEC_ID_ADPCM_IMA_DK4,
@@ -530,7 +530,7 @@ enum AVCodecID {
     AV_CODEC_ID_VIMA = AV_CODEC_ID_ADPCM_VIMA,
 #endif
 
-    AV_CODEC_ID_ADPCM_AFC = 0x11800,
+    AV_CODEC_ID_ADPCM_AFC = $11800,
     AV_CODEC_ID_ADPCM_IMA_OKI,
     AV_CODEC_ID_ADPCM_DTK,
     AV_CODEC_ID_ADPCM_IMA_RAD,
@@ -542,23 +542,23 @@ enum AVCodecID {
     AV_CODEC_ID_ADPCM_MTAF,
 
     (* AMR *)
-    AV_CODEC_ID_AMR_NB = 0x12000,
+    AV_CODEC_ID_AMR_NB = $12000,
     AV_CODEC_ID_AMR_WB,
 
     (* RealAudio codecs*)
-    AV_CODEC_ID_RA_144 = 0x13000,
+    AV_CODEC_ID_RA_144 = $13000,
     AV_CODEC_ID_RA_288,
 
     (* various DPCM codecs *)
-    AV_CODEC_ID_ROQ_DPCM = 0x14000,
+    AV_CODEC_ID_ROQ_DPCM = $14000,
     AV_CODEC_ID_INTERPLAY_DPCM,
     AV_CODEC_ID_XAN_DPCM,
     AV_CODEC_ID_SOL_DPCM,
 
-    AV_CODEC_ID_SDX2_DPCM = 0x14800,
+    AV_CODEC_ID_SDX2_DPCM = $14800,
 
     (* audio codecs *)
-    AV_CODEC_ID_MP2 = 0x15000,
+    AV_CODEC_ID_MP2 = $15000,
     AV_CODEC_ID_MP3, ///< preferred ID for decoding MPEG audio layer 1, 2 or 3
     AV_CODEC_ID_AAC,
     AV_CODEC_ID_AC3,
@@ -629,7 +629,7 @@ enum AVCodecID {
     AV_CODEC_ID_ON2AVC,
     AV_CODEC_ID_DSS_SP,
 
-    AV_CODEC_ID_FFWAVESYNTH = 0x15800,
+    AV_CODEC_ID_FFWAVESYNTH = $15800,
     AV_CODEC_ID_SONIC,
     AV_CODEC_ID_SONIC_LS,
     AV_CODEC_ID_EVRC,
@@ -647,8 +647,8 @@ enum AVCodecID {
     AV_CODEC_ID_ATRAC3PAL,
 
     (* subtitle codecs *)
-    AV_CODEC_ID_FIRST_SUBTITLE = 0x17000,          ///< A dummy ID pointing at the start of subtitle codecs.
-    AV_CODEC_ID_DVD_SUBTITLE = 0x17000,
+    AV_CODEC_ID_FIRST_SUBTITLE = $17000,          ///< A dummy ID pointing at the start of subtitle codecs.
+    AV_CODEC_ID_DVD_SUBTITLE = $17000,
     AV_CODEC_ID_DVB_SUBTITLE,
     AV_CODEC_ID_TEXT,  ///< raw UTF-8 text
     AV_CODEC_ID_XSUB,
@@ -658,7 +658,7 @@ enum AVCodecID {
     AV_CODEC_ID_DVB_TELETEXT,
     AV_CODEC_ID_SRT,
 
-    AV_CODEC_ID_MICRODVD   = 0x17800,
+    AV_CODEC_ID_MICRODVD   = $17800,
     AV_CODEC_ID_EIA_608,
     AV_CODEC_ID_JACOSUB,
     AV_CODEC_ID_SAMI,
@@ -675,11 +675,11 @@ enum AVCodecID {
     AV_CODEC_ID_HDMV_TEXT_SUBTITLE,
 
     (* other specific kind of codecs (generally used for attachments) *)
-    AV_CODEC_ID_FIRST_UNKNOWN = 0x18000,           ///< A dummy ID pointing at the start of various fake codecs.
-    AV_CODEC_ID_TTF = 0x18000,
+    AV_CODEC_ID_FIRST_UNKNOWN = $18000,           ///< A dummy ID pointing at the start of various fake codecs.
+    AV_CODEC_ID_TTF = $18000,
 
     AV_CODEC_ID_SCTE_35, ///< Contain timestamp estimated through PCR of program stream.
-    AV_CODEC_ID_BINTEXT    = 0x18800,
+    AV_CODEC_ID_BINTEXT    = $18800,
     AV_CODEC_ID_XBIN,
     AV_CODEC_ID_IDF,
     AV_CODEC_ID_OTF,
@@ -689,14 +689,14 @@ enum AVCodecID {
     AV_CODEC_ID_BIN_DATA,
 
 
-    AV_CODEC_ID_PROBE = 0x19000, ///< codec_id is not known (like AV_CODEC_ID_NONE) but lavf should attempt to identify it
+    AV_CODEC_ID_PROBE = $19000, ///< codec_id is not known (like AV_CODEC_ID_NONE) but lavf should attempt to identify it
 
-    AV_CODEC_ID_MPEG2TS = 0x20000, (**< _FAKE_ codec to indicate a raw MPEG-2 TS
+    AV_CODEC_ID_MPEG2TS = $20000, (**< _FAKE_ codec to indicate a raw MPEG-2 TS
                                 * stream (only used by libavformat) *)
-    AV_CODEC_ID_MPEG4SYSTEMS = 0x20001, (**< _FAKE_ codec to indicate a MPEG-4 Systems
+    AV_CODEC_ID_MPEG4SYSTEMS = $20001, (**< _FAKE_ codec to indicate a MPEG-4 Systems
                                 * stream (only used by libavformat) *)
-    AV_CODEC_ID_FFMETADATA = 0x21000,   ///< Dummy codec for streams containing only metadata information.
-    AV_CODEC_ID_WRAPPED_AVFRAME = 0x21001, ///< Passthrough codec, AVFrames wrapped in AVPacket
+    AV_CODEC_ID_FFMETADATA = $21000,   ///< Dummy codec for streams containing only metadata information.
+    AV_CODEC_ID_WRAPPED_AVFRAME = $21001, ///< Passthrough codec, AVFrames wrapped in AVPacket
 };
 
 (**
@@ -1096,11 +1096,11 @@ typedef struct RcOverride{
 (**
  * Codec is intra only.
  *)
-  AV_CODEC_CAP_INTRA_ONLY = 0x40000000
+  AV_CODEC_CAP_INTRA_ONLY = $40000000
 (**
  * Codec is lossless.
  *)
-  AV_CODEC_CAP_LOSSLESS = 0x80000000
+  AV_CODEC_CAP_LOSSLESS = $80000000
 
 
 #if FF_API_WITHOUT_PREFIX
@@ -1117,21 +1117,21 @@ typedef struct RcOverride{
 (**
  * @deprecated use the "gmc" private option of the libxvid encoder
  *)
-  CODEC_FLAG_GMC = 0x0020  ///< Use GMC.
+  CODEC_FLAG_GMC = $0020  ///< Use GMC.
 #endif
 #if FF_API_MV0
 (**
  * @deprecated use the flag "mv0" in the "mpv_flags" private option of the
  * mpegvideo encoders
  *)
-  CODEC_FLAG_MV0 = 0x0040
+  CODEC_FLAG_MV0 = $0040
 #endif
 #if FF_API_INPUT_PRESERVED
 (**
  * @deprecated passing reference-counted frames to the encoders replaces this
  * flag
  *)
-  CODEC_FLAG_INPUT_PRESERVED = 0x0100
+  CODEC_FLAG_INPUT_PRESERVED = $0100
 #endif
   CODEC_FLAG_PASS1 = AV_CODEC_FLAG_PASS1
   CODEC_FLAG_PASS2 = AV_CODEC_FLAG_PASS2
@@ -1141,7 +1141,7 @@ typedef struct RcOverride{
  * @deprecated edges are not used/required anymore. I.e. this flag is now always
  * set.
  *)
-  CODEC_FLAG_EMU_EDGE = 0x4000
+  CODEC_FLAG_EMU_EDGE = $4000
 #endif
   CODEC_FLAG_PSNR = AV_CODEC_FLAG_PSNR
   CODEC_FLAG_TRUNCATED = AV_CODEC_FLAG_TRUNCATED
@@ -1151,7 +1151,7 @@ typedef struct RcOverride{
  * @deprecated use the flag "naq" in the "mpv_flags" private option of the
  * mpegvideo encoders
  *)
-  CODEC_FLAG_NORMALIZE_AQP = 0x00020000
+  CODEC_FLAG_NORMALIZE_AQP = $00020000
 #endif
   CODEC_FLAG_INTERLACED_DCT = AV_CODEC_FLAG_INTERLACED_DCT
   CODEC_FLAG_LOW_DELAY = AV_CODEC_FLAG_LOW_DELAY
@@ -1195,7 +1195,7 @@ typedef struct RcOverride{
  * The application can use the passed context to determine bitstream version,
  * chroma format, resolution etc.
  *)
-  CODEC_CAP_HWACCEL = 0x0010
+  CODEC_CAP_HWACCEL = $0010
 #endif (* FF_API_XVMC *)
 (**
  * Encoder or decoder requires flushing with NULL input at the end in order to
@@ -1257,7 +1257,7 @@ typedef struct RcOverride{
 (**
  * @deprecated no codecs use this capability
  *)
-  CODEC_CAP_NEG_LINESIZES = 0x0800
+  CODEC_CAP_NEG_LINESIZES = $0800
 #endif
 (**
  * Codec supports frame-level multithreading.
@@ -1292,32 +1292,32 @@ typedef struct RcOverride{
  * HWAccel is experimental and is thus avoided in favor of non experimental
  * codecs
  *)
-  HWACCEL_CODEC_CAP_EXPERIMENTAL = 0x0200
+  HWACCEL_CODEC_CAP_EXPERIMENTAL = $0200
 #endif (* FF_API_WITHOUT_PREFIX *)
 
 #if FF_API_MB_TYPE
 //The following defines may change, don't expect compatibility if you use them.
-  MB_TYPE_INTRA4x4 = 0x0001
-  MB_TYPE_INTRA16x16 = 0x0002 //FIXME H.264-specific
-  MB_TYPE_INTRA_PCM = 0x0004 //FIXME H.264-specific
-  MB_TYPE_16x16 = 0x0008
-  MB_TYPE_16x8 = 0x0010
-  MB_TYPE_8x16 = 0x0020
-  MB_TYPE_8x8 = 0x0040
-  MB_TYPE_INTERLACED = 0x0080
-  MB_TYPE_DIRECT2 = 0x0100 //FIXME
-  MB_TYPE_ACPRED = 0x0200
-  MB_TYPE_GMC = 0x0400
-  MB_TYPE_SKIP = 0x0800
-  MB_TYPE_P0L0 = 0x1000
-  MB_TYPE_P1L0 = 0x2000
-  MB_TYPE_P0L1 = 0x4000
-  MB_TYPE_P1L1 = 0x8000
+  MB_TYPE_INTRA4x4 = $0001
+  MB_TYPE_INTRA16x16 = $0002 //FIXME H.264-specific
+  MB_TYPE_INTRA_PCM = $0004 //FIXME H.264-specific
+  MB_TYPE_16x16 = $0008
+  MB_TYPE_16x8 = $0010
+  MB_TYPE_8x16 = $0020
+  MB_TYPE_8x8 = $0040
+  MB_TYPE_INTERLACED = $0080
+  MB_TYPE_DIRECT2 = $0100 //FIXME
+  MB_TYPE_ACPRED = $0200
+  MB_TYPE_GMC = $0400
+  MB_TYPE_SKIP = $0800
+  MB_TYPE_P0L0 = $1000
+  MB_TYPE_P1L0 = $2000
+  MB_TYPE_P0L1 = $4000
+  MB_TYPE_P1L1 = $8000
   MB_TYPE_L0 = (MB_TYPE_P0L0 | MB_TYPE_P1L0)
   MB_TYPE_L1 = (MB_TYPE_P0L1 | MB_TYPE_P1L1)
   MB_TYPE_L0L1 = (MB_TYPE_L0   | MB_TYPE_L1)
-  MB_TYPE_QUANT = 0x00010000
-  MB_TYPE_CBP = 0x00020000
+  MB_TYPE_QUANT = $00010000
+  MB_TYPE_CBP = $00020000
 // Note bits 24-31 are reserved for codec specific use (H.264 ref0, MPEG-1 0mv, ...)
 #endif
 
@@ -1698,20 +1698,20 @@ typedef struct AVPacket {
     int64_t convergence_duration;
 #endif
 } AVPacket;
-  AV_PKT_FLAG_KEY = 0x0001 ///< The packet contains a keyframe
-  AV_PKT_FLAG_CORRUPT = 0x0002 ///< The packet content is corrupted
+  AV_PKT_FLAG_KEY = $0001 ///< The packet contains a keyframe
+  AV_PKT_FLAG_CORRUPT = $0002 ///< The packet content is corrupted
 (**
  * Flag is used to discard packets which are required to maintain valid
  * decoder state but are not required for output and should be dropped
  * after decoding.
  **)
-  AV_PKT_FLAG_DISCARD = 0x0004
+  AV_PKT_FLAG_DISCARD = $0004
 
 enum AVSideDataParamChangeFlags {
-    AV_SIDE_DATA_PARAM_CHANGE_CHANNEL_COUNT  = 0x0001,
-    AV_SIDE_DATA_PARAM_CHANGE_CHANNEL_LAYOUT = 0x0002,
-    AV_SIDE_DATA_PARAM_CHANGE_SAMPLE_RATE    = 0x0004,
-    AV_SIDE_DATA_PARAM_CHANGE_DIMENSIONS     = 0x0008,
+    AV_SIDE_DATA_PARAM_CHANGE_CHANNEL_COUNT  = $0001,
+    AV_SIDE_DATA_PARAM_CHANGE_CHANNEL_LAYOUT = $0002,
+    AV_SIDE_DATA_PARAM_CHANGE_SAMPLE_RATE    = $0004,
+    AV_SIDE_DATA_PARAM_CHANGE_DIMENSIONS     = $0008,
 };
 (**
  * @}
@@ -2285,9 +2285,9 @@ typedef struct AVCodecContext {
      * - decoding: Set by user.
      *)
     int slice_flags;
-  SLICE_FLAG_CODED_ORDER = 0x0001 ///< draw_horiz_band() is called in coded order instead of display
-  SLICE_FLAG_ALLOW_FIELD = 0x0002 ///< allow draw_horiz_band() with field slices (MPEG-2 field pics)
-  SLICE_FLAG_ALLOW_PLANE = 0x0004 ///< allow draw_horiz_band() with 1 component at a time (SVQ1)
+  SLICE_FLAG_CODED_ORDER = $0001 ///< draw_horiz_band() is called in coded order instead of display
+  SLICE_FLAG_ALLOW_FIELD = $0002 ///< allow draw_horiz_band() with field slices (MPEG-2 field pics)
+  SLICE_FLAG_ALLOW_PLANE = $0004 ///< allow draw_horiz_band() with 1 component at a time (SVQ1)
 
 #if FF_API_XVMC
     (**
@@ -2994,23 +2994,23 @@ typedef struct AVCodecContext {
  *)
   FF_DEBUG_MV = 32
 #endif
-  FF_DEBUG_DCT_COEFF = 0x00000040
-  FF_DEBUG_SKIP = 0x00000080
-  FF_DEBUG_STARTCODE = 0x00000100
+  FF_DEBUG_DCT_COEFF = $00000040
+  FF_DEBUG_SKIP = $00000080
+  FF_DEBUG_STARTCODE = $00000100
 #if FF_API_UNUSED_MEMBERS
-  FF_DEBUG_PTS = 0x00000200
+  FF_DEBUG_PTS = $00000200
 #endif (* FF_API_UNUSED_MEMBERS *)
-  FF_DEBUG_ER = 0x00000400
-  FF_DEBUG_MMCO = 0x00000800
-  FF_DEBUG_BUGS = 0x00001000
+  FF_DEBUG_ER = $00000400
+  FF_DEBUG_MMCO = $00000800
+  FF_DEBUG_BUGS = $00001000
 #if FF_API_DEBUG_MV
-  FF_DEBUG_VIS_QP = 0x00002000
-  FF_DEBUG_VIS_MB_TYPE = 0x00004000
+  FF_DEBUG_VIS_QP = $00002000
+  FF_DEBUG_VIS_MB_TYPE = $00004000
 #endif
-  FF_DEBUG_BUFFERS = 0x00008000
-  FF_DEBUG_THREADS = 0x00010000
-  FF_DEBUG_GREEN_MD = 0x00800000
-  FF_DEBUG_NOMC = 0x01000000
+  FF_DEBUG_BUFFERS = $00008000
+  FF_DEBUG_THREADS = $00010000
+  FF_DEBUG_GREEN_MD = $00800000
+  FF_DEBUG_NOMC = $01000000
 
 #if FF_API_DEBUG_MV
     (**
@@ -3019,9 +3019,9 @@ typedef struct AVCodecContext {
      * - decoding: Set by user.
      *)
     int debug_mv;
-  FF_DEBUG_VIS_MV_P_FOR = 0x00000001 // visualize forward predicted MVs of P-frames
-  FF_DEBUG_VIS_MV_B_FOR = 0x00000002 // visualize forward predicted MVs of B-frames
-  FF_DEBUG_VIS_MV_B_BACK = 0x00000004 // visualize backward predicted MVs of B-frames
+  FF_DEBUG_VIS_MV_P_FOR = $00000001 // visualize forward predicted MVs of P-frames
+  FF_DEBUG_VIS_MV_B_FOR = $00000002 // visualize forward predicted MVs of B-frames
+  FF_DEBUG_VIS_MV_B_BACK = $00000004 // visualize backward predicted MVs of B-frames
 #endif
 
     (**
@@ -3526,9 +3526,9 @@ typedef struct AVCodecContext {
      * - decoding: Set by user.
      *)
     int debug_mv;
-  FF_DEBUG_VIS_MV_P_FOR = 0x00000001 //visualize forward predicted MVs of P frames
-  FF_DEBUG_VIS_MV_B_FOR = 0x00000002 //visualize forward predicted MVs of B frames
-  FF_DEBUG_VIS_MV_B_BACK = 0x00000004 //visualize backward predicted MVs of B frames
+  FF_DEBUG_VIS_MV_P_FOR = $00000001 //visualize forward predicted MVs of P frames
+  FF_DEBUG_VIS_MV_B_FOR = $00000002 //visualize forward predicted MVs of B frames
+  FF_DEBUG_VIS_MV_B_BACK = $00000004 //visualize backward predicted MVs of B frames
 #endif
 
     (**
@@ -3560,8 +3560,8 @@ typedef struct AVCodecContext {
      * - decoding: set by libavcodec
      *)
     unsigned properties;
-  FF_CODEC_PROPERTY_LOSSLESS = 0x00000001
-  FF_CODEC_PROPERTY_CLOSED_CAPTIONS = 0x00000002
+  FF_CODEC_PROPERTY_LOSSLESS = $00000001
+  FF_CODEC_PROPERTY_CLOSED_CAPTIONS = $00000002
 
     (**
      * Additional data associated with the entire coded stream.
@@ -4014,7 +4014,7 @@ enum AVSubtitleType {
     SUBTITLE_ASS,
 };
 
-  AV_SUBTITLE_FLAG_FORCED = 0x00000001
+  AV_SUBTITLE_FLAG_FORCED = $00000001
 
 typedef struct AVSubtitleRect {
     int x;         ///< top left corner  of pict, undefined when pict is not set
@@ -5118,11 +5118,11 @@ typedef struct AVCodecParserContext {
     int64_t cur_frame_dts[AV_PARSER_PTS_NB];
 
     int flags;
-  PARSER_FLAG_COMPLETE_FRAMES = 0x0001
-  PARSER_FLAG_ONCE = 0x0002
+  PARSER_FLAG_COMPLETE_FRAMES = $0001
+  PARSER_FLAG_ONCE = $0002
 /// Set if the parser has a valid file offset
-  PARSER_FLAG_FETCHED_OFFSET = 0x0004
-  PARSER_FLAG_USE_CODEC_TS = 0x1000
+  PARSER_FLAG_FETCHED_OFFSET = $0004
+  PARSER_FLAG_USE_CODEC_TS = $1000
 
     int64_t offset;      ///< byte offset from starting packet start
     int64_t cur_frame_end[AV_PARSER_PTS_NB];

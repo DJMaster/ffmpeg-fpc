@@ -68,8 +68,8 @@
  * by functions like ::avformat_version() and ::avcodec_version()
  *)
 #define AV_VERSION_MAJOR(a) ((a) >> 16)
-#define AV_VERSION_MINOR(a) (((a) & 0x00FF00) >> 8)
-#define AV_VERSION_MICRO(a) ((a) & 0xFF)
+#define AV_VERSION_MINOR(a) (((a) & $00FF00) >> 8)
+#define AV_VERSION_MICRO(a) ((a) & $FF)
 
 (**
  * @}

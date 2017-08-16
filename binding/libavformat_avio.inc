@@ -502,7 +502,7 @@ void avio_write_marker(AVIOContext *s, int64_t time, enum AVIODataMarkerType typ
  * return the filesize without seeking anywhere. Supporting this is optional.
  * If it is not supported then the seek function will return <0.
  *)
-  AVSEEK_SIZE = 0x10000
+  AVSEEK_SIZE = $10000
 
 (**
  * Passing this flag as the "whence" parameter to a seek function causes it to
@@ -510,7 +510,7 @@ void avio_write_marker(AVIOContext *s, int64_t time, enum AVIODataMarkerType typ
  * means that can be extremely slow.
  * This may be ignored by the seek code.
  *)
-  AVSEEK_FORCE = 0x20000
+  AVSEEK_FORCE = $20000
 
 (**
  * fseek() equivalent for AVIOContext.
@@ -650,7 +650,7 @@ int avio_get_str16be(AVIOContext *pb, int maxlen, char *buf, int buflen);
  * instead of going through a buffer, and avio_seek will always
  * call the underlying seek function directly.
  *)
-  AVIO_FLAG_DIRECT = 0x8000
+  AVIO_FLAG_DIRECT = $8000
 
 (**
  * Create and initialize a AVIOContext for accessing the

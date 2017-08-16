@@ -36,9 +36,9 @@
  * Public libavcodec D3D11VA header.
  *)
 
-#if !defined(_WIN32_WINNT) || _WIN32_WINNT < 0x0602
+#if !defined(_WIN32_WINNT) || _WIN32_WINNT < $0602
 #undef _WIN32_WINNT
-  _WIN32_WINNT = 0x0602
+  _WIN32_WINNT = $0602
 #endif
 
 #include <stdint.h>
