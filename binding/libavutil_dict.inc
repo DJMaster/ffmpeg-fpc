@@ -203,4 +203,4 @@ int av_dict_get_string(const AVDictionary *m, char **buffer,
  * @}
  *)
 
-// #endif /* AVUTIL_DICT_H */
+// #endif (* AVUTIL_DICT_H *)
