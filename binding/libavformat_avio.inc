@@ -43,12 +43,12 @@
 (**
  * Seeking works like for a local file.
  *)
-  AVIO_SEEKABLE_NORMAL = (1 << 0)
+  AVIO_SEEKABLE_NORMAL = (1 << 0);
 
 (**
  * Seeking by timestamp with avio_seek_time() is possible.
  *)
-  AVIO_SEEKABLE_TIME = (1 << 1)
+  AVIO_SEEKABLE_TIME = (1 << 1);
 
 (**
  * Callback for checking whether to abort blocking functions.
@@ -502,7 +502,7 @@ void avio_write_marker(AVIOContext *s, int64_t time, enum AVIODataMarkerType typ
  * return the filesize without seeking anywhere. Supporting this is optional.
  * If it is not supported then the seek function will return <0.
  *)
-  AVSEEK_SIZE = $10000
+  AVSEEK_SIZE = $10000;
 
 (**
  * Passing this flag as the "whence" parameter to a seek function causes it to
@@ -510,7 +510,7 @@ void avio_write_marker(AVIOContext *s, int64_t time, enum AVIODataMarkerType typ
  * means that can be extremely slow.
  * This may be ignored by the seek code.
  *)
-  AVSEEK_FORCE = $20000
+  AVSEEK_FORCE = $20000;
 
 (**
  * fseek() equivalent for AVIOContext.
@@ -623,9 +623,9 @@ int avio_get_str16be(AVIOContext *pb, int maxlen, char *buf, int buflen);
  * constants, optionally ORed with other flags.
  * @{
  *)
-  AVIO_FLAG_READ = 1                                      (**< read-only *)
-  AVIO_FLAG_WRITE = 2                                      (**< write-only *)
-  AVIO_FLAG_READ_WRITE = (AVIO_FLAG_READ|AVIO_FLAG_WRITE)  (**< read-write pseudo flag *)
+  AVIO_FLAG_READ = 1;                                      (**< read-only *)
+  AVIO_FLAG_WRITE = 2;                                     (**< write-only *)
+  AVIO_FLAG_READ_WRITE = (AVIO_FLAG_READ|AVIO_FLAG_WRITE); (**< read-write pseudo flag *)
 (**
  * @}
  *)
@@ -642,7 +642,7 @@ int avio_get_str16be(AVIOContext *pb, int maxlen, char *buf, int buflen);
  * Warning: non-blocking protocols is work-in-progress; this flag may be
  * silently ignored.
  *)
-  AVIO_FLAG_NONBLOCK = 8
+  AVIO_FLAG_NONBLOCK = 8;
 
 (**
  * Use direct mode.
@@ -650,7 +650,7 @@ int avio_get_str16be(AVIOContext *pb, int maxlen, char *buf, int buflen);
  * instead of going through a buffer, and avio_seek will always
  * call the underlying seek function directly.
  *)
-  AVIO_FLAG_DIRECT = $8000
+  AVIO_FLAG_DIRECT = $8000;
 
 (**
  * Create and initialize a AVIOContext for accessing the

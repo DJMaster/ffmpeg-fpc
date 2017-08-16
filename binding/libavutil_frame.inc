@@ -407,11 +407,11 @@ typedef struct AVFrame {
 (**
  * The frame data may be corrupted, e.g. due to decoding errors.
  *)
-  AV_FRAME_FLAG_CORRUPT = (1 << 0)
+  AV_FRAME_FLAG_CORRUPT = (1 << 0);
 (**
  * A flag to mark the frames which need to be decoded, but shouldn't be output.
  *)
-  AV_FRAME_FLAG_DISCARD = (1 << 2)
+  AV_FRAME_FLAG_DISCARD = (1 << 2);
 (**
  * @}
  *)
@@ -478,8 +478,8 @@ typedef struct AVFrame {
      * - decoding: set by libavcodec, read by user.
      *)
     int decode_error_flags;
-  FF_DECODE_ERROR_INVALID_BITSTREAM = 1
-  FF_DECODE_ERROR_MISSING_REFERENCE = 2
+  FF_DECODE_ERROR_INVALID_BITSTREAM = 1;
+  FF_DECODE_ERROR_MISSING_REFERENCE = 2;
 
     (**
      * number of audio channels, only used for audio.

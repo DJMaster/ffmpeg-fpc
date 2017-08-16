@@ -75,9 +75,9 @@
  *)
 #define AVERROR_BUG2               FFERRTAG( 'B','U','G',' ')
 #define AVERROR_UNKNOWN            FFERRTAG( 'U','N','K','N') ///< Unknown error, typically from an external library
- #define = AVERROR_EXPERIMENTAL       (-0x2bb2afa8) ///< Requested feature is flagged experimental. Set strict_std_compliance if you really want to use it.
-  AVERROR_INPUT_CHANGED = (-0x636e6701) ///< Input changed between calls. Reconfiguration is required. (can be OR-ed with AVERROR_OUTPUT_CHANGED)
-  AVERROR_OUTPUT_CHANGED = (-0x636e6702) ///< Output changed between calls. Reconfiguration is required. (can be OR-ed with AVERROR_INPUT_CHANGED)
+  AVERROR_EXPERIMENTAL = (-0x2bb2afa8); ///< Requested feature is flagged experimental. Set strict_std_compliance if you really want to use it.
+  AVERROR_INPUT_CHANGED = (-0x636e6701); ///< Input changed between calls. Reconfiguration is required. (can be OR-ed with AVERROR_OUTPUT_CHANGED)
+  AVERROR_OUTPUT_CHANGED = (-0x636e6702); ///< Output changed between calls. Reconfiguration is required. (can be OR-ed with AVERROR_INPUT_CHANGED)
 (* HTTP & RTSP errors *)
 #define AVERROR_HTTP_BAD_REQUEST   FFERRTAG(0xF8,'4','0','0')
 #define AVERROR_HTTP_UNAUTHORIZED  FFERRTAG(0xF8,'4','0','1')
@@ -86,7 +86,7 @@
 #define AVERROR_HTTP_OTHER_4XX     FFERRTAG(0xF8,'4','X','X')
 #define AVERROR_HTTP_SERVER_ERROR  FFERRTAG(0xF8,'5','X','X')
 
-  AV_ERROR_MAX_STRING_SIZE = 64
+  AV_ERROR_MAX_STRING_SIZE = 64;
 
 (**
  * Put a description of the AVERROR code errnum in errbuf.

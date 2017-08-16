@@ -158,7 +158,7 @@ const char *av_hash_get_name(const struct AVHashContext *ctx);
  * av_hash_get_size(), or limit your use of the Hashing API to hashes that are
  * already in FFmpeg during the time of compilation.
  *)
-  AV_HASH_MAX_SIZE = 64
+  AV_HASH_MAX_SIZE = 64;
 
 (**
  * Get the size of the resulting hash value in bytes.

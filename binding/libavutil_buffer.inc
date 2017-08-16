@@ -116,7 +116,7 @@ AVBufferRef *av_buffer_allocz(int size);
  * Always treat the buffer as read-only, even when it has only one
  * reference.
  *)
-  AV_BUFFER_FLAG_READONLY = (1 << 0)
+  AV_BUFFER_FLAG_READONLY = (1 << 0);
 
 (**
  * Create an AVBuffer from an existing array.

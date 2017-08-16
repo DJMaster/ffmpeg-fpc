@@ -139,7 +139,7 @@ interface
 #include "libswresample/version.h"
 
 #if LIBSWRESAMPLE_VERSION_MAJOR < 1
-  SWR_CH_MAX = 32   ///< Maximum number of channels
+  SWR_CH_MAX = 32; ///< Maximum number of channels
 #endif
 
 (**
@@ -149,7 +149,7 @@ interface
  *
  *)
 
-  SWR_FLAG_RESAMPLE = 1 ///< Force resampling even if equal sample rate
+  SWR_FLAG_RESAMPLE = 1; ///< Force resampling even if equal sample rate
 //TODO use int resample ?
 //long term TODO can we enable this dynamically?
 

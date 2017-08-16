@@ -33,8 +33,8 @@
 #include "attributes.h"
 #include "version.h"
 
-  AES_CTR_KEY_SIZE = (16)
-  AES_CTR_IV_SIZE = (8)
+  AES_CTR_KEY_SIZE = (16);
+  AES_CTR_IV_SIZE = (8);
 
 struct AVAESCTR;
 

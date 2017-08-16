@@ -37,7 +37,7 @@
 
 #include <stdint.h>
 
-  Picture = QuickdrawPicture
+  Picture = QuickdrawPicture;
 #include <VideoToolbox/VideoToolbox.h>
 #undef Picture
 

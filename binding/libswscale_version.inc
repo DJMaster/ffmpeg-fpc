@@ -39,13 +39,13 @@ const
 
   LIBSWSCALE_VERSION_INT = AV_VERSION_INT(LIBSWSCALE_VERSION_MAJOR, \
                                                LIBSWSCALE_VERSION_MINOR, \
-                                               LIBSWSCALE_VERSION_MICRO)
+                                               LIBSWSCALE_VERSION_MICRO);
   LIBSWSCALE_VERSION = AV_VERSION(LIBSWSCALE_VERSION_MAJOR, \
                                            LIBSWSCALE_VERSION_MINOR, \
-                                           LIBSWSCALE_VERSION_MICRO)
-  LIBSWSCALE_BUILD = LIBSWSCALE_VERSION_INT
+                                           LIBSWSCALE_VERSION_MICRO);
+  LIBSWSCALE_BUILD = LIBSWSCALE_VERSION_INT;
 
-  LIBSWSCALE_IDENT = "SwS" AV_STRINGIFY(LIBSWSCALE_VERSION)
+  LIBSWSCALE_IDENT = "SwS" AV_STRINGIFY(LIBSWSCALE_VERSION);
 
 (**
  * FF_API_* defines may be placed below to indicate public API that will be
@@ -54,7 +54,7 @@ const
  *)
 
 #ifndef FF_API_SWS_VECTOR
-  FF_API_SWS_VECTOR = (LIBSWSCALE_VERSION_MAJOR < 6)
+  FF_API_SWS_VECTOR = (LIBSWSCALE_VERSION_MAJOR < 6);
 #endif
 
 // #endif (* SWSCALE_VERSION_H *)

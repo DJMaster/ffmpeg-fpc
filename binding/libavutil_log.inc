@@ -161,53 +161,53 @@ typedef struct AVClass {
 (**
  * Print no output.
  *)
-  AV_LOG_QUIET = -8
+  AV_LOG_QUIET = -8;
 
 (**
  * Something went really wrong and we will crash now.
  *)
-  AV_LOG_PANIC = 0
+  AV_LOG_PANIC = 0;
 
 (**
  * Something went wrong and recovery is not possible.
  * For example, no header was found for a format which depends
  * on headers or an illegal combination of parameters is used.
  *)
-  AV_LOG_FATAL = 8
+  AV_LOG_FATAL = 8;
 
 (**
  * Something went wrong and cannot losslessly be recovered.
  * However, not all future data is affected.
  *)
-  AV_LOG_ERROR = 16
+  AV_LOG_ERROR = 16;
 
 (**
  * Something somehow does not look correct. This may or may not
  * lead to problems. An example would be the use of '-vstrict -2'.
  *)
-  AV_LOG_WARNING = 24
+  AV_LOG_WARNING = 24;
 
 (**
  * Standard information.
  *)
-  AV_LOG_INFO = 32
+  AV_LOG_INFO = 32;
 
 (**
  * Detailed information.
  *)
-  AV_LOG_VERBOSE = 40
+  AV_LOG_VERBOSE = 40;
 
 (**
  * Stuff which is only useful for libav* developers.
  *)
-  AV_LOG_DEBUG = 48
+  AV_LOG_DEBUG = 48;
 
 (**
  * Extremely verbose debugging, useful for libav* development.
  *)
-  AV_LOG_TRACE = 56
+  AV_LOG_TRACE = 56;
 
-  AV_LOG_MAX_OFFSET = (AV_LOG_TRACE - AV_LOG_QUIET)
+  AV_LOG_MAX_OFFSET = (AV_LOG_TRACE - AV_LOG_QUIET);
 
 (**
  * @}
@@ -362,7 +362,7 @@ int av_log_format_line2(void *ptr, int level, const char *fmt, va_list vl,
  * Also to receive the last, "last repeated" line if any, the user app must
  * call av_log(NULL, AV_LOG_QUIET, "%s", ""); at the end
  *)
-  AV_LOG_SKIP_REPEATED = 1
+  AV_LOG_SKIP_REPEATED = 1;
 
 (**
  * Include the log severity in messages originating from codecs.
@@ -370,7 +370,7 @@ int av_log_format_line2(void *ptr, int level, const char *fmt, va_list vl,
  * Results in messages such as:
  * [rawvideo @ 0xDEADBEEF] [error] encode did not produce valid pts
  *)
-  AV_LOG_PRINT_LEVEL = 2
+  AV_LOG_PRINT_LEVEL = 2;
 
 void av_log_set_flags(int arg);
 int av_log_get_flags(void);

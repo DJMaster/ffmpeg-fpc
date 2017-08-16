@@ -67,45 +67,45 @@ const char *swscale_configuration(void);
 const char *swscale_license(void);
 
 (* values for the flags, the stuff on the command line is different *)
-  SWS_FAST_BILINEAR = 1
-  SWS_BILINEAR = 2
-  SWS_BICUBIC = 4
-  SWS_X = 8
-  SWS_POINT = $10
-  SWS_AREA = $20
-  SWS_BICUBLIN = $40
-  SWS_GAUSS = $80
-  SWS_SINC = $100
-  SWS_LANCZOS = $200
-  SWS_SPLINE = $400
+  SWS_FAST_BILINEAR = 1;
+  SWS_BILINEAR = 2;
+  SWS_BICUBIC = 4;
+  SWS_X = 8;
+  SWS_POINT = $10;
+  SWS_AREA = $20;
+  SWS_BICUBLIN = $40;
+  SWS_GAUSS = $80;
+  SWS_SINC = $100;
+  SWS_LANCZOS = $200;
+  SWS_SPLINE = $400;
 
-  SWS_SRC_V_CHR_DROP_MASK = $30000
-  SWS_SRC_V_CHR_DROP_SHIFT = 16
+  SWS_SRC_V_CHR_DROP_MASK = $30000;
+  SWS_SRC_V_CHR_DROP_SHIFT = 16;
 
-  SWS_PARAM_DEFAULT = 123456
+  SWS_PARAM_DEFAULT = 123456;
 
-  SWS_PRINT_INFO = $1000
+  SWS_PRINT_INFO = $1000;
 
 //the following 3 flags are not completely implemented
 //internal chrominance subsampling info
-  SWS_FULL_CHR_H_INT = $2000
+  SWS_FULL_CHR_H_INT = $2000;
 //input subsampling info
-  SWS_FULL_CHR_H_INP = $4000
-  SWS_DIRECT_BGR = $8000
-  SWS_ACCURATE_RND = $40000
-  SWS_BITEXACT = $80000
-  SWS_ERROR_DIFFUSION = $800000
+  SWS_FULL_CHR_H_INP = $4000;
+  SWS_DIRECT_BGR = $8000;
+  SWS_ACCURATE_RND = $40000;
+  SWS_BITEXACT = $80000;
+  SWS_ERROR_DIFFUSION = $800000;
 
-  SWS_MAX_REDUCE_CUTOFF = 0.002
+  SWS_MAX_REDUCE_CUTOFF = 0.002;
 
-  SWS_CS_ITU709 = 1
-  SWS_CS_FCC = 4
-  SWS_CS_ITU601 = 5
-  SWS_CS_ITU624 = 5
-  SWS_CS_SMPTE170M = 5
-  SWS_CS_SMPTE240M = 7
-  SWS_CS_DEFAULT = 5
-  SWS_CS_BT2020 = 9
+  SWS_CS_ITU709 = 1;
+  SWS_CS_FCC = 4;
+  SWS_CS_ITU601 = 5;
+  SWS_CS_ITU624 = 5;
+  SWS_CS_SMPTE170M = 5;
+  SWS_CS_SMPTE240M = 7;
+  SWS_CS_DEFAULT = 5;
+  SWS_CS_BT2020 = 9;
 
 (**
  * Return a pointer to yuv<->rgb coefficients for the given colorspace

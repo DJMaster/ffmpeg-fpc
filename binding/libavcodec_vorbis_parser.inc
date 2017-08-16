@@ -50,9 +50,9 @@ AVVorbisParseContext *av_vorbis_parse_init(const uint8_t *extradata,
  *)
 void av_vorbis_parse_free(AVVorbisParseContext **s);
 
-  VORBIS_FLAG_HEADER = $00000001
-  VORBIS_FLAG_COMMENT = $00000002
-  VORBIS_FLAG_SETUP = $00000004
+  VORBIS_FLAG_HEADER = $00000001;
+  VORBIS_FLAG_COMMENT = $00000002;
+  VORBIS_FLAG_SETUP = $00000004;
 
 (**
  * Get the duration for a Vorbis packet.

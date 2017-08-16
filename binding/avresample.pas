@@ -113,7 +113,7 @@ interface
 
 #include "libavresample/version.h"
 
-  AVRESAMPLE_MAX_CHANNELS = 32
+  AVRESAMPLE_MAX_CHANNELS = 32;
 
 typedef struct AVAudioResampleContext AVAudioResampleContext;
 

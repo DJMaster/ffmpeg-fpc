@@ -29,50 +29,50 @@
 
 #include "attributes.h"
 
-  AV_CPU_FLAG_FORCE = $80000000 (* force usage of selected flags (OR) *)
+  AV_CPU_FLAG_FORCE = $80000000; (* force usage of selected flags (OR) *)
 
     (* lower 16 bits - CPU features *)
-  AV_CPU_FLAG_MMX = $0001 ///< standard MMX
-  AV_CPU_FLAG_MMXEXT = $0002 ///< SSE integer functions or AMD MMX ext
-  AV_CPU_FLAG_MMX2 = $0002 ///< SSE integer functions or AMD MMX ext
-  AV_CPU_FLAG_3DNOW = $0004 ///< AMD 3DNOW
-  AV_CPU_FLAG_SSE = $0008 ///< SSE functions
-  AV_CPU_FLAG_SSE2 = $0010 ///< PIV SSE2 functions
-  AV_CPU_FLAG_SSE2SLOW = $40000000 ///< SSE2 supported, but usually not faster
+  AV_CPU_FLAG_MMX = $0001; ///< standard MMX
+  AV_CPU_FLAG_MMXEXT = $0002; ///< SSE integer functions or AMD MMX ext
+  AV_CPU_FLAG_MMX2 = $0002; ///< SSE integer functions or AMD MMX ext
+  AV_CPU_FLAG_3DNOW = $0004; ///< AMD 3DNOW
+  AV_CPU_FLAG_SSE = $0008; ///< SSE functions
+  AV_CPU_FLAG_SSE2 = $0010; ///< PIV SSE2 functions
+  AV_CPU_FLAG_SSE2SLOW = $40000000; ///< SSE2 supported, but usually not faster
                                         ///< than regular MMX/SSE (e.g. Core1)
-  AV_CPU_FLAG_3DNOWEXT = $0020 ///< AMD 3DNowExt
-  AV_CPU_FLAG_SSE3 = $0040 ///< Prescott SSE3 functions
-  AV_CPU_FLAG_SSE3SLOW = $20000000 ///< SSE3 supported, but usually not faster
+  AV_CPU_FLAG_3DNOWEXT = $0020; ///< AMD 3DNowExt
+  AV_CPU_FLAG_SSE3 = $0040; ///< Prescott SSE3 functions
+  AV_CPU_FLAG_SSE3SLOW = $20000000; ///< SSE3 supported, but usually not faster
                                         ///< than regular MMX/SSE (e.g. Core1)
-  AV_CPU_FLAG_SSSE3 = $0080 ///< Conroe SSSE3 functions
-  AV_CPU_FLAG_SSSE3SLOW = $4000000 ///< SSSE3 supported, but usually not faster
-  AV_CPU_FLAG_ATOM = $10000000 ///< Atom processor, some SSSE3 instructions are slower
-  AV_CPU_FLAG_SSE4 = $0100 ///< Penryn SSE4.1 functions
-  AV_CPU_FLAG_SSE42 = $0200 ///< Nehalem SSE4.2 functions
-  AV_CPU_FLAG_AESNI = $80000 ///< Advanced Encryption Standard functions
-  AV_CPU_FLAG_AVX = $4000 ///< AVX functions: requires OS support even if YMM registers aren't used
-  AV_CPU_FLAG_AVXSLOW = $8000000 ///< AVX supported, but slow when using YMM registers (e.g. Bulldozer)
-  AV_CPU_FLAG_XOP = $0400 ///< Bulldozer XOP functions
-  AV_CPU_FLAG_FMA4 = $0800 ///< Bulldozer FMA4 functions
-  AV_CPU_FLAG_CMOV = $1000 ///< supports cmov instruction
-  AV_CPU_FLAG_AVX2 = $8000 ///< AVX2 functions: requires OS support even if YMM registers aren't used
-  AV_CPU_FLAG_FMA3 = $10000 ///< Haswell FMA3 functions
-  AV_CPU_FLAG_BMI1 = $20000 ///< Bit Manipulation Instruction Set 1
-  AV_CPU_FLAG_BMI2 = $40000 ///< Bit Manipulation Instruction Set 2
+  AV_CPU_FLAG_SSSE3 = $0080; ///< Conroe SSSE3 functions
+  AV_CPU_FLAG_SSSE3SLOW = $4000000; ///< SSSE3 supported, but usually not faster
+  AV_CPU_FLAG_ATOM = $10000000; ///< Atom processor, some SSSE3 instructions are slower
+  AV_CPU_FLAG_SSE4 = $0100; ///< Penryn SSE4.1 functions
+  AV_CPU_FLAG_SSE42 = $0200; ///< Nehalem SSE4.2 functions
+  AV_CPU_FLAG_AESNI = $80000; ///< Advanced Encryption Standard functions
+  AV_CPU_FLAG_AVX = $4000; ///< AVX functions: requires OS support even if YMM registers aren't used
+  AV_CPU_FLAG_AVXSLOW = $8000000; ///< AVX supported, but slow when using YMM registers (e.g. Bulldozer)
+  AV_CPU_FLAG_XOP = $0400; ///< Bulldozer XOP functions
+  AV_CPU_FLAG_FMA4 = $0800; ///< Bulldozer FMA4 functions
+  AV_CPU_FLAG_CMOV = $1000; ///< supports cmov instruction
+  AV_CPU_FLAG_AVX2 = $8000; ///< AVX2 functions: requires OS support even if YMM registers aren't used
+  AV_CPU_FLAG_FMA3 = $10000; ///< Haswell FMA3 functions
+  AV_CPU_FLAG_BMI1 = $20000; ///< Bit Manipulation Instruction Set 1
+  AV_CPU_FLAG_BMI2 = $40000; ///< Bit Manipulation Instruction Set 2
 
-  AV_CPU_FLAG_ALTIVEC = $0001 ///< standard
-  AV_CPU_FLAG_VSX = $0002 ///< ISA 2.06
-  AV_CPU_FLAG_POWER8 = $0004 ///< ISA 2.07
+  AV_CPU_FLAG_ALTIVEC = $0001; ///< standard
+  AV_CPU_FLAG_VSX = $0002; ///< ISA 2.06
+  AV_CPU_FLAG_POWER8 = $0004; ///< ISA 2.07
 
-  AV_CPU_FLAG_ARMV5TE = (1 << 0)
-  AV_CPU_FLAG_ARMV6 = (1 << 1)
-  AV_CPU_FLAG_ARMV6T2 = (1 << 2)
-  AV_CPU_FLAG_VFP = (1 << 3)
-  AV_CPU_FLAG_VFPV3 = (1 << 4)
-  AV_CPU_FLAG_NEON = (1 << 5)
-  AV_CPU_FLAG_ARMV8 = (1 << 6)
-  AV_CPU_FLAG_VFP_VM = (1 << 7) ///< VFPv2 vector mode, deprecated in ARMv7-A and unavailable in various CPUs implementations
-  AV_CPU_FLAG_SETEND = (1 <<16)
+  AV_CPU_FLAG_ARMV5TE = (1 << 0);
+  AV_CPU_FLAG_ARMV6 = (1 << 1);
+  AV_CPU_FLAG_ARMV6T2 = (1 << 2);
+  AV_CPU_FLAG_VFP = (1 << 3);
+  AV_CPU_FLAG_VFPV3 = (1 << 4);
+  AV_CPU_FLAG_NEON = (1 << 5);
+  AV_CPU_FLAG_ARMV8 = (1 << 6);
+  AV_CPU_FLAG_VFP_VM = (1 << 7); ///< VFPv2 vector mode, deprecated in ARMv7-A and unavailable in various CPUs implementations
+  AV_CPU_FLAG_SETEND = (1 <<16);
 
 (**
  * Return the flags which specify extensions supported by the CPU.

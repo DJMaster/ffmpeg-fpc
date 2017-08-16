@@ -43,7 +43,7 @@
 // http://openradar.appspot.com/8026390
 #undef __GNUC_STDC_INLINE__
 
-  Picture = QuickdrawPicture
+  Picture = QuickdrawPicture;
 #include <VideoDecodeAcceleration/VDADecoder.h>
 #undef Picture
 

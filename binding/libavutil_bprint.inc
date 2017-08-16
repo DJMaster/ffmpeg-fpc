@@ -98,8 +98,8 @@ FF_PAD_STRUCTURE(AVBPrint, 1024,
  * parameter.
  *)
 #define AV_BPRINT_SIZE_UNLIMITED  ((unsigned)-1)
-  AV_BPRINT_SIZE_AUTOMATIC = 1
-  AV_BPRINT_SIZE_COUNT_ONLY = 0
+  AV_BPRINT_SIZE_AUTOMATIC = 1;
+  AV_BPRINT_SIZE_COUNT_ONLY = 0;
 
 (**
  * Init a print buffer.

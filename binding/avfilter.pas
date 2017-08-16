@@ -114,18 +114,18 @@ enum AVMediaType avfilter_pad_get_type(const AVFilterPad *pads, int pad_idx);
  * The filter might add additional inputs during initialization depending on the
  * options supplied to it.
  *)
-  AVFILTER_FLAG_DYNAMIC_INPUTS = (1 << 0)
+  AVFILTER_FLAG_DYNAMIC_INPUTS = (1 shl 0);
 (**
  * The number of the filter outputs is not determined just by AVFilter.outputs.
  * The filter might add additional outputs during initialization depending on
  * the options supplied to it.
  *)
-  AVFILTER_FLAG_DYNAMIC_OUTPUTS = (1 << 1)
+  AVFILTER_FLAG_DYNAMIC_OUTPUTS = (1 shl 1);
 (**
  * The filter supports multithreading by splitting frames into multiple parts
  * and processing them concurrently.
  *)
-  AVFILTER_FLAG_SLICE_THREADS = (1 << 2)
+  AVFILTER_FLAG_SLICE_THREADS = (1 shl 2);
 (**
  * Some filters support a generic "enable" expression option that can be used
  * to enable or disable a filter in the timeline. Filters supporting this
@@ -134,7 +134,7 @@ enum AVMediaType avfilter_pad_get_type(const AVFilterPad *pads, int pad_idx);
  * callback defined on each input pad, thus the frame is passed unchanged to
  * the next filters.
  *)
-  AVFILTER_FLAG_SUPPORT_TIMELINE_GENERIC = (1 << 16)
+  AVFILTER_FLAG_SUPPORT_TIMELINE_GENERIC = (1 shl 16);
 (**
  * Same as AVFILTER_FLAG_SUPPORT_TIMELINE_GENERIC, except that the filter will
  * have its filter_frame() callback(s) called as usual even when the enable
@@ -142,12 +142,12 @@ enum AVMediaType avfilter_pad_get_type(const AVFilterPad *pads, int pad_idx);
  * filter_frame() callback(s) itself, for example executing code depending on
  * the AVFilterContext->is_disabled value.
  *)
-  AVFILTER_FLAG_SUPPORT_TIMELINE_INTERNAL = (1 << 17)
+  AVFILTER_FLAG_SUPPORT_TIMELINE_INTERNAL = (1 shl 17);
 (**
  * Handy mask to test whether the filter supports or no the timeline feature
  * (internally or generically).
  *)
-  AVFILTER_FLAG_SUPPORT_TIMELINE = (AVFILTER_FLAG_SUPPORT_TIMELINE_GENERIC | AVFILTER_FLAG_SUPPORT_TIMELINE_INTERNAL)
+  AVFILTER_FLAG_SUPPORT_TIMELINE = (AVFILTER_FLAG_SUPPORT_TIMELINE_GENERIC | AVFILTER_FLAG_SUPPORT_TIMELINE_INTERNAL);
 
 (**
  * Filter definition. This defines the pads a filter contains, and all the
@@ -327,7 +327,7 @@ typedef struct AVFilter {
 (**
  * Process multiple parts of the frame concurrently.
  *)
-  AVFILTER_THREAD_SLICE = (1 << 0)
+  AVFILTER_THREAD_SLICE = (1 shl 0);
 
 typedef struct AVFilterInternal AVFilterInternal;
 
@@ -665,8 +665,8 @@ void avfilter_link_set_closed(AVFilterLink *link, int closed);
  *)
 int avfilter_config_links(AVFilterContext *filter);
 
-  AVFILTER_CMD_FLAG_ONE = 1 ///< Stop once a filter understood the command (for target=all for example), fast filters are favored automatically
-  AVFILTER_CMD_FLAG_FAST = 2 ///< Only execute command when its fast (like a video out that supports contrast adjustment in hw)
+  AVFILTER_CMD_FLAG_ONE = 1;  ///< Stop once a filter understood the command (for target=all for example), fast filters are favored automatically
+  AVFILTER_CMD_FLAG_FAST = 2; ///< Only execute command when its fast (like a video out that supports contrast adjustment in hw)
 
 (**
  * Make the filter instance process a command.

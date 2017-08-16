@@ -35,8 +35,8 @@
 #include "libavutil/avconfig.h"
 #include "version.h"
 
-  AVPALETTE_SIZE = 1024
-  AVPALETTE_COUNT = 256
+  AVPALETTE_SIZE = 1024;
+  AVPALETTE_COUNT = 256;
 
 (**
  * Pixel format.
@@ -470,7 +470,7 @@ enum AVColorSpace {
     AVCOL_SPC_SMPTE2085   = 11, ///< SMPTE 2085, Y'D'zD'x
     AVCOL_SPC_NB                ///< Not part of ABI
 };
-  AVCOL_SPC_YCGCO = AVCOL_SPC_YCOCG
+  AVCOL_SPC_YCGCO = AVCOL_SPC_YCOCG;
 
 
 (**

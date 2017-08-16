@@ -234,12 +234,12 @@ const char *av_get_media_type_string(enum AVMediaType media_type);
  * @{
  *)
 
-  FF_LAMBDA_SHIFT = 7
-  FF_LAMBDA_SCALE = (1<<FF_LAMBDA_SHIFT)
-  FF_QP2LAMBDA = 118 ///< factor to convert from H.263 QP to lambda
-  FF_LAMBDA_MAX = (256*128-1)
+  FF_LAMBDA_SHIFT = 7;
+  FF_LAMBDA_SCALE = (1<<FF_LAMBDA_SHIFT);
+  FF_QP2LAMBDA = 118; ///< factor to convert from H.263 QP to lambda
+  FF_LAMBDA_MAX = (256*128-1);
 
-  FF_QUALITY_SCALE = FF_LAMBDA_SCALE //FIXME maybe remove
+  FF_QUALITY_SCALE = FF_LAMBDA_SCALE; //FIXME maybe remove
 
 (**
  * @}
@@ -257,13 +257,13 @@ const char *av_get_media_type_string(enum AVMediaType media_type);
  * either pts or dts.
  *)
 
-  AV_NOPTS_VALUE = ((int64_t)UINT64_C(0x8000000000000000))
+  AV_NOPTS_VALUE = ((int64_t)UINT64_C(0x8000000000000000));
 
 (**
  * Internal time base represented as integer
  *)
 
-  AV_TIME_BASE = 1000000
+  AV_TIME_BASE = 1000000;
 
 (**
  * Internal time base represented as fractional value
@@ -355,7 +355,7 @@ FILE *av_fopen_utf8(const char *path, const char *mode);
  *)
 AVRational av_get_time_base_q(void);
 
-  AV_FOURCC_MAX_STRING_SIZE = 32
+  AV_FOURCC_MAX_STRING_SIZE = 32;
 
 #define av_fourcc2str(fourcc) av_fourcc_make_string((char[AV_FOURCC_MAX_STRING_SIZE]){0}, fourcc)
 
