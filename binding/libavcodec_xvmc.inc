@@ -46,7 +46,7 @@
  * @{
  *)
 
-#define AV_XVMC_ID                    0x1DC711C0  (**< special value to ensure that regular pixel routines haven't corrupted the struct
+  AV_XVMC_ID = 0x1DC711C0  (**< special value to ensure that regular pixel routines haven't corrupted the struct
                                                        the number is 1337 speak for the letters IDCT MCo (motion compensation) *)
 
 struct attribute_deprecated xvmc_pix_fmt {

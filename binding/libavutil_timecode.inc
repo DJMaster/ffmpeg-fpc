@@ -36,7 +36,7 @@
 #include <stdint.h>
 #include "rational.h"
 
-#define AV_TIMECODE_STR_SIZE 16
+  AV_TIMECODE_STR_SIZE = 16
 
 enum AVTimecodeFlag {
     AV_TIMECODE_FLAG_DROPFRAME      = 1<<0, ///< timecode is drop frame

@@ -279,24 +279,24 @@ typedef struct AVOption {
     double max;                 ///< maximum valid value for the option
 
     int flags;
-#define AV_OPT_FLAG_ENCODING_PARAM  1   ///< a generic parameter which can be set by the user for muxing or encoding
-#define AV_OPT_FLAG_DECODING_PARAM  2   ///< a generic parameter which can be set by the user for demuxing or decoding
+  AV_OPT_FLAG_ENCODING_PARAM = 1   ///< a generic parameter which can be set by the user for muxing or encoding
+  AV_OPT_FLAG_DECODING_PARAM = 2   ///< a generic parameter which can be set by the user for demuxing or decoding
 #if FF_API_OPT_TYPE_METADATA
-#define AV_OPT_FLAG_METADATA        4   ///< some data extracted or inserted into the file like title, comment, ...
+  AV_OPT_FLAG_METADATA = 4   ///< some data extracted or inserted into the file like title, comment, ...
 #endif
-#define AV_OPT_FLAG_AUDIO_PARAM     8
-#define AV_OPT_FLAG_VIDEO_PARAM     16
-#define AV_OPT_FLAG_SUBTITLE_PARAM  32
+  AV_OPT_FLAG_AUDIO_PARAM = 8
+  AV_OPT_FLAG_VIDEO_PARAM = 16
+  AV_OPT_FLAG_SUBTITLE_PARAM = 32
 (**
  * The option is intended for exporting values to the caller.
  *)
-#define AV_OPT_FLAG_EXPORT          64
+  AV_OPT_FLAG_EXPORT = 64
 (**
  * The option may not be set through the AVOptions API, only read.
  * This flag only makes sense when AV_OPT_FLAG_EXPORT is also set.
  *)
-#define AV_OPT_FLAG_READONLY        128
-#define AV_OPT_FLAG_FILTERING_PARAM (1<<16) ///< a generic parameter which can be set by the user for filtering
+  AV_OPT_FLAG_READONLY = 128
+  AV_OPT_FLAG_FILTERING_PARAM = (1<<16) ///< a generic parameter which can be set by the user for filtering
 //FIXME think about enc-audio, ... style flags
 
     (**
@@ -560,7 +560,7 @@ int av_opt_eval_q     (void *obj, const AVOption *o, const char *val, AVRational
  * @}
  *)
 
-#define AV_OPT_SEARCH_CHILDREN   (1 << 0) (**< Search in possible children of the
+  AV_OPT_SEARCH_CHILDREN = (1 << 0) (**< Search in possible children of the
                                                given object first. *)
 (**
  *  The obj passed to av_opt_find() is fake -- only a double pointer to AVClass
@@ -568,20 +568,20 @@ int av_opt_eval_q     (void *obj, const AVOption *o, const char *val, AVRational
  *  useful for searching for options without needing to allocate the corresponding
  *  object.
  *)
-#define AV_OPT_SEARCH_FAKE_OBJ   (1 << 1)
+  AV_OPT_SEARCH_FAKE_OBJ = (1 << 1)
 
 (**
  *  In av_opt_get, return NULL if the option has a pointer type and is set to NULL,
  *  rather than returning an empty string.
  *)
-#define AV_OPT_ALLOW_NULL (1 << 2)
+  AV_OPT_ALLOW_NULL = (1 << 2)
 
 (**
  *  Allows av_opt_query_ranges and av_opt_query_ranges_default to return more than
  *  one component for certain option types.
  *  @see AVOptionRanges for details.
  *)
-#define AV_OPT_MULTI_COMPONENT_RANGE (1 << 12)
+  AV_OPT_MULTI_COMPONENT_RANGE = (1 << 12)
 
 (**
  * Look for an option in an object. Consider only options which
@@ -842,8 +842,8 @@ int av_opt_is_set_to_default(void *obj, const AVOption *o);
 int av_opt_is_set_to_default_by_name(void *obj, const char *name, int search_flags);
 
 
-#define AV_OPT_SERIALIZE_SKIP_DEFAULTS              0x00000001  ///< Serialize options that are not set to default values only.
-#define AV_OPT_SERIALIZE_OPT_FLAGS_EXACT            0x00000002  ///< Serialize options that exactly match opt_flags only.
+  AV_OPT_SERIALIZE_SKIP_DEFAULTS = 0x00000001  ///< Serialize options that are not set to default values only.
+  AV_OPT_SERIALIZE_OPT_FLAGS_EXACT = 0x00000002  ///< Serialize options that exactly match opt_flags only.
 
 (**
  * Serialize object's options.

@@ -222,13 +222,13 @@ int av_vdpau_get_profile(AVCodecContext *avctx, VdpDecoderProfile *profile);
 
 #if FF_API_CAP_VDPAU
 (** @brief The videoSurface is used for rendering. *)
-#define FF_VDPAU_STATE_USED_FOR_RENDER 1
+  FF_VDPAU_STATE_USED_FOR_RENDER = 1
 
 (**
  * @brief The videoSurface is needed for reference/prediction.
  * The codec manipulates this.
  *)
-#define FF_VDPAU_STATE_USED_FOR_REFERENCE 2
+  FF_VDPAU_STATE_USED_FOR_REFERENCE = 2
 
 (**
  * @brief This structure is used as a callback between the FFmpeg

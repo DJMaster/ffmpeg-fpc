@@ -48,7 +48,7 @@
  *
  * We use this instead of MAX_DECOMPOSITIONS to save some memory.
  *)
-#define MAX_DWT_LEVELS 5
+  MAX_DWT_LEVELS = 5
 
 (**
  * Parse code values:

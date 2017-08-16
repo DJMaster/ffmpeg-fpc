@@ -36,7 +36,7 @@
 #error missing -D__STDC_FORMAT_MACROS / #define __STDC_FORMAT_MACROS
 #endif
 
-#define AV_TS_MAX_STRING_SIZE 32
+  AV_TS_MAX_STRING_SIZE = 32
 
 (**
  * Fill the provided buffer with a string containing a timestamp

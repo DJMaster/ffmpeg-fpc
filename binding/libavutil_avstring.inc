@@ -325,14 +325,14 @@ enum AVEscapeMode {
  * characters lists, except it is guaranteed to use the exact same list
  * of whitespace characters as the rest of libavutil.
  *)
-#define AV_ESCAPE_FLAG_WHITESPACE (1 << 0)
+  AV_ESCAPE_FLAG_WHITESPACE = (1 << 0)
 
 (**
  * Escape only specified special characters.
  * Without this flag, escape also any characters that may be considered
  * special by av_get_token(), such as the single quote.
  *)
-#define AV_ESCAPE_FLAG_STRICT (1 << 1)
+  AV_ESCAPE_FLAG_STRICT = (1 << 1)
 
 (**
  * Escape string in src, and put the escaped string in an allocated
@@ -354,12 +354,12 @@ av_warn_unused_result
 int av_escape(char **dst, const char *src, const char *special_chars,
               enum AVEscapeMode mode, int flags);
 
-#define AV_UTF8_FLAG_ACCEPT_INVALID_BIG_CODES          1 ///< accept codepoints over 0x10FFFF
-#define AV_UTF8_FLAG_ACCEPT_NON_CHARACTERS             2 ///< accept non-characters - 0xFFFE and 0xFFFF
-#define AV_UTF8_FLAG_ACCEPT_SURROGATES                 4 ///< accept UTF-16 surrogates codes
-#define AV_UTF8_FLAG_EXCLUDE_XML_INVALID_CONTROL_CODES 8 ///< exclude control codes not accepted by XML
+  AV_UTF8_FLAG_ACCEPT_INVALID_BIG_CODES = 1 ///< accept codepoints over 0x10FFFF
+  AV_UTF8_FLAG_ACCEPT_NON_CHARACTERS = 2 ///< accept non-characters - 0xFFFE and 0xFFFF
+  AV_UTF8_FLAG_ACCEPT_SURROGATES = 4 ///< accept UTF-16 surrogates codes
+  AV_UTF8_FLAG_EXCLUDE_XML_INVALID_CONTROL_CODES = 8 ///< exclude control codes not accepted by XML
 
-#define AV_UTF8_FLAG_ACCEPT_ALL \
+  AV_UTF8_FLAG_ACCEPT_ALL = \
     AV_UTF8_FLAG_ACCEPT_INVALID_BIG_CODES|AV_UTF8_FLAG_ACCEPT_NON_CHARACTERS|AV_UTF8_FLAG_ACCEPT_SURROGATES
 
 (**

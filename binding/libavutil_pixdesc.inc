@@ -131,27 +131,27 @@ typedef struct AVPixFmtDescriptor {
 (**
  * Pixel format is big-endian.
  *)
-#define AV_PIX_FMT_FLAG_BE           (1 << 0)
+  AV_PIX_FMT_FLAG_BE = (1 << 0)
 (**
  * Pixel format has a palette in data[1], values are indexes in this palette.
  *)
-#define AV_PIX_FMT_FLAG_PAL          (1 << 1)
+  AV_PIX_FMT_FLAG_PAL = (1 << 1)
 (**
  * All values of a component are bit-wise packed end to end.
  *)
-#define AV_PIX_FMT_FLAG_BITSTREAM    (1 << 2)
+  AV_PIX_FMT_FLAG_BITSTREAM = (1 << 2)
 (**
  * Pixel format is an HW accelerated format.
  *)
-#define AV_PIX_FMT_FLAG_HWACCEL      (1 << 3)
+  AV_PIX_FMT_FLAG_HWACCEL = (1 << 3)
 (**
  * At least one pixel component is not in the first data plane.
  *)
-#define AV_PIX_FMT_FLAG_PLANAR       (1 << 4)
+  AV_PIX_FMT_FLAG_PLANAR = (1 << 4)
 (**
  * The pixel format contains RGB-like data (as opposed to YUV/grayscale).
  *)
-#define AV_PIX_FMT_FLAG_RGB          (1 << 5)
+  AV_PIX_FMT_FLAG_RGB = (1 << 5)
 
 (**
  * The pixel format is "pseudo-paletted". This means that it contains a
@@ -161,7 +161,7 @@ typedef struct AVPixFmtDescriptor {
  * the pixel format without using the palette.
  * An example of a pseudo-paletted format is AV_PIX_FMT_GRAY8
  *)
-#define AV_PIX_FMT_FLAG_PSEUDOPAL    (1 << 6)
+  AV_PIX_FMT_FLAG_PSEUDOPAL = (1 << 6)
 
 (**
  * The pixel format has an alpha channel. This is set on all formats that
@@ -176,12 +176,12 @@ typedef struct AVPixFmtDescriptor {
  * opaque, or use the equivalent pixel formats without alpha component, e.g.
  * AV_PIX_FMT_RGB0 (or AV_PIX_FMT_RGB24 etc.) instead of AV_PIX_FMT_RGBA.
  *)
-#define AV_PIX_FMT_FLAG_ALPHA        (1 << 7)
+  AV_PIX_FMT_FLAG_ALPHA = (1 << 7)
 
 (**
  * The pixel format is following a Bayer pattern
  *)
-#define AV_PIX_FMT_FLAG_BAYER        (1 << 8)
+  AV_PIX_FMT_FLAG_BAYER = (1 << 8)
 
 (**
  * Return the number of bits per pixel used by the pixel format
@@ -352,12 +352,12 @@ void av_write_image_line(const uint16_t *src, uint8_t *data[4],
  *)
 enum AVPixelFormat av_pix_fmt_swap_endianness(enum AVPixelFormat pix_fmt);
 
-#define FF_LOSS_RESOLUTION  0x0001 (**< loss due to resolution change *)
-#define FF_LOSS_DEPTH       0x0002 (**< loss due to color depth change *)
-#define FF_LOSS_COLORSPACE  0x0004 (**< loss due to color space conversion *)
-#define FF_LOSS_ALPHA       0x0008 (**< loss of alpha bits *)
-#define FF_LOSS_COLORQUANT  0x0010 (**< loss due to color quantization *)
-#define FF_LOSS_CHROMA      0x0020 (**< loss of chroma (e.g. RGB to gray conversion) *)
+  FF_LOSS_RESOLUTION = 0x0001 (**< loss due to resolution change *)
+  FF_LOSS_DEPTH = 0x0002 (**< loss due to color depth change *)
+  FF_LOSS_COLORSPACE = 0x0004 (**< loss due to color space conversion *)
+  FF_LOSS_ALPHA = 0x0008 (**< loss of alpha bits *)
+  FF_LOSS_COLORQUANT = 0x0010 (**< loss due to color quantization *)
+  FF_LOSS_CHROMA = 0x0020 (**< loss of chroma (e.g. RGB to gray conversion) *)
 
 (**
  * Compute what kind of losses will occur when converting from one specific
