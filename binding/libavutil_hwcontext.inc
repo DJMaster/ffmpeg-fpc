@@ -447,23 +447,23 @@ enum {
     (**
      * The mapping must be readable.
      *)
-    AV_HWFRAME_MAP_READ      = 1 << 0,
+    AV_HWFRAME_MAP_READ      = 1 shl 0,
     (**
      * The mapping must be writeable.
      *)
-    AV_HWFRAME_MAP_WRITE     = 1 << 1,
+    AV_HWFRAME_MAP_WRITE     = 1 shl 1,
     (**
      * The mapped frame will be overwritten completely in subsequent
      * operations, so the current frame data need not be loaded.  Any values
      * which are not overwritten are unspecified.
      *)
-    AV_HWFRAME_MAP_OVERWRITE = 1 << 2,
+    AV_HWFRAME_MAP_OVERWRITE = 1 shl 2,
     (**
      * The mapping must be direct.  That is, there must not be any copying in
      * the map or unmap steps.  Note that performance of direct mappings may
      * be much lower than normal memory.
      *)
-    AV_HWFRAME_MAP_DIRECT    = 1 << 3,
+    AV_HWFRAME_MAP_DIRECT    = 1 shl 3,
 };
 
 (**

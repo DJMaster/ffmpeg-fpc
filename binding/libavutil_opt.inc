@@ -296,7 +296,7 @@ typedef struct AVOption {
  * This flag only makes sense when AV_OPT_FLAG_EXPORT is also set.
  *)
   AV_OPT_FLAG_READONLY = 128
-  AV_OPT_FLAG_FILTERING_PARAM = (1<<16) ///< a generic parameter which can be set by the user for filtering
+  AV_OPT_FLAG_FILTERING_PARAM = (1 shl 16) ///< a generic parameter which can be set by the user for filtering
 //FIXME think about enc-audio, ... style flags
 
     (**
@@ -560,7 +560,7 @@ int av_opt_eval_q     (void *obj, const AVOption *o, const char *val, AVRational
  * @}
  *)
 
-  AV_OPT_SEARCH_CHILDREN = (1 << 0) (**< Search in possible children of the
+  AV_OPT_SEARCH_CHILDREN = (1 shl 0) (**< Search in possible children of the
                                                given object first. *)
 (**
  *  The obj passed to av_opt_find() is fake -- only a double pointer to AVClass
@@ -568,20 +568,20 @@ int av_opt_eval_q     (void *obj, const AVOption *o, const char *val, AVRational
  *  useful for searching for options without needing to allocate the corresponding
  *  object.
  *)
-  AV_OPT_SEARCH_FAKE_OBJ = (1 << 1)
+  AV_OPT_SEARCH_FAKE_OBJ = (1 shl 1)
 
 (**
  *  In av_opt_get, return NULL if the option has a pointer type and is set to NULL,
  *  rather than returning an empty string.
  *)
-  AV_OPT_ALLOW_NULL = (1 << 2)
+  AV_OPT_ALLOW_NULL = (1 shl 2)
 
 (**
  *  Allows av_opt_query_ranges and av_opt_query_ranges_default to return more than
  *  one component for certain option types.
  *  @see AVOptionRanges for details.
  *)
-  AV_OPT_MULTI_COMPONENT_RANGE = (1 << 12)
+  AV_OPT_MULTI_COMPONENT_RANGE = (1 shl 12)
 
 (**
  * Look for an option in an object. Consider only options which

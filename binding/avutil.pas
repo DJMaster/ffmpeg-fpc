@@ -235,7 +235,7 @@ const char *av_get_media_type_string(enum AVMediaType media_type);
  *)
 
   FF_LAMBDA_SHIFT = 7;
-  FF_LAMBDA_SCALE = (1<<FF_LAMBDA_SHIFT);
+  FF_LAMBDA_SCALE = (1 shl FF_LAMBDA_SHIFT);
   FF_QP2LAMBDA = 118; ///< factor to convert from H.263 QP to lambda
   FF_LAMBDA_MAX = (256*128-1);
 

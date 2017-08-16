@@ -51,8 +51,8 @@
 
 // extra flags not defined in VDADecoder.h
 enum {
-    kVDADecodeInfo_Asynchronous = 1UL << 0,
-    kVDADecodeInfo_FrameDropped = 1UL << 1
+    kVDADecodeInfo_Asynchronous = 1UL shl 0,
+    kVDADecodeInfo_FrameDropped = 1UL shl 1
 };
 
 (**

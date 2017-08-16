@@ -131,27 +131,27 @@ typedef struct AVPixFmtDescriptor {
 (**
  * Pixel format is big-endian.
  *)
-  AV_PIX_FMT_FLAG_BE = (1 << 0);
+  AV_PIX_FMT_FLAG_BE = (1 shl 0);
 (**
  * Pixel format has a palette in data[1], values are indexes in this palette.
  *)
-  AV_PIX_FMT_FLAG_PAL = (1 << 1);
+  AV_PIX_FMT_FLAG_PAL = (1 shl 1);
 (**
  * All values of a component are bit-wise packed end to end.
  *)
-  AV_PIX_FMT_FLAG_BITSTREAM = (1 << 2);
+  AV_PIX_FMT_FLAG_BITSTREAM = (1 shl 2);
 (**
  * Pixel format is an HW accelerated format.
  *)
-  AV_PIX_FMT_FLAG_HWACCEL = (1 << 3);
+  AV_PIX_FMT_FLAG_HWACCEL = (1 shl 3);
 (**
  * At least one pixel component is not in the first data plane.
  *)
-  AV_PIX_FMT_FLAG_PLANAR = (1 << 4);
+  AV_PIX_FMT_FLAG_PLANAR = (1 shl 4);
 (**
  * The pixel format contains RGB-like data (as opposed to YUV/grayscale).
  *)
-  AV_PIX_FMT_FLAG_RGB = (1 << 5);
+  AV_PIX_FMT_FLAG_RGB = (1 shl 5);
 
 (**
  * The pixel format is "pseudo-paletted". This means that it contains a
@@ -161,7 +161,7 @@ typedef struct AVPixFmtDescriptor {
  * the pixel format without using the palette.
  * An example of a pseudo-paletted format is AV_PIX_FMT_GRAY8
  *)
-  AV_PIX_FMT_FLAG_PSEUDOPAL = (1 << 6);
+  AV_PIX_FMT_FLAG_PSEUDOPAL = (1 shl 6);
 
 (**
  * The pixel format has an alpha channel. This is set on all formats that
@@ -176,12 +176,12 @@ typedef struct AVPixFmtDescriptor {
  * opaque, or use the equivalent pixel formats without alpha component, e.g.
  * AV_PIX_FMT_RGB0 (or AV_PIX_FMT_RGB24 etc.) instead of AV_PIX_FMT_RGBA.
  *)
-  AV_PIX_FMT_FLAG_ALPHA = (1 << 7);
+  AV_PIX_FMT_FLAG_ALPHA = (1 shl 7);
 
 (**
  * The pixel format is following a Bayer pattern
  *)
-  AV_PIX_FMT_FLAG_BAYER = (1 << 8);
+  AV_PIX_FMT_FLAG_BAYER = (1 shl 8);
 
 (**
  * Return the number of bits per pixel used by the pixel format

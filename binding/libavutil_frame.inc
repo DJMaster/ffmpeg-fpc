@@ -407,11 +407,11 @@ typedef struct AVFrame {
 (**
  * The frame data may be corrupted, e.g. due to decoding errors.
  *)
-  AV_FRAME_FLAG_CORRUPT = (1 << 0);
+  AV_FRAME_FLAG_CORRUPT = (1 shl 0);
 (**
  * A flag to mark the frames which need to be decoded, but shouldn't be output.
  *)
-  AV_FRAME_FLAG_DISCARD = (1 << 2);
+  AV_FRAME_FLAG_DISCARD = (1 shl 2);
 (**
  * @}
  *)

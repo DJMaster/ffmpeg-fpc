@@ -43,12 +43,12 @@
 (**
  * Seeking works like for a local file.
  *)
-  AVIO_SEEKABLE_NORMAL = (1 << 0);
+  AVIO_SEEKABLE_NORMAL = (1 shl 0);
 
 (**
  * Seeking by timestamp with avio_seek_time() is possible.
  *)
-  AVIO_SEEKABLE_TIME = (1 << 1);
+  AVIO_SEEKABLE_TIME = (1 shl 1);
 
 (**
  * Callback for checking whether to abort blocking functions.

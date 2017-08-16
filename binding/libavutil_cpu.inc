@@ -64,15 +64,15 @@
   AV_CPU_FLAG_VSX = $0002; ///< ISA 2.06
   AV_CPU_FLAG_POWER8 = $0004; ///< ISA 2.07
 
-  AV_CPU_FLAG_ARMV5TE = (1 << 0);
-  AV_CPU_FLAG_ARMV6 = (1 << 1);
-  AV_CPU_FLAG_ARMV6T2 = (1 << 2);
-  AV_CPU_FLAG_VFP = (1 << 3);
-  AV_CPU_FLAG_VFPV3 = (1 << 4);
-  AV_CPU_FLAG_NEON = (1 << 5);
-  AV_CPU_FLAG_ARMV8 = (1 << 6);
-  AV_CPU_FLAG_VFP_VM = (1 << 7); ///< VFPv2 vector mode, deprecated in ARMv7-A and unavailable in various CPUs implementations
-  AV_CPU_FLAG_SETEND = (1 <<16);
+  AV_CPU_FLAG_ARMV5TE = (1 shl 0);
+  AV_CPU_FLAG_ARMV6 = (1 shl 1);
+  AV_CPU_FLAG_ARMV6T2 = (1 shl 2);
+  AV_CPU_FLAG_VFP = (1 shl 3);
+  AV_CPU_FLAG_VFPV3 = (1 shl 4);
+  AV_CPU_FLAG_NEON = (1 shl 5);
+  AV_CPU_FLAG_ARMV8 = (1 shl 6);
+  AV_CPU_FLAG_VFP_VM = (1 shl 7); ///< VFPv2 vector mode, deprecated in ARMv7-A and unavailable in various CPUs implementations
+  AV_CPU_FLAG_SETEND = (1 shl 16);
 
 (**
  * Return the flags which specify extensions supported by the CPU.

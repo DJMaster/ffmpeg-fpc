@@ -325,14 +325,14 @@ enum AVEscapeMode {
  * characters lists, except it is guaranteed to use the exact same list
  * of whitespace characters as the rest of libavutil.
  *)
-  AV_ESCAPE_FLAG_WHITESPACE = (1 << 0);
+  AV_ESCAPE_FLAG_WHITESPACE = (1 shl 0);
 
 (**
  * Escape only specified special characters.
  * Without this flag, escape also any characters that may be considered
  * special by av_get_token(), such as the single quote.
  *)
-  AV_ESCAPE_FLAG_STRICT = (1 << 1);
+  AV_ESCAPE_FLAG_STRICT = (1 shl 1);
 
 (**
  * Escape string in src, and put the escaped string in an allocated
