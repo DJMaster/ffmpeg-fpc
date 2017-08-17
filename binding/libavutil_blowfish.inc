@@ -46,7 +46,7 @@ typedef struct AVBlowfish {
 (**
  * Allocate an AVBlowfish context.
  *)
-AVBlowfish *av_blowfish_alloc(void);
+AVBlowfish *av_blowfish_alloc();
 
 (**
  * Initialize an AVBlowfish context.

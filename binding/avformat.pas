@@ -1986,17 +1986,17 @@ typedef struct AVPacketList {
 (**
  * Return the LIBAVFORMAT_VERSION_INT constant.
  *)
-unsigned avformat_version(void);
+unsigned avformat_version();
 
 (**
  * Return the libavformat build-time configuration.
  *)
-const char *avformat_configuration(void);
+const char *avformat_configuration();
 
 (**
  * Return the libavformat license.
  *)
-const char *avformat_license(void);
+const char *avformat_license();
 
 (**
  * Initialize libavformat and register all the muxers, demuxers and
@@ -2006,7 +2006,7 @@ const char *avformat_license(void);
  * @see av_register_input_format()
  * @see av_register_output_format()
  *)
-void av_register_all(void);
+void av_register_all();
 
 void av_register_input_format(AVInputFormat *format);
 void av_register_output_format(AVOutputFormat *format);
@@ -2019,12 +2019,12 @@ void av_register_output_format(AVOutputFormat *format);
  * Calling this function will become mandatory if using network
  * protocols at some major version bump.
  *)
-int avformat_network_init(void);
+int avformat_network_init();
 
 (**
  * Undo the initialization done by avformat_network_init.
  *)
-int avformat_network_deinit(void);
+int avformat_network_deinit();
 
 (**
  * If f is NULL, returns the first registered input format,
@@ -2045,7 +2045,7 @@ AVOutputFormat *av_oformat_next(const AVOutputFormat *f);
  * avformat_free_context() can be used to free the context and everything
  * allocated by the framework within it.
  *)
-AVFormatContext *avformat_alloc_context(void);
+AVFormatContext *avformat_alloc_context();
 
 (**
  * Free an AVFormatContext and all its streams.
@@ -2059,7 +2059,7 @@ void avformat_free_context(AVFormatContext *s);
  *
  * @see av_opt_find().
  *)
-const AVClass *avformat_get_class(void);
+const AVClass *avformat_get_class();
 
 (**
  * Add a new stream to a media file.
@@ -2901,19 +2901,19 @@ int avformat_query_codec(const AVOutputFormat *ofmt, enum AVCodecID codec_id,
 (**
  * @return the table mapping RIFF FourCCs for video to libavcodec AVCodecID.
  *)
-const struct AVCodecTag *avformat_get_riff_video_tags(void);
+const struct AVCodecTag *avformat_get_riff_video_tags();
 (**
  * @return the table mapping RIFF FourCCs for audio to AVCodecID.
  *)
-const struct AVCodecTag *avformat_get_riff_audio_tags(void);
+const struct AVCodecTag *avformat_get_riff_audio_tags();
 (**
  * @return the table mapping MOV FourCCs for video to libavcodec AVCodecID.
  *)
-const struct AVCodecTag *avformat_get_mov_video_tags(void);
+const struct AVCodecTag *avformat_get_mov_video_tags();
 (**
  * @return the table mapping MOV FourCCs for audio to AVCodecID.
  *)
-const struct AVCodecTag *avformat_get_mov_audio_tags(void);
+const struct AVCodecTag *avformat_get_mov_audio_tags();
 
 (**
  * @}

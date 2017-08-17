@@ -198,7 +198,7 @@ typedef struct AVVDAContext {
  *
  * @return the newly allocated context or NULL on failure
  *)
-AVVDAContext *av_vda_alloc_context(void);
+AVVDAContext *av_vda_alloc_context();
 
 (**
  * This is a convenience function that creates and sets up the VDA context using

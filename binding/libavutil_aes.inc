@@ -45,7 +45,7 @@ struct AVAES;
 (**
  * Allocate an AVAES context.
  *)
-struct AVAES *av_aes_alloc(void);
+struct AVAES *av_aes_alloc();
 
 (**
  * Initialize an AVAES context.

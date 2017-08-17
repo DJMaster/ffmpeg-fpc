@@ -82,9 +82,9 @@ typedef struct AVDCT {
  *
  * To free it use av_free()
  *)
-AVDCT *avcodec_dct_alloc(void);
+AVDCT *avcodec_dct_alloc();
 int avcodec_dct_init(AVDCT *);
 
-const AVClass *avcodec_dct_get_class(void);
+const AVClass *avcodec_dct_get_class();
 
 // #endif (* AVCODEC_AVDCT_H *)

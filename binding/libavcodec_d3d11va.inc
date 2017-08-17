@@ -109,7 +109,7 @@ typedef struct AVD3D11VAContext {
  *
  * @return Newly-allocated AVD3D11VAContext or NULL on failure.
  *)
-AVD3D11VAContext *av_d3d11va_alloc_context(void);
+AVD3D11VAContext *av_d3d11va_alloc_context();
 
 (**
  * @}

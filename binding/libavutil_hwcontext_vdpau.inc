@@ -38,10 +38,12 @@
 (**
  * This struct is allocated as AVHWDeviceContext.hwctx
  *)
-typedef struct AVVDPAUDeviceContext {
-    VdpDevice          device;
-    VdpGetProcAddress *get_proc_address;
-} AVVDPAUDeviceContext;
+type
+  PAVVDPAUDeviceContext = ^AVVDPAUDeviceContext;
+  AVVDPAUDeviceContext = record
+    device: VdpDevice;
+    get_proc_address: PVdpGetProcAddress;
+  end;
 
 (**
  * AVHWFramesContext.hwctx is currently not used

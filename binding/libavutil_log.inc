@@ -264,7 +264,7 @@ void av_vlog(void *avcl, int level, const char *fmt, va_list vl);
  *
  * @return Current log level
  *)
-int av_log_get_level(void);
+int av_log_get_level();
 
 (**
  * Set the log level
@@ -373,7 +373,7 @@ int av_log_format_line2(void *ptr, int level, const char *fmt, va_list vl,
   AV_LOG_PRINT_LEVEL = 2;
 
 void av_log_set_flags(int arg);
-int av_log_get_flags(void);
+int av_log_get_flags();
 
 (**
  * @}

@@ -63,7 +63,7 @@ struct AVSHA512;
 (**
  * Allocate an AVSHA512 context.
  *)
-struct AVSHA512 *av_sha512_alloc(void);
+struct AVSHA512 *av_sha512_alloc();
 
 (**
  * Initialize SHA-2 512 hashing.

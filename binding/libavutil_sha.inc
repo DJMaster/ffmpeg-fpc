@@ -61,7 +61,7 @@ struct AVSHA;
 (**
  * Allocate an AVSHA context.
  *)
-struct AVSHA *av_sha_alloc(void);
+struct AVSHA *av_sha_alloc();
 
 (**
  * Initialize SHA-1 or SHA-2 hashing.

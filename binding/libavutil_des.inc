@@ -44,7 +44,7 @@ typedef struct AVDES {
 (**
  * Allocate an AVDES context.
  *)
-AVDES *av_des_alloc(void);
+AVDES *av_des_alloc();
 
 (**
  * @brief Initializes an AVDES context.

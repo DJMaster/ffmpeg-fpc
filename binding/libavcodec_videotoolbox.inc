@@ -95,7 +95,7 @@ typedef struct AVVideotoolboxContext {
  *
  * @return the newly allocated context or NULL on failure
  *)
-AVVideotoolboxContext *av_videotoolbox_alloc_context(void);
+AVVideotoolboxContext *av_videotoolbox_alloc_context();
 
 (**
  * This is a convenience function that creates and sets up the Videotoolbox context using

@@ -144,7 +144,7 @@ typedef struct AVStereo3D {
  *
  * @return An AVStereo3D filled with default values or NULL on failure.
  *)
-AVStereo3D *av_stereo3d_alloc(void);
+AVStereo3D *av_stereo3d_alloc();
 
 (**
  * Allocate a complete AVFrameSideData and add it to the frame.

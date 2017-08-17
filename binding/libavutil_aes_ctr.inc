@@ -41,7 +41,7 @@ struct AVAESCTR;
 (**
  * Allocate an AVAESCTR context.
  *)
-struct AVAESCTR *av_aes_ctr_alloc(void);
+struct AVAESCTR *av_aes_ctr_alloc();
 
 (**
  * Initialize an AVAESCTR context.

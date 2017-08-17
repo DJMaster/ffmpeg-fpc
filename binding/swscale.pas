@@ -54,17 +54,17 @@ interface
  *
  * Return the LIBSWSCALE_VERSION_INT constant.
  *)
-unsigned swscale_version(void);
+unsigned swscale_version();
 
 (**
  * Return the libswscale build-time configuration.
  *)
-const char *swscale_configuration(void);
+const char *swscale_configuration();
 
 (**
  * Return the libswscale license.
  *)
-const char *swscale_license(void);
+const char *swscale_license();
 
 (* values for the flags, the stuff on the command line is different *)
   SWS_FAST_BILINEAR = 1;
@@ -157,7 +157,7 @@ int sws_isSupportedEndiannessConversion(enum AVPixelFormat pix_fmt);
  * sws_init_context(). For filling see AVOptions, options.c and
  * sws_setColorspaceDetails().
  *)
-struct SwsContext *sws_alloc_context(void);
+struct SwsContext *sws_alloc_context();
 
 (**
  * Initialize the swscaler context sws_context.
@@ -274,7 +274,7 @@ void sws_normalizeVec(SwsVector *a, double height);
 
 #if FF_API_SWS_VECTOR
 attribute_deprecated SwsVector *sws_getConstVec(double c, int length);
-attribute_deprecated SwsVector *sws_getIdentityVec(void);
+attribute_deprecated SwsVector *sws_getIdentityVec();
 attribute_deprecated void sws_convVec(SwsVector *a, SwsVector *b);
 attribute_deprecated void sws_addVec(SwsVector *a, SwsVector *b);
 attribute_deprecated void sws_subVec(SwsVector *a, SwsVector *b);
@@ -339,7 +339,7 @@ void sws_convertPalette8ToPacked24(const uint8_t *src, uint8_t *dst, int num_pix
  *
  * @see av_opt_find().
  *)
-const AVClass *sws_get_class(void);
+const AVClass *sws_get_class();
 
 (**
  * @}

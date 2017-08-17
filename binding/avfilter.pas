@@ -64,17 +64,17 @@ interface
 (**
  * Return the LIBAVFILTER_VERSION_INT constant.
  *)
-unsigned avfilter_version(void);
+unsigned avfilter_version();
 
 (**
  * Return the libavfilter build-time configuration.
  *)
-const char *avfilter_configuration(void);
+const char *avfilter_configuration();
 
 (**
  * Return the libavfilter license.
  *)
-const char *avfilter_license(void);
+const char *avfilter_license();
 
 typedef struct AVFilterContext AVFilterContext;
 typedef struct AVFilterLink    AVFilterLink;
@@ -675,12 +675,12 @@ int avfilter_config_links(AVFilterContext *filter);
 int avfilter_process_command(AVFilterContext *filter, const char *cmd, const char *arg, char *res, int res_len, int flags);
 
 (** Initialize the filter system. Register all builtin filters. *)
-void avfilter_register_all(void);
+void avfilter_register_all();
 
 #if FF_API_OLD_FILTER_REGISTER
 (** Uninitialize the filter system. Unregister all filters. *)
 attribute_deprecated
-void avfilter_uninit(void);
+void avfilter_uninit();
 #endif
 
 (**
@@ -816,7 +816,7 @@ int avfilter_insert_filter(AVFilterLink *link, AVFilterContext *filt,
  *
  * @see av_opt_find().
  *)
-const AVClass *avfilter_get_class(void);
+const AVClass *avfilter_get_class();
 
 typedef struct AVFilterGraphInternal AVFilterGraphInternal;
 
@@ -926,7 +926,7 @@ typedef struct AVFilterGraph {
  *
  * @return the allocated filter graph on success or NULL.
  *)
-AVFilterGraph *avfilter_graph_alloc(void);
+AVFilterGraph *avfilter_graph_alloc();
 
 (**
  * Create a new filter instance in a filter graph.
@@ -1045,7 +1045,7 @@ typedef struct AVFilterInOut {
  * Must be freed with avfilter_inout_free().
  * @return allocated AVFilterInOut on success, NULL on failure.
  *)
-AVFilterInOut *avfilter_inout_alloc(void);
+AVFilterInOut *avfilter_inout_alloc();
 
 (**
  * Free the supplied list of AVFilterInOut and set *inout to NULL.

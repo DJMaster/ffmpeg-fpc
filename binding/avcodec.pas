@@ -4228,17 +4228,17 @@ AVCodec *av_codec_next(const AVCodec *c);
 (**
  * Return the LIBAVCODEC_VERSION_INT constant.
  *)
-unsigned avcodec_version(void);
+unsigned avcodec_version();
 
 (**
  * Return the libavcodec build-time configuration.
  *)
-const char *avcodec_configuration(void);
+const char *avcodec_configuration();
 
 (**
  * Return the libavcodec license.
  *)
-const char *avcodec_license(void);
+const char *avcodec_license();
 
 (**
  * Register the codec codec and initialize libavcodec.
@@ -4260,7 +4260,7 @@ void avcodec_register(AVCodec *codec);
  * @see av_register_codec_parser
  * @see av_register_bitstream_filter
  *)
-void avcodec_register_all(void);
+void avcodec_register_all();
 
 (**
  * Allocate an AVCodecContext and set its fields to default values. The
@@ -4298,7 +4298,7 @@ int avcodec_get_context_defaults3(AVCodecContext *s, const AVCodec *codec);
  *
  * @see av_opt_find().
  *)
-const AVClass *avcodec_get_class(void);
+const AVClass *avcodec_get_class();
 
 #if FF_API_COPY_CONTEXT
 (**
@@ -4307,7 +4307,7 @@ const AVClass *avcodec_get_class(void);
  *
  * @see av_opt_find().
  *)
-const AVClass *avcodec_get_frame_class(void);
+const AVClass *avcodec_get_frame_class();
 
 (**
  * Get the AVClass for AVSubtitleRect. It can be used in combination with
@@ -4315,7 +4315,7 @@ const AVClass *avcodec_get_frame_class(void);
  *
  * @see av_opt_find().
  *)
-const AVClass *avcodec_get_subtitle_rect_class(void);
+const AVClass *avcodec_get_subtitle_rect_class();
 
 (**
  * Copy the settings of the source AVCodecContext into the destination
@@ -4343,7 +4343,7 @@ int avcodec_copy_context(AVCodecContext *dest, const AVCodecContext *src);
  * (unknown/invalid/0). The returned struct must be freed with
  * avcodec_parameters_free().
  *)
-AVCodecParameters *avcodec_parameters_alloc(void);
+AVCodecParameters *avcodec_parameters_alloc();
 
 (**
  * Free an AVCodecParameters instance and everything associated with it and
@@ -4462,7 +4462,7 @@ void avsubtitle_free(AVSubtitle *sub);
  *
  * @see av_new_packet
  *)
-AVPacket *av_packet_alloc(void);
+AVPacket *av_packet_alloc();
 
 (**
  * Create a new packet that references the same data as src.
@@ -4763,7 +4763,7 @@ int avcodec_default_get_buffer2(AVCodecContext *s, AVFrame *frame, int flags);
  * needed
  *)
 attribute_deprecated
-unsigned avcodec_get_edge_width(void);
+unsigned avcodec_get_edge_width();
 #endif
 
 (**
@@ -6098,7 +6098,7 @@ void av_bsf_free(AVBSFContext **ctx);
  *
  * @see av_opt_find().
  *)
-const AVClass *av_bsf_get_class(void);
+const AVClass *av_bsf_get_class();
 
 (**
  * Structure for chain/list of bitstream filters.
@@ -6113,7 +6113,7 @@ typedef struct AVBSFList AVBSFList;
  *
  * @return Pointer to @ref AVBSFList on success, NULL in case of failure
  *)
-AVBSFList *av_bsf_list_alloc(void);
+AVBSFList *av_bsf_list_alloc();
 
 (**
  * Free list of bitstream filters.

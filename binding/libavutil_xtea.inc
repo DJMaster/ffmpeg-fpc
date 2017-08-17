@@ -45,7 +45,7 @@ typedef struct AVXTEA {
 (**
  * Allocate an AVXTEA context.
  *)
-AVXTEA *av_xtea_alloc(void);
+AVXTEA *av_xtea_alloc();
 
 (**
  * Initialize an AVXTEA context.

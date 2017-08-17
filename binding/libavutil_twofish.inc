@@ -47,7 +47,7 @@ struct AVTWOFISH;
   * Allocate an AVTWOFISH context
   * To free the struct: av_free(ptr)
   *)
-struct AVTWOFISH *av_twofish_alloc(void);
+struct AVTWOFISH *av_twofish_alloc();
 
 (**
   * Initialize an AVTWOFISH context.

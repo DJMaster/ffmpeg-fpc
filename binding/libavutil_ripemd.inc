@@ -54,7 +54,7 @@ struct AVRIPEMD;
 (**
  * Allocate an AVRIPEMD context.
  *)
-struct AVRIPEMD *av_ripemd_alloc(void);
+struct AVRIPEMD *av_ripemd_alloc();
 
 (**
  * Initialize RIPEMD hashing.

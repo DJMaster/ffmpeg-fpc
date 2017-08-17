@@ -204,7 +204,7 @@ typedef struct SwrContext SwrContext;
  * @see av_opt_find().
  * @return the AVClass of SwrContext
  *)
-const AVClass *swr_get_class(void);
+const AVClass *swr_get_class();
 
 (**
  * @name SwrContext constructor functions
@@ -220,7 +220,7 @@ const AVClass *swr_get_class(void);
  * @see swr_alloc_set_opts(), swr_init(), swr_free()
  * @return NULL on error, allocated context otherwise
  *)
-struct SwrContext *swr_alloc(void);
+struct SwrContext *swr_alloc();
 
 (**
  * Initialize context after user parameters have been set.
@@ -511,21 +511,21 @@ int swr_get_out_samples(struct SwrContext *s, int in_samples);
  *
  * @returns     the unsigned int-typed version
  *)
-unsigned swresample_version(void);
+unsigned swresample_version();
 
 (**
  * Return the swr build-time configuration.
  *
  * @returns     the build-time @c ./configure flags
  *)
-const char *swresample_configuration(void);
+const char *swresample_configuration();
 
 (**
  * Return the swr license.
  *
  * @returns     the license of libswresample, determined at build-time
  *)
-const char *swresample_license(void);
+const char *swresample_license();
 
 (**
  * @}

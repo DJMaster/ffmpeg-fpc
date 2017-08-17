@@ -126,7 +126,7 @@ typedef struct AVBufferSrcParameters {
  * Allocate a new AVBufferSrcParameters instance. It should be freed by the
  * caller with av_free().
  *)
-AVBufferSrcParameters *av_buffersrc_parameters_alloc(void);
+AVBufferSrcParameters *av_buffersrc_parameters_alloc();
 
 (**
  * Initialize the buffersrc or abuffersrc filter with the provided parameters.

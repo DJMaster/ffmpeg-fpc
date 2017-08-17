@@ -65,22 +65,22 @@ interface
 (**
  * Return the LIBAVDEVICE_VERSION_INT constant.
  *)
-unsigned avdevice_version(void);
+unsigned avdevice_version();
 
 (**
  * Return the libavdevice build-time configuration.
  *)
-const char *avdevice_configuration(void);
+const char *avdevice_configuration();
 
 (**
  * Return the libavdevice license.
  *)
-const char *avdevice_license(void);
+const char *avdevice_license();
 
 (**
  * Initialize libavdevice and register all the input and output devices.
  *)
-void avdevice_register_all(void);
+void avdevice_register_all();
 
 (**
  * Audio input devices iterator.

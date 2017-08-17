@@ -51,17 +51,17 @@ interface
 (**
  * Return the LIBPOSTPROC_VERSION_INT constant.
  *)
-unsigned postproc_version(void);
+unsigned postproc_version();
 
 (**
  * Return the libpostproc build-time configuration.
  *)
-const char *postproc_configuration(void);
+const char *postproc_configuration();
 
 (**
  * Return the libpostproc license.
  *)
-const char *postproc_license(void);
+const char *postproc_license();
 
   PP_QUALITY_MAX = 6;
 

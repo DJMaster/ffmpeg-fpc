@@ -77,7 +77,7 @@ typedef struct {
  *
  * Must be freed with av_free().
  *)
-AVBufferSinkParams *av_buffersink_params_alloc(void);
+AVBufferSinkParams *av_buffersink_params_alloc();
 
 (**
  * Struct to use for initializing an abuffersink context.
@@ -95,7 +95,7 @@ typedef struct {
  *
  * Must be freed with av_free().
  *)
-AVABufferSinkParams *av_abuffersink_params_alloc(void);
+AVABufferSinkParams *av_abuffersink_params_alloc();
 
 (**
  * Set the frame size for an audio buffer sink.

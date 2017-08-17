@@ -53,7 +53,7 @@ typedef struct AVMediaCodecContext {
  *
  * @return a pointer to a newly allocated AVMediaCodecContext on success, NULL otherwise
  *)
-AVMediaCodecContext *av_mediacodec_alloc_context(void);
+AVMediaCodecContext *av_mediacodec_alloc_context();
 
 (**
  * Convenience function that sets up the MediaCodec context.

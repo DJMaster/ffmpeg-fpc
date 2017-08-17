@@ -108,6 +108,6 @@ typedef struct AVQSVContext {
  *
  * It must be freed by the caller with av_free().
  *)
-AVQSVContext *av_qsv_alloc_context(void);
+AVQSVContext *av_qsv_alloc_context();
 
 // #endif (* AVCODEC_QSV_H *)

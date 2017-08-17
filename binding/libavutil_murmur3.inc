@@ -69,7 +69,7 @@
  *
  * @return Uninitialized hash context or `NULL` in case of error
  *)
-struct AVMurMur3 *av_murmur3_alloc(void);
+struct AVMurMur3 *av_murmur3_alloc();
 
 (**
  * Initialize or reinitialize an AVMurMur3 hash context with a seed.

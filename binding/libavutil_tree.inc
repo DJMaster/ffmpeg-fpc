@@ -54,7 +54,7 @@ extern const int av_tree_node_size;
 (**
  * Allocate an AVTreeNode.
  *)
-struct AVTreeNode *av_tree_node_alloc(void);
+struct AVTreeNode *av_tree_node_alloc();
 
 (**
  * Find an element.

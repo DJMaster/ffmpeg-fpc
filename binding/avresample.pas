@@ -144,18 +144,18 @@ enum AVResampleDitherMethod {
 (**
  * Return the LIBAVRESAMPLE_VERSION_INT constant.
  *)
-unsigned avresample_version(void);
+unsigned avresample_version();
 
 (**
  * Return the libavresample build-time configuration.
  * @return  configure string
  *)
-const char *avresample_configuration(void);
+const char *avresample_configuration();
 
 (**
  * Return the libavresample license.
  *)
-const char *avresample_license(void);
+const char *avresample_license();
 
 (**
  * Get the AVClass for AVAudioResampleContext.
@@ -167,14 +167,14 @@ const char *avresample_license(void);
  *
  * @return AVClass for AVAudioResampleContext
  *)
-const AVClass *avresample_get_class(void);
+const AVClass *avresample_get_class();
 
 (**
  * Allocate AVAudioResampleContext and set options.
  *
  * @return  allocated audio resample context, or NULL on failure
  *)
-AVAudioResampleContext *avresample_alloc_context(void);
+AVAudioResampleContext *avresample_alloc_context();
 
 (**
  * Initialize AVAudioResampleContext.

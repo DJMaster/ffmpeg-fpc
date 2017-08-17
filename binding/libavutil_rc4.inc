@@ -43,7 +43,7 @@ typedef struct AVRC4 {
 (**
  * Allocate an AVRC4 context.
  *)
-AVRC4 *av_rc4_alloc(void);
+AVRC4 *av_rc4_alloc();
 
 (**
  * @brief Initializes an AVRC4 context.

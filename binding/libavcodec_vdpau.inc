@@ -150,7 +150,7 @@ typedef struct AVVDPAUContext {
  *
  * Allows extending the struct without breaking API/ABI
  *)
-AVVDPAUContext *av_alloc_vdpaucontext(void);
+AVVDPAUContext *av_alloc_vdpaucontext();
 
 AVVDPAU_Render2 av_vdpau_hwaccel_get_render2(const AVVDPAUContext *);
 void av_vdpau_hwaccel_set_render2(AVVDPAUContext *, AVVDPAU_Render2);
@@ -200,7 +200,7 @@ int av_vdpau_get_surface_parameters(AVCodecContext *avctx, VdpChromaType *type,
  *
  * @return Newly-allocated AVVDPAUContext or NULL on failure.
  *)
-AVVDPAUContext *av_vdpau_alloc_context(void);
+AVVDPAUContext *av_vdpau_alloc_context();
 
 #if FF_API_VDPAU_PROFILE
 (**

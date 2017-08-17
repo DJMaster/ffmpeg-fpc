@@ -46,7 +46,7 @@ struct AVTEA;
   * Allocate an AVTEA context
   * To free the struct: av_free(ptr)
   *)
-struct AVTEA *av_tea_alloc(void);
+struct AVTEA *av_tea_alloc();
 
 (**
  * Initialize an AVTEA context.

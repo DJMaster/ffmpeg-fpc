@@ -53,7 +53,7 @@ struct AVMD5;
 (**
  * Allocate an AVMD5 context.
  *)
-struct AVMD5 *av_md5_alloc(void);
+struct AVMD5 *av_md5_alloc();
 
 (**
  * Initialize MD5 hashing.

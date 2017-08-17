@@ -32,7 +32,7 @@
 (**
  * Get the current time in microseconds.
  *)
-int64_t av_gettime(void);
+int64_t av_gettime();
 
 (**
  * Get the current time in microseconds since some unspecified starting point.
@@ -41,13 +41,13 @@ int64_t av_gettime(void);
  * The returned values may not be monotonic on platforms where a monotonic
  * clock is not available.
  *)
-int64_t av_gettime_relative(void);
+int64_t av_gettime_relative();
 
 (**
  * Indicates with a boolean result if the av_gettime_relative() time source
  * is monotonic.
  *)
-int av_gettime_relative_is_monotonic(void);
+int av_gettime_relative_is_monotonic();
 
 (**
  * Sleep for a period of time.  Although the duration is expressed in

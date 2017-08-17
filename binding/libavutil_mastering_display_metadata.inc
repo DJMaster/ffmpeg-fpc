@@ -81,7 +81,7 @@ typedef struct AVMasteringDisplayMetadata {
  * @return An AVMasteringDisplayMetadata filled with default values or NULL
  *         on failure.
  *)
-AVMasteringDisplayMetadata *av_mastering_display_metadata_alloc(void);
+AVMasteringDisplayMetadata *av_mastering_display_metadata_alloc();
 
 (**
  * Allocate a complete AVMasteringDisplayMetadata and add it to the frame.

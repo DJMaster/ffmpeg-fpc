@@ -30,6 +30,12 @@ unit avutil;
 
 interface
 
+uses
+  ctypes;
+
+const
+  LIB_LIBAVUTIL = 'avutil-55.dll';
+
 // #ifndef AVUTIL_AVUTIL_H
 // #define AVUTIL_AVUTIL_H
 
@@ -180,24 +186,24 @@ interface
 (**
  * Return the LIBAVUTIL_VERSION_INT constant.
  *)
-unsigned avutil_version(void);
+unsigned avutil_version();
 
 (**
  * Return an informative version string. This usually is the actual release
  * version number or a git commit description. This string has no fixed format
  * and can change any time. It should never be parsed by code.
  *)
-const char *av_version_info(void);
+const char *av_version_info();
 
 (**
  * Return the libavutil build-time configuration.
  *)
-const char *avutil_configuration(void);
+const char *avutil_configuration();
 
 (**
  * Return the libavutil license.
  *)
-const char *avutil_license(void);
+const char *avutil_license();
 
 (**
  * @}
@@ -353,7 +359,7 @@ FILE *av_fopen_utf8(const char *path, const char *mode);
 (**
  * Return the fractional representation of the internal time base.
  *)
-AVRational av_get_time_base_q(void);
+AVRational av_get_time_base_q();
 
   AV_FOURCC_MAX_STRING_SIZE = 32;
 

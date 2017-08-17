@@ -80,7 +80,7 @@
  * before. So av_get_cpu_flags() can easily be used in an application to
  * detect the enabled cpu flags.
  *)
-int av_get_cpu_flags(void);
+int av_get_cpu_flags();
 
 (**
  * Disables cpu detection and forces the specified flags.
@@ -117,6 +117,6 @@ int av_parse_cpu_caps(unsigned *flags, const char *s);
 (**
  * @return the number of logical CPU cores present.
  *)
-int av_cpu_count(void);
+int av_cpu_count();
 
 // #endif (* AVUTIL_CPU_H *)
