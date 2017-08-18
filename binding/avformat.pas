@@ -449,7 +449,7 @@ int av_get_packet(AVIOContext *s, AVPacket *pkt, int size);
  *)
 int av_append_packet(AVIOContext *s, AVPacket *pkt, int size);
 
-#if FF_API_LAVF_FRAC
+{$if FF_API_LAVF_FRAC}
 (*************************************************)
 (* fractional numbers for exact pts handling *)
 
@@ -460,7 +460,7 @@ int av_append_packet(AVIOContext *s, AVPacket *pkt, int size);
 typedef struct AVFrac {
     int64_t val, num, den;
 } AVFrac;
-#endif
+{$endif}
 
 (*************************************************)
 (* input/output formats *)
@@ -490,10 +490,10 @@ typedef struct AVProbeData {
   AVFMT_NOFILE = $0001;
   AVFMT_NEEDNUMBER = $0002;      (**< Needs '%d' in filename. *)
   AVFMT_SHOW_IDS = $0008;        (**< Show format stream IDs numbers. *)
-#if FF_API_LAVF_FMT_RAWPICTURE
+{$if FF_API_LAVF_FMT_RAWPICTURE}
   AVFMT_RAWPICTURE = $0020;      (**< Format wants AVPicture structure for
                                       raw picture data. @deprecated Not used anymore *)
-#endif
+{$endif}
   AVFMT_GLOBALHEADER = $0040;    (**< Format wants global header. *)
   AVFMT_NOTIMESTAMPS = $0080;    (**< Format does not need / have any timestamps. *)
   AVFMT_GENERIC_INDEX = $0100;   (**< Use generic index building code. *)
@@ -897,22 +897,22 @@ typedef struct AVStream {
      * encoding: set by the user, replaced by libavformat if left unset
      *)
     int id;
-#if FF_API_LAVF_AVCTX
+{$if FF_API_LAVF_AVCTX}
     (**
      * @deprecated use the codecpar struct instead
      *)
     attribute_deprecated
     AVCodecContext *codec;
-#endif
+{$endif}
     void *priv_data;
 
-#if FF_API_LAVF_FRAC
+{$if FF_API_LAVF_FRAC}
     (**
      * @deprecated this field is unused
      *)
     attribute_deprecated
     struct AVFrac pts;
-#endif
+{$endif}
 
     (**
      * This is the fundamental unit of time (in seconds) in terms
@@ -1480,9 +1480,9 @@ typedef struct AVFormatContext {
   AVFMT_FLAG_MP4A_LATM = $8000; ///< Enable RTP MP4A-LATM payload
   AVFMT_FLAG_SORT_DTS = $10000; ///< try to interleave outputted packets by dts (using this flag can slow demuxing down)
   AVFMT_FLAG_PRIV_OPT = $20000; ///< Enable use of private options by delaying codec open (this could be made default once all code is converted)
-#if FF_API_LAVF_KEEPSIDE_FLAG
+{$if FF_API_LAVF_KEEPSIDE_FLAG}
   AVFMT_FLAG_KEEP_SIDE_DATA = $40000; ///< Don't merge side data but keep it separate. Deprecated, will be the default.
-#endif
+{$endif}
   AVFMT_FLAG_FAST_SEEK = $80000; ///< Enable fast, but inaccurate seeks for some formats
   AVFMT_FLAG_SHORTEST = $100000; ///< Stop muxing when the shortest stream stops.
   AVFMT_FLAG_AUTO_BSF = $200000; ///< Wait for packet data before writing a header, and add bitstream filters as requested by the muxer
@@ -1859,7 +1859,7 @@ typedef struct AVFormatContext {
      *)
     enum AVCodecID data_codec_id;
 
-#if FF_API_OLD_OPEN_CALLBACKS
+{$if FF_API_OLD_OPEN_CALLBACKS}
     (**
      * Called to open further IO contexts when needed for demuxing.
      *
@@ -1879,7 +1879,7 @@ typedef struct AVFormatContext {
      *)
     attribute_deprecated
     int (*open_cb)(struct AVFormatContext *s, AVIOContext **p, const char *url, int flags, const AVIOInterruptCB *int_cb, AVDictionary **options);
-#endif
+{$endif}
 
     (**
      * ',' separated list of allowed protocols.
@@ -1950,10 +1950,10 @@ void *    av_format_get_opaque(const AVFormatContext *s);
 void      av_format_set_opaque(AVFormatContext *s, void *opaque);
 av_format_control_message av_format_get_control_message_cb(const AVFormatContext *s);
 void      av_format_set_control_message_cb(AVFormatContext *s, av_format_control_message callback);
-#if FF_API_OLD_OPEN_CALLBACKS
+{$if FF_API_OLD_OPEN_CALLBACKS}
 attribute_deprecated AVOpenCallback av_format_get_open_cb(const AVFormatContext *s);
 attribute_deprecated void av_format_set_open_cb(AVFormatContext *s, AVOpenCallback callback);
-#endif
+{$endif}
 
 (**
  * This function will cause global side data to be injected in the next packet
@@ -2115,13 +2115,13 @@ uint8_t *av_stream_new_side_data(AVStream *stream,
  * @param size pointer for side information size to store (optional)
  * @return pointer to data if present or NULL otherwise
  *)
-#if FF_API_NOCONST_GET_SIDE_DATA
+{$if FF_API_NOCONST_GET_SIDE_DATA}
 uint8_t *av_stream_get_side_data(AVStream *stream,
                                  enum AVPacketSideDataType type, int *size);
 #else
 uint8_t *av_stream_get_side_data(const AVStream *stream,
                                  enum AVPacketSideDataType type, int *size);
-#endif
+{$endif}
 
 AVProgram *av_new_program(AVFormatContext *s, int id);
 
@@ -2977,19 +2977,19 @@ int avformat_queue_attached_pictures(AVFormatContext *s);
  * @return  >=0 on success;
  *          AVERROR code on failure
  *)
-#if FF_API_OLD_BSF
+{$if FF_API_OLD_BSF}
 attribute_deprecated
 int av_apply_bitstream_filters(AVCodecContext *codec, AVPacket *pkt,
                                AVBitStreamFilterContext *bsfc);
-#endif
+{$endif}
 
 enum AVTimebaseSource {
     AVFMT_TBCF_AUTO = -1,
     AVFMT_TBCF_DECODER,
     AVFMT_TBCF_DEMUXER,
-#if FF_API_R_FRAME_RATE
+{$if FF_API_R_FRAME_RATE}
     AVFMT_TBCF_R_FRAMERATE,
-#endif
+{$endif}
 };
 
 (**

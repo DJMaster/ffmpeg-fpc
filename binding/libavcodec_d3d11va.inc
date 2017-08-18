@@ -39,7 +39,7 @@
 #if !defined(_WIN32_WINNT) || _WIN32_WINNT < $0602
 #undef _WIN32_WINNT
   _WIN32_WINNT = $0602;
-#endif
+{$endif}
 
 #include <stdint.h>
 #include <d3d11.h>

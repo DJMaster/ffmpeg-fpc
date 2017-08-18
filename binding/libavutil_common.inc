@@ -34,7 +34,7 @@
 
 #if defined(__cplusplus) && !defined(__STDC_CONSTANT_MACROS) && !defined(UINT64_C)
 #error missing -D__STDC_CONSTANT_MACROS / #define __STDC_CONSTANT_MACROS
-#endif
+{$endif}
 
 #include <errno.h>
 #include <inttypes.h>
@@ -50,11 +50,11 @@
 #include "version.h"
 #include "libavutil/avconfig.h"
 
-#if AV_HAVE_BIGENDIAN
+{$if AV_HAVE_BIGENDIAN}
 #   define AV_NE(be, le) (be)
 #else
 #   define AV_NE(be, le) (le)
-#endif
+{$endif}
 
 //rounded division & shift
 #define RSHIFT(a,b) ((a) > 0 ? ((a) + ((1<<(b))>>1))>>(b) : ((a) + ((1<<(b))>>1)-1)>>(b))
@@ -110,18 +110,18 @@
 #ifdef HAVE_AV_CONFIG_H
 #   include "config.h"
 #   include "intmath.h"
-#endif
+{$endif}
 
 (* Pull in unguarded fallback defines at the end of this file. *)
 #include "common.h"
 
 #ifndef av_log2
 av_const int av_log2(unsigned v);
-#endif
+{$endif}
 
 #ifndef av_log2_16bit
 av_const int av_log2_16bit(unsigned v);
-#endif
+{$endif}
 
 (**
  * Clip a signed integer value into the amin-amax range.
@@ -134,7 +134,7 @@ static av_always_inline av_const int av_clip_c(int a, int amin, int amax)
 {
 #if defined(HAVE_AV_CONFIG_H) && defined(ASSERT_LEVEL) && ASSERT_LEVEL >= 2
     if (amin > amax) abort();
-#endif
+{$endif}
     if      (a < amin) return amin;
     else if (a > amax) return amax;
     else               return a;
@@ -151,7 +151,7 @@ static av_always_inline av_const int64_t av_clip64_c(int64_t a, int64_t amin, in
 {
 #if defined(HAVE_AV_CONFIG_H) && defined(ASSERT_LEVEL) && ASSERT_LEVEL >= 2
     if (amin > amax) abort();
-#endif
+{$endif}
     if      (a < amin) return amin;
     else if (a > amax) return amax;
     else               return a;
@@ -284,7 +284,7 @@ static av_always_inline av_const float av_clipf_c(float a, float amin, float ama
 {
 #if defined(HAVE_AV_CONFIG_H) && defined(ASSERT_LEVEL) && ASSERT_LEVEL >= 2
     if (amin > amax) abort();
-#endif
+{$endif}
     if      (a < amin) return amin;
     else if (a > amax) return amax;
     else               return a;
@@ -301,7 +301,7 @@ static av_always_inline av_const double av_clipd_c(double a, double amin, double
 {
 #if defined(HAVE_AV_CONFIG_H) && defined(ASSERT_LEVEL) && ASSERT_LEVEL >= 2
     if (amin > amax) abort();
-#endif
+{$endif}
     if      (a < amin) return amin;
     else if (a > amax) return amax;
     else               return a;
@@ -471,7 +471,7 @@ static av_always_inline av_const int av_parity_c(uint32_t v)
 
 #ifdef HAVE_AV_CONFIG_H
 #    include "internal.h"
-#endif (* HAVE_AV_CONFIG_H *)
+{$endif} (* HAVE_AV_CONFIG_H *)
 
 // #endif (* AVUTIL_COMMON_H *)
 
@@ -482,55 +482,55 @@ static av_always_inline av_const int av_parity_c(uint32_t v)
 
 #ifndef av_ceil_log2
 #   define av_ceil_log2     av_ceil_log2_c
-#endif
+{$endif}
 #ifndef av_clip
 #   define av_clip          av_clip_c
-#endif
+{$endif}
 #ifndef av_clip64
 #   define av_clip64        av_clip64_c
-#endif
+{$endif}
 #ifndef av_clip_uint8
 #   define av_clip_uint8    av_clip_uint8_c
-#endif
+{$endif}
 #ifndef av_clip_int8
 #   define av_clip_int8     av_clip_int8_c
-#endif
+{$endif}
 #ifndef av_clip_uint16
 #   define av_clip_uint16   av_clip_uint16_c
-#endif
+{$endif}
 #ifndef av_clip_int16
 #   define av_clip_int16    av_clip_int16_c
-#endif
+{$endif}
 #ifndef av_clipl_int32
 #   define av_clipl_int32   av_clipl_int32_c
-#endif
+{$endif}
 #ifndef av_clip_intp2
 #   define av_clip_intp2    av_clip_intp2_c
-#endif
+{$endif}
 #ifndef av_clip_uintp2
 #   define av_clip_uintp2   av_clip_uintp2_c
-#endif
+{$endif}
 #ifndef av_mod_uintp2
 #   define av_mod_uintp2    av_mod_uintp2_c
-#endif
+{$endif}
 #ifndef av_sat_add32
 #   define av_sat_add32     av_sat_add32_c
-#endif
+{$endif}
 #ifndef av_sat_dadd32
 #   define av_sat_dadd32    av_sat_dadd32_c
-#endif
+{$endif}
 #ifndef av_clipf
 #   define av_clipf         av_clipf_c
-#endif
+{$endif}
 #ifndef av_clipd
 #   define av_clipd         av_clipd_c
-#endif
+{$endif}
 #ifndef av_popcount
 #   define av_popcount      av_popcount_c
-#endif
+{$endif}
 #ifndef av_popcount64
 #   define av_popcount64    av_popcount64_c
-#endif
+{$endif}
 #ifndef av_parity
 #   define av_parity        av_parity_c
-#endif
+{$endif}

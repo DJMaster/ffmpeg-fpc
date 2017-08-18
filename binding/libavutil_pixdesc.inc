@@ -63,7 +63,7 @@ typedef struct AVComponentDescriptor {
      *)
     int depth;
 
-#if FF_API_PLUS1_MINUS1
+{$if FF_API_PLUS1_MINUS1}
     (** deprecated, use step instead *)
     attribute_deprecated int step_minus1;
 

@@ -281,7 +281,7 @@ typedef struct AVOption {
     int flags;
   AV_OPT_FLAG_ENCODING_PARAM = 1   ///< a generic parameter which can be set by the user for muxing or encoding
   AV_OPT_FLAG_DECODING_PARAM = 2   ///< a generic parameter which can be set by the user for demuxing or decoding
-#if FF_API_OPT_TYPE_METADATA
+{$if FF_API_OPT_TYPE_METADATA}
   AV_OPT_FLAG_METADATA = 4   ///< some data extracted or inserted into the file like title, comment, ...
 #endif
   AV_OPT_FLAG_AUDIO_PARAM = 8

@@ -40,7 +40,7 @@
 
 #include "config.h"
 
-#if   ARCH_AARCH64
+{$if   }ARCH_AARCH64
 #   include "aarch64/bswap.h"
 #elif ARCH_ARM
 #   include "arm/bswap.h"
@@ -50,9 +50,9 @@
 #   include "sh4/bswap.h"
 #elif ARCH_X86
 #   include "x86/bswap.h"
-#endif
+{$endif}
 
-#endif (* HAVE_AV_CONFIG_H *)
+{$endif} (* HAVE_AV_CONFIG_H *)
 
 #define AV_BSWAP16C(x) (((x) << 8 & $ff00)  | ((x) >> 8 & $00ff))
 #define AV_BSWAP32C(x) (AV_BSWAP16C(x) << 16 | AV_BSWAP16C((x) >> 16))
@@ -66,26 +66,26 @@ static av_always_inline av_const uint16_t av_bswap16(uint16_t x)
     x= (x>>8) | (x<<8);
     return x;
 }
-#endif
+{$endif}
 
 #ifndef av_bswap32
 static av_always_inline av_const uint32_t av_bswap32(uint32_t x)
 {
     return AV_BSWAP32C(x);
 }
-#endif
+{$endif}
 
 #ifndef av_bswap64
 static inline uint64_t av_const av_bswap64(uint64_t x)
 {
     return (uint64_t)av_bswap32(x) << 32 | av_bswap32(x >> 32);
 }
-#endif
+{$endif}
 
 // be2ne ... big-endian to native-endian
 // le2ne ... little-endian to native-endian
 
-#if AV_HAVE_BIGENDIAN
+{$if AV_HAVE_BIGENDIAN}
 #define av_be2ne16(x) (x)
 #define av_be2ne32(x) (x)
 #define av_be2ne64(x) (x)
@@ -103,7 +103,7 @@ static inline uint64_t av_const av_bswap64(uint64_t x)
 #define av_le2ne64(x) (x)
 #define AV_BE2NEC(s, x) AV_BSWAPC(s, x)
 #define AV_LE2NEC(s, x) (x)
-#endif
+{$endif}
 
 #define AV_BE2NE16C(x) AV_BE2NEC(16, x)
 #define AV_BE2NE32C(x) AV_BE2NEC(32, x)

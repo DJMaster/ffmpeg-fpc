@@ -276,7 +276,7 @@ typedef struct AVFrame {
      *)
     int64_t pts;
 
-#if FF_API_PKT_PTS
+{$if FF_API_PKT_PTS}
     (**
      * PTS copied from the AVPacket that was decoded to produce this frame.
      * @deprecated use the pts field instead
@@ -311,7 +311,7 @@ typedef struct AVFrame {
      *)
     void *opaque;
 
-#if FF_API_ERROR_FRAME
+{$if FF_API_ERROR_FRAME}
     (**
      * @deprecated unused
      *)
@@ -497,7 +497,7 @@ typedef struct AVFrame {
      *)
     int pkt_size;
 
-#if FF_API_FRAME_QP
+{$if FF_API_FRAME_QP}
     (**
      * QP table
      *)
@@ -555,7 +555,7 @@ void    av_frame_set_decode_error_flags   (AVFrame *frame, int     val);
 int     av_frame_get_pkt_size(const AVFrame *frame);
 void    av_frame_set_pkt_size(AVFrame *frame, int val);
 AVDictionary **avpriv_frame_get_metadatap(AVFrame *frame);
-#if FF_API_FRAME_QP
+{$if FF_API_FRAME_QP}
 int8_t *av_frame_get_qp_table(AVFrame *f, int *stride, int *type);
 int av_frame_set_qp_table(AVFrame *f, AVBufferRef *buf, int stride, int type);
 #endif

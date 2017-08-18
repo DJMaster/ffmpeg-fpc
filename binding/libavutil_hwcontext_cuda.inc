@@ -26,9 +26,9 @@
 // #ifndef AVUTIL_HWCONTEXT_CUDA_H
 // #define AVUTIL_HWCONTEXT_CUDA_H
 
-#ifndef CUDA_VERSION
+{$ifndef CUDA_VERSION}
 #include <cuda.h>
-#endif
+{$endif}
 
 #include "pixfmt.h"
 

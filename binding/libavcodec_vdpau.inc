@@ -63,14 +63,14 @@
 #include "avcodec.h"
 #include "version.h"
 
-#if FF_API_BUFS_VDPAU
+{$if FF_API_BUFS_VDPAU}
 union AVVDPAUPictureInfo {
     VdpPictureInfoH264        h264;
     VdpPictureInfoMPEG1Or2    mpeg;
     VdpPictureInfoVC1          vc1;
     VdpPictureInfoMPEG4Part2 mpeg4;
 };
-#endif
+{$endif}
 
 struct AVCodecContext;
 struct AVFrame;
@@ -108,7 +108,7 @@ typedef struct AVVDPAUContext {
      *)
     VdpDecoderRender *render;
 
-#if FF_API_BUFS_VDPAU
+{$if FF_API_BUFS_VDPAU}
     (**
      * VDPAU picture information
      *
@@ -141,7 +141,7 @@ typedef struct AVVDPAUContext {
      *)
     attribute_deprecated
     VdpBitstreamBuffer *bitstream_buffers;
-#endif
+{$endif}
     AVVDPAU_Render2 render2;
 } AVVDPAUContext;
 
@@ -202,7 +202,7 @@ int av_vdpau_get_surface_parameters(AVCodecContext *avctx, VdpChromaType *type,
  *)
 AVVDPAUContext *av_vdpau_alloc_context();
 
-#if FF_API_VDPAU_PROFILE
+{$if FF_API_VDPAU_PROFILE}
 (**
  * Get a decoder profile that should be used for initializing a VDPAU decoder.
  * Should be called from the AVCodecContext.get_format() callback.
@@ -218,9 +218,9 @@ AVVDPAUContext *av_vdpau_alloc_context();
  *)
 attribute_deprecated
 int av_vdpau_get_profile(AVCodecContext *avctx, VdpDecoderProfile *profile);
-#endif
+{$endif}
 
-#if FF_API_CAP_VDPAU
+{$if FF_API_CAP_VDPAU}
 (** @brief The videoSurface is used for rendering. *)
   FF_VDPAU_STATE_USED_FOR_RENDER = 1;
 
@@ -252,7 +252,7 @@ struct vdpau_render_state {
     (** The user is responsible for freeing this buffer using av_freep(). *)
     VdpBitstreamBuffer *bitstream_buffers;
 };
-#endif
+{$endif}
 
 (* @}*)
 

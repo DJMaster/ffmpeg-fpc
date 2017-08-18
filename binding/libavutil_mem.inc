@@ -93,29 +93,29 @@
  * @param v Name of the variable
  *)
 
-#if defined(__INTEL_COMPILER) && __INTEL_COMPILER < 1110 || defined(__SUNPRO_C)
-    #define DECLARE_ALIGNED(n,t,v)      t __attribute__ ((aligned (n))) v
-    #define DECLARE_ASM_CONST(n,t,v)    const t __attribute__ ((aligned (n))) v
-#elif defined(__TI_COMPILER_VERSION__)
-    #define DECLARE_ALIGNED(n,t,v)                      \
-        AV_PRAGMA(DATA_ALIGN(v,n))                      \
-        t __attribute__((aligned(n))) v
-    #define DECLARE_ASM_CONST(n,t,v)                    \
-        AV_PRAGMA(DATA_ALIGN(v,n))                      \
-        static const t __attribute__((aligned(n))) v
-#elif defined(__DJGPP__)
-    #define DECLARE_ALIGNED(n,t,v)      t __attribute__ ((aligned (FFMIN(n, 16)))) v
-    #define DECLARE_ASM_CONST(n,t,v)    static const t av_used __attribute__ ((aligned (FFMIN(n, 16)))) v
-#elif defined(__GNUC__) || defined(__clang__)
-    #define DECLARE_ALIGNED(n,t,v)      t __attribute__ ((aligned (n))) v
-    #define DECLARE_ASM_CONST(n,t,v)    static const t av_used __attribute__ ((aligned (n))) v
-#elif defined(_MSC_VER)
-    #define DECLARE_ALIGNED(n,t,v)      __declspec(align(n)) t v
-    #define DECLARE_ASM_CONST(n,t,v)    __declspec(align(n)) static const t v
-#else
-    #define DECLARE_ALIGNED(n,t,v)      t v
-    #define DECLARE_ASM_CONST(n,t,v)    static const t v
-#endif
+//TODO #if defined(__INTEL_COMPILER) && __INTEL_COMPILER < 1110 || defined(__SUNPRO_C)
+//TODO     #define DECLARE_ALIGNED(n,t,v)      t __attribute__ ((aligned (n))) v
+//TODO     #define DECLARE_ASM_CONST(n,t,v)    const t __attribute__ ((aligned (n))) v
+//TODO #elif defined(__TI_COMPILER_VERSION__)
+//TODO     #define DECLARE_ALIGNED(n,t,v)                      \
+//TODO         AV_PRAGMA(DATA_ALIGN(v,n))                      \
+//TODO         t __attribute__((aligned(n))) v
+//TODO     #define DECLARE_ASM_CONST(n,t,v)                    \
+//TODO         AV_PRAGMA(DATA_ALIGN(v,n))                      \
+//TODO         static const t __attribute__((aligned(n))) v
+//TODO #elif defined(__DJGPP__)
+//TODO     #define DECLARE_ALIGNED(n,t,v)      t __attribute__ ((aligned (FFMIN(n, 16)))) v
+//TODO     #define DECLARE_ASM_CONST(n,t,v)    static const t av_used __attribute__ ((aligned (FFMIN(n, 16)))) v
+//TODO #elif defined(__GNUC__) || defined(__clang__)
+//TODO     #define DECLARE_ALIGNED(n,t,v)      t __attribute__ ((aligned (n))) v
+//TODO     #define DECLARE_ASM_CONST(n,t,v)    static const t av_used __attribute__ ((aligned (n))) v
+//TODO #elif defined(_MSC_VER)
+//TODO     #define DECLARE_ALIGNED(n,t,v)      __declspec(align(n)) t v
+//TODO     #define DECLARE_ASM_CONST(n,t,v)    __declspec(align(n)) static const t v
+//TODO #else
+//TODO     #define DECLARE_ALIGNED(n,t,v)      t v
+//TODO     #define DECLARE_ASM_CONST(n,t,v)    static const t v
+//TODO #endif
 
 (**
  * @}
@@ -137,11 +137,11 @@
  * @see <a href="https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-g_t_0040code_007bmalloc_007d-function-attribute-3251">Function attribute `malloc` in GCC's documentation</a>
  *)
 
-#if AV_GCC_VERSION_AT_LEAST(3,1)
-    #define av_malloc_attrib __attribute__((__malloc__))
-#else
-    #define av_malloc_attrib
-#endif
+//TODO #if AV_GCC_VERSION_AT_LEAST(3,1)
+//TODO     #define av_malloc_attrib __attribute__((__malloc__))
+//TODO #else
+//TODO     #define av_malloc_attrib
+//TODO #endif
 
 (**
  * @def av_alloc_size(...)
@@ -158,11 +158,11 @@
  * @see <a href="https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-g_t_0040code_007balloc_005fsize_007d-function-attribute-3220">Function attribute `alloc_size` in GCC's documentation</a>
  *)
 
-#if AV_GCC_VERSION_AT_LEAST(4,3)
-    #define av_alloc_size(...) __attribute__((alloc_size(__VA_ARGS__)))
-#else
-    #define av_alloc_size(...)
-#endif
+//TODO #if AV_GCC_VERSION_AT_LEAST(4,3)
+//TODO     #define av_alloc_size(...) __attribute__((alloc_size(__VA_ARGS__)))
+//TODO #else
+//TODO     #define av_alloc_size(...)
+//TODO #endif
 
 (**
  * @}

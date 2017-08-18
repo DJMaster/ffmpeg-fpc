@@ -112,36 +112,36 @@ const
  * @{
  *)
 
-#ifndef FF_API_VDPAU
+{$ifndef FF_API_VDPAU}
   FF_API_VDPAU = (LIBAVUTIL_VERSION_MAJOR < 56);
-#endif
-#ifndef FF_API_XVMC
+{$endif}
+{$ifndef FF_API_XVMC}
   FF_API_XVMC = (LIBAVUTIL_VERSION_MAJOR < 56);
-#endif
-#ifndef FF_API_OPT_TYPE_METADATA
+{$endif}
+{$ifndef FF_API_OPT_TYPE_METADATA}
   FF_API_OPT_TYPE_METADATA = (LIBAVUTIL_VERSION_MAJOR < 56);
-#endif
-#ifndef FF_API_DLOG
+{$endif}
+{$ifndef FF_API_DLOG}
   FF_API_DLOG = (LIBAVUTIL_VERSION_MAJOR < 56);
-#endif
-#ifndef FF_API_VAAPI
+{$endif}
+{$ifndef FF_API_VAAPI}
   FF_API_VAAPI = (LIBAVUTIL_VERSION_MAJOR < 56);
-#endif
-#ifndef FF_API_FRAME_QP
+{$endif}
+{$ifndef FF_API_FRAME_QP}
   FF_API_FRAME_QP = (LIBAVUTIL_VERSION_MAJOR < 56);
-#endif
-#ifndef FF_API_PLUS1_MINUS1
+{$endif}
+{$ifndef FF_API_PLUS1_MINUS1}
   FF_API_PLUS1_MINUS1 = (LIBAVUTIL_VERSION_MAJOR < 56);
-#endif
-#ifndef FF_API_ERROR_FRAME
+{$endif}
+{$ifndef FF_API_ERROR_FRAME}
   FF_API_ERROR_FRAME = (LIBAVUTIL_VERSION_MAJOR < 56);
-#endif
-#ifndef FF_API_CRC_BIG_TABLE
+{$endif}
+{$ifndef FF_API_CRC_BIG_TABLE}
   FF_API_CRC_BIG_TABLE = (LIBAVUTIL_VERSION_MAJOR < 56);
-#endif
-#ifndef FF_API_PKT_PTS
+{$endif}
+{$ifndef FF_API_PKT_PTS}
   FF_API_PKT_PTS = (LIBAVUTIL_VERSION_MAJOR < 56);
-#endif
+{$endif}
 
 
 (**

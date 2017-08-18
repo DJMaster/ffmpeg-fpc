@@ -340,7 +340,7 @@ void av_log_format_line(void *ptr, int level, const char *fmt, va_list vl,
 int av_log_format_line2(void *ptr, int level, const char *fmt, va_list vl,
                         char *line, int line_size, int *print_prefix);
 
-#if FF_API_DLOG
+{$if FF_API_DLOG}
 (**
  * av_dlog macros
  * @deprecated unused
@@ -351,8 +351,8 @@ int av_log_format_line2(void *ptr, int level, const char *fmt, va_list vl,
 #    define av_dlog(pctx, ...) av_log(pctx, AV_LOG_DEBUG, __VA_ARGS__)
 #else
 #    define av_dlog(pctx, ...) do { if (0) av_log(pctx, AV_LOG_DEBUG, __VA_ARGS__); } while (0)
-#endif
-#endif (* FF_API_DLOG *)
+{$endif}
+{$endif} (* FF_API_DLOG *)
 
 (**
  * Skip repeated messages, this requires the user app to use av_log() instead of

@@ -40,7 +40,7 @@
 #include "libavutil/attributes.h"
 #include "version.h"
 
-#if FF_API_STRUCT_VAAPI_CONTEXT
+{$if FF_API_STRUCT_VAAPI_CONTEXT}
 
 (**
  * @defgroup lavc_codec_hwaccel_vaapi VA API Decoding
@@ -84,7 +84,7 @@ struct attribute_deprecated vaapi_context {
      *)
     uint32_t context_id;
 
-#if FF_API_VAAPI_CONTEXT
+{$if FF_API_VAAPI_CONTEXT}
     (**
      * VAPictureParameterBuffer ID
      *
@@ -191,11 +191,11 @@ struct attribute_deprecated vaapi_context {
      *)
     attribute_deprecated
     uint32_t slice_data_size;
-#endif
+{$endif}
 };
 
 (* @} *)
 
-#endif (* FF_API_STRUCT_VAAPI_CONTEXT *)
+{$endif} (* FF_API_STRUCT_VAAPI_CONTEXT *)
 
 // #endif (* AVCODEC_VAAPI_H *)

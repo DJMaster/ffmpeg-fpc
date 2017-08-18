@@ -623,7 +623,7 @@ struct AVFilterLink {
      *)
     int status_out;
 
-#endif (* FF_INTERNAL_FIELDS *)
+{$endif} (* FF_INTERNAL_FIELDS *)
 
 };
 
@@ -677,11 +677,11 @@ int avfilter_process_command(AVFilterContext *filter, const char *cmd, const cha
 (** Initialize the filter system. Register all builtin filters. *)
 void avfilter_register_all();
 
-#if FF_API_OLD_FILTER_REGISTER
+{$if FF_API_OLD_FILTER_REGISTER}
 (** Uninitialize the filter system. Unregister all filters. *)
 attribute_deprecated
 void avfilter_uninit();
-#endif
+{$endif}
 
 (**
  * Register a filter. This is only needed if you plan to use
@@ -702,9 +702,9 @@ int avfilter_register(AVFilter *filter);
  * @return     the filter definition, if any matching one is registered.
  *             NULL if none found.
  *)
-#if !FF_API_NOCONST_GET_NAME
+{$if not FF_API_NOCONST_GET_NAME}
 const
-#endif
+{$endif}
 AVFilter *avfilter_get_by_name(const char *name);
 
 (**
@@ -714,7 +714,7 @@ AVFilter *avfilter_get_by_name(const char *name);
  *)
 const AVFilter *avfilter_next(const AVFilter *prev);
 
-#if FF_API_OLD_FILTER_REGISTER
+{$if FF_API_OLD_FILTER_REGISTER}
 (**
  * If filter is NULL, returns a pointer to the first registered filter pointer,
  * if filter is non-NULL, returns the next pointer after filter.
@@ -724,9 +724,9 @@ const AVFilter *avfilter_next(const AVFilter *prev);
  *)
 attribute_deprecated
 AVFilter **av_filter_next(AVFilter **filter);
-#endif
+{$endif}
 
-#if FF_API_AVFILTER_OPEN
+{$if FF_API_AVFILTER_OPEN}
 (**
  * Create a filter instance.
  *
@@ -739,10 +739,10 @@ AVFilter **av_filter_next(AVFilter **filter);
  *)
 attribute_deprecated
 int avfilter_open(AVFilterContext **filter_ctx, AVFilter *filter, const char *inst_name);
-#endif
+{$endif}
 
 
-#if FF_API_AVFILTER_INIT_FILTER
+{$if FF_API_AVFILTER_INIT_FILTER}
 (**
  * Initialize a filter.
  *
@@ -755,7 +755,7 @@ int avfilter_open(AVFilterContext **filter_ctx, AVFilter *filter, const char *in
  *)
 attribute_deprecated
 int avfilter_init_filter(AVFilterContext *filter, const char *args, void *opaque);
-#endif
+{$endif}
 
 (**
  * Initialize a filter with the supplied parameters.
@@ -855,9 +855,9 @@ typedef struct AVFilterGraph {
     unsigned nb_filters;
 
     char *scale_sws_opts; ///< sws options to use for the auto-inserted scale filters
-#if FF_API_LAVR_OPTS
+{$if FF_API_LAVR_OPTS}
     attribute_deprecated char *resample_lavr_opts;   ///< libavresample options to use for the auto-inserted resample filters
-#endif
+{$endif}
 
     (**
      * Type of multithreading allowed for filters in this graph. A combination
@@ -956,7 +956,7 @@ AVFilterContext *avfilter_graph_alloc_filter(AVFilterGraph *graph,
  *)
 AVFilterContext *avfilter_graph_get_filter(AVFilterGraph *graph, const char *name);
 
-#if FF_API_AVFILTER_OPEN
+{$if FF_API_AVFILTER_OPEN}
 (**
  * Add an existing filter instance to a filter graph.
  *
@@ -968,7 +968,7 @@ AVFilterContext *avfilter_graph_get_filter(AVFilterGraph *graph, const char *nam
  *)
 attribute_deprecated
 int avfilter_graph_add_filter(AVFilterGraph *graphctx, AVFilterContext *filter);
-#endif
+{$endif}
 
 (**
  * Create and add a filter instance into an existing graph.
