@@ -40,7 +40,7 @@
 #    define AV_GCC_VERSION_AT_MOST(x,y)  0
 {$endif}
 
-#ifndef av_always_inline
+{$ifndef av_always_inline}
 #if AV_GCC_VERSION_AT_LEAST(3,1)
 #    define av_always_inline __attribute__((always_inline)) inline
 #elif defined(_MSC_VER)
@@ -50,7 +50,7 @@
 {$endif}
 {$endif}
 
-#ifndef av_extern_inline
+{$ifndef av_extern_inline}
 #if defined(__ICL) && __ICL >= 1210 || defined(__GNUC_STDC_INLINE__)
 #    define av_extern_inline extern inline
 #else
@@ -109,7 +109,7 @@
  * This is useful for sections of code kept for backward compatibility and
  * scheduled for removal.
  *)
-#ifndef AV_NOWARN_DEPRECATED
+{$ifndef AV_NOWARN_DEPRECATED}
 #if AV_GCC_VERSION_AT_LEAST(4,6)
 #    define AV_NOWARN_DEPRECATED(code) \
         _Pragma("GCC diagnostic push") \

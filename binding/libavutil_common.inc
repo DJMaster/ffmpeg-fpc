@@ -115,11 +115,11 @@
 (* Pull in unguarded fallback defines at the end of this file. *)
 #include "common.h"
 
-#ifndef av_log2
+{$ifndef av_log2}
 av_const int av_log2(unsigned v);
 {$endif}
 
-#ifndef av_log2_16bit
+{$ifndef av_log2_16bit}
 av_const int av_log2_16bit(unsigned v);
 {$endif}
 
@@ -480,57 +480,57 @@ static av_always_inline av_const int av_parity_c(uint32_t v)
  * to ensure they are immediately available in intmath.h.
  *)
 
-#ifndef av_ceil_log2
+{$ifndef av_ceil_log2}
 #   define av_ceil_log2     av_ceil_log2_c
 {$endif}
-#ifndef av_clip
+{$ifndef av_clip}
 #   define av_clip          av_clip_c
 {$endif}
-#ifndef av_clip64
+{$ifndef av_clip64}
 #   define av_clip64        av_clip64_c
 {$endif}
-#ifndef av_clip_uint8
+{$ifndef av_clip_uint8}
 #   define av_clip_uint8    av_clip_uint8_c
 {$endif}
-#ifndef av_clip_int8
+{$ifndef av_clip_int8}
 #   define av_clip_int8     av_clip_int8_c
 {$endif}
-#ifndef av_clip_uint16
+{$ifndef av_clip_uint16}
 #   define av_clip_uint16   av_clip_uint16_c
 {$endif}
-#ifndef av_clip_int16
+{$ifndef av_clip_int16}
 #   define av_clip_int16    av_clip_int16_c
 {$endif}
-#ifndef av_clipl_int32
+{$ifndef av_clipl_int32}
 #   define av_clipl_int32   av_clipl_int32_c
 {$endif}
-#ifndef av_clip_intp2
+{$ifndef av_clip_intp2}
 #   define av_clip_intp2    av_clip_intp2_c
 {$endif}
-#ifndef av_clip_uintp2
+{$ifndef av_clip_uintp2}
 #   define av_clip_uintp2   av_clip_uintp2_c
 {$endif}
-#ifndef av_mod_uintp2
+{$ifndef av_mod_uintp2}
 #   define av_mod_uintp2    av_mod_uintp2_c
 {$endif}
-#ifndef av_sat_add32
+{$ifndef av_sat_add32}
 #   define av_sat_add32     av_sat_add32_c
 {$endif}
-#ifndef av_sat_dadd32
+{$ifndef av_sat_dadd32}
 #   define av_sat_dadd32    av_sat_dadd32_c
 {$endif}
-#ifndef av_clipf
+{$ifndef av_clipf}
 #   define av_clipf         av_clipf_c
 {$endif}
-#ifndef av_clipd
+{$ifndef av_clipd}
 #   define av_clipd         av_clipd_c
 {$endif}
-#ifndef av_popcount
+{$ifndef av_popcount}
 #   define av_popcount      av_popcount_c
 {$endif}
-#ifndef av_popcount64
+{$ifndef av_popcount64}
 #   define av_popcount64    av_popcount64_c
 {$endif}
-#ifndef av_parity
+{$ifndef av_parity}
 #   define av_parity        av_parity_c
 {$endif}

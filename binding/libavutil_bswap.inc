@@ -60,7 +60,7 @@
 
 #define AV_BSWAPC(s, x) AV_BSWAP##s##C(x)
 
-#ifndef av_bswap16
+{$ifndef av_bswap16}
 static av_always_inline av_const uint16_t av_bswap16(uint16_t x)
 {
     x= (x>>8) | (x<<8);
@@ -68,14 +68,14 @@ static av_always_inline av_const uint16_t av_bswap16(uint16_t x)
 }
 {$endif}
 
-#ifndef av_bswap32
+{$ifndef av_bswap32}
 static av_always_inline av_const uint32_t av_bswap32(uint32_t x)
 {
     return AV_BSWAP32C(x);
 }
 {$endif}
 
-#ifndef av_bswap64
+{$ifndef av_bswap64}
 static inline uint64_t av_const av_bswap64(uint64_t x)
 {
     return (uint64_t)av_bswap32(x) << 32 | av_bswap32(x >> 32);

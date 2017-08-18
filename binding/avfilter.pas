@@ -581,7 +581,7 @@ struct AVFilterLink {
      *)
     AVBufferRef *hw_frames_ctx;
 
-#ifndef FF_INTERNAL_FIELDS
+{$ifndef FF_INTERNAL_FIELDS}
 
     (**
      * Internal structure members.
