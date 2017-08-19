@@ -50,7 +50,7 @@
  *
  * @{
  *)
-
+const
   FF_DXVA2_WORKAROUND_SCALING_LIST_ZIGZAG = 1; ///< Work around for Direct3D11 and old UVD/UVD+ ATI video cards
   FF_DXVA2_WORKAROUND_INTEL_CLEARVIDEO = 2; ///< Work around for Direct3D11 and old Intel GPUs with ClearVideo interface
 
@@ -62,54 +62,56 @@
  *
  * Use av_d3d11va_alloc_context() exclusively to allocate an AVD3D11VAContext.
  *)
-typedef struct AVD3D11VAContext {
+type
+  PAVD3D11VAContext = ^AVD3D11VAContext;
+  AVD3D11VAContext = record
     (**
      * D3D11 decoder object
      *)
-    ID3D11VideoDecoder *decoder;
+    decoder: PID3D11VideoDecoder;
 
     (**
       * D3D11 VideoContext
       *)
-    ID3D11VideoContext *video_context;
+    video_context: PID3D11VideoContext;
 
     (**
      * D3D11 configuration used to create the decoder
      *)
-    D3D11_VIDEO_DECODER_CONFIG *cfg;
+    cfg: PD3D11_VIDEO_DECODER_CONFIG;
 
     (**
      * The number of surface in the surface array
      *)
-    unsigned surface_count;
+    surface_count: cunsigned;
 
     (**
      * The array of Direct3D surfaces used to create the decoder
      *)
-    ID3D11VideoDecoderOutputView **surface;
+    surface: PPID3D11VideoDecoderOutputView;
 
     (**
      * A bit field configuring the workarounds needed for using the decoder
      *)
-    uint64_t workaround;
+    workaround: cuint64_t;
 
     (**
      * Private to the FFmpeg AVHWAccel implementation
      *)
-    unsigned report_id;
+    report_id: cunsigned;
 
     (**
       * Mutex to access video_context
       *)
-    HANDLE  context_mutex;
-} AVD3D11VAContext;
+    context_mutex: HANDLE;
+  end;
 
 (**
  * Allocate an AVD3D11VAContext.
  *
  * @return Newly-allocated AVD3D11VAContext or NULL on failure.
  *)
-AVD3D11VAContext *av_d3d11va_alloc_context();
+function av_d3d11va_alloc_context(): PAVD3D11VAContext; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * @}

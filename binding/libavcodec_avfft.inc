@@ -37,71 +37,81 @@
  *
  * @{
  *)
+type
+  FFTSample: cfloat;
 
-typedef float FFTSample;
+  PFFTComplex = ^FFTComplex;
+  FFTComplex = record
+    re: FFTSample;
+    im: FFTSample;
+  end;;
 
-typedef struct FFTComplex {
-    FFTSample re, im;
-} FFTComplex;
-
-typedef struct FFTContext FFTContext;
+  PFFTContext = ^FFTContext;
+  FFTContext = record
+  end;
 
 (**
  * Set up a complex FFT.
  * @param nbits           log2 of the length of the input array
  * @param inverse         if 0 perform the forward transform, if 1 perform the inverse
  *)
-FFTContext *av_fft_init(int nbits, int inverse);
+function av_fft_init(nbits: cint; inverse: cint): PFFTContext; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Do the permutation needed BEFORE calling ff_fft_calc().
  *)
-void av_fft_permute(FFTContext *s, FFTComplex *z);
+procedure av_fft_permute(s: PFFTContext; z: PFFTComplex); cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Do a complex FFT with the parameters defined in av_fft_init(). The
  * input data must be permuted before. No 1.0/sqrt(n) normalization is done.
  *)
-void av_fft_calc(FFTContext *s, FFTComplex *z);
+procedure av_fft_calc(s: PFFTContext; z: PFFTComplex); cdecl; external LIB_LIBAVCODEC;
 
-void av_fft_end(FFTContext *s);
+procedure av_fft_end(s: PFFTContext); cdecl; external LIB_LIBAVCODEC;
 
-FFTContext *av_mdct_init(int nbits, int inverse, double scale);
-void av_imdct_calc(FFTContext *s, FFTSample *output, const FFTSample *input);
-void av_imdct_half(FFTContext *s, FFTSample *output, const FFTSample *input);
-void av_mdct_calc(FFTContext *s, FFTSample *output, const FFTSample *input);
-void av_mdct_end(FFTContext *s);
+function av_mdct_init(nbits: cint; inverse: cint ; scale: cdouble): PFFTContext; cdecl; external LIB_LIBAVCODEC;
+procedure av_imdct_calc(s: PFFTContext; output: PFFTSample; const input: PFFTSample); cdecl; external LIB_LIBAVCODEC;
+procedure av_imdct_half(s: PFFTContext; output: PFFTSample; const input: PFFTSample); cdecl; external LIB_LIBAVCODEC;
+procedure av_mdct_calc(s: PFFTContext; output: PFFTSample; const input: PFFTSample); cdecl; external LIB_LIBAVCODEC;
+procedure av_mdct_end(s: PFFTContext); cdecl; external LIB_LIBAVCODEC;
 
 (* Real Discrete Fourier Transform *)
 
-enum RDFTransformType {
+type
+  RDFTransformType = (
     DFT_R2C,
     IDFT_C2R,
     IDFT_R2C,
-    DFT_C2R,
-};
+    DFT_C2R
+  );
 
-typedef struct RDFTContext RDFTContext;
+  PRDFTContext = ^RDFTContext;
+  RDFTContext = record
+  end;
 
 (**
  * Set up a real FFT.
  * @param nbits           log2 of the length of the input array
  * @param trans           the type of transform
  *)
-RDFTContext *av_rdft_init(int nbits, enum RDFTransformType trans);
-void av_rdft_calc(RDFTContext *s, FFTSample *data);
-void av_rdft_end(RDFTContext *s);
+function av_rdft_init(nbits: cint; trans: RDFTransformType): PRDFTContext; cdecl; external LIB_LIBAVCODEC;
+procedure av_rdft_calc(s: PRDFTContext; data: PFFTSample); cdecl; external LIB_LIBAVCODEC;
+procedure av_rdft_end(s: PRDFTContext); cdecl; external LIB_LIBAVCODEC;
 
 (* Discrete Cosine Transform *)
 
-typedef struct DCTContext DCTContext;
+type
+  PDCTContext = ^DCTContext;
+  DCTContext = record
+  end;
 
-enum DCTTransformType {
+  DCTTransformType = (
     DCT_II = 0,
     DCT_III,
     DCT_I,
-    DST_I,
-};
+    DST_I
+  };
 
 (**
  * Set up DCT.
@@ -113,9 +123,9 @@ enum DCTTransformType {
  *
  * @note the first element of the input of DST-I is ignored
  *)
-DCTContext *av_dct_init(int nbits, enum DCTTransformType type);
-void av_dct_calc(DCTContext *s, FFTSample *data);
-void av_dct_end (DCTContext *s);
+function av_dct_init(nbits: cint; type_: DCTTransformType): PDCTContext; cdecl; external LIB_LIBAVCODEC;
+procedure av_dct_calc(s: PDCTContext; data: PFFTSample); cdecl; external LIB_LIBAVCODEC;
+procedure av_dct_end(s: PDCTContext); cdecl; external LIB_LIBAVCODEC;
 
 (**
  * @}

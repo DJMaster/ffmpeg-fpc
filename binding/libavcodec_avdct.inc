@@ -32,8 +32,9 @@
  * @note function pointers can be NULL if the specific features have been
  *       disabled at build time.
  *)
-typedef struct AVDCT {
-    const AVClass *av_class;
+  PAVDCT = ^AVDCT;
+  AVDCT = record
+    av_class: PAVClass;
 
     void (*idct)(int16_t *block (* align 16 *));
 
@@ -51,7 +52,7 @@ typedef struct AVDCT {
      * - (-> decode coeffs -> zigzag reorder -> simple_mmx_perm -> dequant
      *    -> simple_idct_mmx -> ...)
      *)
-    uint8_t idct_permutation[64];
+    idct_permutation: array[0..63] of cuint8_t;
 
     void (*fdct)(int16_t *block (* align 16 *));
 
@@ -66,14 +67,14 @@ typedef struct AVDCT {
      * IDCT algorithm.
      * must use AVOptions to set this field.
      *)
-    int idct_algo;
+    idct_algo: cint;
 
     void (*get_pixels)(int16_t *block (* align 16 *),
                        const uint8_t *pixels (* align 8 *),
                        ptrdiff_t line_size);
 
-    int bits_per_sample;
-} AVDCT;
+    bits_per_sample: cint;
+  end;
 
 (**
  * Allocates a AVDCT context.
@@ -82,9 +83,9 @@ typedef struct AVDCT {
  *
  * To free it use av_free()
  *)
-AVDCT *avcodec_dct_alloc();
-int avcodec_dct_init(AVDCT *);
+function avcodec_dct_alloc(): PAVDCT; cdecl; external LIB_LIBAVCODEC;
+function avcodec_dct_init(dct: PAVDCT): cint; cdecl; external LIB_LIBAVCODEC;
 
-const AVClass *avcodec_dct_get_class();
+function avcodec_dct_get_class(): PAVClass; cdecl; external LIB_LIBAVCODEC;
 
 // #endif (* AVCODEC_AVDCT_H *)
