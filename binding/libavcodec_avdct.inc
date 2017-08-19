@@ -36,7 +36,7 @@
   AVDCT = record
     av_class: PAVClass;
 
-    void (*idct)(int16_t *block (* align 16 *));
+    procedure (*idct)(int16_t *block (* align 16 *));
 
     (**
      * IDCT input permutation.
@@ -54,7 +54,7 @@
      *)
     idct_permutation: array[0..63] of cuint8_t;
 
-    void (*fdct)(int16_t *block (* align 16 *));
+    procedure (*fdct)(int16_t *block (* align 16 *));
 
 
     (**
@@ -69,7 +69,7 @@
      *)
     idct_algo: cint;
 
-    void (*get_pixels)(int16_t *block (* align 16 *),
+    procedure (*get_pixels)(int16_t *block (* align 16 *),
                        const uint8_t *pixels (* align 8 *),
                        ptrdiff_t line_size);
 

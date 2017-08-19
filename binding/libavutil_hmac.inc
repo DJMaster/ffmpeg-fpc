@@ -57,7 +57,7 @@ AVHMAC *av_hmac_alloc(enum AVHMACType type);
  * Free an AVHMAC context.
  * @param ctx The context to free, may be NULL
  *)
-void av_hmac_free(AVHMAC *ctx);
+procedure av_hmac_free(AVHMAC *ctx);
 
 (**
  * Initialize an AVHMAC context with an authentication key.
@@ -65,7 +65,7 @@ void av_hmac_free(AVHMAC *ctx);
  * @param key    The authentication key
  * @param keylen The length of the key, in bytes
  *)
-void av_hmac_init(AVHMAC *ctx, const uint8_t *key, unsigned int keylen);
+procedure av_hmac_init(AVHMAC *ctx, const uint8_t *key, unsigned int keylen);
 
 (**
  * Hash data with the HMAC.
@@ -73,7 +73,7 @@ void av_hmac_init(AVHMAC *ctx, const uint8_t *key, unsigned int keylen);
  * @param data The data to hash
  * @param len  The length of the data, in bytes
  *)
-void av_hmac_update(AVHMAC *ctx, const uint8_t *data, unsigned int len);
+procedure av_hmac_update(AVHMAC *ctx, const uint8_t *data, unsigned int len);
 
 (**
  * Finish hashing and output the HMAC digest.

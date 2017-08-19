@@ -391,7 +391,7 @@ int av_opt_show2(void *obj, void *av_log_obj, int req_flags, int rej_flags);
  *
  * @param s an AVOption-enabled struct (its first member must be a pointer to AVClass)
  *)
-void av_opt_set_defaults(void *s);
+procedure av_opt_set_defaults(void *s);
 
 (**
  * Set the values of all AVOption fields to their default values. Only these
@@ -402,7 +402,7 @@ void av_opt_set_defaults(void *s);
  * @param mask combination of AV_OPT_FLAG_*
  * @param flags combination of AV_OPT_FLAG_*
  *)
-void av_opt_set_defaults2(void *s, int mask, int flags);
+procedure av_opt_set_defaults2(void *s, int mask, int flags);
 
 (**
  * Parse the key/value pairs list in opts. For each key/value pair
@@ -457,7 +457,7 @@ int av_opt_set_from_string(void *ctx, const char *opts,
 (**
  * Free all allocated objects in obj.
  *)
-void av_opt_free(void *obj);
+procedure av_opt_free(void *obj);
 
 (**
  * Check whether a particular flag is set in a flags field.
@@ -770,7 +770,7 @@ void *av_opt_ptr(const AVClass *avclass, void *obj, const char *name);
 (**
  * Free an AVOptionRanges struct and set it to NULL.
  *)
-void av_opt_freep_ranges(AVOptionRanges **ranges);
+procedure av_opt_freep_ranges(AVOptionRanges **ranges);
 
 (**
  * Get a list of allowed ranges for the given option.

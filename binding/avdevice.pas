@@ -80,7 +80,7 @@ const char *avdevice_license();
 (**
  * Initialize libavdevice and register all the input and output devices.
  *)
-void avdevice_register_all();
+procedure avdevice_register_all();
 
 (**
  * Audio input devices iterator.
@@ -456,7 +456,7 @@ int avdevice_capabilities_create(AVDeviceCapabilitiesQuery **caps, AVFormatConte
  * @param caps Device capabilities data to be freed.
  * @param s    Context of the device.
  *)
-void avdevice_capabilities_free(AVDeviceCapabilitiesQuery **caps, AVFormatContext *s);
+procedure avdevice_capabilities_free(AVDeviceCapabilitiesQuery **caps, AVFormatContext *s);
 
 (**
  * Structure describes basic parameters of the device.
@@ -495,7 +495,7 @@ int avdevice_list_devices(struct AVFormatContext *s, AVDeviceInfoList **device_l
  *
  * @param devices device list to be freed.
  *)
-void avdevice_free_list_devices(AVDeviceInfoList **device_list);
+procedure avdevice_free_list_devices(AVDeviceInfoList **device_list);
 
 (**
  * List devices.

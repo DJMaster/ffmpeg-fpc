@@ -81,7 +81,7 @@ int av_sha512_init(struct AVSHA512* context, int bits);
  * @param data    input data to update hash with
  * @param len     input data length
  *)
-void av_sha512_update(struct AVSHA512* context, const uint8_t* data, unsigned int len);
+procedure av_sha512_update(struct AVSHA512* context, const uint8_t* data, unsigned int len);
 
 (**
  * Finish hashing and output digest value.
@@ -89,7 +89,7 @@ void av_sha512_update(struct AVSHA512* context, const uint8_t* data, unsigned in
  * @param context hash function context
  * @param digest  buffer where output digest value is stored
  *)
-void av_sha512_final(struct AVSHA512* context, uint8_t *digest);
+procedure av_sha512_final(struct AVSHA512* context, uint8_t *digest);
 
 (**
  * @}

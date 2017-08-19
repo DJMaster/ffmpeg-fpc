@@ -48,7 +48,7 @@ AVVorbisParseContext *av_vorbis_parse_init(const uint8_t *extradata,
 (**
  * Free the parser and everything associated with it.
  *)
-void av_vorbis_parse_free(AVVorbisParseContext **s);
+procedure av_vorbis_parse_free(AVVorbisParseContext **s);
 
   VORBIS_FLAG_HEADER = $00000001;
   VORBIS_FLAG_COMMENT = $00000002;
@@ -78,6 +78,6 @@ int av_vorbis_parse_frame_flags(AVVorbisParseContext *s, const uint8_t *buf,
 int av_vorbis_parse_frame(AVVorbisParseContext *s, const uint8_t *buf,
                           int buf_size);
 
-void av_vorbis_parse_reset(AVVorbisParseContext *s);
+procedure av_vorbis_parse_reset(AVVorbisParseContext *s);
 
 // #endif (* AVCODEC_VORBIS_PARSER_H *)

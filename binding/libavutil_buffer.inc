@@ -142,7 +142,7 @@ AVBufferRef *av_buffer_create(uint8_t *data, int size,
  * This function is meant to be passed to av_buffer_create(), not called
  * directly.
  *)
-void av_buffer_default_free(void *opaque, uint8_t *data);
+procedure av_buffer_default_free(void *opaque, uint8_t *data);
 
 (**
  * Create a new reference to an AVBuffer.
@@ -158,7 +158,7 @@ AVBufferRef *av_buffer_ref(AVBufferRef *buf);
  *
  * @param buf the reference to be freed. The pointer is set to NULL on return.
  *)
-void av_buffer_unref(AVBufferRef **buf);
+procedure av_buffer_unref(AVBufferRef **buf);
 
 (**
  * @return 1 if the caller may write to the data referred to by buf (which is
@@ -280,7 +280,7 @@ AVBufferPool *av_buffer_pool_init2(int size, void *opaque,
  *
  * @param pool pointer to the pool to be freed. It will be set to NULL.
  *)
-void av_buffer_pool_uninit(AVBufferPool **pool);
+procedure av_buffer_pool_uninit(AVBufferPool **pool);
 
 (**
  * Allocate a new AVBuffer, reusing an old buffer from the pool when available.

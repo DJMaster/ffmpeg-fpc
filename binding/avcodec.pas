@@ -2008,7 +2008,7 @@ typedef struct AVCodecContext {
      * @param type 1->top field, 2->bottom field, 3->frame
      * @param offset offset into the AVFrame.data from which the slice should be read
      *)
-    void (*draw_horiz_band)(struct AVCodecContext *s,
+    procedure (*draw_horiz_band)(struct AVCodecContext *s,
                             const AVFrame *src, int offset[AV_NUM_DATA_POINTERS],
                             int y, int type, int height);
 
@@ -2873,7 +2873,7 @@ typedef struct AVCodecContext {
     (* mb_nb contains the number of macroblocks     *)
     (* encoded in the RTP payload.                  *)
     attribute_deprecated
-    void (*rtp_callback)(struct AVCodecContext *avctx, void *data, int size, int mb_nb);
+    procedure (*rtp_callback)(struct AVCodecContext *avctx, void *data, int size, int mb_nb);
 {$endif}
 
 {$if FF_API_PRIVATE_OPT}
@@ -3673,13 +3673,13 @@ void                     av_codec_set_codec_descriptor(AVCodecContext *avctx, co
 unsigned av_codec_get_codec_properties(const AVCodecContext *avctx);
 
 int  av_codec_get_lowres(const AVCodecContext *avctx);
-void av_codec_set_lowres(AVCodecContext *avctx, int val);
+procedure av_codec_set_lowres(AVCodecContext *avctx, int val);
 
 int  av_codec_get_seek_preroll(const AVCodecContext *avctx);
-void av_codec_set_seek_preroll(AVCodecContext *avctx, int val);
+procedure av_codec_set_seek_preroll(AVCodecContext *avctx, int val);
 
 uint16_t *av_codec_get_chroma_intra_matrix(const AVCodecContext *avctx);
-void av_codec_set_chroma_intra_matrix(AVCodecContext *avctx, uint16_t *val);
+procedure av_codec_set_chroma_intra_matrix(AVCodecContext *avctx, uint16_t *val);
 
 (**
  * AVProfile.
@@ -4254,7 +4254,7 @@ const char *avcodec_license();
  *
  * @see avcodec_register_all()
  *)
-void avcodec_register(AVCodec *codec);
+procedure avcodec_register(AVCodec *codec);
 
 (**
  * Register all the codecs, parsers and bitstream filters which were enabled at
@@ -4266,7 +4266,7 @@ void avcodec_register(AVCodec *codec);
  * @see av_register_codec_parser
  * @see av_register_bitstream_filter
  *)
-void avcodec_register_all();
+procedure avcodec_register_all();
 
 (**
  * Allocate an AVCodecContext and set its fields to default values. The
@@ -4287,7 +4287,7 @@ AVCodecContext *avcodec_alloc_context3(const AVCodec *codec);
  * Free the codec context and everything associated with it and write NULL to
  * the provided pointer.
  *)
-void avcodec_free_context(AVCodecContext **avctx);
+procedure avcodec_free_context(AVCodecContext **avctx);
 
 {$if FF_API_GET_CONTEXT_DEFAULTS}
 (**
@@ -4355,7 +4355,7 @@ AVCodecParameters *avcodec_parameters_alloc();
  * Free an AVCodecParameters instance and everything associated with it and
  * write NULL to the supplied pointer.
  *)
-void avcodec_parameters_free(AVCodecParameters **par);
+procedure avcodec_parameters_free(AVCodecParameters **par);
 
 (**
  * Copy the contents of src to dst. Any allocated fields in dst are freed and
@@ -4446,7 +4446,7 @@ int avcodec_close(AVCodecContext *avctx);
  *
  * @param sub AVSubtitle to free.
  *)
-void avsubtitle_free(AVSubtitle *sub);
+procedure avsubtitle_free(AVSubtitle *sub);
 
 (**
  * @}
@@ -4489,7 +4489,7 @@ AVPacket *av_packet_clone(const AVPacket *src);
  * @param packet packet to be freed. The pointer will be set to NULL.
  * @note passing NULL is a no-op.
  *)
-void av_packet_free(AVPacket **pkt);
+procedure av_packet_free(AVPacket **pkt);
 
 (**
  * Initialize optional fields of a packet with default values.
@@ -4499,7 +4499,7 @@ void av_packet_free(AVPacket **pkt);
  *
  * @param pkt packet
  *)
-void av_init_packet(AVPacket *pkt);
+procedure av_init_packet(AVPacket *pkt);
 
 (**
  * Allocate the payload of a packet and initialize its fields with
@@ -4517,7 +4517,7 @@ int av_new_packet(AVPacket *pkt, int size);
  * @param pkt packet
  * @param size new size
  *)
-void av_shrink_packet(AVPacket *pkt, int size);
+procedure av_shrink_packet(AVPacket *pkt, int size);
 
 (**
  * Increase packet size, correctly zeroing padding
@@ -4573,7 +4573,7 @@ int av_copy_packet_side_data(AVPacket *dst, const AVPacket *src);
  * @param pkt packet to free
  *)
 attribute_deprecated
-void av_free_packet(AVPacket *pkt);
+procedure av_free_packet(AVPacket *pkt);
 {$endif}
 (**
  * Allocate new information of a packet.
@@ -4659,7 +4659,7 @@ int av_packet_unpack_dictionary(const uint8_t *data, int size, AVDictionary **di
  *
  * @param pkt packet
  *)
-void av_packet_free_side_data(AVPacket *pkt);
+procedure av_packet_free_side_data(AVPacket *pkt);
 
 (**
  * Setup a new reference to the data described by a given packet
@@ -4687,7 +4687,7 @@ int av_packet_ref(AVPacket *dst, const AVPacket *src);
  *
  * @param pkt The packet to be unreferenced.
  *)
-void av_packet_unref(AVPacket *pkt);
+procedure av_packet_unref(AVPacket *pkt);
 
 (**
  * Move every field in src to dst and reset src.
@@ -4697,7 +4697,7 @@ void av_packet_unref(AVPacket *pkt);
  * @param src Source packet, will be reset
  * @param dst Destination packet
  *)
-void av_packet_move_ref(AVPacket *dst, AVPacket *src);
+procedure av_packet_move_ref(AVPacket *dst, AVPacket *src);
 
 (**
  * Copy only "properties" fields from src to dst.
@@ -4723,7 +4723,7 @@ int av_packet_copy_props(AVPacket *dst, const AVPacket *src);
  * @param tb_dst destination timebase, to which the timing fields will be
  *               converted
  *)
-void av_packet_rescale_ts(AVPacket *pkt, AVRational tb_src, AVRational tb_dst);
+procedure av_packet_rescale_ts(AVPacket *pkt, AVRational tb_src, AVRational tb_dst);
 
 (**
  * @}
@@ -4779,7 +4779,7 @@ unsigned avcodec_get_edge_width();
  *
  * May only be used if a codec with AV_CODEC_CAP_DR1 has been opened.
  *)
-void avcodec_align_dimensions(AVCodecContext *s, int *width, int *height);
+procedure avcodec_align_dimensions(AVCodecContext *s, int *width, int *height);
 
 (**
  * Modify width and height values so that they will result in a memory
@@ -4788,7 +4788,7 @@ void avcodec_align_dimensions(AVCodecContext *s, int *width, int *height);
  *
  * May only be used if a codec with AV_CODEC_CAP_DR1 has been opened.
  *)
-void avcodec_align_dimensions2(AVCodecContext *s, int *width, int *height,
+procedure avcodec_align_dimensions2(AVCodecContext *s, int *width, int *height,
                                int linesize_align[AV_NUM_DATA_POINTERS]);
 
 (**
@@ -5274,7 +5274,7 @@ typedef struct AVCodecParser {
 
 AVCodecParser *av_parser_next(const AVCodecParser *c);
 
-void av_register_codec_parser(AVCodecParser *parser);
+procedure av_register_codec_parser(AVCodecParser *parser);
 AVCodecParserContext *av_parser_init(int codec_id);
 
 (**
@@ -5323,7 +5323,7 @@ int av_parser_change(AVCodecParserContext *s,
                      AVCodecContext *avctx,
                      uint8_t **poutbuf, int *poutbuf_size,
                      const uint8_t *buf, int buf_size, int keyframe);
-void av_parser_close(AVCodecParserContext *s);
+procedure av_parser_close(AVCodecParserContext *s);
 
 (**
  * @}
@@ -5530,9 +5530,9 @@ int av_resample(struct AVResampleContext *c, short *dst, short *src, int *consum
  * especially if the compensation_distance is large and the in_rate used during init is small
  *)
 attribute_deprecated
-void av_resample_compensate(struct AVResampleContext *c, int sample_delta, int compensation_distance);
+procedure av_resample_compensate(struct AVResampleContext *c, int sample_delta, int compensation_distance);
 attribute_deprecated
-void av_resample_close(struct AVResampleContext *c);
+procedure av_resample_close(struct AVResampleContext *c);
 
 (**
  * @}
@@ -5555,7 +5555,7 @@ int avpicture_alloc(AVPicture *picture, enum AVPixelFormat pix_fmt, int width, i
  * @deprecated unused
  *)
 attribute_deprecated
-void avpicture_free(AVPicture *picture);
+procedure avpicture_free(AVPicture *picture);
 
 (**
  * @deprecated use av_image_fill_arrays() instead.
@@ -5582,7 +5582,7 @@ int avpicture_get_size(enum AVPixelFormat pix_fmt, int width, int height);
  * @deprecated av_image_copy() instead.
  *)
 attribute_deprecated
-void av_picture_copy(AVPicture *dst, const AVPicture *src,
+procedure av_picture_copy(AVPicture *dst, const AVPicture *src,
                      enum AVPixelFormat pix_fmt, int width, int height);
 
 (**
@@ -5635,7 +5635,7 @@ int av_picture_pad(AVPicture *dst, const AVPicture *src, int height, int width, 
  * @see av_pix_fmt_get_chroma_sub_sample
  *)
 
-void avcodec_get_chroma_sub_sample(enum AVPixelFormat pix_fmt, int *h_shift, int *v_shift);
+procedure avcodec_get_chroma_sub_sample(enum AVPixelFormat pix_fmt, int *h_shift, int *v_shift);
 
 (**
  * Return a value representing the fourCC code associated to the
@@ -5692,7 +5692,7 @@ enum AVPixelFormat avcodec_default_get_format(struct AVCodecContext *s, const en
  * @deprecated this function is not supposed to be used from outside of lavc
  *)
 attribute_deprecated
-void avcodec_set_dimensions(AVCodecContext *s, int width, int height);
+procedure avcodec_set_dimensions(AVCodecContext *s, int width, int height);
 {$endif}
 
 {$if FF_API_TAG_STRING}
@@ -5711,7 +5711,7 @@ attribute_deprecated
 size_t av_get_codec_tag_string(char *buf, size_t buf_size, unsigned int codec_tag);
 {$endif}
 
-void avcodec_string(char *buf, int buf_size, AVCodecContext *enc, int encode);
+procedure avcodec_string(char *buf, int buf_size, AVCodecContext *enc, int encode);
 
 (**
  * Return a name for the specified profile, if available.
@@ -5775,7 +5775,7 @@ int avcodec_fill_audio_frame(AVFrame *frame, int nb_channels,
  * refcounted frames are used, the decoder just releases any references it might
  * keep internally, but the caller's reference remains valid.
  *)
-void avcodec_flush_buffers(AVCodecContext *avctx);
+procedure avcodec_flush_buffers(AVCodecContext *avctx);
 
 (**
  * Return codec bits per sample.
@@ -5940,7 +5940,7 @@ typedef struct AVBitStreamFilter {
  * @see avcodec_register_all()
  *)
 attribute_deprecated
-void av_register_bitstream_filter(AVBitStreamFilter *bsf);
+procedure av_register_bitstream_filter(AVBitStreamFilter *bsf);
 
 (**
  * Create and initialize a bitstream filter context given a bitstream
@@ -5997,7 +5997,7 @@ int av_bitstream_filter_filter(AVBitStreamFilterContext *bsfc,
  * av_bitstream_filter_init(), can be NULL
  *)
 attribute_deprecated
-void av_bitstream_filter_close(AVBitStreamFilterContext *bsf);
+procedure av_bitstream_filter_close(AVBitStreamFilterContext *bsf);
 
 (**
  * If f is NULL, return the first registered bitstream filter,
@@ -6096,7 +6096,7 @@ int av_bsf_receive_packet(AVBSFContext *ctx, AVPacket *pkt);
  * Free a bitstream filter context and everything associated with it; write NULL
  * into the supplied pointer.
  *)
-void av_bsf_free(AVBSFContext **ctx);
+procedure av_bsf_free(AVBSFContext **ctx);
 
 (**
  * Get the AVClass for AVBSFContext. It can be used in combination with
@@ -6126,7 +6126,7 @@ AVBSFList *av_bsf_list_alloc();
  *
  * @param lst Pointer to pointer returned by av_bsf_list_alloc()
  *)
-void av_bsf_list_free(AVBSFList **lst);
+procedure av_bsf_list_free(AVBSFList **lst);
 
 (**
  * Append bitstream filter to the list of bitstream filters.
@@ -6200,13 +6200,13 @@ int av_bsf_get_null_filter(AVBSFContext **bsf);
  * In addition the whole buffer will initially and after resizes
  * be 0-initialized so that no uninitialized data will ever appear.
  *)
-void av_fast_padded_malloc(void *ptr, unsigned int *size, size_t min_size);
+procedure av_fast_padded_malloc(void *ptr, unsigned int *size, size_t min_size);
 
 (**
  * Same behaviour av_fast_padded_malloc except that buffer will always
  * be 0-initialized after call.
  *)
-void av_fast_padded_mallocz(void *ptr, unsigned int *size, size_t min_size);
+procedure av_fast_padded_mallocz(void *ptr, unsigned int *size, size_t min_size);
 
 (**
  * Encode extradata length to a buffer. Used by xiph codecs.
@@ -6232,7 +6232,7 @@ unsigned int av_xiphlacing(unsigned char *s, unsigned int v);
  * @deprecated Use avpriv_report_missing_feature() instead.
  *)
 attribute_deprecated
-void av_log_missing_feature(void *avc, const char *feature, int want_sample);
+procedure av_log_missing_feature(void *avc, const char *feature, int want_sample);
 
 (**
  * Log a generic warning message asking for a sample. This function is
@@ -6244,13 +6244,13 @@ void av_log_missing_feature(void *avc, const char *feature, int want_sample);
  * @deprecated Use avpriv_request_sample() instead.
  *)
 attribute_deprecated
-void av_log_ask_for_sample(void *avc, const char *msg, ...) av_printf_format(2, 3);
+procedure av_log_ask_for_sample(void *avc, const char *msg, ...) av_printf_format(2, 3);
 {$endif} (* FF_API_MISSING_SAMPLE *)
 
 (**
  * Register the hardware accelerator hwaccel.
  *)
-void av_register_hwaccel(AVHWAccel *hwaccel);
+procedure av_register_hwaccel(AVHWAccel *hwaccel);
 
 (**
  * If hwaccel is NULL, returns the first registered hardware accelerator,
@@ -6273,7 +6273,7 @@ enum AVLockOp {
 (**
  * Register a user provided lock manager supporting the operations
  * specified by AVLockOp. The "mutex" argument to the function points
- * to a (void *) where the lockmgr should store/get a pointer to a user
+ * to a (void * ) where the lockmgr should store/get a pointer to a user
  * allocated mutex. It is NULL upon AV_LOCK_CREATE and equal to the
  * value left by the last call for all other ops. If the lock manager is
  * unable to perform the op then it should leave the mutex in the same

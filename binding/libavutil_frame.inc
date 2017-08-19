@@ -537,32 +537,32 @@ typedef struct AVFrame {
  * compatibility, and do not need to be used anymore.
  *)
 int64_t av_frame_get_best_effort_timestamp(const AVFrame *frame);
-void    av_frame_set_best_effort_timestamp(AVFrame *frame, int64_t val);
+procedure    av_frame_set_best_effort_timestamp(AVFrame *frame, int64_t val);
 int64_t av_frame_get_pkt_duration         (const AVFrame *frame);
-void    av_frame_set_pkt_duration         (AVFrame *frame, int64_t val);
+procedure    av_frame_set_pkt_duration         (AVFrame *frame, int64_t val);
 int64_t av_frame_get_pkt_pos              (const AVFrame *frame);
-void    av_frame_set_pkt_pos              (AVFrame *frame, int64_t val);
+procedure    av_frame_set_pkt_pos              (AVFrame *frame, int64_t val);
 int64_t av_frame_get_channel_layout       (const AVFrame *frame);
-void    av_frame_set_channel_layout       (AVFrame *frame, int64_t val);
+procedure    av_frame_set_channel_layout       (AVFrame *frame, int64_t val);
 int     av_frame_get_channels             (const AVFrame *frame);
-void    av_frame_set_channels             (AVFrame *frame, int     val);
+procedure    av_frame_set_channels             (AVFrame *frame, int     val);
 int     av_frame_get_sample_rate          (const AVFrame *frame);
-void    av_frame_set_sample_rate          (AVFrame *frame, int     val);
+procedure    av_frame_set_sample_rate          (AVFrame *frame, int     val);
 AVDictionary *av_frame_get_metadata       (const AVFrame *frame);
-void          av_frame_set_metadata       (AVFrame *frame, AVDictionary *val);
+procedure          av_frame_set_metadata       (AVFrame *frame, AVDictionary *val);
 int     av_frame_get_decode_error_flags   (const AVFrame *frame);
-void    av_frame_set_decode_error_flags   (AVFrame *frame, int     val);
+procedure    av_frame_set_decode_error_flags   (AVFrame *frame, int     val);
 int     av_frame_get_pkt_size(const AVFrame *frame);
-void    av_frame_set_pkt_size(AVFrame *frame, int val);
+procedure    av_frame_set_pkt_size(AVFrame *frame, int val);
 AVDictionary **avpriv_frame_get_metadatap(AVFrame *frame);
 {$if FF_API_FRAME_QP}
 int8_t *av_frame_get_qp_table(AVFrame *f, int *stride, int *type);
 int av_frame_set_qp_table(AVFrame *f, AVBufferRef *buf, int stride, int type);
 #endif
 enum AVColorSpace av_frame_get_colorspace(const AVFrame *frame);
-void    av_frame_set_colorspace(AVFrame *frame, enum AVColorSpace val);
+procedure    av_frame_set_colorspace(AVFrame *frame, enum AVColorSpace val);
 enum AVColorRange av_frame_get_color_range(const AVFrame *frame);
-void    av_frame_set_color_range(AVFrame *frame, enum AVColorRange val);
+procedure    av_frame_set_color_range(AVFrame *frame, enum AVColorRange val);
 
 (**
  * Get the name of a colorspace.
@@ -589,7 +589,7 @@ AVFrame *av_frame_alloc();
  *
  * @param frame frame to be freed. The pointer will be set to NULL.
  *)
-void av_frame_free(AVFrame **frame);
+procedure av_frame_free(AVFrame **frame);
 
 (**
  * Set up a new reference to the data described by the source frame.
@@ -620,7 +620,7 @@ AVFrame *av_frame_clone(const AVFrame *src);
 (**
  * Unreference all the buffers referenced by frame and reset the frame fields.
  *)
-void av_frame_unref(AVFrame *frame);
+procedure av_frame_unref(AVFrame *frame);
 
 (**
  * Move everything contained in src to dst and reset src.
@@ -629,7 +629,7 @@ void av_frame_unref(AVFrame *frame);
  *           or deallocating its contents. Call av_frame_unref(dst) manually
  *           before calling this function to ensure that no memory is leaked.
  *)
-void av_frame_move_ref(AVFrame *dst, AVFrame *src);
+procedure av_frame_move_ref(AVFrame *dst, AVFrame *src);
 
 (**
  * Allocate new buffer(s) for audio or video data.
@@ -738,7 +738,7 @@ AVFrameSideData *av_frame_get_side_data(const AVFrame *frame,
  * If side data of the supplied type exists in the frame, free it and remove it
  * from the frame.
  *)
-void av_frame_remove_side_data(AVFrame *frame, enum AVFrameSideDataType type);
+procedure av_frame_remove_side_data(AVFrame *frame, enum AVFrameSideDataType type);
 
 (**
  * @return a string identifying the side data type

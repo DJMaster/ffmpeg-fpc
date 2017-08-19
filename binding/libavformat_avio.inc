@@ -418,7 +418,7 @@ int avio_close_dir(AVIODirContext **s);
  *
  * @param entry entry to be freed.
  *)
-void avio_free_directory_entry(AVIODirEntry **entry);
+procedure avio_free_directory_entry(AVIODirEntry **entry);
 
 (**
  * Allocate and initialize an AVIOContext for buffered I/O. It must be later
@@ -450,16 +450,16 @@ AVIOContext *avio_alloc_context(
                   int (*write_packet)(void *opaque, uint8_t *buf, int buf_size),
                   int64_t (*seek)(void *opaque, int64_t offset, int whence));
 
-void avio_w8(AVIOContext *s, int b);
-void avio_write(AVIOContext *s, const unsigned char *buf, int size);
-void avio_wl64(AVIOContext *s, uint64_t val);
-void avio_wb64(AVIOContext *s, uint64_t val);
-void avio_wl32(AVIOContext *s, unsigned int val);
-void avio_wb32(AVIOContext *s, unsigned int val);
-void avio_wl24(AVIOContext *s, unsigned int val);
-void avio_wb24(AVIOContext *s, unsigned int val);
-void avio_wl16(AVIOContext *s, unsigned int val);
-void avio_wb16(AVIOContext *s, unsigned int val);
+procedure avio_w8(AVIOContext *s, int b);
+procedure avio_write(AVIOContext *s, const unsigned char *buf, int size);
+procedure avio_wl64(AVIOContext *s, uint64_t val);
+procedure avio_wb64(AVIOContext *s, uint64_t val);
+procedure avio_wl32(AVIOContext *s, unsigned int val);
+procedure avio_wb32(AVIOContext *s, unsigned int val);
+procedure avio_wl24(AVIOContext *s, unsigned int val);
+procedure avio_wb24(AVIOContext *s, unsigned int val);
+procedure avio_wl16(AVIOContext *s, unsigned int val);
+procedure avio_wb16(AVIOContext *s, unsigned int val);
 
 (**
  * Write a NULL-terminated string.
@@ -495,7 +495,7 @@ int avio_put_str16be(AVIOContext *s, const char *str);
  *             applicable
  * @param type the kind of data written starting at the current pos
  *)
-void avio_write_marker(AVIOContext *s, int64_t time, enum AVIODataMarkerType type);
+procedure avio_write_marker(AVIOContext *s, int64_t time, enum AVIODataMarkerType type);
 
 (**
  * ORing this as the "whence" parameter to a seek function causes it to
@@ -565,7 +565,7 @@ int avio_printf(AVIOContext *s, const char *fmt, ...) av_printf_format(2, 3);
  * reported file position to that of the underlying stream. This does not
  * read new data, and does not perform any seeks.
  *)
-void avio_flush(AVIOContext *s);
+procedure avio_flush(AVIOContext *s);
 
 (**
  * Read size bytes from AVIOContext into buf.

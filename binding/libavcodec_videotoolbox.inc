@@ -124,7 +124,7 @@ int av_videotoolbox_default_init2(AVCodecContext *avctx, AVVideotoolboxContext *
  *
  * @param avctx the corresponding codec context
  *)
-void av_videotoolbox_default_free(AVCodecContext *avctx);
+procedure av_videotoolbox_default_free(AVCodecContext *avctx);
 
 (**
  * @}

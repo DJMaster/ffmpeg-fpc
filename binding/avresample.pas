@@ -213,7 +213,7 @@ int avresample_is_open(AVAudioResampleContext *avr);
  *
  * @param avr  audio resample context
  *)
-void avresample_close(AVAudioResampleContext *avr);
+procedure avresample_close(AVAudioResampleContext *avr);
 
 (**
  * Free AVAudioResampleContext and associated AVOption values.
@@ -222,7 +222,7 @@ void avresample_close(AVAudioResampleContext *avr);
  *
  * @param avr  audio resample context
  *)
-void avresample_free(AVAudioResampleContext **avr);
+procedure avresample_free(AVAudioResampleContext **avr);
 
 (**
  * Generate a channel mixing matrix.

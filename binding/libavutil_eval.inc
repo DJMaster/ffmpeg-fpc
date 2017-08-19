@@ -95,7 +95,7 @@ double av_expr_eval(AVExpr *e, const double *const_values, void *opaque);
 (**
  * Free a parsed expression previously created with av_expr_parse().
  *)
-void av_expr_free(AVExpr *e);
+procedure av_expr_free(AVExpr *e);
 
 (**
  * Parse the string in numstr and return its value as a double. If

@@ -79,7 +79,7 @@ double av_display_rotation_get(const int32_t matrix[9]);
  *               by this function)
  * @param angle rotation angle in degrees.
  *)
-void av_display_rotation_set(int32_t matrix[9], double angle);
+procedure av_display_rotation_set(int32_t matrix[9], double angle);
 
 (**
  * Flip the input matrix horizontally and/or vertically.
@@ -88,6 +88,6 @@ void av_display_rotation_set(int32_t matrix[9], double angle);
  * @param hflip whether the matrix should be flipped horizontally
  * @param vflip whether the matrix should be flipped vertically
  *)
-void av_display_matrix_flip(int32_t matrix[9], int hflip, int vflip);
+procedure av_display_matrix_flip(int32_t matrix[9], int hflip, int vflip);
 
 // #endif (* AVUTIL_DISPLAY_H *)

@@ -591,7 +591,7 @@ typedef struct AVOutputFormat {
      *)
     int (*query_codec)(enum AVCodecID id, int std_compliance);
 
-    void (*get_output_timestamp)(struct AVFormatContext *s, int stream,
+    procedure (*get_output_timestamp)(struct AVFormatContext *s, int stream,
                                  int64_t *dts, int64_t *wall);
     (**
      * Allows sending messages from application to device.
@@ -643,7 +643,7 @@ typedef struct AVOutputFormat {
      *
      * This is called if init() fails as well.
      *)
-    void (*deinit)(struct AVFormatContext *);
+    procedure (*deinit)(struct AVFormatContext *);
     (**
      * Set up any necessary bitstream filtering and extract any extra data needed
      * for the global header.
@@ -1256,10 +1256,10 @@ typedef struct AVStream {
 } AVStream;
 
 AVRational av_stream_get_r_frame_rate(const AVStream *s);
-void       av_stream_set_r_frame_rate(AVStream *s, AVRational r);
+procedure       av_stream_set_r_frame_rate(AVStream *s, AVRational r);
 struct AVCodecParserContext *av_stream_get_parser(const AVStream *s);
 char* av_stream_get_recommended_encoder_configuration(const AVStream *s);
-void  av_stream_set_recommended_encoder_configuration(AVStream *s, char *configuration);
+procedure  av_stream_set_recommended_encoder_configuration(AVStream *s, char *configuration);
 
 (**
  * Returns the pts of the last muxed packet + its duration
@@ -1914,7 +1914,7 @@ typedef struct AVFormatContext {
     (**
      * A callback for closing the streams opened with AVFormatContext.io_open().
      *)
-    void (*io_close)(struct AVFormatContext *s, AVIOContext *pb);
+    procedure (*io_close)(struct AVFormatContext *s, AVIOContext *pb);
 
     (**
      * ',' separated list of disallowed protocols.
@@ -1937,29 +1937,29 @@ typedef struct AVFormatContext {
  *)
 int av_format_get_probe_score(const AVFormatContext *s);
 AVCodec * av_format_get_video_codec(const AVFormatContext *s);
-void      av_format_set_video_codec(AVFormatContext *s, AVCodec *c);
+procedure      av_format_set_video_codec(AVFormatContext *s, AVCodec *c);
 AVCodec * av_format_get_audio_codec(const AVFormatContext *s);
-void      av_format_set_audio_codec(AVFormatContext *s, AVCodec *c);
+procedure      av_format_set_audio_codec(AVFormatContext *s, AVCodec *c);
 AVCodec * av_format_get_subtitle_codec(const AVFormatContext *s);
-void      av_format_set_subtitle_codec(AVFormatContext *s, AVCodec *c);
+procedure      av_format_set_subtitle_codec(AVFormatContext *s, AVCodec *c);
 AVCodec * av_format_get_data_codec(const AVFormatContext *s);
-void      av_format_set_data_codec(AVFormatContext *s, AVCodec *c);
+procedure      av_format_set_data_codec(AVFormatContext *s, AVCodec *c);
 int       av_format_get_metadata_header_padding(const AVFormatContext *s);
-void      av_format_set_metadata_header_padding(AVFormatContext *s, int c);
+procedure      av_format_set_metadata_header_padding(AVFormatContext *s, int c);
 void *    av_format_get_opaque(const AVFormatContext *s);
-void      av_format_set_opaque(AVFormatContext *s, void *opaque);
+procedure      av_format_set_opaque(AVFormatContext *s, void *opaque);
 av_format_control_message av_format_get_control_message_cb(const AVFormatContext *s);
-void      av_format_set_control_message_cb(AVFormatContext *s, av_format_control_message callback);
+procedure      av_format_set_control_message_cb(AVFormatContext *s, av_format_control_message callback);
 {$if FF_API_OLD_OPEN_CALLBACKS}
 attribute_deprecated AVOpenCallback av_format_get_open_cb(const AVFormatContext *s);
-attribute_deprecated void av_format_set_open_cb(AVFormatContext *s, AVOpenCallback callback);
+attribute_deprecated procedure av_format_set_open_cb(AVFormatContext *s, AVOpenCallback callback);
 {$endif}
 
 (**
  * This function will cause global side data to be injected in the next packet
  * of each stream as well as after any subsequent seek.
  *)
-void av_format_inject_global_side_data(AVFormatContext *s);
+procedure av_format_inject_global_side_data(AVFormatContext *s);
 
 (**
  * Returns the method used to set ctx->duration.
@@ -2006,10 +2006,10 @@ const char *avformat_license();
  * @see av_register_input_format()
  * @see av_register_output_format()
  *)
-void av_register_all();
+procedure av_register_all();
 
-void av_register_input_format(AVInputFormat *format);
-void av_register_output_format(AVOutputFormat *format);
+procedure av_register_input_format(AVInputFormat *format);
+procedure av_register_output_format(AVOutputFormat *format);
 
 (**
  * Do global initialization of network components. This is optional,
@@ -2051,7 +2051,7 @@ AVFormatContext *avformat_alloc_context();
  * Free an AVFormatContext and all its streams.
  * @param s context to free
  *)
-void avformat_free_context(AVFormatContext *s);
+procedure avformat_free_context(AVFormatContext *s);
 
 (**
  * Get the AVClass for AVFormatContext. It can be used in combination with
@@ -2277,7 +2277,7 @@ int avformat_find_stream_info(AVFormatContext *ic, AVDictionary **options);
  *)
 AVProgram *av_find_program_from_stream(AVFormatContext *ic, AVProgram *last, int s);
 
-void av_program_add_stream_index(AVFormatContext *ac, int progid, unsigned int idx);
+procedure av_program_add_stream_index(AVFormatContext *ac, int progid, unsigned int idx);
 
 (**
  * Find the "best" stream in the file.
@@ -2417,7 +2417,7 @@ int av_read_pause(AVFormatContext *s);
  * Close an opened input AVFormatContext. Free it and all its contents
  * and set *s to NULL.
  *)
-void avformat_close_input(AVFormatContext **s);
+procedure avformat_close_input(AVFormatContext **s);
 (**
  * @}
  *)
@@ -2675,7 +2675,7 @@ int av_get_output_timestamp(struct AVFormatContext *s, int stream,
  *
  * @see av_hex_dump_log, av_pkt_dump2, av_pkt_dump_log2
  *)
-void av_hex_dump(FILE *f, const uint8_t *buf, int size);
+procedure av_hex_dump(FILE *f, const uint8_t *buf, int size);
 
 (**
  * Send a nice hexadecimal dump of a buffer to the log.
@@ -2689,7 +2689,7 @@ void av_hex_dump(FILE *f, const uint8_t *buf, int size);
  *
  * @see av_hex_dump, av_pkt_dump2, av_pkt_dump_log2
  *)
-void av_hex_dump_log(void *avcl, int level, const uint8_t *buf, int size);
+procedure av_hex_dump_log(void *avcl, int level, const uint8_t *buf, int size);
 
 (**
  * Send a nice dump of a packet to the specified file stream.
@@ -2699,7 +2699,7 @@ void av_hex_dump_log(void *avcl, int level, const uint8_t *buf, int size);
  * @param dump_payload True if the payload must be displayed, too.
  * @param st AVStream that the packet belongs to
  *)
-void av_pkt_dump2(FILE *f, const AVPacket *pkt, int dump_payload, const AVStream *st);
+procedure av_pkt_dump2(FILE *f, const AVPacket *pkt, int dump_payload, const AVStream *st);
 
 
 (**
@@ -2713,7 +2713,7 @@ void av_pkt_dump2(FILE *f, const AVPacket *pkt, int dump_payload, const AVStream
  * @param dump_payload True if the payload must be displayed, too.
  * @param st AVStream that the packet belongs to
  *)
-void av_pkt_dump_log2(void *avcl, int level, const AVPacket *pkt, int dump_payload,
+procedure av_pkt_dump_log2(void *avcl, int level, const AVPacket *pkt, int dump_payload,
                       const AVStream *st);
 
 (**
@@ -2792,7 +2792,7 @@ int av_add_index_entry(AVStream *st, int64_t pos, int64_t timestamp,
  * @param path_size the size of the path buffer
  * @param url the URL to split
  *)
-void av_url_split(char *proto,         int proto_size,
+procedure av_url_split(char *proto,         int proto_size,
                   char *authorization, int authorization_size,
                   char *hostname,      int hostname_size,
                   int *port_ptr,
@@ -2810,7 +2810,7 @@ void av_url_split(char *proto,         int proto_size,
  * @param url       the URL to print, such as source or destination file
  * @param is_output Select whether the specified context is an input(0) or output(1)
  *)
-void av_dump_format(AVFormatContext *ic,
+procedure av_dump_format(AVFormatContext *ic,
                     int index,
                     const char *url,
                     int is_output);

@@ -172,7 +172,7 @@ int sws_init_context(struct SwsContext *sws_context, SwsFilter *srcFilter, SwsFi
  * Free the swscaler context swsContext.
  * If swsContext is NULL, then does nothing.
  *)
-void sws_freeContext(struct SwsContext *swsContext);
+procedure sws_freeContext(struct SwsContext *swsContext);
 
 (**
  * Allocate and return an SwsContext. You need it to perform
@@ -265,31 +265,31 @@ SwsVector *sws_getGaussianVec(double variance, double quality);
 (**
  * Scale all the coefficients of a by the scalar value.
  *)
-void sws_scaleVec(SwsVector *a, double scalar);
+procedure sws_scaleVec(SwsVector *a, double scalar);
 
 (**
  * Scale all the coefficients of a so that their sum equals height.
  *)
-void sws_normalizeVec(SwsVector *a, double height);
+procedure sws_normalizeVec(SwsVector *a, double height);
 
 {$if FF_API_SWS_VECTOR}
 attribute_deprecated SwsVector *sws_getConstVec(double c, int length);
 attribute_deprecated SwsVector *sws_getIdentityVec();
-attribute_deprecated void sws_convVec(SwsVector *a, SwsVector *b);
-attribute_deprecated void sws_addVec(SwsVector *a, SwsVector *b);
-attribute_deprecated void sws_subVec(SwsVector *a, SwsVector *b);
-attribute_deprecated void sws_shiftVec(SwsVector *a, int shift);
+attribute_deprecated procedure sws_convVec(SwsVector *a, SwsVector *b);
+attribute_deprecated procedure sws_addVec(SwsVector *a, SwsVector *b);
+attribute_deprecated procedure sws_subVec(SwsVector *a, SwsVector *b);
+attribute_deprecated procedure sws_shiftVec(SwsVector *a, int shift);
 attribute_deprecated SwsVector *sws_cloneVec(SwsVector *a);
-attribute_deprecated void sws_printVec2(SwsVector *a, AVClass *log_ctx, int log_level);
+attribute_deprecated procedure sws_printVec2(SwsVector *a, AVClass *log_ctx, int log_level);
 {$endif}
 
-void sws_freeVec(SwsVector *a);
+procedure sws_freeVec(SwsVector *a);
 
 SwsFilter *sws_getDefaultFilter(float lumaGBlur, float chromaGBlur,
                                 float lumaSharpen, float chromaSharpen,
                                 float chromaHShift, float chromaVShift,
                                 int verbose);
-void sws_freeFilter(SwsFilter *filter);
+procedure sws_freeFilter(SwsFilter *filter);
 
 (**
  * Check if context can be reused, otherwise reallocate a new one.
@@ -319,7 +319,7 @@ struct SwsContext *sws_getCachedContext(struct SwsContext *context,
  * @param num_pixels number of pixels to convert
  * @param palette    array with [256] entries, which must match color arrangement (RGB or BGR) of src
  *)
-void sws_convertPalette8ToPacked32(const uint8_t *src, uint8_t *dst, int num_pixels, const uint8_t *palette);
+procedure sws_convertPalette8ToPacked32(const uint8_t *src, uint8_t *dst, int num_pixels, const uint8_t *palette);
 
 (**
  * Convert an 8-bit paletted frame into a frame with a color depth of 24 bits.
@@ -331,7 +331,7 @@ void sws_convertPalette8ToPacked32(const uint8_t *src, uint8_t *dst, int num_pix
  * @param num_pixels number of pixels to convert
  * @param palette    array with [256] entries, which must match color arrangement (RGB or BGR) of src
  *)
-void sws_convertPalette8ToPacked24(const uint8_t *src, uint8_t *dst, int num_pixels, const uint8_t *palette);
+procedure sws_convertPalette8ToPacked24(const uint8_t *src, uint8_t *dst, int num_pixels, const uint8_t *palette);
 
 (**
  * Get the AVClass for swsContext. It can be used in combination with

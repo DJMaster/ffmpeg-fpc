@@ -168,13 +168,13 @@ int av_get_extended_channel_layout(const char *name, uint64_t* channel_layout, i
  * @param buf put here the string containing the channel layout
  * @param buf_size size in bytes of the buffer
  *)
-void av_get_channel_layout_string(char *buf, int buf_size, int nb_channels, uint64_t channel_layout);
+procedure av_get_channel_layout_string(char *buf, int buf_size, int nb_channels, uint64_t channel_layout);
 
 struct AVBPrint;
 (**
  * Append a description of a channel layout to a bprint buffer.
  *)
-void av_bprint_channel_layout(struct AVBPrint *bp, int nb_channels, uint64_t channel_layout);
+procedure av_bprint_channel_layout(struct AVBPrint *bp, int nb_channels, uint64_t channel_layout);
 
 (**
  * Return the number of channels in the channel layout.

@@ -76,6 +76,6 @@
  *
  * This will av_assert0() that the cpu is not in MMX state on X86
  *)
-void av_assert0_fpu();
+procedure av_assert0_fpu();
 
 // #endif (* AVUTIL_AVASSERT_H *)

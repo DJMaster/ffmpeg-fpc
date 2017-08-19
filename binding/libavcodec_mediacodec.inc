@@ -71,7 +71,7 @@ int av_mediacodec_default_init(AVCodecContext *avctx, AVMediaCodecContext *ctx, 
  *
  * @param avctx codec context
  *)
-void av_mediacodec_default_free(AVCodecContext *avctx);
+procedure av_mediacodec_default_free(AVCodecContext *avctx);
 
 (**
  * Opaque structure representing a MediaCodec buffer to render.

@@ -56,7 +56,7 @@ int av_file_map(const char *filename, uint8_t **bufptr, size_t *size,
  * @param size size in bytes of bufptr, must be the same as returned
  * by av_file_map()
  *)
-void av_file_unmap(uint8_t *bufptr, size_t size);
+procedure av_file_unmap(uint8_t *bufptr, size_t size);
 
 (**
  * Wrapper to work around the lack of mkstemp() on mingw.

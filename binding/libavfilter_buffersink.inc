@@ -104,7 +104,7 @@ AVABufferSinkParams *av_abuffersink_params_alloc();
  * exactly the specified number of samples, or AVERROR(EAGAIN) if there is
  * not enough. The last buffer at EOF will be padded with 0.
  *)
-void av_buffersink_set_frame_size(AVFilterContext *ctx, unsigned frame_size);
+procedure av_buffersink_set_frame_size(AVFilterContext *ctx, unsigned frame_size);
 
 (**
  * @defgroup lavfi_buffersink_accessors Buffer sink accessors

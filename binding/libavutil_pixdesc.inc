@@ -320,7 +320,7 @@ char *av_get_pix_fmt_string(char *buf, int buf_size,
  * component c in data[1] to dst, rather than the palette indexes in
  * data[0]. The behavior is undefined if the format is not paletted.
  *)
-void av_read_image_line(uint16_t *dst, const uint8_t *data[4],
+procedure av_read_image_line(uint16_t *dst, const uint8_t *data[4],
                         const int linesize[4], const AVPixFmtDescriptor *desc,
                         int x, int y, int c, int w, int read_pal_component);
 
@@ -338,7 +338,7 @@ void av_read_image_line(uint16_t *dst, const uint8_t *data[4],
  * @param w the width of the line to write, that is the number of
  * values to write to the image line
  *)
-void av_write_image_line(const uint16_t *src, uint8_t *data[4],
+procedure av_write_image_line(const uint16_t *src, uint8_t *data[4],
                          const int linesize[4], const AVPixFmtDescriptor *desc,
                          int x, int y, int c, int w);
 

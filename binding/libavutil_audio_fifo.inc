@@ -59,7 +59,7 @@ typedef struct AVAudioFifo AVAudioFifo;
  *
  * @param af  AVAudioFifo to free
  *)
-void av_audio_fifo_free(AVAudioFifo *af);
+procedure av_audio_fifo_free(AVAudioFifo *af);
 
 (**
  * Allocate an AVAudioFifo.
@@ -167,7 +167,7 @@ int av_audio_fifo_drain(AVAudioFifo *af, int nb_samples);
  *
  * @param af  AVAudioFifo to reset
  *)
-void av_audio_fifo_reset(AVAudioFifo *af);
+procedure av_audio_fifo_reset(AVAudioFifo *af);
 
 (**
  * Get the current number of samples in the AVAudioFifo available for reading.

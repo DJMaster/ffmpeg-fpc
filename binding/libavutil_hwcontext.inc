@@ -166,7 +166,7 @@ typedef struct AVHWFramesContext {
      * If non-NULL, this callback will be called when the last reference to
      * this context is unreferenced, immediately before it is freed.
      *)
-    void (*free)(struct AVHWFramesContext *ctx);
+    procedure (*free)(struct AVHWFramesContext *ctx);
 
     (**
      * Arbitrary user data, to be used e.g. by the free() callback.
@@ -437,7 +437,7 @@ AVHWFramesConstraints *av_hwdevice_get_hwframe_constraints(AVBufferRef *ref,
  *
  * @param constraints The (filled or unfilled) AVHWFrameConstraints structure.
  *)
-void av_hwframe_constraints_free(AVHWFramesConstraints **constraints);
+procedure av_hwframe_constraints_free(AVHWFramesConstraints **constraints);
 
 
 (**

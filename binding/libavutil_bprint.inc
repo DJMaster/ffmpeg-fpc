@@ -114,7 +114,7 @@ FF_PAD_STRUCTURE(AVBPrint, 1024,
  *                   UINT_MAX, the largest limit possible.
  *                   Check also AV_BPRINT_SIZE_* macros.
  *)
-void av_bprint_init(AVBPrint *buf, unsigned size_init, unsigned size_max);
+procedure av_bprint_init(AVBPrint *buf, unsigned size_init, unsigned size_max);
 
 (**
  * Init a print buffer using a pre-existing buffer.
@@ -125,22 +125,22 @@ void av_bprint_init(AVBPrint *buf, unsigned size_init, unsigned size_max);
  * @param buffer  byte buffer to use for the string data
  * @param size    size of buffer
  *)
-void av_bprint_init_for_buffer(AVBPrint *buf, char *buffer, unsigned size);
+procedure av_bprint_init_for_buffer(AVBPrint *buf, char *buffer, unsigned size);
 
 (**
  * Append a formatted string to a print buffer.
  *)
-void av_bprintf(AVBPrint *buf, const char *fmt, ...) av_printf_format(2, 3);
+procedure av_bprintf(AVBPrint *buf, const char *fmt, ...) av_printf_format(2, 3);
 
 (**
  * Append a formatted string to a print buffer.
  *)
-void av_vbprintf(AVBPrint *buf, const char *fmt, va_list vl_arg);
+procedure av_vbprintf(AVBPrint *buf, const char *fmt, va_list vl_arg);
 
 (**
  * Append char c n times to a print buffer.
  *)
-void av_bprint_chars(AVBPrint *buf, char c, unsigned n);
+procedure av_bprint_chars(AVBPrint *buf, char c, unsigned n);
 
 (**
  * Append data to a print buffer.
@@ -149,7 +149,7 @@ void av_bprint_chars(AVBPrint *buf, char c, unsigned n);
  * param data pointer to data
  * param size size of data
  *)
-void av_bprint_append_data(AVBPrint *buf, const char *data, unsigned size);
+procedure av_bprint_append_data(AVBPrint *buf, const char *data, unsigned size);
 
 struct tm;
 (**
@@ -163,7 +163,7 @@ struct tm;
  * produce poor results if the format string expands to a very long text and
  * the bprint buffer is near the limit stated by the size_max option.
  *)
-void av_bprint_strftime(AVBPrint *buf, const char *fmt, const struct tm *tm);
+procedure av_bprint_strftime(AVBPrint *buf, const char *fmt, const struct tm *tm);
 
 (**
  * Allocate bytes in the buffer for external use.
@@ -174,13 +174,13 @@ void av_bprint_strftime(AVBPrint *buf, const char *fmt, const struct tm *tm);
  * @param[out] actual_size  size of the memory area after allocation;
  *                          can be larger or smaller than size
  *)
-void av_bprint_get_buffer(AVBPrint *buf, unsigned size,
+procedure av_bprint_get_buffer(AVBPrint *buf, unsigned size,
                           unsigned char **mem, unsigned *actual_size);
 
 (**
  * Reset the string to "" but keep internal allocated data.
  *)
-void av_bprint_clear(AVBPrint *buf);
+procedure av_bprint_clear(AVBPrint *buf);
 
 (**
  * Test if the print buffer is complete (not truncated).
@@ -219,7 +219,7 @@ int av_bprint_finalize(AVBPrint *buf, char **ret_str);
  *                      notice.
  * @param flags         flags which control how to escape, see AV_ESCAPE_FLAG_* macros
  *)
-void av_bprint_escape(AVBPrint *dstbuf, const char *src, const char *special_chars,
+procedure av_bprint_escape(AVBPrint *dstbuf, const char *src, const char *special_chars,
                       enum AVEscapeMode mode, int flags);
 
 // #endif (* AVUTIL_BPRINT_H *)

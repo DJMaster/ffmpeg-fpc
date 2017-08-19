@@ -59,19 +59,19 @@ AVFifoBuffer *av_fifo_alloc_array(size_t nmemb, size_t size);
  * Free an AVFifoBuffer.
  * @param f AVFifoBuffer to free
  *)
-void av_fifo_free(AVFifoBuffer *f);
+procedure av_fifo_free(AVFifoBuffer *f);
 
 (**
  * Free an AVFifoBuffer and reset pointer to NULL.
  * @param f AVFifoBuffer to free
  *)
-void av_fifo_freep(AVFifoBuffer **f);
+procedure av_fifo_freep(AVFifoBuffer **f);
 
 (**
  * Reset the AVFifoBuffer to the state right after av_fifo_alloc, in particular it is emptied.
  * @param f AVFifoBuffer to reset
  *)
-void av_fifo_reset(AVFifoBuffer *f);
+procedure av_fifo_reset(AVFifoBuffer *f);
 
 (**
  * Return the amount of data in bytes in the AVFifoBuffer, that is the
@@ -160,7 +160,7 @@ int av_fifo_grow(AVFifoBuffer *f, unsigned int additional_space);
  * @param f AVFifoBuffer to read from
  * @param size amount of data to read in bytes
  *)
-void av_fifo_drain(AVFifoBuffer *f, int size);
+procedure av_fifo_drain(AVFifoBuffer *f, int size);
 
 (**
  * Return a pointer to the data stored in a FIFO buffer at a certain offset.

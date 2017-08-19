@@ -35,7 +35,7 @@ typedef struct AVLFG {
     int index;
 } AVLFG;
 
-void av_lfg_init(AVLFG *c, unsigned int seed);
+procedure av_lfg_init(AVLFG *c, unsigned int seed);
 
 (**
  * Seed the state of the ALFG using binary data.
@@ -72,6 +72,6 @@ static inline unsigned int av_mlfg_get(AVLFG *c){
  *
  * @param out array where the two generated numbers are placed
  *)
-void av_bmg_get(AVLFG *lfg, double out[2]);
+procedure av_bmg_get(AVLFG *lfg, double out[2]);
 
 // #endif (* AVUTIL_LFG_H *)

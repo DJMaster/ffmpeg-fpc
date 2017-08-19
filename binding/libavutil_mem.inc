@@ -409,7 +409,7 @@ void *av_fast_realloc(void *ptr, unsigned int *size, size_t min_size);
  * @see av_realloc()
  * @see av_fast_mallocz()
  *)
-void av_fast_malloc(void *ptr, unsigned int *size, size_t min_size);
+procedure av_fast_malloc(void *ptr, unsigned int *size, size_t min_size);
 
 (**
  * Allocate and clear a buffer, reusing the given one if large enough.
@@ -429,7 +429,7 @@ void av_fast_malloc(void *ptr, unsigned int *size, size_t min_size);
  * @param[in]     min_size New size of buffer `*ptr`
  * @see av_fast_malloc()
  *)
-void av_fast_mallocz(void *ptr, unsigned int *size, size_t min_size);
+procedure av_fast_mallocz(void *ptr, unsigned int *size, size_t min_size);
 
 (**
  * Free a memory block which has been allocated with a function of av_malloc()
@@ -442,7 +442,7 @@ void av_fast_mallocz(void *ptr, unsigned int *size, size_t min_size);
  *       behind dangling pointers.
  * @see av_freep()
  *)
-void av_free(void *ptr);
+procedure av_free(void *ptr);
 
 (**
  * Free a memory block which has been allocated with a function of av_malloc()
@@ -465,7 +465,7 @@ void av_free(void *ptr);
  * @note `*ptr = NULL` is safe and leads to no action.
  * @see av_free()
  *)
-void av_freep(void *ptr);
+procedure av_freep(void *ptr);
 
 (**
  * Duplicate a string.
@@ -509,7 +509,7 @@ void *av_memdup(const void *p, size_t size);
  * @note `cnt > back` is valid, this will copy the bytes we just copied,
  *       thus creating a repeating pattern with a period length of `back`.
  *)
-void av_memcpy_backptr(uint8_t *dst, int back, int cnt);
+procedure av_memcpy_backptr(uint8_t *dst, int back, int cnt);
 
 (**
  * @}
@@ -611,7 +611,7 @@ void av_memcpy_backptr(uint8_t *dst, int back, int cnt);
  * @param[in]     elem    Element to add
  * @see av_dynarray_add_nofree(), av_dynarray2_add()
  *)
-void av_dynarray_add(void *tab_ptr, int *nb_ptr, void *elem);
+procedure av_dynarray_add(void *tab_ptr, int *nb_ptr, void *elem);
 
 (**
  * Add an element to a dynamic array.
@@ -695,7 +695,7 @@ static inline int av_size_mult(size_t a, size_t b, size_t *r)
  * @warning Exercise extreme caution when using this function. Don't touch
  *          this if you do not understand the full consequence of doing so.
  *)
-void av_max_alloc(size_t max);
+procedure av_max_alloc(size_t max);
 
 (**
  * @}

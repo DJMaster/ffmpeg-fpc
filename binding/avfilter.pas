@@ -252,7 +252,7 @@ typedef struct AVFilter {
      * This callback may be called even if @ref AVFilter.init "init" was not
      * called or failed, so it must be prepared to handle such a situation.
      *)
-    void (*uninit)(AVFilterContext *ctx);
+    procedure (*uninit)(AVFilterContext *ctx);
 
     (**
      * Query formats supported by the filter on its inputs and outputs.
@@ -642,7 +642,7 @@ int avfilter_link(AVFilterContext *src, unsigned srcpad,
 (**
  * Free the link in *link, and set its pointer to NULL.
  *)
-void avfilter_link_free(AVFilterLink **link);
+procedure avfilter_link_free(AVFilterLink **link);
 
 (**
  * Get the number of channels of a link.
@@ -655,7 +655,7 @@ int avfilter_link_get_channels(AVFilterLink *link);
  * close the sinks.
  *)
 attribute_deprecated
-void avfilter_link_set_closed(AVFilterLink *link, int closed);
+procedure avfilter_link_set_closed(AVFilterLink *link, int closed);
 
 (**
  * Negotiate the media format, dimensions, etc of all inputs to a filter.
@@ -675,12 +675,12 @@ int avfilter_config_links(AVFilterContext *filter);
 int avfilter_process_command(AVFilterContext *filter, const char *cmd, const char *arg, char *res, int res_len, int flags);
 
 (** Initialize the filter system. Register all builtin filters. *)
-void avfilter_register_all();
+procedure avfilter_register_all();
 
 {$if FF_API_OLD_FILTER_REGISTER}
 (** Uninitialize the filter system. Unregister all filters. *)
 attribute_deprecated
-void avfilter_uninit();
+procedure avfilter_uninit();
 {$endif}
 
 (**
@@ -797,7 +797,7 @@ int avfilter_init_dict(AVFilterContext *ctx, AVDictionary **options);
  *
  * @param filter the filter to free
  *)
-void avfilter_free(AVFilterContext *filter);
+procedure avfilter_free(AVFilterContext *filter);
 
 (**
  * Insert a filter in the middle of an existing link.
@@ -995,7 +995,7 @@ int avfilter_graph_create_filter(AVFilterContext **filt_ctx, const AVFilter *fil
  *
  * @param flags  any of the AVFILTER_AUTO_CONVERT_* constants
  *)
-void avfilter_graph_set_auto_convert(AVFilterGraph *graph, unsigned flags);
+procedure avfilter_graph_set_auto_convert(AVFilterGraph *graph, unsigned flags);
 
 enum {
     AVFILTER_AUTO_CONVERT_ALL  =  0, (**< all automatic conversions enabled *)
@@ -1015,7 +1015,7 @@ int avfilter_graph_config(AVFilterGraph *graphctx, void *log_ctx);
  * Free a graph, destroy its links, and set *graph to NULL.
  * If *graph is NULL, do nothing.
  *)
-void avfilter_graph_free(AVFilterGraph **graph);
+procedure avfilter_graph_free(AVFilterGraph **graph);
 
 (**
  * A linked-list of the inputs/outputs of the filter chain.
@@ -1051,7 +1051,7 @@ AVFilterInOut *avfilter_inout_alloc();
  * Free the supplied list of AVFilterInOut and set *inout to NULL.
  * If *inout is NULL, do nothing.
  *)
-void avfilter_inout_free(AVFilterInOut **inout);
+procedure avfilter_inout_free(AVFilterInOut **inout);
 
 (**
  * Add a graph described by a string to a graph.

@@ -227,7 +227,7 @@ int av_vda_default_init2(AVCodecContext *avctx, AVVDAContext *vdactx);
  *
  * @param avctx the corresponding codec context
  *)
-void av_vda_default_free(AVCodecContext *avctx);
+procedure av_vda_default_free(AVCodecContext *avctx);
 
 (**
  * @}

@@ -86,14 +86,14 @@ int av_get_cpu_flags();
  * Disables cpu detection and forces the specified flags.
  * -1 is a special case that disables forcing of specific flags.
  *)
-void av_force_cpu_flags(int flags);
+procedure av_force_cpu_flags(int flags);
 
 (**
  * Set a mask on flags returned by av_get_cpu_flags().
  * This function is mainly useful for testing.
  * Please use av_force_cpu_flags() and av_get_cpu_flags() instead which are more flexible
  *)
-attribute_deprecated void av_set_cpu_flags_mask(int mask);
+attribute_deprecated procedure av_set_cpu_flags_mask(int mask);
 
 (**
  * Parse CPU flags from a string.

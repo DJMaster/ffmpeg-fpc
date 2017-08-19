@@ -121,7 +121,7 @@ void *av_tree_insert(struct AVTreeNode **rootp, void *key,
                      int (*cmp)(const void *key, const void *b),
                      struct AVTreeNode **next);
 
-void av_tree_destroy(struct AVTreeNode *t);
+procedure av_tree_destroy(struct AVTreeNode *t);
 
 (**
  * Apply enu(opaque, &elem) to all the elements in the tree in a given range.
@@ -133,7 +133,7 @@ void av_tree_destroy(struct AVTreeNode *t);
  * @note The cmp function should use the same ordering used to construct the
  *       tree.
  *)
-void av_tree_enumerate(struct AVTreeNode *t, void *opaque,
+procedure av_tree_enumerate(struct AVTreeNode *t, void *opaque,
                        int (*cmp)(void *opaque, void *elem),
                        int (*enu)(void *opaque, void *elem));
 

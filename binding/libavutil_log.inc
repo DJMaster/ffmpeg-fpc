@@ -237,7 +237,7 @@ typedef struct AVClass {
  * @param fmt The format string (printf-compatible) that specifies how
  *        subsequent arguments are converted to output.
  *)
-void av_log(void *avcl, int level, const char *fmt, ...) av_printf_format(3, 4);
+procedure av_log(void *avcl, int level, const char *fmt, ...) av_printf_format(3, 4);
 
 
 (**
@@ -255,7 +255,7 @@ void av_log(void *avcl, int level, const char *fmt, ...) av_printf_format(3, 4);
  *        subsequent arguments are converted to output.
  * @param vl The arguments referenced by the format string.
  *)
-void av_vlog(void *avcl, int level, const char *fmt, va_list vl);
+procedure av_vlog(void *avcl, int level, const char *fmt, va_list vl);
 
 (**
  * Get the current log level
@@ -273,7 +273,7 @@ int av_log_get_level();
  *
  * @param level Logging level
  *)
-void av_log_set_level(int level);
+procedure av_log_set_level(int level);
 
 (**
  * Set the logging callback
@@ -285,7 +285,7 @@ void av_log_set_level(int level);
  *
  * @param callback A logging function with a compatible signature.
  *)
-void av_log_set_callback(void (*callback)(void*, int, const char*, va_list));
+procedure av_log_set_callback(void (*callback)(void*, int, const char*, va_list));
 
 (**
  * Default logging callback
@@ -300,7 +300,7 @@ void av_log_set_callback(void (*callback)(void*, int, const char*, va_list));
  *        subsequent arguments are converted to output.
  * @param vl The arguments referenced by the format string.
  *)
-void av_log_default_callback(void *avcl, int level, const char *fmt,
+procedure av_log_default_callback(void *avcl, int level, const char *fmt,
                              va_list vl);
 
 (**
@@ -320,7 +320,7 @@ AVClassCategory av_default_get_category(void *ptr);
  * @param print_prefix  used to store whether the prefix must be printed;
  *                      must point to a persistent integer initially set to 1
  *)
-void av_log_format_line(void *ptr, int level, const char *fmt, va_list vl,
+procedure av_log_format_line(void *ptr, int level, const char *fmt, va_list vl,
                         char *line, int line_size, int *print_prefix);
 
 (**
@@ -372,7 +372,7 @@ int av_log_format_line2(void *ptr, int level, const char *fmt, va_list vl,
  *)
   AV_LOG_PRINT_LEVEL = 2;
 
-void av_log_set_flags(int arg);
+procedure av_log_set_flags(int arg);
 int av_log_get_flags();
 
 (**
