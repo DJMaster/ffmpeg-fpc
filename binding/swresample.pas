@@ -139,6 +139,7 @@ interface
 #include "libswresample/version.h"
 
 {$if LIBSWRESAMPLE_VERSION_MAJOR < 1}
+const
   SWR_CH_MAX = 32; ///< Maximum number of channels
 {$endif}
 
@@ -149,12 +150,14 @@ interface
  *
  *)
 
+const
   SWR_FLAG_RESAMPLE = 1; ///< Force resampling even if equal sample rate
 //TODO use int resample ?
 //long term TODO can we enable this dynamically?
 
 (** Dithering algorithms *)
-enum SwrDitherType {
+type
+  SwrDitherType = (
     SWR_DITHER_NONE = 0,
     SWR_DITHER_RECTANGULAR,
     SWR_DITHER_TRIANGULAR,
@@ -168,22 +171,22 @@ enum SwrDitherType {
     SWR_DITHER_NS_SHIBATA,
     SWR_DITHER_NS_LOW_SHIBATA,
     SWR_DITHER_NS_HIGH_SHIBATA,
-    SWR_DITHER_NB,              ///< not part of API/ABI
-};
+    SWR_DITHER_NB               ///< not part of API/ABI
+  );
 
 (** Resampling Engines *)
-enum SwrEngine {
+  SwrEngine = (
     SWR_ENGINE_SWR,             (**< SW Resampler *)
     SWR_ENGINE_SOXR,            (**< SoX Resampler *)
-    SWR_ENGINE_NB,              ///< not part of API/ABI
-};
+    SWR_ENGINE_NB               ///< not part of API/ABI
+  );
 
 (** Resampling Filter Types *)
-enum SwrFilterType {
+  SwrFilterType = (
     SWR_FILTER_TYPE_CUBIC,              (**< Cubic *)
     SWR_FILTER_TYPE_BLACKMAN_NUTTALL,   (**< Blackman Nuttall windowed sinc *)
-    SWR_FILTER_TYPE_KAISER,             (**< Kaiser windowed sinc *)
-};
+    SWR_FILTER_TYPE_KAISER              (**< Kaiser windowed sinc *)
+  );
 
 (**
  * @}
@@ -195,7 +198,10 @@ enum SwrFilterType {
  * the @ref avoptions API and cannot directly set values to members of the
  * structure.
  *)
-typedef struct SwrContext SwrContext;
+type
+  PSwrContext = ^SwrContext;
+  SwrContext = record
+  end;
 
 (**
  * Get the AVClass for SwrContext. It can be used in combination with
@@ -204,7 +210,7 @@ typedef struct SwrContext SwrContext;
  * @see av_opt_find().
  * @return the AVClass of SwrContext
  *)
-const AVClass *swr_get_class();
+function swr_get_class(): PAVClass; cdecl; external LIB_LIBSWRESAMPLE;
 
 (**
  * @name SwrContext constructor functions
@@ -220,7 +226,7 @@ const AVClass *swr_get_class();
  * @see swr_alloc_set_opts(), swr_init(), swr_free()
  * @return NULL on error, allocated context otherwise
  *)
-struct SwrContext *swr_alloc();
+function swr_alloc(): PSwrContext; cdecl; external LIB_LIBSWRESAMPLE;
 
 (**
  * Initialize context after user parameters have been set.
@@ -232,7 +238,7 @@ struct SwrContext *swr_alloc();
  * @param[in,out]   s Swr context to initialize
  * @return AVERROR error code in case of failure.
  *)
-function cint swr_init(struct SwrContext *s);
+function swr_init(struct SwrContext *s): cint; cdecl; external LIB_LIBSWRESAMPLE;
 
 (**
  * Check whether an swr context has been initialized or not.
@@ -241,7 +247,7 @@ function cint swr_init(struct SwrContext *s);
  * @see swr_init()
  * @return positive if it has been initialized, 0 if not initialized
  *)
-function cint swr_is_initialized(struct SwrContext *s);
+function swr_is_initialized(struct SwrContext *s): cint; cdecl; external LIB_LIBSWRESAMPLE;
 
 (**
  * Allocate SwrContext if needed and set/reset common parameters.
@@ -251,11 +257,11 @@ function cint swr_is_initialized(struct SwrContext *s);
  * on the allocated context.
  *
  * @param s               existing Swr context if available, or NULL if not
- * @param out_ch_layout   output channel layout (AV_CH_LAYOUT_*)
- * @param out_sample_fmt  output sample format (AV_SAMPLE_FMT_*).
+ * @param out_ch_layout   output channel layout (AV_CH_LAYOUT_* )
+ * @param out_sample_fmt  output sample format (AV_SAMPLE_FMT_* ).
  * @param out_sample_rate output sample rate (frequency in Hz)
- * @param in_ch_layout    input channel layout (AV_CH_LAYOUT_*)
- * @param in_sample_fmt   input sample format (AV_SAMPLE_FMT_*).
+ * @param in_ch_layout    input channel layout (AV_CH_LAYOUT_* )
+ * @param in_sample_fmt   input sample format (AV_SAMPLE_FMT_* ).
  * @param in_sample_rate  input sample rate (frequency in Hz)
  * @param log_offset      logging level offset
  * @param log_ctx         parent logging context, can be NULL
@@ -263,10 +269,10 @@ function cint swr_is_initialized(struct SwrContext *s);
  * @see swr_init(), swr_free()
  * @return NULL on error, allocated context otherwise
  *)
-struct SwrContext *swr_alloc_set_opts(struct SwrContext *s,
+function swr_alloc_set_opts(struct SwrContext *s,
                                       int64_t out_ch_layout, enum AVSampleFormat out_sample_fmt, int out_sample_rate,
                                       int64_t  in_ch_layout, enum AVSampleFormat  in_sample_fmt, int  in_sample_rate,
-                                      int log_offset, void *log_ctx);
+                                      int log_offset, void *log_ctx): PSwrContext; cdecl; external LIB_LIBSWRESAMPLE;
 
 (**
  * @}
@@ -280,7 +286,7 @@ struct SwrContext *swr_alloc_set_opts(struct SwrContext *s,
  *
  * @param[in] s a pointer to a pointer to Swr context
  *)
-void swr_free(struct SwrContext **s);
+procedure swr_free(struct SwrContext **s); cdecl; external LIB_LIBSWRESAMPLE;
 
 (**
  * Closes the context so that swr_is_initialized() returns 0.
@@ -292,7 +298,7 @@ void swr_free(struct SwrContext **s);
  *
  * @param[in,out] s Swr context to be closed
  *)
-void swr_close(struct SwrContext *s);
+procedure swr_close(struct SwrContext *s); cdecl; external LIB_LIBSWRESAMPLE;
 
 (**
  * @}
@@ -319,8 +325,8 @@ void swr_close(struct SwrContext *s);
  *
  * @return number of samples output per channel, negative value on error
  *)
-function cint swr_convert(struct SwrContext *s, uint8_t **out, int out_count,
-                                const uint8_t **in , int in_count);
+function swr_convert(struct SwrContext *s, uint8_t **out, int out_count,
+                                const uint8_t **in , int in_count): cint; cdecl; external LIB_LIBSWRESAMPLE;
 
 (**
  * Convert the next timestamp from input to output
@@ -339,7 +345,7 @@ function cint swr_convert(struct SwrContext *s, uint8_t **out, int out_count,
  *      function used internally for timestamp compensation.
  * @return the output timestamp for the next output sample
  *)
-int64_t swr_next_pts(struct SwrContext *s, int64_t pts);
+function swr_next_pts(struct SwrContext *s, int64_t pts): cint64_t; cdecl; external LIB_LIBSWRESAMPLE;
 
 (**
  * @}
@@ -366,7 +372,7 @@ int64_t swr_next_pts(struct SwrContext *s, int64_t pts);
  *            @li compensation unsupported by resampler, or
  *            @li swr_init() fails when called.
  *)
-function cint swr_set_compensation(struct SwrContext *s, int sample_delta, int compensation_distance);
+function swr_set_compensation(struct SwrContext *s, int sample_delta, int compensation_distance): cint; cdecl; external LIB_LIBSWRESAMPLE;
 
 (**
  * Set a customized input channel mapping.
@@ -376,7 +382,7 @@ function cint swr_set_compensation(struct SwrContext *s, int sample_delta, int c
  *                            indexes, -1 for a muted channel)
  * @return >= 0 on success, or AVERROR error code in case of failure.
  *)
-function cint swr_set_channel_mapping(struct SwrContext *s, const int *channel_map);
+function swr_set_channel_mapping(struct SwrContext *s, const int *channel_map): cint; cdecl; external LIB_LIBSWRESAMPLE;
 
 (**
  * Generate a channel mixing matrix.
@@ -401,12 +407,12 @@ function cint swr_set_channel_mapping(struct SwrContext *s, const int *channel_m
  * @param log_ctx             parent logging context, can be NULL
  * @return                    0 on success, negative AVERROR code on failure
  *)
-function cint swr_build_matrix(uint64_t in_layout, uint64_t out_layout,
+function swr_build_matrix(uint64_t in_layout, uint64_t out_layout,
                      double center_mix_level, double surround_mix_level,
                      double lfe_mix_level, double rematrix_maxval,
                      double rematrix_volume, double *matrix,
                      int stride, enum AVMatrixEncoding matrix_encoding,
-                     void *log_ctx);
+                     void *log_ctx): cint; cdecl; external LIB_LIBSWRESAMPLE;
 
 (**
  * Set a customized remix matrix.
@@ -417,7 +423,7 @@ function cint swr_build_matrix(uint64_t in_layout, uint64_t out_layout,
  * @param stride  offset between lines of the matrix
  * @return  >= 0 on success, or AVERROR error code in case of failure.
  *)
-function cint swr_set_matrix(struct SwrContext *s, const double *matrix, int stride);
+function swr_set_matrix(struct SwrContext *s, const double *matrix, int stride): cint; cdecl; external LIB_LIBSWRESAMPLE;
 
 (**
  * @}
@@ -437,7 +443,7 @@ function cint swr_set_matrix(struct SwrContext *s, const double *matrix, int str
  *
  * @return >= 0 on success, or a negative AVERROR code on failure
  *)
-function cint swr_drop_output(struct SwrContext *s, int count);
+function swr_drop_output(struct SwrContext *s, int count): cint; cdecl; external LIB_LIBSWRESAMPLE;
 
 (**
  * Injects the specified number of silence samples.
@@ -450,7 +456,7 @@ function cint swr_drop_output(struct SwrContext *s, int count);
  *
  * @return >= 0 on success, or a negative AVERROR code on failure
  *)
-function cint swr_inject_silence(struct SwrContext *s, int count);
+function swr_inject_silence(struct SwrContext *s, int count): cint; cdecl; external LIB_LIBSWRESAMPLE;
 
 (**
  * Gets the delay the next input sample will experience relative to the next output sample.
@@ -476,7 +482,7 @@ function cint swr_inject_silence(struct SwrContext *s, int count);
  *                  returned
  * @returns     the delay in 1 / @c base units.
  *)
-int64_t swr_get_delay(struct SwrContext *s, int64_t base);
+function swr_get_delay(struct SwrContext *s, int64_t base): cint64_t; cdecl; external LIB_LIBSWRESAMPLE;
 
 (**
  * Find an upper bound on the number of samples that the next swr_convert
@@ -494,7 +500,7 @@ int64_t swr_get_delay(struct SwrContext *s, int64_t base);
  * @returns an upper bound on the number of samples that the next swr_convert
  *          will output or a negative value to indicate an error
  *)
-function cint swr_get_out_samples(struct SwrContext *s, int in_samples);
+function swr_get_out_samples(struct SwrContext *s, int in_samples): cint; cdecl; external LIB_LIBSWRESAMPLE;
 
 (**
  * @}
@@ -511,21 +517,21 @@ function cint swr_get_out_samples(struct SwrContext *s, int in_samples);
  *
  * @returns     the unsigned int-typed version
  *)
-unsigned swresample_version();
+function swresample_version(): cunsigned; cdecl; external LIB_LIBSWRESAMPLE;
 
 (**
  * Return the swr build-time configuration.
  *
  * @returns     the build-time @c ./configure flags
  *)
-const pchar swresample_configuration();
+function swresample_configuration(): pchar; cdecl; external LIB_LIBSWRESAMPLE;
 
 (**
  * Return the swr license.
  *
  * @returns     the license of libswresample, determined at build-time
  *)
-const pchar swresample_license();
+function swresample_license(): pchar; cdecl; external LIB_LIBSWRESAMPLE;
 
 (**
  * @}
@@ -568,8 +574,8 @@ const pchar swresample_license();
  * @return                0 on success, AVERROR on failure or nonmatching
  *                        configuration.
  *)
-function cint swr_convert_frame(SwrContext *swr,
-                      AVFrame *output, const AVFrame *input);
+function swr_convert_frame(SwrContext *swr,
+                      AVFrame *output, const AVFrame *input): cint; cdecl; external LIB_LIBSWRESAMPLE;
 
 (**
  * Configure or reconfigure the SwrContext using the information
@@ -585,7 +591,7 @@ function cint swr_convert_frame(SwrContext *swr,
  * @param input           input AVFrame
  * @return                0 on success, AVERROR on failure.
  *)
-function cint swr_config_frame(SwrContext *swr, const AVFrame *out, const AVFrame *in);
+function swr_config_frame(SwrContext *swr, const AVFrame *out, const AVFrame *in): cint; cdecl; external LIB_LIBSWRESAMPLE;
 
 (**
  * @}

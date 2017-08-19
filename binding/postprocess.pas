@@ -51,22 +51,23 @@ interface
 (**
  * Return the LIBPOSTPROC_VERSION_INT constant.
  *)
-unsigned postproc_version();
+function postproc_version(): cunsigned; cdecl; external LIB_LIBPOSTPROCESS;
 
 (**
  * Return the libpostproc build-time configuration.
  *)
-const pchar postproc_configuration();
+function postproc_configuration(): pchar; cdecl; external LIB_LIBPOSTPROCESS;
 
 (**
  * Return the libpostproc license.
  *)
-const pchar postproc_license();
+function postproc_license(): pchar; cdecl; external LIB_LIBPOSTPROCESS;
 
+const
   PP_QUALITY_MAX = 6;
 
 {$if FF_API_QP_TYPE}
-  QP_STORE_T = int8_t; //deprecated
+  QP_STORE_T = cint8_t; //deprecated
 {$endif}
 
 #include <inttypes.h>
@@ -82,11 +83,11 @@ extern const pchar const pp_help; ///< a simple help text
 extern const char pp_help[]; ///< a simple help text
 {$endif}
 
-void  pp_postprocess(const uint8_t * src[3], const int srcStride[3],
+procedure pp_postprocess(const uint8_t * src[3], const int srcStride[3],
                      uint8_t * dst[3], const int dstStride[3],
                      int horizontalSize, int verticalSize,
                      const int8_t *QP_store,  int QP_stride,
-                     pp_mode *mode, pp_context *ppContext, int pict_type);
+                     pp_mode *mode, pp_context *ppContext, int pict_type); cdecl; external LIB_LIBPOSTPROCESS;
 
 
 (**
@@ -95,12 +96,13 @@ void  pp_postprocess(const uint8_t * src[3], const int srcStride[3],
  * @param name    the string after "-pp" on the command line
  * @param quality a number from 0 to PP_QUALITY_MAX
  *)
-pp_mode *pp_get_mode_by_name_and_quality(const pchar name, int quality);
-void pp_free_mode(pp_mode *mode);
+function pp_get_mode_by_name_and_quality(const pchar name, int quality): Ppp_mode; cdecl; external LIB_LIBPOSTPROCESS;
+procedure pp_free_mode(pp_mode *mode); cdecl; external LIB_LIBPOSTPROCESS;
 
-pp_context *pp_get_context(int width, int height, int flags);
-void pp_free_context(pp_context *ppContext);
+function pp_get_context(int width, int height, int flags): Ppp_context; cdecl; external LIB_LIBPOSTPROCESS;
+procedure pp_free_context(pp_context *ppContext); cdecl; external LIB_LIBPOSTPROCESS;
 
+const
   PP_CPU_CAPS_MMX = $80000000;
   PP_CPU_CAPS_MMX2 = $20000000;
   PP_CPU_CAPS_3DNOW = $40000000;
@@ -108,11 +110,11 @@ void pp_free_context(pp_context *ppContext);
   PP_CPU_CAPS_AUTO = $00080000;
 
   PP_FORMAT = $00000008;
-  PP_FORMAT_420 = (0x00000011|PP_FORMAT);
-  PP_FORMAT_422 = (0x00000001|PP_FORMAT);
-  PP_FORMAT_411 = (0x00000002|PP_FORMAT);
-  PP_FORMAT_444 = (0x00000000|PP_FORMAT);
-  PP_FORMAT_440 = (0x00000010|PP_FORMAT);
+  PP_FORMAT_420 = ($00000011 or PP_FORMAT);
+  PP_FORMAT_422 = ($00000001 or PP_FORMAT);
+  PP_FORMAT_411 = ($00000002 or PP_FORMAT);
+  PP_FORMAT_444 = ($00000000 or PP_FORMAT);
+  PP_FORMAT_440 = ($00000010 or PP_FORMAT);
 
   PP_PICT_TYPE_QP2 = $00000010; ///< MPEG2 style QScale
 
