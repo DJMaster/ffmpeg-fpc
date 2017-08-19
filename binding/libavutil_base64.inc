@@ -45,7 +45,7 @@
  * @return         number of bytes written, or a negative value in case of
  *                 invalid input
  *)
-int av_base64_decode(uint8_t *out, const char *in, int out_size);
+int av_base64_decode(uint8_t *out_, const pchar in_, int out_size);
 
 (**
  * Calculate the output size in bytes needed to decode a base64 string

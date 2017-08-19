@@ -59,12 +59,12 @@ unsigned swscale_version();
 (**
  * Return the libswscale build-time configuration.
  *)
-const char *swscale_configuration();
+const pchar swscale_configuration();
 
 (**
  * Return the libswscale license.
  *)
-const char *swscale_license();
+const pchar swscale_license();
 
 (* values for the flags, the stuff on the command line is different *)
   SWS_FAST_BILINEAR = 1;

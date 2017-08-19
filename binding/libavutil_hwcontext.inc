@@ -273,7 +273,7 @@ int av_hwdevice_ctx_init(AVBufferRef *ref);
  * @return 0 on success, a negative AVERROR code on failure.
  *)
 int av_hwdevice_ctx_create(AVBufferRef **device_ctx, enum AVHWDeviceType type,
-                           const char *device, AVDictionary *opts, int flags);
+                           const pchar device, AVDictionary *opts, int flags);
 
 (**
  * Allocate an AVHWFramesContext tied to a given device context.

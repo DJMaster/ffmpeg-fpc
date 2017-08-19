@@ -47,7 +47,7 @@ int64_t av_gettime_relative();
  * Indicates with a boolean result if the av_gettime_relative() time source
  * is monotonic.
  *)
-int av_gettime_relative_is_monotonic();
+function av_gettime_relative_is_monotonic(): cint;
 
 (**
  * Sleep for a period of time.  Although the duration is expressed in
@@ -57,6 +57,6 @@ int av_gettime_relative_is_monotonic();
  * @param  usec Number of microseconds to sleep.
  * @return zero on success or (negative) error code.
  *)
-int av_usleep(unsigned usec);
+function av_usleep(unsigned usec): cint;
 
 // #endif (* AVUTIL_TIME_H *)

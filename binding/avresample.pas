@@ -150,12 +150,12 @@ unsigned avresample_version();
  * Return the libavresample build-time configuration.
  * @return  configure string
  *)
-const char *avresample_configuration();
+const pchar avresample_configuration();
 
 (**
  * Return the libavresample license.
  *)
-const char *avresample_license();
+const pchar avresample_license();
 
 (**
  * Get the AVClass for AVAudioResampleContext.

@@ -59,7 +59,7 @@ typedef struct {
  * @return         adjusted frame number
  * @warning        adjustment is only valid in NTSC 29.97 and 59.94
  *)
-int av_timecode_adjust_ntsc_framenum2(int framenum, int fps);
+function av_timecode_adjust_ntsc_framenum2(int framenum, int fps): cint;
 
 (**
  * Convert frame number to SMPTE 12M binary representation.
@@ -122,7 +122,7 @@ char *av_timecode_make_mpeg_tc_string(char *buf, uint32_t tc25bit);
  * @param frame_start the first frame number
  * @return            0 on success, AVERROR otherwise
  *)
-int av_timecode_init(AVTimecode *tc, AVRational rate, int flags, int frame_start, void *log_ctx);
+function av_timecode_init(AVTimecode *tc, AVRational rate, int flags, int frame_start, void *log_ctx): cint;
 
 (**
  * Parse timecode representation (hh:mm:ss[:;.]ff).
@@ -134,13 +134,13 @@ int av_timecode_init(AVTimecode *tc, AVRational rate, int flags, int frame_start
  * @param str     timecode string which will determine the frame start
  * @return        0 on success, AVERROR otherwise
  *)
-int av_timecode_init_from_string(AVTimecode *tc, AVRational rate, const char *str, void *log_ctx);
+function av_timecode_init_from_string(AVTimecode *tc, AVRational rate, const pchar str, void *log_ctx): cint;
 
 (**
  * Check if the timecode feature is available for the given frame rate
  *
  * @return 0 if supported, <0 otherwise
  *)
-int av_timecode_check_frame_rate(AVRational rate);
+function av_timecode_check_frame_rate(AVRational rate): cint;
 
 // #endif (* AVUTIL_TIMECODE_H *)

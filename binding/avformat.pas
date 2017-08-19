@@ -471,10 +471,10 @@ struct AVCodecTag;
  * This structure contains the data a format has to probe a file.
  *)
 typedef struct AVProbeData {
-    const char *filename;
+    const pchar filename;
     unsigned char *buf; (**< Buffer must have AVPROBE_PADDING_SIZE of extra allocated bytes filled with zero. *)
     int buf_size;       (**< Size of buf except extra allocated bytes *)
-    const char *mime_type; (**< mime_type, when known. *)
+    const pchar mime_type; (**< mime_type, when known. *)
 } AVProbeData;
 
   AVPROBE_SCORE_RETRY = (AVPROBE_SCORE_MAX/4);
@@ -524,15 +524,15 @@ typedef struct AVProbeData {
  * @{
  *)
 typedef struct AVOutputFormat {
-    const char *name;
+    const pchar name;
     (**
      * Descriptive name for the format, meant to be more human-readable
      * than name. You should use the NULL_IF_CONFIG_SMALL() macro
      * to define it.
      *)
-    const char *long_name;
-    const char *mime_type;
-    const char *extensions; (**< comma-separated filename extensions *)
+    const pchar long_name;
+    const pchar mime_type;
+    const pchar extensions; (**< comma-separated filename extensions *)
     (* output support *)
     enum AVCodecID audio_codec;    (**< default audio codec *)
     enum AVCodecID video_codec;    (**< default video codec *)
@@ -664,14 +664,14 @@ typedef struct AVInputFormat {
      * A comma separated list of short names for the format. New names
      * may be appended with a minor bump.
      *)
-    const char *name;
+    const pchar name;
 
     (**
      * Descriptive name for the format, meant to be more human-readable
      * than name. You should use the NULL_IF_CONFIG_SMALL() macro
      * to define it.
      *)
-    const char *long_name;
+    const pchar long_name;
 
     (**
      * Can use flags: AVFMT_NOFILE, AVFMT_NEEDNUMBER, AVFMT_SHOW_IDS,
@@ -685,7 +685,7 @@ typedef struct AVInputFormat {
      * usually not use extension format guessing because it is not
      * reliable enough
      *)
-    const char *extensions;
+    const pchar extensions;
 
     const struct AVCodecTag * const *codec_tag;
 
@@ -696,7 +696,7 @@ typedef struct AVInputFormat {
      * It is used check for matching mime types while probing.
      * @see av_probe_input_format2
      *)
-    const char *mime_type;
+    const pchar mime_type;
 
     (*****************************************************************
      * No fields below this line are part of the public API. They
@@ -1319,7 +1319,7 @@ typedef struct AVChapter {
 typedef int (*av_format_control_message)(struct AVFormatContext *s, int type,
                                          void *data, size_t data_size);
 
-typedef int (*AVOpenCallback)(struct AVFormatContext *s, AVIOContext **pb, const char *url, int flags,
+typedef int (*AVOpenCallback)(struct AVFormatContext *s, AVIOContext **pb, const pchar url, int flags,
                               const AVIOInterruptCB *int_cb, AVDictionary **options);
 
 (**
@@ -1878,7 +1878,7 @@ typedef struct AVFormatContext {
      * @deprecated Use io_open and io_close.
      *)
     attribute_deprecated
-    int (*open_cb)(struct AVFormatContext *s, AVIOContext **p, const char *url, int flags, const AVIOInterruptCB *int_cb, AVDictionary **options);
+    int (*open_cb)(struct AVFormatContext *s, AVIOContext **p, const pchar url, int flags, const AVIOInterruptCB *int_cb, AVDictionary **options);
 {$endif}
 
     (**
@@ -1908,7 +1908,7 @@ typedef struct AVFormatContext {
      * passed to this callback may be different from the one facing the caller.
      * It will, however, have the same 'opaque' field.
      *)
-    int (*io_open)(struct AVFormatContext *s, AVIOContext **pb, const char *url,
+    int (*io_open)(struct AVFormatContext *s, AVIOContext **pb, const pchar url,
                    int flags, AVDictionary **options);
 
     (**
@@ -1991,12 +1991,12 @@ unsigned avformat_version();
 (**
  * Return the libavformat build-time configuration.
  *)
-const char *avformat_configuration();
+const pchar avformat_configuration();
 
 (**
  * Return the libavformat license.
  *)
-const char *avformat_license();
+const pchar avformat_license();
 
 (**
  * Initialize libavformat and register all the muxers, demuxers and
@@ -2147,7 +2147,7 @@ AVProgram *av_new_program(AVFormatContext *s, int id);
  * failure
  *)
 int avformat_alloc_output_context2(AVFormatContext **ctx, AVOutputFormat *oformat,
-                                   const char *format_name, const char *filename);
+                                   const pchar format_name, const pchar filename);
 
 (**
  * @addtogroup lavf_decoding
@@ -2157,7 +2157,7 @@ int avformat_alloc_output_context2(AVFormatContext **ctx, AVOutputFormat *oforma
 (**
  * Find AVInputFormat based on the short name of the input format.
  *)
-AVInputFormat *av_find_input_format(const char *short_name);
+AVInputFormat *av_find_input_format(const pchar short_name);
 
 (**
  * Guess the file format.
@@ -2208,14 +2208,14 @@ AVInputFormat *av_probe_input_format3(AVProbeData *pd, int is_opened, int *score
  * AVERROR code otherwise
  *)
 int av_probe_input_buffer2(AVIOContext *pb, AVInputFormat **fmt,
-                           const char *url, void *logctx,
+                           const pchar url, void *logctx,
                            unsigned int offset, unsigned int max_probe_size);
 
 (**
  * Like av_probe_input_buffer2() but returns 0 on success
  *)
 int av_probe_input_buffer(AVIOContext *pb, AVInputFormat **fmt,
-                          const char *url, void *logctx,
+                          const pchar url, void *logctx,
                           unsigned int offset, unsigned int max_probe_size);
 
 (**
@@ -2237,7 +2237,7 @@ int av_probe_input_buffer(AVIOContext *pb, AVInputFormat **fmt,
  *
  * @note If you want to use custom IO, preallocate the format context and set its pb field.
  *)
-int avformat_open_input(AVFormatContext **ps, const char *url, AVInputFormat *fmt, AVDictionary **options);
+int avformat_open_input(AVFormatContext **ps, const pchar url, AVInputFormat *fmt, AVDictionary **options);
 
 attribute_deprecated
 int av_demuxer_open(AVFormatContext *ic);
@@ -2622,15 +2622,15 @@ int av_write_trailer(AVFormatContext *s);
  * @param mime_type if non-NULL checks if mime_type matches with the
  * MIME type of the registered formats
  *)
-AVOutputFormat *av_guess_format(const char *short_name,
-                                const char *filename,
-                                const char *mime_type);
+AVOutputFormat *av_guess_format(const pchar short_name,
+                                const pchar filename,
+                                const pchar mime_type);
 
 (**
  * Guess the codec ID based upon muxer and filename.
  *)
-enum AVCodecID av_guess_codec(AVOutputFormat *fmt, const char *short_name,
-                            const char *filename, const char *mime_type,
+enum AVCodecID av_guess_codec(AVOutputFormat *fmt, const pchar short_name,
+                            const pchar filename, const pchar mime_type,
                             enum AVMediaType type);
 
 (**
@@ -2797,7 +2797,7 @@ procedure av_url_split(char *proto,         int proto_size,
                   char *hostname,      int hostname_size,
                   int *port_ptr,
                   char *path,          int path_size,
-                  const char *url);
+                  const pchar url);
 
 
 (**
@@ -2812,7 +2812,7 @@ procedure av_url_split(char *proto,         int proto_size,
  *)
 procedure av_dump_format(AVFormatContext *ic,
                     int index,
-                    const char *url,
+                    const pchar url,
                     int is_output);
 
 
@@ -2832,10 +2832,10 @@ procedure av_dump_format(AVFormatContext *ic,
  * @return 0 if OK, -1 on format error
  *)
 int av_get_frame_filename2(char *buf, int buf_size,
-                          const char *path, int number, int flags);
+                          const pchar path, int number, int flags);
 
 int av_get_frame_filename(char *buf, int buf_size,
-                          const char *path, int number);
+                          const pchar path, int number);
 
 (**
  * Check whether filename actually is a numbered sequence generator.
@@ -2843,7 +2843,7 @@ int av_get_frame_filename(char *buf, int buf_size,
  * @param filename possible numbered sequence string
  * @return 1 if a valid numbered sequence string, 0 otherwise
  *)
-int av_filename_number_test(const char *filename);
+int av_filename_number_test(const pchar filename);
 
 (**
  * Generate an SDP for an RTP session.
@@ -2871,7 +2871,7 @@ int av_sdp_create(AVFormatContext *ac[], int n_files, char *buf, int size);
  * @param filename   file name to check against the given extensions
  * @param extensions a comma-separated list of filename extensions
  *)
-int av_match_ext(const char *filename, const char *extensions);
+int av_match_ext(const pchar filename, const pchar extensions);
 
 (**
  * Test if the given container can store a codec.
@@ -2962,7 +2962,7 @@ AVRational av_guess_frame_rate(AVFormatContext *ctx, AVStream *stream, AVFrame *
  * @note  A stream specifier can match several streams in the format.
  *)
 int avformat_match_stream_specifier(AVFormatContext *s, AVStream *st,
-                                    const char *spec);
+                                    const pchar spec);
 
 int avformat_queue_attached_pictures(AVFormatContext *s);
 

@@ -2739,7 +2739,7 @@ typedef struct AVCodecContext {
      * @deprecated use encoder private options instead
      *)
     attribute_deprecated
-    const char *rc_eq;
+    const pchar rc_eq;
 {$endif}
 
     (**
@@ -3686,7 +3686,7 @@ procedure av_codec_set_chroma_intra_matrix(AVCodecContext *avctx, uint16_t *val)
  *)
 typedef struct AVProfile {
     int profile;
-    const char *name; ///< short name for the profile
+    const pchar name; ///< short name for the profile
 } AVProfile;
 
 typedef struct AVCodecDefault AVCodecDefault;
@@ -3703,12 +3703,12 @@ typedef struct AVCodec {
      * encoder and a decoder can share the same name).
      * This is the primary way to find a codec from the user perspective.
      *)
-    const char *name;
+    const pchar name;
     (**
      * Descriptive name for the codec, meant to be more human readable than name.
      * You should use the NULL_IF_CONFIG_SMALL() macro to define it.
      *)
-    const char *long_name;
+    const pchar long_name;
     enum AVMediaType type;
     enum AVCodecID id;
     (**
@@ -3822,7 +3822,7 @@ typedef struct AVHWAccel {
      * The name is globally unique among encoders and among decoders (but an
      * encoder and a decoder can share the same name).
      *)
-    const char *name;
+    const pchar name;
 
     (**
      * Type of codec implemented by the hardware accelerator.
@@ -4239,12 +4239,12 @@ unsigned avcodec_version();
 (**
  * Return the libavcodec build-time configuration.
  *)
-const char *avcodec_configuration();
+const pchar avcodec_configuration();
 
 (**
  * Return the libavcodec license.
  *)
-const char *avcodec_license();
+const pchar avcodec_license();
 
 (**
  * Register the codec codec and initialize libavcodec.
@@ -4632,7 +4632,7 @@ attribute_deprecated
 int av_packet_split_side_data(AVPacket *pkt);
 {$endif}
 
-const char *av_packet_side_data_name(enum AVPacketSideDataType type);
+const pchar av_packet_side_data_name(enum AVPacketSideDataType type);
 
 (**
  * Pack a dictionary for use in side_data.
@@ -4748,7 +4748,7 @@ AVCodec *avcodec_find_decoder(enum AVCodecID id);
  * @param name name of the requested decoder
  * @return A decoder if one was found, NULL otherwise.
  *)
-AVCodec *avcodec_find_decoder_by_name(const char *name);
+AVCodec *avcodec_find_decoder_by_name(const name: pchar);
 
 (**
  * The default callback for AVCodecContext.get_buffer2(). It is made public so
@@ -5349,7 +5349,7 @@ AVCodec *avcodec_find_encoder(enum AVCodecID id);
  * @param name name of the requested encoder
  * @return An encoder if one was found, NULL otherwise.
  *)
-AVCodec *avcodec_find_encoder_by_name(const char *name);
+AVCodec *avcodec_find_encoder_by_name(const name: pchar);
 
 (**
  * Encode a frame of audio.
@@ -5720,7 +5720,7 @@ procedure avcodec_string(char *buf, int buf_size, AVCodecContext *enc, int encod
  * @param profile the profile value for which a name is requested
  * @return A name for the profile if found, NULL otherwise.
  *)
-const char *av_get_profile_name(const AVCodec *codec, int profile);
+const pchar av_get_profile_name(const AVCodec *codec, int profile);
 
 (**
  * Return a name for the specified profile, if available.
@@ -5733,7 +5733,7 @@ const char *av_get_profile_name(const AVCodec *codec, int profile);
  *       supported by a specific decoder or encoder implementation, this
  *       function searches the list of profiles from the AVCodecDescriptor
  *)
-const char *avcodec_profile_name(enum AVCodecID codec_id, int profile);
+const pchar avcodec_profile_name(enum AVCodecID codec_id, int profile);
 
 int avcodec_default_execute(AVCodecContext *c, int (*func)(AVCodecContext *c2, void *arg2),void *arg, int *ret, int count, int size);
 int avcodec_default_execute2(AVCodecContext *c, int (*func)(AVCodecContext *c2, void *arg2, int, int),void *arg, int *ret, int count);
@@ -5895,7 +5895,7 @@ typedef struct AVBSFContext {
 } AVBSFContext;
 
 typedef struct AVBitStreamFilter {
-    const char *name;
+    const pchar name;
 
     (**
      * A list of codec ids supported by the filter, terminated by
@@ -5953,7 +5953,7 @@ procedure av_register_bitstream_filter(AVBitStreamFilter *bsf);
  * and successfully initialized, NULL otherwise
  *)
 attribute_deprecated
-AVBitStreamFilterContext *av_bitstream_filter_init(const char *name);
+AVBitStreamFilterContext *av_bitstream_filter_init(const name: pchar);
 
 (**
  * Filter bitstream.
@@ -5986,7 +5986,7 @@ AVBitStreamFilterContext *av_bitstream_filter_init(const char *name);
  *)
 attribute_deprecated
 int av_bitstream_filter_filter(AVBitStreamFilterContext *bsfc,
-                               AVCodecContext *avctx, const char *args,
+                               AVCodecContext *avctx, const pchar args,
                                uint8_t **poutbuf, int *poutbuf_size,
                                const uint8_t *buf, int buf_size, int keyframe);
 
@@ -6015,7 +6015,7 @@ AVBitStreamFilter *av_bitstream_filter_next(const AVBitStreamFilter *f);
  * @return a bitstream filter with the specified name or NULL if no such
  *         bitstream filter exists.
  *)
-const AVBitStreamFilter *av_bsf_get_by_name(const char *name);
+const AVBitStreamFilter *av_bsf_get_by_name(const name: pchar);
 
 (**
  * Iterate over all registered bitstream filters.
@@ -6148,7 +6148,7 @@ int av_bsf_list_append(AVBSFList *lst, AVBSFContext *bsf);
  *
  * @return >=0 on success, negative AVERROR in case of failure
  *)
-int av_bsf_list_append2(AVBSFList *lst, const char * bsf_name, AVDictionary **options);
+int av_bsf_list_append2(AVBSFList *lst, const pchar  bsf_name, AVDictionary **options);
 (**
  * Finalize list of bitstream filters.
  *
@@ -6180,7 +6180,7 @@ int av_bsf_list_finalize(AVBSFList **lst, AVBSFContext **bsf);
  *
  * @return >=0 on success, negative AVERROR in case of failure
  *)
-int av_bsf_list_parse_str(const char *str, AVBSFContext **bsf);
+int av_bsf_list_parse_str(const pchar str, AVBSFContext **bsf);
 
 (**
  * Get null/pass-through bitstream filter.
@@ -6232,7 +6232,7 @@ unsigned int av_xiphlacing(unsigned char *s, unsigned int v);
  * @deprecated Use avpriv_report_missing_feature() instead.
  *)
 attribute_deprecated
-procedure av_log_missing_feature(void *avc, const char *feature, int want_sample);
+procedure av_log_missing_feature(void *avc, const pchar feature, int want_sample);
 
 (**
  * Log a generic warning message asking for a sample. This function is
@@ -6244,7 +6244,7 @@ procedure av_log_missing_feature(void *avc, const char *feature, int want_sample
  * @deprecated Use avpriv_request_sample() instead.
  *)
 attribute_deprecated
-procedure av_log_ask_for_sample(void *avc, const char *msg, ...) av_printf_format(2, 3);
+procedure av_log_ask_for_sample(void *avc, const pchar msg, ...) av_printf_format(2, 3);
 {$endif} (* FF_API_MISSING_SAMPLE *)
 
 (**
@@ -6304,7 +6304,7 @@ enum AVMediaType avcodec_get_type(enum AVCodecID codec_id);
  * Get the name of a codec.
  * @return  a static string identifying the codec; never NULL
  *)
-const char *avcodec_get_name(enum AVCodecID id);
+const pchar avcodec_get_name(enum AVCodecID id);
 
 (**
  * @return a positive value if s is open (i.e. avcodec_open2() was called on it
@@ -6340,7 +6340,7 @@ const AVCodecDescriptor *avcodec_descriptor_next(const AVCodecDescriptor *prev);
  * @return codec descriptor with the given name or NULL if no such descriptor
  *         exists.
  *)
-const AVCodecDescriptor *avcodec_descriptor_get_by_name(const char *name);
+const AVCodecDescriptor *avcodec_descriptor_get_by_name(const name: pchar);
 
 (**
  * Allocate a CPB properties structure and initialize its fields to default

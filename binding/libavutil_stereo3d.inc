@@ -162,7 +162,7 @@ AVStereo3D *av_stereo3d_create_side_data(AVFrame *frame);
  *
  * @return The name of the stereo3d value, or "unknown".
  *)
-const char *av_stereo3d_type_name(unsigned int type);
+const pchar av_stereo3d_type_name(unsigned int type);
 
 (**
  * Get the AVStereo3DType form a human-readable name.
@@ -171,6 +171,6 @@ const char *av_stereo3d_type_name(unsigned int type);
  *
  * @return The AVStereo3DType value, or -1 if not found.
  *)
-int av_stereo3d_from_name(const char *name);
+int av_stereo3d_from_name(const name: pchar);
 
 // #endif (* AVUTIL_STEREO3D_H *)

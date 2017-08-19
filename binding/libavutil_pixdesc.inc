@@ -85,7 +85,7 @@ typedef struct AVComponentDescriptor {
  *       are stored not what these values represent.
  *)
 typedef struct AVPixFmtDescriptor {
-    const char *name;
+    const pchar name;
     uint8_t nb_components;  ///< The number of components each pixel has, (1-4)
 
     (**
@@ -125,7 +125,7 @@ typedef struct AVPixFmtDescriptor {
     (**
      * Alternative comma-separated names.
      *)
-    const char *alias;
+    const pchar alias;
 } AVPixFmtDescriptor;
 
 (**
@@ -248,27 +248,27 @@ int av_pix_fmt_count_planes(enum AVPixelFormat pix_fmt);
 (**
  * @return the name for provided color range or NULL if unknown.
  *)
-const char *av_color_range_name(enum AVColorRange range);
+const pchar av_color_range_name(enum AVColorRange range);
 
 (**
  * @return the name for provided color primaries or NULL if unknown.
  *)
-const char *av_color_primaries_name(enum AVColorPrimaries primaries);
+const pchar av_color_primaries_name(enum AVColorPrimaries primaries);
 
 (**
  * @return the name for provided color transfer or NULL if unknown.
  *)
-const char *av_color_transfer_name(enum AVColorTransferCharacteristic transfer);
+const pchar av_color_transfer_name(enum AVColorTransferCharacteristic transfer);
 
 (**
  * @return the name for provided color space or NULL if unknown.
  *)
-const char *av_color_space_name(enum AVColorSpace space);
+const pchar av_color_space_name(enum AVColorSpace space);
 
 (**
  * @return the name for provided chroma location or NULL if unknown.
  *)
-const char *av_chroma_location_name(enum AVChromaLocation location);
+const pchar av_chroma_location_name(enum AVChromaLocation location);
 
 (**
  * Return the pixel format corresponding to name.
@@ -281,7 +281,7 @@ const char *av_chroma_location_name(enum AVChromaLocation location);
  *
  * Finally if no pixel format has been found, returns AV_PIX_FMT_NONE.
  *)
-enum AVPixelFormat av_get_pix_fmt(const char *name);
+enum AVPixelFormat av_get_pix_fmt(const name: pchar);
 
 (**
  * Return the short name for a pixel format, NULL in case pix_fmt is
@@ -289,7 +289,7 @@ enum AVPixelFormat av_get_pix_fmt(const char *name);
  *
  * @see av_get_pix_fmt(), av_get_pix_fmt_string()
  *)
-const char *av_get_pix_fmt_name(enum AVPixelFormat pix_fmt);
+const pchar av_get_pix_fmt_name(enum AVPixelFormat pix_fmt);
 
 (**
  * Print in buf the string corresponding to the pixel format with

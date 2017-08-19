@@ -70,12 +70,12 @@ unsigned avdevice_version();
 (**
  * Return the libavdevice build-time configuration.
  *)
-const char *avdevice_configuration();
+const pchar avdevice_configuration();
 
 (**
  * Return the libavdevice license.
  *)
-const char *avdevice_license();
+const pchar avdevice_license();
 
 (**
  * Initialize libavdevice and register all the input and output devices.
@@ -514,9 +514,9 @@ procedure avdevice_free_list_devices(AVDeviceInfoList **device_list);
  * @return count of autodetected devices, negative on error.
  * @note device argument takes precedence over device_name when both are set.
  *)
-int avdevice_list_input_sources(struct AVInputFormat *device, const char *device_name,
+int avdevice_list_input_sources(struct AVInputFormat *device, const pchar device_name,
                                 AVDictionary *device_options, AVDeviceInfoList **device_list);
-int avdevice_list_output_sinks(struct AVOutputFormat *device, const char *device_name,
+int avdevice_list_output_sinks(struct AVOutputFormat *device, const pchar device_name,
                                AVDictionary *device_options, AVDeviceInfoList **device_list);
 
 (**

@@ -303,12 +303,12 @@ typedef struct AVIOContext {
     (**
      * ',' separated list of allowed protocols.
      *)
-    const char *protocol_whitelist;
+    const pchar protocol_whitelist;
 
     (**
      * ',' separated list of disallowed protocols.
      *)
-    const char *protocol_blacklist;
+    const pchar protocol_blacklist;
 
     (**
      * A callback that is used instead of write_packet.
@@ -342,7 +342,7 @@ typedef struct AVIOContext {
  *
  * @return Name of the protocol or NULL.
  *)
-const char *avio_find_protocol_name(const char *url);
+const pchar avio_find_protocol_name(const pchar url);
 
 (**
  * Return AVIO_FLAG_* access flags corresponding to the access permissions
@@ -356,7 +356,7 @@ const char *avio_find_protocol_name(const char *url);
  * unless you are sure that no other processes are accessing the
  * checked resource.
  *)
-int avio_check(const char *url, int flags);
+int avio_check(const pchar url, int flags);
 
 (**
  * Move or rename a resource.
@@ -367,7 +367,7 @@ int avio_check(const char *url, int flags);
  * @param url_dst new url to resource if the operation succeeded
  * @return >=0 on success or negative on error.
  *)
-int avpriv_io_move(const char *url_src, const char *url_dst);
+int avpriv_io_move(const pchar url_src, const pchar url_dst);
 
 (**
  * Delete a resource.
@@ -375,7 +375,7 @@ int avpriv_io_move(const char *url_src, const char *url_dst);
  * @param url resource to be deleted.
  * @return >=0 on success or negative on error.
  *)
-int avpriv_io_delete(const char *url);
+int avpriv_io_delete(const pchar url);
 
 (**
  * Open directory for reading.
@@ -387,7 +387,7 @@ int avpriv_io_delete(const char *url);
  *                containing options that were not found. May be NULL.
  * @return >=0 on success or negative on error.
  *)
-int avio_open_dir(AVIODirContext **s, const char *url, AVDictionary **options);
+int avio_open_dir(AVIODirContext **s, const pchar url, AVDictionary **options);
 
 (**
  * Get next directory entry.
@@ -465,7 +465,7 @@ procedure avio_wb16(AVIOContext *s, unsigned int val);
  * Write a NULL-terminated string.
  * @return number of bytes written.
  *)
-int avio_put_str(AVIOContext *s, const char *str);
+int avio_put_str(AVIOContext *s, const pchar str);
 
 (**
  * Convert an UTF-8 string to UTF-16LE and write it.
@@ -474,7 +474,7 @@ int avio_put_str(AVIOContext *s, const char *str);
  *
  * @return number of bytes written.
  *)
-int avio_put_str16le(AVIOContext *s, const char *str);
+int avio_put_str16le(AVIOContext *s, const pchar str);
 
 (**
  * Convert an UTF-8 string to UTF-16BE and write it.
@@ -483,7 +483,7 @@ int avio_put_str16le(AVIOContext *s, const char *str);
  *
  * @return number of bytes written.
  *)
-int avio_put_str16be(AVIOContext *s, const char *str);
+int avio_put_str16be(AVIOContext *s, const pchar str);
 
 (**
  * Mark the written bytestream as a specific type.
@@ -553,7 +553,7 @@ int url_feof(AVIOContext *s);
 {$endif}
 
 (** @warning Writes up to 4 KiB per call *)
-int avio_printf(AVIOContext *s, const char *fmt, ...) av_printf_format(2, 3);
+int avio_printf(AVIOContext *s, const pchar fmt, ...) av_printf_format(2, 3);
 
 (**
  * Force flushing of buffered data.
@@ -666,7 +666,7 @@ int avio_get_str16be(AVIOContext *pb, int maxlen, char *buf, int buflen);
  * @return >= 0 in case of success, a negative value corresponding to an
  * AVERROR code in case of failure
  *)
-int avio_open(AVIOContext **s, const char *url, int flags);
+int avio_open(AVIOContext **s, const pchar url, int flags);
 
 (**
  * Create and initialize a AVIOContext for accessing the
@@ -686,7 +686,7 @@ int avio_open(AVIOContext **s, const char *url, int flags);
  * @return >= 0 in case of success, a negative value corresponding to an
  * AVERROR code in case of failure
  *)
-int avio_open2(AVIOContext **s, const char *url, int flags,
+int avio_open2(AVIOContext **s, const pchar url, int flags,
                const AVIOInterruptCB *int_cb, AVDictionary **options);
 
 (**
@@ -757,7 +757,7 @@ int avio_close_dyn_buf(AVIOContext *s, uint8_t **pbuffer);
  *
  * @return A static string containing the name of current protocol or NULL
  *)
-const char *avio_enum_protocols(void **opaque, int output);
+const pchar avio_enum_protocols(void **opaque, int output);
 
 (**
  * Pause and resume playing - only meaningful if using a network streaming

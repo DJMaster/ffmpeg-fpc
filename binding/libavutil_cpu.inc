@@ -105,14 +105,14 @@ attribute_deprecated procedure av_set_cpu_flags_mask(int mask);
  * @return a combination of AV_CPU_* flags, negative on error.
  *)
 attribute_deprecated
-int av_parse_cpu_flags(const char *s);
+int av_parse_cpu_flags(const pchar s);
 
 (**
  * Parse CPU caps from a string and update the given AV_CPU_* flags based on that.
  *
  * @return negative on error.
  *)
-int av_parse_cpu_caps(unsigned *flags, const char *s);
+int av_parse_cpu_caps(unsigned *flags, const pchar s);
 
 (**
  * @return the number of logical CPU cores present.

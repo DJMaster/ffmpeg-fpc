@@ -145,7 +145,7 @@ typedef struct AVClass {
      * Callback to return the supported/allowed ranges.
      * available since version (52.12)
      *)
-    int (*query_ranges)(struct AVOptionRanges **, void *obj, const char *key, int flags);
+    int (*query_ranges)(struct AVOptionRanges **, void *obj, const pchar key, int flags);
 } AVClass;
 
 (**
@@ -237,7 +237,7 @@ typedef struct AVClass {
  * @param fmt The format string (printf-compatible) that specifies how
  *        subsequent arguments are converted to output.
  *)
-procedure av_log(void *avcl, int level, const char *fmt, ...) av_printf_format(3, 4);
+procedure av_log(void *avcl, int level, const pchar fmt, ...) av_printf_format(3, 4);
 
 
 (**
@@ -255,7 +255,7 @@ procedure av_log(void *avcl, int level, const char *fmt, ...) av_printf_format(3
  *        subsequent arguments are converted to output.
  * @param vl The arguments referenced by the format string.
  *)
-procedure av_vlog(void *avcl, int level, const char *fmt, va_list vl);
+procedure av_vlog(void *avcl, int level, const pchar fmt, va_list vl);
 
 (**
  * Get the current log level
@@ -300,7 +300,7 @@ procedure av_log_set_callback(void (*callback)(void*, int, const char*, va_list)
  *        subsequent arguments are converted to output.
  * @param vl The arguments referenced by the format string.
  *)
-procedure av_log_default_callback(void *avcl, int level, const char *fmt,
+procedure av_log_default_callback(void *avcl, int level, const pchar fmt,
                              va_list vl);
 
 (**
@@ -320,7 +320,7 @@ AVClassCategory av_default_get_category(void *ptr);
  * @param print_prefix  used to store whether the prefix must be printed;
  *                      must point to a persistent integer initially set to 1
  *)
-procedure av_log_format_line(void *ptr, int level, const char *fmt, va_list vl,
+procedure av_log_format_line(void *ptr, int level, const pchar fmt, va_list vl,
                         char *line, int line_size, int *print_prefix);
 
 (**
@@ -337,7 +337,7 @@ procedure av_log_format_line(void *ptr, int level, const char *fmt, va_list vl,
  *         character. If the return value is not less than line_size, it means
  *         that the log message was truncated to fit the buffer.
  *)
-int av_log_format_line2(void *ptr, int level, const char *fmt, va_list vl,
+int av_log_format_line2(void *ptr, int level, const pchar fmt, va_list vl,
                         char *line, int line_size, int *print_prefix);
 
 {$if FF_API_DLOG}

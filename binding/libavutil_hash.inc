@@ -127,7 +127,7 @@ struct AVHashContext;
  * @note The context is not initialized after a call to this function; you must
  * call av_hash_init() to do so.
  *)
-int av_hash_alloc(struct AVHashContext **ctx, const char *name);
+int av_hash_alloc(struct AVHashContext **ctx, const pchar name);
 
 (**
  * Get the names of available hash algorithms.
@@ -137,12 +137,12 @@ int av_hash_alloc(struct AVHashContext **ctx, const char *name);
  * @param[in] i  Index of the hash algorithm, starting from 0
  * @return       Pointer to a static string or `NULL` if `i` is out of range
  *)
-const char *av_hash_names(int i);
+const pchar av_hash_names(int i);
 
 (**
  * Get the name of the algorithm corresponding to the given hash context.
  *)
-const char *av_hash_get_name(const struct AVHashContext *ctx);
+const pchar av_hash_get_name(const struct AVHashContext *ctx);
 
 (**
  * Maximum value that av_hash_get_size() will currently return.

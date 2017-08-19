@@ -56,7 +56,7 @@ struct AVTWOFISH *av_twofish_alloc();
   * @param key a key of size ranging from 1 to 32 bytes used for encryption/decryption
   * @param key_bits number of keybits: 128, 192, 256 If less than the required, padded with zeroes to nearest valid value; return value is 0 if key_bits is 128/192/256, -1 if less than 0, 1 otherwise
  *)
-int av_twofish_init(struct AVTWOFISH *ctx, const uint8_t *key, int key_bits);
+function av_twofish_init(struct AVTWOFISH *ctx, const uint8_t *key, int key_bits): cint;
 
 (**
   * Encrypt or decrypt a buffer using a previously initialized context

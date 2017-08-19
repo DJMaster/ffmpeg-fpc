@@ -518,14 +518,14 @@ unsigned swresample_version();
  *
  * @returns     the build-time @c ./configure flags
  *)
-const char *swresample_configuration();
+const pchar swresample_configuration();
 
 (**
  * Return the swr license.
  *
  * @returns     the license of libswresample, determined at build-time
  *)
-const char *swresample_license();
+const pchar swresample_license();
 
 (**
  * @}

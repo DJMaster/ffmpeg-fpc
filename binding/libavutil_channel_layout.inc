@@ -145,7 +145,7 @@ enum AVMatrixEncoding {
  *
  * Example: "stereo+FC" = "2c+FC" = "2c+1c" = "0x7"
  *)
-uint64_t av_get_channel_layout(const char *name);
+uint64_t av_get_channel_layout(const name: pchar);
 
 (**
  * Return a channel layout and the number of channels based on the specified name.
@@ -159,7 +159,7 @@ uint64_t av_get_channel_layout(const char *name);
  *
  * @return 0 on success, AVERROR(EINVAL) if the parsing fails.
  *)
-int av_get_extended_channel_layout(const char *name, uint64_t* channel_layout, int* nb_channels);
+int av_get_extended_channel_layout(const pchar name, uint64_t* channel_layout, int* nb_channels);
 
 (**
  * Return a description of a channel layout.
@@ -208,7 +208,7 @@ uint64_t av_channel_layout_extract_channel(uint64_t channel_layout, int index);
  *
  * @return channel name on success, NULL on error.
  *)
-const char *av_get_channel_name(uint64_t channel);
+const pchar av_get_channel_name(uint64_t channel);
 
 (**
  * Get the description of a given channel.
@@ -216,7 +216,7 @@ const char *av_get_channel_name(uint64_t channel);
  * @param channel  a channel layout with a single channel
  * @return  channel description on success, NULL on error
  *)
-const char *av_get_channel_description(uint64_t channel);
+const pchar av_get_channel_description(uint64_t channel);
 
 (**
  * Get the value and name of a standard channel layout.
@@ -228,7 +228,7 @@ const char *av_get_channel_description(uint64_t channel);
  *          <0 if index is beyond the limits
  *)
 int av_get_standard_channel_layout(unsigned index, uint64_t *layout,
-                                   const char **name);
+                                   const ppchar name);
 
 (**
  * @}

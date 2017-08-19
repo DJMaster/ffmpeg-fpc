@@ -56,12 +56,12 @@ unsigned postproc_version();
 (**
  * Return the libpostproc build-time configuration.
  *)
-const char *postproc_configuration();
+const pchar postproc_configuration();
 
 (**
  * Return the libpostproc license.
  *)
-const char *postproc_license();
+const pchar postproc_license();
 
   PP_QUALITY_MAX = 6;
 
@@ -77,7 +77,7 @@ typedef void pp_mode;
 {$if LIBPOSTPROC_VERSION_INT < (52 shl 16)}
 typedef pp_context pp_context_t;
 typedef pp_mode pp_mode_t;
-extern const char *const pp_help; ///< a simple help text
+extern const pchar const pp_help; ///< a simple help text
 #else
 extern const char pp_help[]; ///< a simple help text
 {$endif}
@@ -95,7 +95,7 @@ void  pp_postprocess(const uint8_t * src[3], const int srcStride[3],
  * @param name    the string after "-pp" on the command line
  * @param quality a number from 0 to PP_QUALITY_MAX
  *)
-pp_mode *pp_get_mode_by_name_and_quality(const char *name, int quality);
+pp_mode *pp_get_mode_by_name_and_quality(const pchar name, int quality);
 void pp_free_mode(pp_mode *mode);
 
 pp_context *pp_get_context(int width, int height, int flags);

@@ -475,7 +475,7 @@ procedure av_freep(void *ptr);
  *         copy of `s` or `NULL` if the string cannot be allocated
  * @see av_strndup()
  *)
-char *av_strdup(const char *s) av_malloc_attrib;
+char *av_strdup(const pchar s) av_malloc_attrib;
 
 (**
  * Duplicate a substring of a string.
@@ -486,7 +486,7 @@ char *av_strdup(const char *s) av_malloc_attrib;
  * @return Pointer to a newly-allocated string containing a
  *         substring of `s` or `NULL` if the string cannot be allocated
  *)
-char *av_strndup(const char *s, size_t len) av_malloc_attrib;
+char *av_strndup(const pchar s, size_t len) av_malloc_attrib;
 
 (**
  * Duplicate a buffer with av_malloc().

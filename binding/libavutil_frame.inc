@@ -568,7 +568,7 @@ procedure    av_frame_set_color_range(AVFrame *frame, enum AVColorRange val);
  * Get the name of a colorspace.
  * @return a static string identifying the colorspace; can be NULL.
  *)
-const char *av_get_colorspace_name(enum AVColorSpace val);
+const pchar av_get_colorspace_name(enum AVColorSpace val);
 
 (**
  * Allocate an AVFrame and set its fields to default values.  The resulting
@@ -743,7 +743,7 @@ procedure av_frame_remove_side_data(AVFrame *frame, enum AVFrameSideDataType typ
 (**
  * @return a string identifying the side data type
  *)
-const char *av_frame_side_data_name(enum AVFrameSideDataType type);
+const pchar av_frame_side_data_name(enum AVFrameSideDataType type);
 
 (**
  * @}

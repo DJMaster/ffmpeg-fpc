@@ -84,13 +84,13 @@ enum AVSampleFormat {
  * Return the name of sample_fmt, or NULL if sample_fmt is not
  * recognized.
  *)
-const char *av_get_sample_fmt_name(enum AVSampleFormat sample_fmt);
+const pchar av_get_sample_fmt_name(enum AVSampleFormat sample_fmt);
 
 (**
  * Return a sample format corresponding to name, or AV_SAMPLE_FMT_NONE
  * on error.
  *)
-enum AVSampleFormat av_get_sample_fmt(const char *name);
+enum AVSampleFormat av_get_sample_fmt(const name: pchar);
 
 (**
  * Return the planar<->packed alternative form of the given sample format, or

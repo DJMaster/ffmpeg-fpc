@@ -47,9 +47,9 @@ typedef enum AVThreadMessageFlags {
  * @return  >=0 for success; <0 for error, in particular AVERROR(ENOSYS) if
  *          lavu was built without thread support
  *)
-int av_thread_message_queue_alloc(AVThreadMessageQueue **mq,
+function av_thread_message_queue_alloc(AVThreadMessageQueue **mq,
                                   unsigned nelem,
-                                  unsigned elsize);
+                                  unsigned elsize): cint;
 
 (**
  * Free a message queue.
@@ -61,16 +61,16 @@ procedure av_thread_message_queue_free(AVThreadMessageQueue **mq);
 (**
  * Send a message on the queue.
  *)
-int av_thread_message_queue_send(AVThreadMessageQueue *mq,
-                                 void *msg,
-                                 unsigned flags);
+function av_thread_message_queue_send(AVThreadMessageQueue *mq,
+                                          void *msg,
+                                          unsigned flags): cint;
 
 (**
  * Receive a message from the queue.
  *)
-int av_thread_message_queue_recv(AVThreadMessageQueue *mq,
-                                 void *msg,
-                                 unsigned flags);
+function av_thread_message_queue_recv(AVThreadMessageQueue *mq,
+                                          void *msg,
+                                          unsigned flags): cint;
 
 (**
  * Set the sending error code.

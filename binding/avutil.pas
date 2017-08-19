@@ -193,17 +193,17 @@ unsigned avutil_version();
  * version number or a git commit description. This string has no fixed format
  * and can change any time. It should never be parsed by code.
  *)
-const char *av_version_info();
+const pchar av_version_info();
 
 (**
  * Return the libavutil build-time configuration.
  *)
-const char *avutil_configuration();
+const pchar avutil_configuration();
 
 (**
  * Return the libavutil license.
  *)
-const char *avutil_license();
+const pchar avutil_license();
 
 (**
  * @}
@@ -228,7 +228,7 @@ enum AVMediaType {
  * Return a string describing the media_type enum, NULL if media_type
  * is unknown.
  *)
-const char *av_get_media_type_string(enum AVMediaType media_type);
+const pchar av_get_media_type_string(enum AVMediaType media_type);
 
 (**
  * @defgroup lavu_const Constants
@@ -354,7 +354,7 @@ unsigned av_int_list_length_for_size(unsigned elsize,
  * The API of this function matches POSIX fopen(), errors are returned through
  * errno.
  *)
-FILE *av_fopen_utf8(const char *path, const char *mode);
+FILE *av_fopen_utf8(const pchar path, const pchar mode);
 
 (**
  * Return the fractional representation of the internal time base.

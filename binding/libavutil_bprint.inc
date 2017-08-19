@@ -130,12 +130,12 @@ procedure av_bprint_init_for_buffer(AVBPrint *buf, char *buffer, unsigned size);
 (**
  * Append a formatted string to a print buffer.
  *)
-procedure av_bprintf(AVBPrint *buf, const char *fmt, ...) av_printf_format(2, 3);
+procedure av_bprintf(AVBPrint *buf, const pchar fmt, ...) av_printf_format(2, 3);
 
 (**
  * Append a formatted string to a print buffer.
  *)
-procedure av_vbprintf(AVBPrint *buf, const char *fmt, va_list vl_arg);
+procedure av_vbprintf(AVBPrint *buf, const pchar fmt, va_list vl_arg);
 
 (**
  * Append char c n times to a print buffer.
@@ -149,7 +149,7 @@ procedure av_bprint_chars(AVBPrint *buf, char c, unsigned n);
  * param data pointer to data
  * param size size of data
  *)
-procedure av_bprint_append_data(AVBPrint *buf, const char *data, unsigned size);
+procedure av_bprint_append_data(AVBPrint *buf, const pchar data, unsigned size);
 
 struct tm;
 (**
@@ -163,7 +163,7 @@ struct tm;
  * produce poor results if the format string expands to a very long text and
  * the bprint buffer is near the limit stated by the size_max option.
  *)
-procedure av_bprint_strftime(AVBPrint *buf, const char *fmt, const struct tm *tm);
+procedure av_bprint_strftime(AVBPrint *buf, const pchar fmt, const struct tm *tm);
 
 (**
  * Allocate bytes in the buffer for external use.
@@ -219,7 +219,7 @@ int av_bprint_finalize(AVBPrint *buf, char **ret_str);
  *                      notice.
  * @param flags         flags which control how to escape, see AV_ESCAPE_FLAG_* macros
  *)
-procedure av_bprint_escape(AVBPrint *dstbuf, const char *src, const char *special_chars,
+procedure av_bprint_escape(AVBPrint *dstbuf, const pchar src, const pchar special_chars,
                       enum AVEscapeMode mode, int flags);
 
 // #endif (* AVUTIL_BPRINT_H *)

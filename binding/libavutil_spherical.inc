@@ -220,7 +220,7 @@ procedure av_spherical_tile_bounds(const AVSphericalMapping *map,
  *
  * @return The name of the AVSphericalProjection, or "unknown".
  *)
-const char *av_spherical_projection_name(enum AVSphericalProjection projection);
+const pchar av_spherical_projection_name(enum AVSphericalProjection projection);
 
 (**
  * Get the AVSphericalProjection form a human-readable name.
@@ -229,7 +229,7 @@ const char *av_spherical_projection_name(enum AVSphericalProjection projection);
  *
  * @return The AVSphericalProjection value, or -1 if not found.
  *)
-int av_spherical_from_name(const char *name);
+int av_spherical_from_name(const name: pchar);
 (**
  * @}
  * @}

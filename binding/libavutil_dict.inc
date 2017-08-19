@@ -106,7 +106,7 @@ typedef struct AVDictionary AVDictionary;
  * @param flags a collection of AV_DICT_* flags controlling how the entry is retrieved
  * @return found entry or NULL in case no matching entry was found in the dictionary
  *)
-AVDictionaryEntry *av_dict_get(const AVDictionary *m, const char *key,
+AVDictionaryEntry *av_dict_get(const AVDictionary *m, const pchar key,
                                const AVDictionaryEntry *prev, int flags);
 
 (**
@@ -133,7 +133,7 @@ int av_dict_count(const AVDictionary *m);
  *        Passing a NULL value will cause an existing entry to be deleted.
  * @return >= 0 on success otherwise an error code <0
  *)
-int av_dict_set(AVDictionary **pm, const char *key, const char *value, int flags);
+int av_dict_set(AVDictionary **pm, const pchar key, const pchar value, int flags);
 
 (**
  * Convenience wrapper for av_dict_set that converts the value to a string
@@ -141,7 +141,7 @@ int av_dict_set(AVDictionary **pm, const char *key, const char *value, int flags
  *
  * Note: If AV_DICT_DONT_STRDUP_KEY is set, key will be freed on error.
  *)
-int av_dict_set_int(AVDictionary **pm, const char *key, int64_t value, int flags);
+int av_dict_set_int(AVDictionary **pm, const pchar key, int64_t value, int flags);
 
 (**
  * Parse the key/value pairs list and add the parsed entries to a dictionary.
@@ -159,8 +159,8 @@ int av_dict_set_int(AVDictionary **pm, const char *key, int64_t value, int flags
  *                     be duplicated.
  * @return             0 on success, negative AVERROR code on failure
  *)
-int av_dict_parse_string(AVDictionary **pm, const char *str,
-                         const char *key_val_sep, const char *pairs_sep,
+int av_dict_parse_string(AVDictionary **pm, const pchar str,
+                         const pchar key_val_sep, const pchar pairs_sep,
                          int flags);
 
 (**
