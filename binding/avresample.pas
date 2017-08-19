@@ -190,7 +190,7 @@ AVAudioResampleContext *avresample_alloc_context();
  * @param avr  audio resample context
  * @return     0 on success, negative AVERROR code on failure
  *)
-int avresample_open(AVAudioResampleContext *avr);
+function cint avresample_open(AVAudioResampleContext *avr);
 
 (**
  * Check whether an AVAudioResampleContext is open or closed.
@@ -198,7 +198,7 @@ int avresample_open(AVAudioResampleContext *avr);
  * @param avr AVAudioResampleContext to check
  * @return 1 if avr is open, 0 if avr is closed.
  *)
-int avresample_is_open(AVAudioResampleContext *avr);
+function cint avresample_is_open(AVAudioResampleContext *avr);
 
 (**
  * Close AVAudioResampleContext.
@@ -246,7 +246,7 @@ procedure avresample_free(AVAudioResampleContext **avr);
  * @param matrix_encoding     matrixed stereo downmix mode (e.g. dplii)
  * @return                    0 on success, negative AVERROR code on failure
  *)
-int avresample_build_matrix(uint64_t in_layout, uint64_t out_layout,
+function cint avresample_build_matrix(uint64_t in_layout, uint64_t out_layout,
                             double center_mix_level, double surround_mix_level,
                             double lfe_mix_level, int normalize, double *matrix,
                             int stride, enum AVMatrixEncoding matrix_encoding);
@@ -263,7 +263,7 @@ int avresample_build_matrix(uint64_t in_layout, uint64_t out_layout,
  * @param stride  distance between adjacent input channels in the matrix array
  * @return        0 on success, negative AVERROR code on failure
  *)
-int avresample_get_matrix(AVAudioResampleContext *avr, double *matrix,
+function cint avresample_get_matrix(AVAudioResampleContext *avr, double *matrix,
                           int stride);
 
 (**
@@ -284,7 +284,7 @@ int avresample_get_matrix(AVAudioResampleContext *avr, double *matrix,
  * @param stride  distance between adjacent input channels in the matrix array
  * @return        0 on success, negative AVERROR code on failure
  *)
-int avresample_set_matrix(AVAudioResampleContext *avr, const double *matrix,
+function cint avresample_set_matrix(AVAudioResampleContext *avr, const double *matrix,
                           int stride);
 
 (**
@@ -314,7 +314,7 @@ int avresample_set_matrix(AVAudioResampleContext *avr, const double *matrix,
  * @param channel_map customized input channel mapping
  * @return            0 on success, negative AVERROR code on failure
  *)
-int avresample_set_channel_mapping(AVAudioResampleContext *avr,
+function cint avresample_set_channel_mapping(AVAudioResampleContext *avr,
                                    const int *channel_map);
 
 (**
@@ -330,7 +330,7 @@ int avresample_set_channel_mapping(AVAudioResampleContext *avr,
  * @param compensation_distance  compensation distance, in samples
  * @return                       0 on success, negative AVERROR code on failure
  *)
-int avresample_set_compensation(AVAudioResampleContext *avr, int sample_delta,
+function cint avresample_set_compensation(AVAudioResampleContext *avr, int sample_delta,
                                 int compensation_distance);
 
 (**
@@ -344,7 +344,7 @@ int avresample_set_compensation(AVAudioResampleContext *avr, int sample_delta,
  *                      would exceed INT_MAX
  *)
 
-int avresample_get_out_samples(AVAudioResampleContext *avr, int in_nb_samples);
+function cint avresample_get_out_samples(AVAudioResampleContext *avr, int in_nb_samples);
 
 (**
  * Convert input samples and write them to the output FIFO.
@@ -388,7 +388,7 @@ int avresample_get_out_samples(AVAudioResampleContext *avr, int in_nb_samples);
  *                        not including converted samples added to the internal
  *                        output FIFO
  *)
-int avresample_convert(AVAudioResampleContext *avr, uint8_t **output,
+function cint avresample_convert(AVAudioResampleContext *avr, uint8_t **output,
                        int out_plane_size, int out_samples,
                        uint8_t * const *input, int in_plane_size,
                        int in_samples);
@@ -406,7 +406,7 @@ int avresample_convert(AVAudioResampleContext *avr, uint8_t **output,
  * @param avr  audio resample context
  * @return     number of samples currently in the resampling delay buffer
  *)
-int avresample_get_delay(AVAudioResampleContext *avr);
+function cint avresample_get_delay(AVAudioResampleContext *avr);
 
 (**
  * Return the number of available samples in the output FIFO.
@@ -423,7 +423,7 @@ int avresample_get_delay(AVAudioResampleContext *avr);
  * @param avr  audio resample context
  * @return     number of samples available for reading
  *)
-int avresample_available(AVAudioResampleContext *avr);
+function cint avresample_available(AVAudioResampleContext *avr);
 
 (**
  * Read samples from the output FIFO.
@@ -442,7 +442,7 @@ int avresample_available(AVAudioResampleContext *avr);
  * @param nb_samples  number of samples to read from the FIFO
  * @return            the number of samples written to output
  *)
-int avresample_read(AVAudioResampleContext *avr, uint8_t **output, int nb_samples);
+function cint avresample_read(AVAudioResampleContext *avr, uint8_t **output, int nb_samples);
 
 (**
  * Convert the samples in the input AVFrame and write them to the output AVFrame.
@@ -488,7 +488,7 @@ int avresample_read(AVAudioResampleContext *avr, uint8_t **output, int nb_sample
  * @return                0 on success, AVERROR on failure or nonmatching
  *                        configuration.
  *)
-int avresample_convert_frame(AVAudioResampleContext *avr,
+function cint avresample_convert_frame(AVAudioResampleContext *avr,
                              AVFrame *output, AVFrame *input);
 
 (**
@@ -506,7 +506,7 @@ int avresample_convert_frame(AVAudioResampleContext *avr,
  * @param input           input AVFrame
  * @return                0 on success, AVERROR on failure.
  *)
-int avresample_config(AVAudioResampleContext *avr, AVFrame *out, AVFrame *in);
+function cint avresample_config(AVAudioResampleContext *avr, AVFrame *out, AVFrame *in);
 
 (**
  * @}

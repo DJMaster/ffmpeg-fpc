@@ -288,7 +288,7 @@ void *av_realloc(void *ptr, size_t size) av_alloc_size(2);
  *          correctly aligned.
  *)
 av_warn_unused_result
-int av_reallocp(void *ptr, size_t size);
+function cint av_reallocp(void *ptr, size_t size);
 
 (**
  * Allocate, reallocate, or free a block of memory.
@@ -624,7 +624,7 @@ procedure av_dynarray_add(void *tab_ptr, int *nb_ptr, void *elem);
  * @see av_dynarray_add(), av_dynarray2_add()
  *)
 av_warn_unused_result
-int av_dynarray_add_nofree(void *tab_ptr, int *nb_ptr, void *elem);
+function cint av_dynarray_add_nofree(void *tab_ptr, int *nb_ptr, void *elem);
 
 (**
  * Add an element of size `elem_size` to a dynamic array.

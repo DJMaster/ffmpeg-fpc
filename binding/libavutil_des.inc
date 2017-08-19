@@ -53,7 +53,7 @@ AVDES *av_des_alloc();
  * @param decrypt 0 for encryption/CBC-MAC, 1 for decryption
  * @return zero on success, negative value otherwise
  *)
-int av_des_init(struct AVDES *d, const uint8_t *key, int key_bits, int decrypt);
+function cint av_des_init(struct AVDES *d, const uint8_t *key, int key_bits, int decrypt);
 
 (**
  * @brief Encrypts / decrypts using the DES algorithm.

@@ -62,7 +62,7 @@ procedure av_image_fill_max_pixsteps(int max_pixsteps[4], int max_pixstep_comps[
  *
  * @return the computed size in bytes
  *)
-int av_image_get_linesize(enum AVPixelFormat pix_fmt, int width, int plane);
+function cint av_image_get_linesize(enum AVPixelFormat pix_fmt, int width, int plane);
 
 (**
  * Fill plane linesizes for an image with pixel format pix_fmt and
@@ -71,7 +71,7 @@ int av_image_get_linesize(enum AVPixelFormat pix_fmt, int width, int plane);
  * @param linesizes array to be filled with the linesize for each plane
  * @return >= 0 in case of success, a negative error code otherwise
  *)
-int av_image_fill_linesizes(int linesizes[4], enum AVPixelFormat pix_fmt, int width);
+function cint av_image_fill_linesizes(int linesizes[4], enum AVPixelFormat pix_fmt, int width);
 
 (**
  * Fill plane data pointers for an image with pixel format pix_fmt and
@@ -84,7 +84,7 @@ int av_image_fill_linesizes(int linesizes[4], enum AVPixelFormat pix_fmt, int wi
  * @return the size in bytes required for the image buffer, a negative
  * error code in case of failure
  *)
-int av_image_fill_pointers(uint8_t *data[4], enum AVPixelFormat pix_fmt, int height,
+function cint av_image_fill_pointers(uint8_t *data[4], enum AVPixelFormat pix_fmt, int height,
                            uint8_t *ptr, const int linesizes[4]);
 
 (**
@@ -97,7 +97,7 @@ int av_image_fill_pointers(uint8_t *data[4], enum AVPixelFormat pix_fmt, int hei
  * @return the size in bytes required for the image buffer, a negative
  * error code in case of failure
  *)
-int av_image_alloc(uint8_t *pointers[4], int linesizes[4],
+function cint av_image_alloc(uint8_t *pointers[4], int linesizes[4],
                    int w, int h, enum AVPixelFormat pix_fmt, int align);
 
 (**
@@ -170,7 +170,7 @@ procedure av_image_copy_uc_from(uint8_t *dst_data[4],       const ptrdiff_t dst_
  * @return the size in bytes required for src, a negative error code
  * in case of failure
  *)
-int av_image_fill_arrays(uint8_t *dst_data[4], int dst_linesize[4],
+function cint av_image_fill_arrays(uint8_t *dst_data[4], int dst_linesize[4],
                          const uint8_t *src,
                          enum AVPixelFormat pix_fmt, int width, int height, int align);
 
@@ -180,7 +180,7 @@ int av_image_fill_arrays(uint8_t *dst_data[4], int dst_linesize[4],
  *
  * @param[in] align the assumed linesize alignment
  *)
-int av_image_get_buffer_size(enum AVPixelFormat pix_fmt, int width, int height, int align);
+function cint av_image_get_buffer_size(enum AVPixelFormat pix_fmt, int width, int height, int align);
 
 (**
  * Copy image data from an image into a buffer.
@@ -199,7 +199,7 @@ int av_image_get_buffer_size(enum AVPixelFormat pix_fmt, int width, int height, 
  * @return the number of bytes written to dst, or a negative value
  * (error code) on error
  *)
-int av_image_copy_to_buffer(uint8_t *dst, int dst_size,
+function cint av_image_copy_to_buffer(uint8_t *dst, int dst_size,
                             const uint8_t * const src_data[4], const int src_linesize[4],
                             enum AVPixelFormat pix_fmt, int width, int height, int align);
 
@@ -213,7 +213,7 @@ int av_image_copy_to_buffer(uint8_t *dst, int dst_size,
  * @param log_ctx the parent logging context, it may be NULL
  * @return >= 0 if valid, a negative error code otherwise
  *)
-int av_image_check_size(unsigned int w, unsigned int h, int log_offset, void *log_ctx);
+function cint av_image_check_size(unsigned int w, unsigned int h, int log_offset, void *log_ctx);
 
 (**
  * Check if the given dimension of an image is valid, meaning that all
@@ -228,7 +228,7 @@ int av_image_check_size(unsigned int w, unsigned int h, int log_offset, void *lo
  * @param log_ctx the parent logging context, it may be NULL
  * @return >= 0 if valid, a negative error code otherwise
  *)
-int av_image_check_size2(unsigned int w, unsigned int h, int64_t max_pixels, enum AVPixelFormat pix_fmt, int log_offset, void *log_ctx);
+function cint av_image_check_size2(unsigned int w, unsigned int h, int64_t max_pixels, enum AVPixelFormat pix_fmt, int log_offset, void *log_ctx);
 
 (**
  * Check if the given sample aspect ratio of an image is valid.
@@ -242,7 +242,7 @@ int av_image_check_size2(unsigned int w, unsigned int h, int64_t max_pixels, enu
  * @param sar sample aspect ratio of the image
  * @return 0 if valid, a negative AVERROR code otherwise
  *)
-int av_image_check_sar(unsigned int w, unsigned int h, AVRational sar);
+function cint av_image_check_sar(unsigned int w, unsigned int h, AVRational sar);
 
 (**
  * @}

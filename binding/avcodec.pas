@@ -3691,10 +3691,10 @@ procedure av_codec_set_codec_descriptor(AVCodecContext *avctx, const AVCodecDesc
 
 unsigned av_codec_get_codec_properties(const AVCodecContext *avctx);
 
-int  av_codec_get_lowres(const AVCodecContext *avctx);
+function cint  av_codec_get_lowres(const AVCodecContext *avctx);
 procedure av_codec_set_lowres(AVCodecContext *avctx, int val);
 
-int  av_codec_get_seek_preroll(const AVCodecContext *avctx);
+function cint  av_codec_get_seek_preroll(const AVCodecContext *avctx);
 procedure av_codec_set_seek_preroll(AVCodecContext *avctx, int val);
 
 uint16_t *av_codec_get_chroma_intra_matrix(const AVCodecContext *avctx);
@@ -3827,7 +3827,7 @@ typedef struct AVCodec {
     int caps_internal;
 } AVCodec;
 
-int av_codec_get_max_lowres(const AVCodec *codec);
+function cint av_codec_get_max_lowres(const AVCodec *codec);
 
 struct MpegEncContext;
 
@@ -4314,7 +4314,7 @@ procedure avcodec_free_context(AVCodecContext **avctx);
  * context multiple time is not supported. A new codec context should be
  * allocated for each new use.
  *)
-int avcodec_get_context_defaults3(AVCodecContext *s, const AVCodec *codec);
+function cint avcodec_get_context_defaults3(AVCodecContext *s, const AVCodec *codec);
 {$endif}
 
 (**
@@ -4360,7 +4360,7 @@ const AVClass *avcodec_get_subtitle_rect_class();
  * functions.
  *)
 attribute_deprecated
-int avcodec_copy_context(AVCodecContext *dest, const AVCodecContext *src);
+function cint avcodec_copy_context(AVCodecContext *dest, const AVCodecContext *src);
 {$endif}
 
 (**
@@ -4382,7 +4382,7 @@ procedure avcodec_parameters_free(AVCodecParameters **par);
  *
  * @return >= 0 on success, a negative AVERROR code on failure.
  *)
-int avcodec_parameters_copy(AVCodecParameters *dst, const AVCodecParameters *src);
+function cint avcodec_parameters_copy(AVCodecParameters *dst, const AVCodecParameters *src);
 
 (**
  * Fill the parameters struct based on the values from the supplied codec
@@ -4391,7 +4391,7 @@ int avcodec_parameters_copy(AVCodecParameters *dst, const AVCodecParameters *src
  *
  * @return >= 0 on success, a negative AVERROR code on failure
  *)
-int avcodec_parameters_from_context(AVCodecParameters *par,
+function cint avcodec_parameters_from_context(AVCodecParameters *par,
                                     const AVCodecContext *codec);
 
 (**
@@ -4402,7 +4402,7 @@ int avcodec_parameters_from_context(AVCodecParameters *par,
  *
  * @return >= 0 on success, a negative AVERROR code on failure.
  *)
-int avcodec_parameters_to_context(AVCodecContext *codec,
+function cint avcodec_parameters_to_context(AVCodecContext *codec,
                                   const AVCodecParameters *par);
 
 (**
@@ -4443,7 +4443,7 @@ int avcodec_parameters_to_context(AVCodecContext *codec,
  * @see avcodec_alloc_context3(), avcodec_find_decoder(), avcodec_find_encoder(),
  *      av_dict_set(), av_opt_find().
  *)
-int avcodec_open2(AVCodecContext *avctx, const AVCodec *codec, AVDictionary **options);
+function cint avcodec_open2(AVCodecContext *avctx, const AVCodec *codec, AVDictionary **options);
 
 (**
  * Close a given AVCodecContext and free all the data associated with it
@@ -4458,7 +4458,7 @@ int avcodec_open2(AVCodecContext *avctx, const AVCodec *codec, AVDictionary **op
  * multiple times is not supported anymore -- use multiple codec contexts
  * instead.
  *)
-int avcodec_close(AVCodecContext *avctx);
+function cint avcodec_close(AVCodecContext *avctx);
 
 (**
  * Free all allocated data in the given subtitle struct.
@@ -4528,7 +4528,7 @@ procedure av_init_packet(AVPacket *pkt);
  * @param size wanted payload size
  * @return 0 if OK, AVERROR_xxx otherwise
  *)
-int av_new_packet(AVPacket *pkt, int size);
+function cint av_new_packet(AVPacket *pkt, int size);
 
 (**
  * Reduce packet size, correctly zeroing padding
@@ -4544,7 +4544,7 @@ procedure av_shrink_packet(AVPacket *pkt, int size);
  * @param pkt packet
  * @param grow_by number of bytes by which to increase the size of the packet
  *)
-int av_grow_packet(AVPacket *pkt, int grow_by);
+function cint av_grow_packet(AVPacket *pkt, int grow_by);
 
 (**
  * Initialize a reference-counted packet from av_malloc()ed data.
@@ -4559,7 +4559,7 @@ int av_grow_packet(AVPacket *pkt, int grow_by);
  *
  * @return 0 on success, a negative AVERROR on error
  *)
-int av_packet_from_data(AVPacket *pkt, uint8_t *data, int size);
+function cint av_packet_from_data(AVPacket *pkt, uint8_t *data, int size);
 
 {$if FF_API_AVPACKET_OLD_API}
 (**
@@ -4569,20 +4569,20 @@ int av_packet_from_data(AVPacket *pkt, uint8_t *data, int size);
  * @deprecated Use av_packet_ref
  *)
 attribute_deprecated
-int av_dup_packet(AVPacket *pkt);
+function cint av_dup_packet(AVPacket *pkt);
 (**
  * Copy packet, including contents
  *
  * @return 0 on success, negative AVERROR on fail
  *)
-int av_copy_packet(AVPacket *dst, const AVPacket *src);
+function cint av_copy_packet(AVPacket *dst, const AVPacket *src);
 
 (**
  * Copy packet side data
  *
  * @return 0 on success, negative AVERROR on fail
  *)
-int av_copy_packet_side_data(AVPacket *dst, const AVPacket *src);
+function cint av_copy_packet_side_data(AVPacket *dst, const AVPacket *src);
 
 (**
  * Free a packet.
@@ -4618,7 +4618,7 @@ uint8_t* av_packet_new_side_data(AVPacket *pkt, enum AVPacketSideDataType type,
  *         failure. On failure, the packet is unchanged and the data remains
  *         owned by the caller.
  *)
-int av_packet_add_side_data(AVPacket *pkt, enum AVPacketSideDataType type,
+function cint av_packet_add_side_data(AVPacket *pkt, enum AVPacketSideDataType type,
                             uint8_t *data, size_t size);
 
 (**
@@ -4629,7 +4629,7 @@ int av_packet_add_side_data(AVPacket *pkt, enum AVPacketSideDataType type,
  * @param size new side information size
  * @return 0 on success, < 0 on failure
  *)
-int av_packet_shrink_side_data(AVPacket *pkt, enum AVPacketSideDataType type,
+function cint av_packet_shrink_side_data(AVPacket *pkt, enum AVPacketSideDataType type,
                                int size);
 
 (**
@@ -4645,10 +4645,10 @@ uint8_t* av_packet_get_side_data(const AVPacket *pkt, enum AVPacketSideDataType 
 
 {$if FF_API_MERGE_SD_API}
 attribute_deprecated
-int av_packet_merge_side_data(AVPacket *pkt);
+function cint av_packet_merge_side_data(AVPacket *pkt);
 
 attribute_deprecated
-int av_packet_split_side_data(AVPacket *pkt);
+function cint av_packet_split_side_data(AVPacket *pkt);
 {$endif}
 
 const pchar av_packet_side_data_name(enum AVPacketSideDataType type);
@@ -4669,7 +4669,7 @@ uint8_t *av_packet_pack_dictionary(AVDictionary *dict, int *size);
  * @param dict the metadata storage dictionary
  * @return 0 on success, < 0 on failure
  *)
-int av_packet_unpack_dictionary(const uint8_t *data, int size, AVDictionary **dict);
+function cint av_packet_unpack_dictionary(const uint8_t *data, int size, AVDictionary **dict);
 
 
 (**
@@ -4696,7 +4696,7 @@ procedure av_packet_free_side_data(AVPacket *pkt);
  *
  * @return 0 on success, a negative AVERROR on error.
  *)
-int av_packet_ref(AVPacket *dst, const AVPacket *src);
+function cint av_packet_ref(AVPacket *dst, const AVPacket *src);
 
 (**
  * Wipe the packet.
@@ -4729,7 +4729,7 @@ procedure av_packet_move_ref(AVPacket *dst, AVPacket *src);
  *
  * @return 0 on success AVERROR on failure.
  *)
-int av_packet_copy_props(AVPacket *dst, const AVPacket *src);
+function cint av_packet_copy_props(AVPacket *dst, const AVPacket *src);
 
 (**
  * Convert valid timing fields (timestamps / durations) in a packet from one
@@ -4774,7 +4774,7 @@ AVCodec *avcodec_find_decoder_by_name(const name: pchar);
  * it can be called by custom get_buffer2() implementations for decoders without
  * AV_CODEC_CAP_DR1 set.
  *)
-int avcodec_default_get_buffer2(AVCodecContext *s, AVFrame *frame, int flags);
+function cint avcodec_default_get_buffer2(AVCodecContext *s, AVFrame *frame, int flags);
 
 {$if FF_API_EMU_EDGE}
 (**
@@ -4819,7 +4819,7 @@ procedure avcodec_align_dimensions2(AVCodecContext *s, int *width, int *height,
  * @param xpos  horizontal chroma sample position
  * @param ypos  vertical   chroma sample position
  *)
-int avcodec_enum_to_chroma_pos(int *xpos, int *ypos, enum AVChromaLocation pos);
+function cint avcodec_enum_to_chroma_pos(int *xpos, int *ypos, enum AVChromaLocation pos);
 
 (**
  * Converts swscale x/y chroma position to AVChromaLocation.
@@ -4886,7 +4886,7 @@ enum AVChromaLocation avcodec_chroma_pos_to_enum(int xpos, int ypos);
 * @deprecated Use avcodec_send_packet() and avcodec_receive_frame().
  *)
 attribute_deprecated
-int avcodec_decode_audio4(AVCodecContext *avctx, AVFrame *frame,
+function cint avcodec_decode_audio4(AVCodecContext *avctx, AVFrame *frame,
                           int *got_frame_ptr, const AVPacket *avpkt);
 
 (**
@@ -4935,7 +4935,7 @@ int avcodec_decode_audio4(AVCodecContext *avctx, AVFrame *frame,
  * @deprecated Use avcodec_send_packet() and avcodec_receive_frame().
  *)
 attribute_deprecated
-int avcodec_decode_video2(AVCodecContext *avctx, AVFrame *picture,
+function cint avcodec_decode_video2(AVCodecContext *avctx, AVFrame *picture,
                          int *got_picture_ptr,
                          const AVPacket *avpkt);
 
@@ -4966,7 +4966,7 @@ int avcodec_decode_video2(AVCodecContext *avctx, AVFrame *picture,
  * @param[in,out] got_sub_ptr Zero if no subtitle could be decompressed, otherwise, it is nonzero.
  * @param[in] avpkt The input AVPacket containing the input buffer.
  *)
-int avcodec_decode_subtitle2(AVCodecContext *avctx, AVSubtitle *sub,
+function cint avcodec_decode_subtitle2(AVCodecContext *avctx, AVSubtitle *sub,
                             int *got_sub_ptr,
                             AVPacket *avpkt);
 
@@ -5020,7 +5020,7 @@ int avcodec_decode_subtitle2(AVCodecContext *avctx, AVSubtitle *sub,
  *      AVERROR(ENOMEM):   failed to add packet to internal queue, or similar
  *      other errors: legitimate decoding errors
  *)
-int avcodec_send_packet(AVCodecContext *avctx, const AVPacket *avpkt);
+function cint avcodec_send_packet(AVCodecContext *avctx, const AVPacket *avpkt);
 
 (**
  * Return decoded output data from a decoder.
@@ -5040,7 +5040,7 @@ int avcodec_send_packet(AVCodecContext *avctx, const AVPacket *avpkt);
  *      AVERROR(EINVAL):   codec not opened, or it is an encoder
  *      other negative values: legitimate decoding errors
  *)
-int avcodec_receive_frame(AVCodecContext *avctx, AVFrame *frame);
+function cint avcodec_receive_frame(AVCodecContext *avctx, AVFrame *frame);
 
 (**
  * Supply a raw video or audio frame to the encoder. Use avcodec_receive_packet()
@@ -5077,7 +5077,7 @@ int avcodec_receive_frame(AVCodecContext *avctx, AVFrame *frame);
  *      AVERROR(ENOMEM):   failed to add packet to internal queue, or similar
  *      other errors: legitimate decoding errors
  *)
-int avcodec_send_frame(AVCodecContext *avctx, const AVFrame *frame);
+function cint avcodec_send_frame(AVCodecContext *avctx, const AVFrame *frame);
 
 (**
  * Read encoded data from the encoder.
@@ -5094,7 +5094,7 @@ int avcodec_send_frame(AVCodecContext *avctx, const AVFrame *frame);
  *      AVERROR(EINVAL):   codec not opened, or it is an encoder
  *      other errors: legitimate decoding errors
  *)
-int avcodec_receive_packet(AVCodecContext *avctx, AVPacket *avpkt);
+function cint avcodec_receive_packet(AVCodecContext *avctx, AVPacket *avpkt);
 
 
 (**
@@ -5327,7 +5327,7 @@ AVCodecParserContext *av_parser_init(int codec_id);
  *   }
  * @endcode
  *)
-int av_parser_parse2(AVCodecParserContext *s,
+function cint av_parser_parse2(AVCodecParserContext *s,
                      AVCodecContext *avctx,
                      uint8_t **poutbuf, int *poutbuf_size,
                      const uint8_t *buf, int buf_size,
@@ -5338,7 +5338,7 @@ int av_parser_parse2(AVCodecParserContext *s,
  * @return 0 if the output buffer is a subset of the input, 1 if it is allocated and must be freed
  * @deprecated use AVBitStreamFilter
  *)
-int av_parser_change(AVCodecParserContext *s,
+function cint av_parser_change(AVCodecParserContext *s,
                      AVCodecContext *avctx,
                      uint8_t **poutbuf, int *poutbuf_size,
                      const uint8_t *buf, int buf_size, int keyframe);
@@ -5411,7 +5411,7 @@ AVCodec *avcodec_find_encoder_by_name(const name: pchar);
  * @deprecated use avcodec_send_frame()/avcodec_receive_packet() instead
  *)
 attribute_deprecated
-int avcodec_encode_audio2(AVCodecContext *avctx, AVPacket *avpkt,
+function cint avcodec_encode_audio2(AVCodecContext *avctx, AVPacket *avpkt,
                           const AVFrame *frame, int *got_packet_ptr);
 
 (**
@@ -5450,10 +5450,10 @@ int avcodec_encode_audio2(AVCodecContext *avctx, AVPacket *avpkt,
  * @deprecated use avcodec_send_frame()/avcodec_receive_packet() instead
  *)
 attribute_deprecated
-int avcodec_encode_video2(AVCodecContext *avctx, AVPacket *avpkt,
+function cint avcodec_encode_video2(AVCodecContext *avctx, AVPacket *avpkt,
                           const AVFrame *frame, int *got_packet_ptr);
 
-int avcodec_encode_subtitle(AVCodecContext *avctx, uint8_t *buf, int buf_size,
+function cint avcodec_encode_subtitle(AVCodecContext *avctx, uint8_t *buf, int buf_size,
                             const AVSubtitle *sub);
 
 
@@ -5499,7 +5499,7 @@ ReSampleContext *av_audio_resample_init(int output_channels, int input_channels,
                                         int linear, double cutoff);
 
 attribute_deprecated
-int audio_resample(ReSampleContext *s, short *output, short *input, int nb_samples);
+function cint audio_resample(ReSampleContext *s, short *output, short *input, int nb_samples);
 
 (**
  * Free resample context.
@@ -5533,7 +5533,7 @@ struct AVResampleContext *av_resample_init(int out_rate, int in_rate, int filter
  * @return the number of samples written in dst or -1 if an error occurred
  *)
 attribute_deprecated
-int av_resample(struct AVResampleContext *c, short *dst, short *src, int *consumed, int src_size, int dst_size, int update_ctx);
+function cint av_resample(struct AVResampleContext *c, short *dst, short *src, int *consumed, int src_size, int dst_size, int update_ctx);
 
 
 (**
@@ -5568,7 +5568,7 @@ procedure av_resample_close(struct AVResampleContext *c);
  * @deprecated unused
  *)
 attribute_deprecated
-int avpicture_alloc(AVPicture *picture, enum AVPixelFormat pix_fmt, int width, int height);
+function cint avpicture_alloc(AVPicture *picture, enum AVPixelFormat pix_fmt, int width, int height);
 
 (**
  * @deprecated unused
@@ -5580,14 +5580,14 @@ procedure avpicture_free(AVPicture *picture);
  * @deprecated use av_image_fill_arrays() instead.
  *)
 attribute_deprecated
-int avpicture_fill(AVPicture *picture, const uint8_t *ptr,
+function cint avpicture_fill(AVPicture *picture, const uint8_t *ptr,
                    enum AVPixelFormat pix_fmt, int width, int height);
 
 (**
  * @deprecated use av_image_copy_to_buffer() instead.
  *)
 attribute_deprecated
-int avpicture_layout(const AVPicture *src, enum AVPixelFormat pix_fmt,
+function cint avpicture_layout(const AVPicture *src, enum AVPixelFormat pix_fmt,
                      int width, int height,
                      unsigned char *dest, int dest_size);
 
@@ -5595,7 +5595,7 @@ int avpicture_layout(const AVPicture *src, enum AVPixelFormat pix_fmt,
  * @deprecated use av_image_get_buffer_size() instead.
  *)
 attribute_deprecated
-int avpicture_get_size(enum AVPixelFormat pix_fmt, int width, int height);
+function cint avpicture_get_size(enum AVPixelFormat pix_fmt, int width, int height);
 
 (**
  * @deprecated av_image_copy() instead.
@@ -5608,14 +5608,14 @@ procedure av_picture_copy(AVPicture *dst, const AVPicture *src,
  * @deprecated unused
  *)
 attribute_deprecated
-int av_picture_crop(AVPicture *dst, const AVPicture *src,
+function cint av_picture_crop(AVPicture *dst, const AVPicture *src,
                     enum AVPixelFormat pix_fmt, int top_band, int left_band);
 
 (**
  * @deprecated unused
  *)
 attribute_deprecated
-int av_picture_pad(AVPicture *dst, const AVPicture *src, int height, int width, enum AVPixelFormat pix_fmt,
+function cint av_picture_pad(AVPicture *dst, const AVPicture *src, int height, int width, enum AVPixelFormat pix_fmt,
             int padtop, int padbottom, int padleft, int padright, int *color);
 
 (**
@@ -5666,7 +5666,7 @@ unsigned int avcodec_pix_fmt_to_codec_tag(enum AVPixelFormat pix_fmt);
 (**
  * @deprecated see av_get_pix_fmt_loss()
  *)
-int avcodec_get_pix_fmt_loss(enum AVPixelFormat dst_pix_fmt, enum AVPixelFormat src_pix_fmt,
+function cint avcodec_get_pix_fmt_loss(enum AVPixelFormat dst_pix_fmt, enum AVPixelFormat src_pix_fmt,
                              int has_alpha);
 
 (**
@@ -5754,8 +5754,8 @@ const pchar av_get_profile_name(const AVCodec *codec, int profile);
  *)
 const pchar avcodec_profile_name(enum AVCodecID codec_id, int profile);
 
-int avcodec_default_execute(AVCodecContext *c, int (*func)(AVCodecContext *c2, void *arg2),void *arg, int *ret, int count, int size);
-int avcodec_default_execute2(AVCodecContext *c, int (*func)(AVCodecContext *c2, void *arg2, int, int),void *arg, int *ret, int count);
+function cint avcodec_default_execute(AVCodecContext *c, int (*func)(AVCodecContext *c2, void *arg2),void *arg, int *ret, int count, int size);
+function cint avcodec_default_execute2(AVCodecContext *c, int (*func)(AVCodecContext *c2, void *arg2, int, int),void *arg, int *ret, int count);
 //FIXME func typedef
 
 (**
@@ -5781,7 +5781,7 @@ int avcodec_default_execute2(AVCodecContext *c, int (*func)(AVCodecContext *c2, 
  * @todo return the size in bytes required to store the samples in
  * case of success, at the next libavutil bump
  *)
-int avcodec_fill_audio_frame(AVFrame *frame, int nb_channels,
+function cint avcodec_fill_audio_frame(AVFrame *frame, int nb_channels,
                              enum AVSampleFormat sample_fmt, const uint8_t *buf,
                              int buf_size, int align);
 
@@ -5802,7 +5802,7 @@ procedure avcodec_flush_buffers(AVCodecContext *avctx);
  * @param[in] codec_id the codec
  * @return Number of bits per sample or zero if unknown for the given codec.
  *)
-int av_get_bits_per_sample(enum AVCodecID codec_id);
+function cint av_get_bits_per_sample(enum AVCodecID codec_id);
 
 (**
  * Return the PCM codec associated with a sample format.
@@ -5820,7 +5820,7 @@ enum AVCodecID av_get_pcm_codec(enum AVSampleFormat fmt, int be);
  * @param[in] codec_id the codec
  * @return Number of bits per sample or zero if unknown for the given codec.
  *)
-int av_get_exact_bits_per_sample(enum AVCodecID codec_id);
+function cint av_get_exact_bits_per_sample(enum AVCodecID codec_id);
 
 (**
  * Return audio frame duration.
@@ -5830,13 +5830,13 @@ int av_get_exact_bits_per_sample(enum AVCodecID codec_id);
  * @return             frame duration, in samples, if known. 0 if not able to
  *                     determine.
  *)
-int av_get_audio_frame_duration(AVCodecContext *avctx, int frame_bytes);
+function cint av_get_audio_frame_duration(AVCodecContext *avctx, int frame_bytes);
 
 (**
  * This function is the same as av_get_audio_frame_duration(), except it works
  * with AVCodecParameters instead of an AVCodecContext.
  *)
-int av_get_audio_frame_duration2(AVCodecParameters *par, int frame_bytes);
+function cint av_get_audio_frame_duration2(AVCodecParameters *par, int frame_bytes);
 
 {$if FF_API_OLD_BSF}
 typedef struct AVBitStreamFilterContext {
@@ -6004,7 +6004,7 @@ AVBitStreamFilterContext *av_bitstream_filter_init(const name: pchar);
  * *poutbuf_size was set to 0, which indicates the packet should be dropped.
  *)
 attribute_deprecated
-int av_bitstream_filter_filter(AVBitStreamFilterContext *bsfc,
+function cint av_bitstream_filter_filter(AVBitStreamFilterContext *bsfc,
                                AVCodecContext *avctx, const pchar args,
                                uint8_t **poutbuf, int *poutbuf_size,
                                const uint8_t *buf, int buf_size, int keyframe);
@@ -6059,13 +6059,13 @@ const AVBitStreamFilter *av_bsf_next(void **opaque);
  *
  * @return 0 on success, a negative AVERROR code on failure
  *)
-int av_bsf_alloc(const AVBitStreamFilter *filter, AVBSFContext **ctx);
+function cint av_bsf_alloc(const AVBitStreamFilter *filter, AVBSFContext **ctx);
 
 (**
  * Prepare the filter for use, after all the parameters and options have been
  * set.
  *)
-int av_bsf_init(AVBSFContext *ctx);
+function cint av_bsf_init(AVBSFContext *ctx);
 
 (**
  * Submit a packet for filtering.
@@ -6083,7 +6083,7 @@ int av_bsf_init(AVBSFContext *ctx);
  *
  * @return 0 on success, a negative AVERROR on error.
  *)
-int av_bsf_send_packet(AVBSFContext *ctx, AVPacket *pkt);
+function cint av_bsf_send_packet(AVBSFContext *ctx, AVPacket *pkt);
 
 (**
  * Retrieve a filtered packet.
@@ -6109,7 +6109,7 @@ int av_bsf_send_packet(AVBSFContext *ctx, AVPacket *pkt);
  * output fewer packets than were sent to it, so this function may return
  * AVERROR(EAGAIN) immediately after a successful av_bsf_send_packet() call.
  *)
-int av_bsf_receive_packet(AVBSFContext *ctx, AVPacket *pkt);
+function cint av_bsf_receive_packet(AVBSFContext *ctx, AVPacket *pkt);
 
 (**
  * Free a bitstream filter context and everything associated with it; write NULL
@@ -6155,7 +6155,7 @@ procedure av_bsf_list_free(AVBSFList **lst);
  *
  * @return >=0 on success, negative AVERROR in case of failure
  *)
-int av_bsf_list_append(AVBSFList *lst, AVBSFContext *bsf);
+function cint av_bsf_list_append(AVBSFList *lst, AVBSFContext *bsf);
 
 (**
  * Construct new bitstream filter context given it's name and options
@@ -6167,7 +6167,7 @@ int av_bsf_list_append(AVBSFList *lst, AVBSFContext *bsf);
  *
  * @return >=0 on success, negative AVERROR in case of failure
  *)
-int av_bsf_list_append2(AVBSFList *lst, const pchar  bsf_name, AVDictionary **options);
+function cint av_bsf_list_append2(AVBSFList *lst, const pchar  bsf_name, AVDictionary **options);
 (**
  * Finalize list of bitstream filters.
  *
@@ -6184,7 +6184,7 @@ int av_bsf_list_append2(AVBSFList *lst, const pchar  bsf_name, AVDictionary **op
  *
  * @return >=0 on success, negative AVERROR in case of failure
  *)
-int av_bsf_list_finalize(AVBSFList **lst, AVBSFContext **bsf);
+function cint av_bsf_list_finalize(AVBSFList **lst, AVBSFContext **bsf);
 
 (**
  * Parse string describing list of bitstream filters and create single
@@ -6199,7 +6199,7 @@ int av_bsf_list_finalize(AVBSFList **lst, AVBSFContext **bsf);
  *
  * @return >=0 on success, negative AVERROR in case of failure
  *)
-int av_bsf_list_parse_str(const pchar str, AVBSFContext **bsf);
+function cint av_bsf_list_parse_str(const pchar str, AVBSFContext **bsf);
 
 (**
  * Get null/pass-through bitstream filter.
@@ -6208,7 +6208,7 @@ int av_bsf_list_parse_str(const pchar str, AVBSFContext **bsf);
  *
  * @return
  *)
-int av_bsf_get_null_filter(AVBSFContext **bsf);
+function cint av_bsf_get_null_filter(AVBSFContext **bsf);
 
 (* memory *)
 
@@ -6312,7 +6312,7 @@ enum AVLockOp {
  *           implement your lock manager). If cb is set to NULL the
  *           lockmgr will be unregistered.
  *)
-int av_lockmgr_register(int (*cb)(void **mutex, enum AVLockOp op));
+function cint av_lockmgr_register(int (*cb)(void **mutex, enum AVLockOp op));
 
 (**
  * Get the type of the given codec.
@@ -6329,17 +6329,17 @@ const pchar avcodec_get_name(enum AVCodecID id);
  * @return a positive value if s is open (i.e. avcodec_open2() was called on it
  * with no corresponding avcodec_close()), 0 otherwise.
  *)
-int avcodec_is_open(AVCodecContext *s);
+function cint avcodec_is_open(AVCodecContext *s);
 
 (**
  * @return a non-zero number if codec is an encoder, zero otherwise
  *)
-int av_codec_is_encoder(const AVCodec *codec);
+function cint av_codec_is_encoder(const AVCodec *codec);
 
 (**
  * @return a non-zero number if codec is a decoder, zero otherwise
  *)
-int av_codec_is_decoder(const AVCodec *codec);
+function cint av_codec_is_decoder(const AVCodec *codec);
 
 (**
  * @return descriptor for given codec ID or NULL if no descriptor exists.

@@ -100,7 +100,7 @@
  * @return 0 on success, a negative value if a description for errnum
  * cannot be found
  *)
-int av_strerror(int errnum, char *errbuf, size_t errbuf_size);
+function cint av_strerror(int errnum, char *errbuf, size_t errbuf_size);
 
 (**
  * Fill the provided buffer with a string containing an error string

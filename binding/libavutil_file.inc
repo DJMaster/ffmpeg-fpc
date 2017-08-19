@@ -47,7 +47,7 @@
  * corresponding to an AVERROR error code in case of failure
  *)
 av_warn_unused_result
-int av_file_map(const pchar filename, uint8_t **bufptr, size_t *size,
+function cint av_file_map(const pchar filename, uint8_t **bufptr, size_t *size,
                 int log_offset, void *log_ctx);
 
 (**
@@ -70,6 +70,6 @@ procedure av_file_unmap(uint8_t *bufptr, size_t size);
  *       libraries and could interfere with the calling application.
  * @deprecated as fd numbers cannot be passed saftely between libs on some platforms
  *)
-int av_tempfile(const pchar prefix, char **filename, int log_offset, void *log_ctx);
+function cint av_tempfile(const pchar prefix, char **filename, int log_offset, void *log_ctx);
 
 // #endif (* AVUTIL_FILE_H *)

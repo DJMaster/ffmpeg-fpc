@@ -42,7 +42,7 @@ procedure av_lfg_init(AVLFG *c, unsigned int seed);
  *
  * Return value: 0 on success, negative value (AVERROR) on failure.
  *)
-int av_lfg_init_from_data(AVLFG *c, const uint8_t *data, unsigned int length);
+function cint av_lfg_init_from_data(AVLFG *c, const uint8_t *data, unsigned int length);
 
 (**
  * Get the next random unsigned 32-bit number using an ALFG.

@@ -137,20 +137,20 @@ struct SwsContext;
  * Return a positive value if pix_fmt is a supported input format, 0
  * otherwise.
  *)
-int sws_isSupportedInput(enum AVPixelFormat pix_fmt);
+function cint sws_isSupportedInput(enum AVPixelFormat pix_fmt);
 
 (**
  * Return a positive value if pix_fmt is a supported output format, 0
  * otherwise.
  *)
-int sws_isSupportedOutput(enum AVPixelFormat pix_fmt);
+function cint sws_isSupportedOutput(enum AVPixelFormat pix_fmt);
 
 (**
  * @param[in]  pix_fmt the pixel format
  * @return a positive value if an endianness conversion for pix_fmt is
  * supported, 0 otherwise.
  *)
-int sws_isSupportedEndiannessConversion(enum AVPixelFormat pix_fmt);
+function cint sws_isSupportedEndiannessConversion(enum AVPixelFormat pix_fmt);
 
 (**
  * Allocate an empty SwsContext. This must be filled and passed to
@@ -166,7 +166,7 @@ struct SwsContext *sws_alloc_context();
  * error
  *)
 av_warn_unused_result
-int sws_init_context(struct SwsContext *sws_context, SwsFilter *srcFilter, SwsFilter *dstFilter);
+function cint sws_init_context(struct SwsContext *sws_context, SwsFilter *srcFilter, SwsFilter *dstFilter);
 
 (**
  * Free the swscaler context swsContext.
@@ -226,7 +226,7 @@ struct SwsContext *sws_getContext(int srcW, int srcH, enum AVPixelFormat srcForm
  *                  the destination image
  * @return          the height of the output slice
  *)
-int sws_scale(struct SwsContext *c, const uint8_t *const srcSlice[],
+function cint sws_scale(struct SwsContext *c, const uint8_t *const srcSlice[],
               const int srcStride[], int srcSliceY, int srcSliceH,
               uint8_t *const dst[], const int dstStride[]);
 
@@ -240,14 +240,14 @@ int sws_scale(struct SwsContext *c, const uint8_t *const srcSlice[],
  * @param saturation 16.16 fixed point saturation correction
  * @return -1 if not supported
  *)
-int sws_setColorspaceDetails(struct SwsContext *c, const int inv_table[4],
+function cint sws_setColorspaceDetails(struct SwsContext *c, const int inv_table[4],
                              int srcRange, const int table[4], int dstRange,
                              int brightness, int contrast, int saturation);
 
 (**
  * @return -1 if not supported
  *)
-int sws_getColorspaceDetails(struct SwsContext *c, int **inv_table,
+function cint sws_getColorspaceDetails(struct SwsContext *c, int **inv_table,
                              int *srcRange, int **table, int *dstRange,
                              int *brightness, int *contrast, int *saturation);
 

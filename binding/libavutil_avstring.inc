@@ -45,7 +45,7 @@
  * @param ptr updated if the prefix is matched inside str
  * @return non-zero if the prefix matches, zero otherwise
  *)
-int av_strstart(const pchar str, const pchar pfx, const ppchar ptr);
+function cint av_strstart(const pchar str, const pchar pfx, const ppchar ptr);
 
 (**
  * Return non-zero if pfx is a prefix of str independent of case. If
@@ -57,7 +57,7 @@ int av_strstart(const pchar str, const pchar pfx, const ppchar ptr);
  * @param ptr updated if the prefix is matched inside str
  * @return non-zero if the prefix matches, zero otherwise
  *)
-int av_stristart(const pchar str, const pchar pfx, const ppchar ptr);
+function cint av_stristart(const pchar str, const pchar pfx, const ppchar ptr);
 
 (**
  * Locate the first case-independent occurrence in the string haystack
@@ -264,13 +264,13 @@ static inline av_const int av_isxdigit(int c)
  * Locale-independent case-insensitive compare.
  * @note This means only ASCII-range characters are case-insensitive
  *)
-int av_strcasecmp(const pchar a, const pchar b);
+function cint av_strcasecmp(const pchar a, const pchar b);
 
 (**
  * Locale-independent case-insensitive compare.
  * @note This means only ASCII-range characters are case-insensitive
  *)
-int av_strncasecmp(const pchar a, const pchar b, size_t n);
+function cint av_strncasecmp(const pchar a, const pchar b, size_t n);
 
 
 (**
@@ -299,7 +299,7 @@ const pchar av_dirname(char *path);
  * @param names List of names.
  * @return 1 on match, 0 otherwise.
  *)
-int av_match_name(const pchar name, const pchar names);
+function cint av_match_name(const pchar name, const pchar names);
 
 (**
  * Append path component to the existing path.
@@ -351,7 +351,7 @@ enum AVEscapeMode {
  * @see av_bprint_escape()
  *)
 av_warn_unused_result
-int av_escape(char **dst, const pchar src, const pchar special_chars,
+function cint av_escape(char **dst, const pchar src, const pchar special_chars,
               enum AVEscapeMode mode, int flags);
 
   AV_UTF8_FLAG_ACCEPT_INVALID_BIG_CODES = 1; ///< accept codepoints over 0x10FFFF
@@ -391,7 +391,7 @@ int av_escape(char **dst, const pchar src, const pchar special_chars,
  * value in case of invalid sequence
  *)
 av_warn_unused_result
-int av_utf8_decode(int32_t *codep, const uint8_t **bufp, const uint8_t *buf_end,
+function cint av_utf8_decode(int32_t *codep, const uint8_t **bufp, const uint8_t *buf_end,
                    unsigned int flags);
 
 (**
@@ -399,7 +399,7 @@ int av_utf8_decode(int32_t *codep, const uint8_t **bufp, const uint8_t *buf_end,
  * @returns 0 if not found, or the 1 based index where it has been found in the
  *            list.
  *)
-int av_match_list(const pchar name, const pchar list, char separator);
+function cint av_match_list(const pchar name, const pchar list, char separator);
 
 (**
  * @}

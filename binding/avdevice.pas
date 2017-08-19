@@ -315,7 +315,7 @@ enum AVDevToAppMessageType {
  * @return >= 0 on success, negative on error.
  *         AVERROR(ENOSYS) when device doesn't implement handler of the message.
  *)
-int avdevice_app_to_dev_control_message(struct AVFormatContext *s,
+function cint avdevice_app_to_dev_control_message(struct AVFormatContext *s,
                                         enum AVAppToDevMessageType type,
                                         void *data, size_t data_size);
 
@@ -329,7 +329,7 @@ int avdevice_app_to_dev_control_message(struct AVFormatContext *s,
  * @return >= 0 on success, negative on error.
  *         AVERROR(ENOSYS) when application doesn't implement handler of the message.
  *)
-int avdevice_dev_to_app_control_message(struct AVFormatContext *s,
+function cint avdevice_dev_to_app_control_message(struct AVFormatContext *s,
                                         enum AVDevToAppMessageType type,
                                         void *data, size_t data_size);
 
@@ -447,7 +447,7 @@ extern const AVOption av_device_capabilities[];
  *
  * @return >= 0 on success, negative otherwise.
  *)
-int avdevice_capabilities_create(AVDeviceCapabilitiesQuery **caps, AVFormatContext *s,
+function cint avdevice_capabilities_create(AVDeviceCapabilitiesQuery **caps, AVFormatContext *s,
                                  AVDictionary **device_options);
 
 (**
@@ -488,7 +488,7 @@ typedef struct AVDeviceInfoList {
  * @param[out] device_list list of autodetected devices.
  * @return count of autodetected devices, negative on error.
  *)
-int avdevice_list_devices(struct AVFormatContext *s, AVDeviceInfoList **device_list);
+function cint avdevice_list_devices(struct AVFormatContext *s, AVDeviceInfoList **device_list);
 
 (**
  * Convenient function to free result of avdevice_list_devices().
@@ -514,9 +514,9 @@ procedure avdevice_free_list_devices(AVDeviceInfoList **device_list);
  * @return count of autodetected devices, negative on error.
  * @note device argument takes precedence over device_name when both are set.
  *)
-int avdevice_list_input_sources(struct AVInputFormat *device, const pchar device_name,
+function cint avdevice_list_input_sources(struct AVInputFormat *device, const pchar device_name,
                                 AVDictionary *device_options, AVDeviceInfoList **device_list);
-int avdevice_list_output_sinks(struct AVOutputFormat *device, const pchar device_name,
+function cint avdevice_list_output_sinks(struct AVOutputFormat *device, const pchar device_name,
                                AVDictionary *device_options, AVDeviceInfoList **device_list);
 
 (**

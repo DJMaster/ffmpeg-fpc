@@ -65,7 +65,7 @@ procedure av_vorbis_parse_free(AVVorbisParseContext **s);
  * @param buf_size size of the buffer
  * @param flags    flags for special frames
  *)
-int av_vorbis_parse_frame_flags(AVVorbisParseContext *s, const uint8_t *buf,
+function cint av_vorbis_parse_frame_flags(AVVorbisParseContext *s, const uint8_t *buf,
                                 int buf_size, int *flags);
 
 (**
@@ -75,7 +75,7 @@ int av_vorbis_parse_frame_flags(AVVorbisParseContext *s, const uint8_t *buf,
  * @param buf      buffer containing a Vorbis frame
  * @param buf_size size of the buffer
  *)
-int av_vorbis_parse_frame(AVVorbisParseContext *s, const uint8_t *buf,
+function cint av_vorbis_parse_frame(AVVorbisParseContext *s, const uint8_t *buf,
                           int buf_size);
 
 procedure av_vorbis_parse_reset(AVVorbisParseContext *s);

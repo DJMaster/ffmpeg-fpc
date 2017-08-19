@@ -159,7 +159,7 @@ uint64_t av_get_channel_layout(const name: pchar);
  *
  * @return 0 on success, AVERROR(EINVAL) if the parsing fails.
  *)
-int av_get_extended_channel_layout(const pchar name, uint64_t* channel_layout, int* nb_channels);
+function cint av_get_extended_channel_layout(const pchar name, uint64_t* channel_layout, int* nb_channels);
 
 (**
  * Return a description of a channel layout.
@@ -179,7 +179,7 @@ procedure av_bprint_channel_layout(struct AVBPrint *bp, int nb_channels, uint64_
 (**
  * Return the number of channels in the channel layout.
  *)
-int av_get_channel_layout_nb_channels(uint64_t channel_layout);
+function cint av_get_channel_layout_nb_channels(uint64_t channel_layout);
 
 (**
  * Return default channel layout for a given number of channels.
@@ -195,7 +195,7 @@ int64_t av_get_default_channel_layout(int nb_channels);
  * @return index of channel in channel_layout on success, a negative AVERROR
  *         on error.
  *)
-int av_get_channel_layout_channel_index(uint64_t channel_layout,
+function cint av_get_channel_layout_channel_index(uint64_t channel_layout,
                                         uint64_t channel);
 
 (**
@@ -227,7 +227,7 @@ const pchar av_get_channel_description(uint64_t channel);
  * @return  0  if the layout exists,
  *          <0 if index is beyond the limits
  *)
-int av_get_standard_channel_layout(unsigned index, uint64_t *layout,
+function cint av_get_standard_channel_layout(unsigned index, uint64_t *layout,
                                    const ppchar name);
 
 (**

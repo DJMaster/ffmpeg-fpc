@@ -70,7 +70,7 @@ struct AVSHA *av_sha_alloc();
  * @param bits    number of bits in digest (SHA-1 - 160 bits, SHA-2 224 or 256 bits)
  * @return        zero if initialization succeeded, -1 otherwise
  *)
-int av_sha_init(struct AVSHA* context, int bits);
+function cint av_sha_init(struct AVSHA* context, int bits);
 
 (**
  * Update hash value.

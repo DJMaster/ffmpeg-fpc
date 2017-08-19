@@ -232,7 +232,7 @@ struct SwrContext *swr_alloc();
  * @param[in,out]   s Swr context to initialize
  * @return AVERROR error code in case of failure.
  *)
-int swr_init(struct SwrContext *s);
+function cint swr_init(struct SwrContext *s);
 
 (**
  * Check whether an swr context has been initialized or not.
@@ -241,7 +241,7 @@ int swr_init(struct SwrContext *s);
  * @see swr_init()
  * @return positive if it has been initialized, 0 if not initialized
  *)
-int swr_is_initialized(struct SwrContext *s);
+function cint swr_is_initialized(struct SwrContext *s);
 
 (**
  * Allocate SwrContext if needed and set/reset common parameters.
@@ -319,7 +319,7 @@ void swr_close(struct SwrContext *s);
  *
  * @return number of samples output per channel, negative value on error
  *)
-int swr_convert(struct SwrContext *s, uint8_t **out, int out_count,
+function cint swr_convert(struct SwrContext *s, uint8_t **out, int out_count,
                                 const uint8_t **in , int in_count);
 
 (**
@@ -366,7 +366,7 @@ int64_t swr_next_pts(struct SwrContext *s, int64_t pts);
  *            @li compensation unsupported by resampler, or
  *            @li swr_init() fails when called.
  *)
-int swr_set_compensation(struct SwrContext *s, int sample_delta, int compensation_distance);
+function cint swr_set_compensation(struct SwrContext *s, int sample_delta, int compensation_distance);
 
 (**
  * Set a customized input channel mapping.
@@ -376,7 +376,7 @@ int swr_set_compensation(struct SwrContext *s, int sample_delta, int compensatio
  *                            indexes, -1 for a muted channel)
  * @return >= 0 on success, or AVERROR error code in case of failure.
  *)
-int swr_set_channel_mapping(struct SwrContext *s, const int *channel_map);
+function cint swr_set_channel_mapping(struct SwrContext *s, const int *channel_map);
 
 (**
  * Generate a channel mixing matrix.
@@ -401,7 +401,7 @@ int swr_set_channel_mapping(struct SwrContext *s, const int *channel_map);
  * @param log_ctx             parent logging context, can be NULL
  * @return                    0 on success, negative AVERROR code on failure
  *)
-int swr_build_matrix(uint64_t in_layout, uint64_t out_layout,
+function cint swr_build_matrix(uint64_t in_layout, uint64_t out_layout,
                      double center_mix_level, double surround_mix_level,
                      double lfe_mix_level, double rematrix_maxval,
                      double rematrix_volume, double *matrix,
@@ -417,7 +417,7 @@ int swr_build_matrix(uint64_t in_layout, uint64_t out_layout,
  * @param stride  offset between lines of the matrix
  * @return  >= 0 on success, or AVERROR error code in case of failure.
  *)
-int swr_set_matrix(struct SwrContext *s, const double *matrix, int stride);
+function cint swr_set_matrix(struct SwrContext *s, const double *matrix, int stride);
 
 (**
  * @}
@@ -437,7 +437,7 @@ int swr_set_matrix(struct SwrContext *s, const double *matrix, int stride);
  *
  * @return >= 0 on success, or a negative AVERROR code on failure
  *)
-int swr_drop_output(struct SwrContext *s, int count);
+function cint swr_drop_output(struct SwrContext *s, int count);
 
 (**
  * Injects the specified number of silence samples.
@@ -450,7 +450,7 @@ int swr_drop_output(struct SwrContext *s, int count);
  *
  * @return >= 0 on success, or a negative AVERROR code on failure
  *)
-int swr_inject_silence(struct SwrContext *s, int count);
+function cint swr_inject_silence(struct SwrContext *s, int count);
 
 (**
  * Gets the delay the next input sample will experience relative to the next output sample.
@@ -494,7 +494,7 @@ int64_t swr_get_delay(struct SwrContext *s, int64_t base);
  * @returns an upper bound on the number of samples that the next swr_convert
  *          will output or a negative value to indicate an error
  *)
-int swr_get_out_samples(struct SwrContext *s, int in_samples);
+function cint swr_get_out_samples(struct SwrContext *s, int in_samples);
 
 (**
  * @}
@@ -568,7 +568,7 @@ const pchar swresample_license();
  * @return                0 on success, AVERROR on failure or nonmatching
  *                        configuration.
  *)
-int swr_convert_frame(SwrContext *swr,
+function cint swr_convert_frame(SwrContext *swr,
                       AVFrame *output, const AVFrame *input);
 
 (**
@@ -585,7 +585,7 @@ int swr_convert_frame(SwrContext *swr,
  * @param input           input AVFrame
  * @return                0 on success, AVERROR on failure.
  *)
-int swr_config_frame(SwrContext *swr, const AVFrame *out, const AVFrame *in);
+function cint swr_config_frame(SwrContext *swr, const AVFrame *out, const AVFrame *in);
 
 (**
  * @}

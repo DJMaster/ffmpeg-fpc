@@ -166,14 +166,14 @@ procedure av_buffer_unref(AVBufferRef **buf);
  * Return 0 otherwise.
  * A positive answer is valid until av_buffer_ref() is called on buf.
  *)
-int av_buffer_is_writable(const AVBufferRef *buf);
+function cint av_buffer_is_writable(const AVBufferRef *buf);
 
 (**
  * @return the opaque parameter set by av_buffer_create.
  *)
 void *av_buffer_get_opaque(const AVBufferRef *buf);
 
-int av_buffer_get_ref_count(const AVBufferRef *buf);
+function cint av_buffer_get_ref_count(const AVBufferRef *buf);
 
 (**
  * Create a writable reference from a given buffer reference, avoiding data copy
@@ -184,7 +184,7 @@ int av_buffer_get_ref_count(const AVBufferRef *buf);
  *            written in its place. On failure, buf is left untouched.
  * @return 0 on success, a negative AVERROR on failure.
  *)
-int av_buffer_make_writable(AVBufferRef **buf);
+function cint av_buffer_make_writable(AVBufferRef **buf);
 
 (**
  * Reallocate a given buffer.
@@ -201,7 +201,7 @@ int av_buffer_make_writable(AVBufferRef **buf);
  * reference to it (i.e. the one passed to this function). In all other cases
  * a new buffer is allocated and the data is copied.
  *)
-int av_buffer_realloc(AVBufferRef **buf, int size);
+function cint av_buffer_realloc(AVBufferRef **buf, int size);
 
 (**
  * @}

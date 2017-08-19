@@ -56,7 +56,7 @@ struct AVCAMELLIA *av_camellia_alloc();
   * @param key a key of 16, 24, 32 bytes used for encryption/decryption
   * @param key_bits number of keybits: possible are 128, 192, 256
  *)
-int av_camellia_init(struct AVCAMELLIA *ctx, const uint8_t *key, int key_bits);
+function cint av_camellia_init(struct AVCAMELLIA *ctx, const uint8_t *key, int key_bits);
 
 (**
   * Encrypt or decrypt a buffer using a previously initialized context

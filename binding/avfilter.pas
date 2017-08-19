@@ -85,7 +85,7 @@ typedef struct AVFilterFormats AVFilterFormats;
  * Get the number of elements in a NULL-terminated array of AVFilterPads (e.g.
  * AVFilter.inputs/outputs).
  *)
-int avfilter_pad_count(const AVFilterPad *pads);
+function cint avfilter_pad_count(const AVFilterPad *pads);
 
 (**
  * Get the name of an AVFilterPad.
@@ -636,7 +636,7 @@ struct AVFilterLink {
  * @param dstpad index of the input pad on the destination filter
  * @return       zero on success
  *)
-int avfilter_link(AVFilterContext *src, unsigned srcpad,
+function cint avfilter_link(AVFilterContext *src, unsigned srcpad,
                   AVFilterContext *dst, unsigned dstpad);
 
 (**
@@ -647,7 +647,7 @@ procedure avfilter_link_free(AVFilterLink **link);
 (**
  * Get the number of channels of a link.
  *)
-int avfilter_link_get_channels(AVFilterLink *link);
+function cint avfilter_link_get_channels(AVFilterLink *link);
 
 (**
  * Set the closed field of a link.
@@ -663,7 +663,7 @@ procedure avfilter_link_set_closed(AVFilterLink *link, int closed);
  * @param filter the filter to negotiate the properties for its inputs
  * @return       zero on successful negotiation
  *)
-int avfilter_config_links(AVFilterContext *filter);
+function cint avfilter_config_links(AVFilterContext *filter);
 
   AVFILTER_CMD_FLAG_ONE = 1;  ///< Stop once a filter understood the command (for target=all for example), fast filters are favored automatically
   AVFILTER_CMD_FLAG_FAST = 2; ///< Only execute command when its fast (like a video out that supports contrast adjustment in hw)
@@ -672,7 +672,7 @@ int avfilter_config_links(AVFilterContext *filter);
  * Make the filter instance process a command.
  * It is recommended to use avfilter_graph_send_command().
  *)
-int avfilter_process_command(AVFilterContext *filter, const pchar cmd, const pchar arg, char *res, int res_len, int flags);
+function cint avfilter_process_command(AVFilterContext *filter, const pchar cmd, const pchar arg, char *res, int res_len, int flags);
 
 (** Initialize the filter system. Register all builtin filters. *)
 procedure avfilter_register_all();
@@ -693,7 +693,7 @@ procedure avfilter_uninit();
  * @return 0 if the registration was successful, a negative value
  * otherwise
  *)
-int avfilter_register(AVFilter *filter);
+function cint avfilter_register(AVFilter *filter);
 
 (**
  * Get a filter definition matching the given name.
@@ -738,7 +738,7 @@ AVFilter **av_filter_next(AVFilter **filter);
  * @deprecated use avfilter_graph_alloc_filter() instead
  *)
 attribute_deprecated
-int avfilter_open(AVFilterContext **filter_ctx, AVFilter *filter, const pchar inst_name);
+function cint avfilter_open(AVFilterContext **filter_ctx, AVFilter *filter, const pchar inst_name);
 {$endif}
 
 
@@ -754,7 +754,7 @@ int avfilter_open(AVFilterContext **filter_ctx, AVFilter *filter, const pchar in
  * @return       zero on success
  *)
 attribute_deprecated
-int avfilter_init_filter(AVFilterContext *filter, const pchar args, void *opaque);
+function cint avfilter_init_filter(AVFilterContext *filter, const pchar args, void *opaque);
 {$endif}
 
 (**
@@ -767,7 +767,7 @@ int avfilter_init_filter(AVFilterContext *filter, const pchar args, void *opaque
  *             AVOptions API or there are no options that need to be set.
  * @return 0 on success, a negative AVERROR on failure
  *)
-int avfilter_init_str(AVFilterContext *ctx, const pchar args);
+function cint avfilter_init_str(AVFilterContext *ctx, const pchar args);
 
 (**
  * Initialize a filter with the supplied dictionary of options.
@@ -789,7 +789,7 @@ int avfilter_init_str(AVFilterContext *ctx, const pchar args);
  * this function will leave those extra options in the options AVDictionary and
  * continue as usual.
  *)
-int avfilter_init_dict(AVFilterContext *ctx, AVDictionary **options);
+function cint avfilter_init_dict(AVFilterContext *ctx, AVDictionary **options);
 
 (**
  * Free a filter context. This will also remove the filter from its
@@ -808,7 +808,7 @@ procedure avfilter_free(AVFilterContext *filter);
  * @param filt_dstpad_idx the output pad on the filter to connect
  * @return     zero on success
  *)
-int avfilter_insert_filter(AVFilterLink *link, AVFilterContext *filt,
+function cint avfilter_insert_filter(AVFilterLink *link, AVFilterContext *filt,
                            unsigned filt_srcpad_idx, unsigned filt_dstpad_idx);
 
 (**
@@ -967,7 +967,7 @@ AVFilterContext *avfilter_graph_get_filter(AVFilterGraph *graph, const pchar nam
  * filter graph
  *)
 attribute_deprecated
-int avfilter_graph_add_filter(AVFilterGraph *graphctx, AVFilterContext *filter);
+function cint avfilter_graph_add_filter(AVFilterGraph *graphctx, AVFilterContext *filter);
 {$endif}
 
 (**
@@ -983,7 +983,7 @@ int avfilter_graph_add_filter(AVFilterGraph *graphctx, AVFilterContext *filter);
  * @return a negative AVERROR error code in case of failure, a non
  * negative value otherwise
  *)
-int avfilter_graph_create_filter(AVFilterContext **filt_ctx, const AVFilter *filt,
+function cint avfilter_graph_create_filter(AVFilterContext **filt_ctx, const AVFilter *filt,
                                  const pchar name, const pchar args, void *opaque,
                                  AVFilterGraph *graph_ctx);
 
@@ -1009,7 +1009,7 @@ enum {
  * @param log_ctx context used for logging
  * @return >= 0 in case of success, a negative AVERROR code otherwise
  *)
-int avfilter_graph_config(AVFilterGraph *graphctx, void *log_ctx);
+function cint avfilter_graph_config(AVFilterGraph *graphctx, void *log_ctx);
 
 (**
  * Free a graph, destroy its links, and set *graph to NULL.
@@ -1071,7 +1071,7 @@ procedure avfilter_inout_free(AVFilterInOut **inout);
  * @param outputs linked list to the outputs of the graph
  * @return zero on success, a negative AVERROR code on error
  *)
-int avfilter_graph_parse(AVFilterGraph *graph, const pchar filters,
+function cint avfilter_graph_parse(AVFilterGraph *graph, const pchar filters,
                          AVFilterInOut *inputs, AVFilterInOut *outputs,
                          void *log_ctx);
 
@@ -1092,7 +1092,7 @@ int avfilter_graph_parse(AVFilterGraph *graph, const pchar filters,
  *                after the parsing, should be freed with avfilter_inout_free().
  * @return non negative on success, a negative AVERROR code on error
  *)
-int avfilter_graph_parse_ptr(AVFilterGraph *graph, const pchar filters,
+function cint avfilter_graph_parse_ptr(AVFilterGraph *graph, const pchar filters,
                              AVFilterInOut **inputs, AVFilterInOut **outputs,
                              void *log_ctx);
 
@@ -1118,7 +1118,7 @@ int avfilter_graph_parse_ptr(AVFilterGraph *graph, const pchar filters,
  * the outputs parameter will contain outputs of the newly created
  * filters.
  *)
-int avfilter_graph_parse2(AVFilterGraph *graph, const pchar filters,
+function cint avfilter_graph_parse2(AVFilterGraph *graph, const pchar filters,
                           AVFilterInOut **inputs,
                           AVFilterInOut **outputs);
 
@@ -1137,7 +1137,7 @@ int avfilter_graph_parse2(AVFilterGraph *graph, const pchar filters,
  * @returns >=0 on success otherwise an error code.
  *              AVERROR(ENOSYS) on unsupported commands
  *)
-int avfilter_graph_send_command(AVFilterGraph *graph, const pchar target, const pchar cmd, const pchar arg, char *res, int res_len, int flags);
+function cint avfilter_graph_send_command(AVFilterGraph *graph, const pchar target, const pchar cmd, const pchar arg, char *res, int res_len, int flags);
 
 (**
  * Queue a command for one or more filter instances.
@@ -1154,7 +1154,7 @@ int avfilter_graph_send_command(AVFilterGraph *graph, const pchar target, const 
  * @note As this executes commands after this function returns, no return code
  *       from the filter is provided, also AVFILTER_CMD_FLAG_ONE is not supported.
  *)
-int avfilter_graph_queue_command(AVFilterGraph *graph, const pchar target, const pchar cmd, const pchar arg, int flags, double ts);
+function cint avfilter_graph_queue_command(AVFilterGraph *graph, const pchar target, const pchar cmd, const pchar arg, int flags, double ts);
 
 
 (**
@@ -1185,7 +1185,7 @@ char *avfilter_graph_dump(AVFilterGraph *graph, const pchar options);
  * @return  the return value of ff_request_frame(),
  *          or AVERROR_EOF if all links returned AVERROR_EOF
  *)
-int avfilter_graph_request_oldest(AVFilterGraph *graph);
+function cint avfilter_graph_request_oldest(AVFilterGraph *graph);
 
 (**
  * @}

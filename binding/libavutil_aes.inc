@@ -52,7 +52,7 @@ struct AVAES *av_aes_alloc();
  * @param key_bits 128, 192 or 256
  * @param decrypt 0 for encryption, 1 for decryption
  *)
-int av_aes_init(struct AVAES *a, const uint8_t *key, int key_bits, int decrypt);
+function cint av_aes_init(struct AVAES *a, const uint8_t *key, int key_bits, int decrypt);
 
 (**
  * Encrypt or decrypt a buffer using a previously initialized context.

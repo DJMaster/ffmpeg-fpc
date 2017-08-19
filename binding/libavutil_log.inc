@@ -264,7 +264,7 @@ procedure av_vlog(void *avcl, int level, const pchar fmt, va_list vl);
  *
  * @return Current log level
  *)
-int av_log_get_level();
+function cint av_log_get_level();
 
 (**
  * Set the log level
@@ -337,7 +337,7 @@ procedure av_log_format_line(void *ptr, int level, const pchar fmt, va_list vl,
  *         character. If the return value is not less than line_size, it means
  *         that the log message was truncated to fit the buffer.
  *)
-int av_log_format_line2(void *ptr, int level, const pchar fmt, va_list vl,
+function cint av_log_format_line2(void *ptr, int level, const pchar fmt, va_list vl,
                         char *line, int line_size, int *print_prefix);
 
 {$if FF_API_DLOG}
@@ -373,7 +373,7 @@ int av_log_format_line2(void *ptr, int level, const pchar fmt, va_list vl,
   AV_LOG_PRINT_LEVEL = 2;
 
 procedure av_log_set_flags(int arg);
-int av_log_get_flags();
+function cint av_log_get_flags();
 
 (**
  * @}

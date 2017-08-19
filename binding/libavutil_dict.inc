@@ -115,7 +115,7 @@ AVDictionaryEntry *av_dict_get(const AVDictionary *m, const pchar key,
  * @param m dictionary
  * @return  number of entries in dictionary
  *)
-int av_dict_count(const AVDictionary *m);
+function cint av_dict_count(const AVDictionary *m);
 
 (**
  * Set the given entry in *pm, overwriting an existing entry.
@@ -133,7 +133,7 @@ int av_dict_count(const AVDictionary *m);
  *        Passing a NULL value will cause an existing entry to be deleted.
  * @return >= 0 on success otherwise an error code <0
  *)
-int av_dict_set(AVDictionary **pm, const pchar key, const pchar value, int flags);
+function cint av_dict_set(AVDictionary **pm, const pchar key, const pchar value, int flags);
 
 (**
  * Convenience wrapper for av_dict_set that converts the value to a string
@@ -141,7 +141,7 @@ int av_dict_set(AVDictionary **pm, const pchar key, const pchar value, int flags
  *
  * Note: If AV_DICT_DONT_STRDUP_KEY is set, key will be freed on error.
  *)
-int av_dict_set_int(AVDictionary **pm, const pchar key, int64_t value, int flags);
+function cint av_dict_set_int(AVDictionary **pm, const pchar key, int64_t value, int flags);
 
 (**
  * Parse the key/value pairs list and add the parsed entries to a dictionary.
@@ -159,7 +159,7 @@ int av_dict_set_int(AVDictionary **pm, const pchar key, int64_t value, int flags
  *                     be duplicated.
  * @return             0 on success, negative AVERROR code on failure
  *)
-int av_dict_parse_string(AVDictionary **pm, const pchar str,
+function cint av_dict_parse_string(AVDictionary **pm, const pchar str,
                          const pchar key_val_sep, const pchar pairs_sep,
                          int flags);
 
@@ -173,7 +173,7 @@ int av_dict_parse_string(AVDictionary **pm, const pchar str,
  * @return 0 on success, negative AVERROR code on failure. If dst was allocated
  *           by this function, callers should free the associated memory.
  *)
-int av_dict_copy(AVDictionary **dst, const AVDictionary *src, int flags);
+function cint av_dict_copy(AVDictionary **dst, const AVDictionary *src, int flags);
 
 (**
  * Free all the memory allocated for an AVDictionary struct
@@ -196,7 +196,7 @@ procedure av_dict_free(AVDictionary **m);
  * @return                   >= 0 on success, negative on error
  * @warning Separators cannot be neither '\\' nor '\0'. They also cannot be the same.
  *)
-int av_dict_get_string(const AVDictionary *m, char **buffer,
+function cint av_dict_get_string(const AVDictionary *m, char **buffer,
                        const char key_val_sep, const char pairs_sep);
 
 (**

@@ -52,7 +52,7 @@
  * @param[in] log_ctx parent logging context
  * @return >= 0 on success, a negative error code otherwise
  *)
-int av_parse_ratio(AVRational *q, const pchar str, int max,
+function cint av_parse_ratio(AVRational *q, const pchar str, int max,
                    int log_offset, void *log_ctx);
 
 #define av_parse_ratio_quiet(rate, str, max) \
@@ -69,7 +69,7 @@ int av_parse_ratio(AVRational *q, const pchar str, int max,
  * width x height or a valid video size abbreviation.
  * @return >= 0 on success, a negative error code otherwise
  *)
-int av_parse_video_size(int *width_ptr, int *height_ptr, const pchar str);
+function cint av_parse_video_size(int *width_ptr, int *height_ptr, const pchar str);
 
 (**
  * Parse str and store the detected values in *rate.
@@ -80,7 +80,7 @@ int av_parse_video_size(int *width_ptr, int *height_ptr, const pchar str);
  * rate_num / rate_den, a float number or a valid video rate abbreviation
  * @return >= 0 on success, a negative error code otherwise
  *)
-int av_parse_video_rate(AVRational *rate, const pchar str);
+function cint av_parse_video_rate(AVRational *rate, const pchar str);
 
 (**
  * Put the RGBA values that correspond to color_string in rgba_color.
@@ -101,7 +101,7 @@ int av_parse_video_rate(AVRational *rate, const pchar str);
  * @return >= 0 in case of success, a negative value in case of
  * failure (for example if color_string cannot be parsed).
  *)
-int av_parse_color(uint8_t *rgba_color, const pchar color_string, int slen,
+function cint av_parse_color(uint8_t *rgba_color, const pchar color_string, int slen,
                    void *log_ctx);
 
 (**
@@ -149,7 +149,7 @@ const pchar av_get_known_color_name(int color_idx, const uint8_t **rgb);
  * @return >= 0 in case of success, a negative value corresponding to an
  * AVERROR code otherwise
  *)
-int av_parse_time(int64_t *timeval, const pchar timestr, int duration);
+function cint av_parse_time(int64_t *timeval, const pchar timestr, int duration);
 
 (**
  * Attempt to find a specific tag in a URL.
@@ -157,7 +157,7 @@ int av_parse_time(int64_t *timeval, const pchar timestr, int duration);
  * syntax: '?tag1=val1&tag2=val2...'. Little URL decoding is done.
  * Return 1 if found.
  *)
-int av_find_info_tag(char *arg, int arg_size, const pchar tag1, const pchar info);
+function cint av_find_info_tag(char *arg, int arg_size, const pchar tag1, const pchar info);
 
 (**
  * Simplified version of strptime

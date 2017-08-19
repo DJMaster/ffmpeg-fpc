@@ -63,7 +63,7 @@ struct AVRIPEMD *av_ripemd_alloc();
  * @param bits    number of bits in digest (128, 160, 256 or 320 bits)
  * @return        zero if initialization succeeded, -1 otherwise
  *)
-int av_ripemd_init(struct AVRIPEMD* context, int bits);
+function cint av_ripemd_init(struct AVRIPEMD* context, int bits);
 
 (**
  * Update hash value.

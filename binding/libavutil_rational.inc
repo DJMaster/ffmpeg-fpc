@@ -123,7 +123,7 @@ static inline double av_q2d(AVRational a){
  * @param[in]      max Maximum allowed values for `dst_num` & `dst_den`
  * @return 1 if the operation is exact, 0 otherwise
  *)
-int av_reduce(int *dst_num, int *dst_den, int64_t num, int64_t den, int64_t max);
+function cint av_reduce(int *dst_num, int *dst_den, int64_t num, int64_t den, int64_t max);
 
 (**
  * Multiply two rationals.
@@ -191,7 +191,7 @@ AVRational av_d2q(double d, int max) av_const;
  *         - -1 if `q2` is nearer to `q` than `q1`
  *         - 0 if they have the same distance
  *)
-int av_nearer_q(AVRational q, AVRational q1, AVRational q2);
+function cint av_nearer_q(AVRational q, AVRational q1, AVRational q2);
 
 (**
  * Find the value in a list of rationals nearest a given reference rational.
@@ -200,7 +200,7 @@ int av_nearer_q(AVRational q, AVRational q1, AVRational q2);
  * @param q_list Array of rationals terminated by `{0, 0}`
  * @return Index of the nearest value found in the array
  *)
-int av_find_nearest_q_idx(AVRational q, const AVRational* q_list);
+function cint av_find_nearest_q_idx(AVRational q, const AVRational* q_list);
 
 (**
  * Convert an AVRational to a IEEE 32-bit `float` expressed in fixed-point

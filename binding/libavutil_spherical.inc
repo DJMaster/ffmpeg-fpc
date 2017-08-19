@@ -229,7 +229,7 @@ const pchar av_spherical_projection_name(enum AVSphericalProjection projection);
  *
  * @return The AVSphericalProjection value, or -1 if not found.
  *)
-int av_spherical_from_name(const name: pchar);
+function cint av_spherical_from_name(const name: pchar);
 (**
  * @}
  * @}

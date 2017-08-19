@@ -178,7 +178,7 @@ int64_t av_rescale_q_rnd(int64_t a, AVRational bq, AVRational cq,
  * The result of the function is undefined if one of the timestamps is outside
  * the `int64_t` range when represented in the other's timebase.
  *)
-int av_compare_ts(int64_t ts_a, AVRational tb_a, int64_t ts_b, AVRational tb_b);
+function cint av_compare_ts(int64_t ts_a, AVRational tb_a, int64_t ts_b, AVRational tb_b);
 
 (**
  * Compare the remainders of two integer operands divided by a common divisor.

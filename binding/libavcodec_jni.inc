@@ -39,7 +39,7 @@
  * @param log_ctx context used for logging, can be NULL
  * @return 0 on success, < 0 otherwise
  *)
-int av_jni_set_java_vm(void *vm, void *log_ctx);
+function cint av_jni_set_java_vm(void *vm, void *log_ctx);
 
 (*
  * Get the Java virtual machine which has been set with av_jni_set_java_vm.

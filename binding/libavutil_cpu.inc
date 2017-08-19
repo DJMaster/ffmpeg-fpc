@@ -80,7 +80,7 @@
  * before. So av_get_cpu_flags() can easily be used in an application to
  * detect the enabled cpu flags.
  *)
-int av_get_cpu_flags();
+function cint av_get_cpu_flags();
 
 (**
  * Disables cpu detection and forces the specified flags.
@@ -105,18 +105,18 @@ attribute_deprecated procedure av_set_cpu_flags_mask(int mask);
  * @return a combination of AV_CPU_* flags, negative on error.
  *)
 attribute_deprecated
-int av_parse_cpu_flags(const pchar s);
+function cint av_parse_cpu_flags(const pchar s);
 
 (**
  * Parse CPU caps from a string and update the given AV_CPU_* flags based on that.
  *
  * @return negative on error.
  *)
-int av_parse_cpu_caps(unsigned *flags, const pchar s);
+function cint av_parse_cpu_caps(unsigned *flags, const pchar s);
 
 (**
  * @return the number of logical CPU cores present.
  *)
-int av_cpu_count();
+function cint av_cpu_count();
 
 // #endif (* AVUTIL_CPU_H *)

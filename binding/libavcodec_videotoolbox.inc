@@ -105,7 +105,7 @@ AVVideotoolboxContext *av_videotoolbox_alloc_context();
  *
  * @return >= 0 on success, a negative AVERROR code on failure
  *)
-int av_videotoolbox_default_init(AVCodecContext *avctx);
+function cint av_videotoolbox_default_init(AVCodecContext *avctx);
 
 (**
  * This is a convenience function that creates and sets up the Videotoolbox context using
@@ -116,7 +116,7 @@ int av_videotoolbox_default_init(AVCodecContext *avctx);
  *
  * @return >= 0 on success, a negative AVERROR code on failure
  *)
-int av_videotoolbox_default_init2(AVCodecContext *avctx, AVVideotoolboxContext *vtctx);
+function cint av_videotoolbox_default_init2(AVCodecContext *avctx, AVVideotoolboxContext *vtctx);
 
 (**
  * This function must be called to free the Videotoolbox context initialized with

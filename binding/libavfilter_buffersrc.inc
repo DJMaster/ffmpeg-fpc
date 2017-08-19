@@ -141,7 +141,7 @@ AVBufferSrcParameters *av_buffersrc_parameters_alloc();
  *              copies or references when necessary.
  * @return 0 on success, a negative AVERROR code on failure.
  *)
-int av_buffersrc_parameters_set(AVFilterContext *ctx, AVBufferSrcParameters *param);
+function cint av_buffersrc_parameters_set(AVFilterContext *ctx, AVBufferSrcParameters *param);
 
 (**
  * Add a frame to the buffer source.
@@ -157,7 +157,7 @@ int av_buffersrc_parameters_set(AVFilterContext *ctx, AVBufferSrcParameters *par
  * AV_BUFFERSRC_FLAG_KEEP_REF flag.
  *)
 av_warn_unused_result
-int av_buffersrc_write_frame(AVFilterContext *ctx, const AVFrame *frame);
+function cint av_buffersrc_write_frame(AVFilterContext *ctx, const AVFrame *frame);
 
 (**
  * Add a frame to the buffer source.
@@ -178,7 +178,7 @@ int av_buffersrc_write_frame(AVFilterContext *ctx, const AVFrame *frame);
  * AV_BUFFERSRC_FLAG_KEEP_REF flag.
  *)
 av_warn_unused_result
-int av_buffersrc_add_frame(AVFilterContext *ctx, AVFrame *frame);
+function cint av_buffersrc_add_frame(AVFilterContext *ctx, AVFrame *frame);
 
 (**
  * Add a frame to the buffer source.
@@ -196,7 +196,7 @@ int av_buffersrc_add_frame(AVFilterContext *ctx, AVFrame *frame);
  *                    in case of failure
  *)
 av_warn_unused_result
-int av_buffersrc_add_frame_flags(AVFilterContext *buffer_src,
+function cint av_buffersrc_add_frame_flags(AVFilterContext *buffer_src,
                                  AVFrame *frame, int flags);
 
 

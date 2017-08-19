@@ -245,7 +245,7 @@ AVBufferRef *av_hwdevice_ctx_alloc(enum AVHWDeviceType type);
  * @param ref a reference to the AVHWDeviceContext
  * @return 0 on success, a negative AVERROR code on failure
  *)
-int av_hwdevice_ctx_init(AVBufferRef *ref);
+function cint av_hwdevice_ctx_init(AVBufferRef *ref);
 
 (**
  * Open a device of the specified type and create an AVHWDeviceContext for it.
@@ -272,7 +272,7 @@ int av_hwdevice_ctx_init(AVBufferRef *ref);
  *
  * @return 0 on success, a negative AVERROR code on failure.
  *)
-int av_hwdevice_ctx_create(AVBufferRef **device_ctx, enum AVHWDeviceType type,
+function cint av_hwdevice_ctx_create(AVBufferRef **device_ctx, enum AVHWDeviceType type,
                            const pchar device, AVDictionary *opts, int flags);
 
 (**
@@ -294,7 +294,7 @@ AVBufferRef *av_hwframe_ctx_alloc(AVBufferRef *device_ctx);
  * @param ref a reference to the AVHWFramesContext
  * @return 0 on success, a negative AVERROR code on failure
  *)
-int av_hwframe_ctx_init(AVBufferRef *ref);
+function cint av_hwframe_ctx_init(AVBufferRef *ref);
 
 (**
  * Allocate a new frame attached to the given AVHWFramesContext.
@@ -305,7 +305,7 @@ int av_hwframe_ctx_init(AVBufferRef *ref);
  * @param flags currently unused, should be set to zero
  * @return 0 on success, a negative AVERROR code on failure
  *)
-int av_hwframe_get_buffer(AVBufferRef *hwframe_ctx, AVFrame *frame, int flags);
+function cint av_hwframe_get_buffer(AVBufferRef *hwframe_ctx, AVFrame *frame, int flags);
 
 (**
  * Copy data to or from a hw surface. At least one of dst/src must have an
@@ -336,7 +336,7 @@ int av_hwframe_get_buffer(AVBufferRef *hwframe_ctx, AVFrame *frame, int flags);
  * @param flags currently unused, should be set to zero
  * @return 0 on success, a negative AVERROR error code on failure.
  *)
-int av_hwframe_transfer_data(AVFrame *dst, const AVFrame *src, int flags);
+function cint av_hwframe_transfer_data(AVFrame *dst, const AVFrame *src, int flags);
 
 enum AVHWFrameTransferDirection {
     (**
@@ -365,7 +365,7 @@ enum AVHWFrameTransferDirection {
  * @param flags currently unused, should be set to zero
  * @return 0 on success, a negative AVERROR code on failure.
  *)
-int av_hwframe_transfer_get_formats(AVBufferRef *hwframe_ctx,
+function cint av_hwframe_transfer_get_formats(AVBufferRef *hwframe_ctx,
                                     enum AVHWFrameTransferDirection dir,
                                     enum AVPixelFormat **formats, int flags);
 
@@ -502,7 +502,7 @@ enum {
  * @param flags Some combination of AV_HWFRAME_MAP_* flags.
  * @return Zero on success, negative AVERROR code on failure.
  *)
-int av_hwframe_map(AVFrame *dst, const AVFrame *src, int flags);
+function cint av_hwframe_map(AVFrame *dst, const AVFrame *src, int flags);
 
 
 (**
@@ -520,7 +520,7 @@ int av_hwframe_map(AVFrame *dst, const AVFrame *src, int flags);
  * @param flags  Currently unused; should be set to zero.
  * @return       Zero on success, negative AVERROR code on failure.
  *)
-int av_hwframe_ctx_create_derived(AVBufferRef **derived_frame_ctx,
+function cint av_hwframe_ctx_create_derived(AVBufferRef **derived_frame_ctx,
                                   enum AVPixelFormat format,
                                   AVBufferRef *derived_device_ctx,
                                   AVBufferRef *source_frame_ctx,

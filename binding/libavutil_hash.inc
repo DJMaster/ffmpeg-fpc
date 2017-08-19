@@ -127,7 +127,7 @@ struct AVHashContext;
  * @note The context is not initialized after a call to this function; you must
  * call av_hash_init() to do so.
  *)
-int av_hash_alloc(struct AVHashContext **ctx, const pchar name);
+function cint av_hash_alloc(struct AVHashContext **ctx, const pchar name);
 
 (**
  * Get the names of available hash algorithms.
@@ -169,7 +169,7 @@ const pchar av_hash_get_name(const struct AVHashContext *ctx);
  * @param[in]     ctx Hash context
  * @return            Size of the hash value in bytes
  *)
-int av_hash_get_size(const struct AVHashContext *ctx);
+function cint av_hash_get_size(const struct AVHashContext *ctx);
 
 (**
  * Initialize or reset a hash context.

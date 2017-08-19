@@ -130,7 +130,7 @@ typedef struct AVDiracSeqHeader {
  * @param log_ctx if non-NULL, this function will log errors here
  * @return 0 on success, a negative AVERROR code on failure
  *)
-int av_dirac_parse_sequence_header(AVDiracSeqHeader **dsh,
+function cint av_dirac_parse_sequence_header(AVDiracSeqHeader **dsh,
                                    const uint8_t *buf, size_t buf_size,
                                    void *log_ctx);
 

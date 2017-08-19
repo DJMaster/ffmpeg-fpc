@@ -82,7 +82,7 @@ procedure av_hmac_update(AVHMAC *ctx, const uint8_t *data, unsigned int len);
  * @param outlen The length of the out buffer, in bytes
  * @return       The number of bytes written to out, or a negative error code.
  *)
-int av_hmac_final(AVHMAC *ctx, uint8_t *out, unsigned int outlen);
+function cint av_hmac_final(AVHMAC *ctx, uint8_t *out, unsigned int outlen);
 
 (**
  * Hash an array of data with a key.
@@ -95,7 +95,7 @@ int av_hmac_final(AVHMAC *ctx, uint8_t *out, unsigned int outlen);
  * @param outlen The length of the out buffer, in bytes
  * @return       The number of bytes written to out, or a negative error code.
  *)
-int av_hmac_calc(AVHMAC *ctx, const uint8_t *data, unsigned int len,
+function cint av_hmac_calc(AVHMAC *ctx, const uint8_t *data, unsigned int len,
                  const uint8_t *key, unsigned int keylen,
                  uint8_t *out, unsigned int outlen);
 

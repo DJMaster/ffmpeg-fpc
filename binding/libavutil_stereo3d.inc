@@ -171,6 +171,6 @@ const pchar av_stereo3d_type_name(unsigned int type);
  *
  * @return The AVStereo3DType value, or -1 if not found.
  *)
-int av_stereo3d_from_name(const name: pchar);
+function cint av_stereo3d_from_name(const name: pchar);
 
 // #endif (* AVUTIL_STEREO3D_H *)

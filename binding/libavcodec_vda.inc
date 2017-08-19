@@ -153,12 +153,12 @@ struct vda_context {
 };
 
 (** Create the video decoder. *)
-int ff_vda_create_decoder(struct vda_context *vda_ctx,
+function cint ff_vda_create_decoder(struct vda_context *vda_ctx,
                           uint8_t *extradata,
                           int extradata_size);
 
 (** Destroy the video decoder. *)
-int ff_vda_destroy_decoder(struct vda_context *vda_ctx);
+function cint ff_vda_destroy_decoder(struct vda_context *vda_ctx);
 
 (**
  * This struct holds all the information that needs to be passed
@@ -208,7 +208,7 @@ AVVDAContext *av_vda_alloc_context();
  *
  * @return >= 0 on success, a negative AVERROR code on failure
  *)
-int av_vda_default_init(AVCodecContext *avctx);
+function cint av_vda_default_init(AVCodecContext *avctx);
 
 (**
  * This is a convenience function that creates and sets up the VDA context using
@@ -219,7 +219,7 @@ int av_vda_default_init(AVCodecContext *avctx);
  *
  * @return >= 0 on success, a negative AVERROR code on failure
  *)
-int av_vda_default_init2(AVCodecContext *avctx, AVVDAContext *vdactx);
+function cint av_vda_default_init2(AVCodecContext *avctx, AVVDAContext *vdactx);
 
 (**
  * This function must be called to free the VDA context initialized with

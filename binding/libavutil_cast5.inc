@@ -56,7 +56,7 @@ struct AVCAST5 *av_cast5_alloc();
   * @param key_bits number of keybits: possible are 40,48,...,128
   * @return 0 on success, less than 0 on failure
  *)
-int av_cast5_init(struct AVCAST5 *ctx, const uint8_t *key, int key_bits);
+function cint av_cast5_init(struct AVCAST5 *ctx, const uint8_t *key, int key_bits);
 
 (**
   * Encrypt or decrypt a buffer using a previously initialized context, ECB mode only

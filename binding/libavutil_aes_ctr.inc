@@ -47,7 +47,7 @@ struct AVAESCTR *av_aes_ctr_alloc();
  * Initialize an AVAESCTR context.
  * @param key encryption key, must have a length of AES_CTR_KEY_SIZE
  *)
-int av_aes_ctr_init(struct AVAESCTR *a, const uint8_t *key);
+function cint av_aes_ctr_init(struct AVAESCTR *a, const uint8_t *key);
 
 (**
  * Release an AVAESCTR context.

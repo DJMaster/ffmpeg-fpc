@@ -192,13 +192,13 @@ typedef struct AVPixFmtDescriptor {
  * used for storing the pixel information, that is padding bits are
  * not counted.
  *)
-int av_get_bits_per_pixel(const AVPixFmtDescriptor *pixdesc);
+function cint av_get_bits_per_pixel(const AVPixFmtDescriptor *pixdesc);
 
 (**
  * Return the number of bits per pixel for the pixel format
  * described by pixdesc, including any padding or unused bits.
  *)
-int av_get_padded_bits_per_pixel(const AVPixFmtDescriptor *pixdesc);
+function cint av_get_padded_bits_per_pixel(const AVPixFmtDescriptor *pixdesc);
 
 (**
  * @return a pixel format descriptor for provided pixel format or NULL if
@@ -236,14 +236,14 @@ enum AVPixelFormat av_pix_fmt_desc_get_id(const AVPixFmtDescriptor *desc);
  *
  * @return 0 on success, AVERROR(ENOSYS) on invalid or unknown pixel format
  *)
-int av_pix_fmt_get_chroma_sub_sample(enum AVPixelFormat pix_fmt,
+function cint av_pix_fmt_get_chroma_sub_sample(enum AVPixelFormat pix_fmt,
                                      int *h_shift, int *v_shift);
 
 (**
  * @return number of planes in pix_fmt, a negative AVERROR if pix_fmt is not a
  * valid pixel format.
  *)
-int av_pix_fmt_count_planes(enum AVPixelFormat pix_fmt);
+function cint av_pix_fmt_count_planes(enum AVPixelFormat pix_fmt);
 
 (**
  * @return the name for provided color range or NULL if unknown.
@@ -377,7 +377,7 @@ enum AVPixelFormat av_pix_fmt_swap_endianness(enum AVPixelFormat pix_fmt);
  * @return Combination of flags informing you what kind of losses will occur
  * (maximum loss for an invalid dst_pix_fmt).
  *)
-int av_get_pix_fmt_loss(enum AVPixelFormat dst_pix_fmt,
+function cint av_get_pix_fmt_loss(enum AVPixelFormat dst_pix_fmt,
                         enum AVPixelFormat src_pix_fmt,
                         int has_alpha);
 

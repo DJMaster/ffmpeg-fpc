@@ -54,7 +54,7 @@ typedef struct AVExpr AVExpr;
  * @return >= 0 in case of success, a negative value corresponding to an
  * AVERROR code otherwise
  *)
-int av_expr_parse_and_eval(double *res, const pchar s,
+function cint av_expr_parse_and_eval(double *res, const pchar s,
                            const char * const *const_names, const double *const_values,
                            const char * const *func1_names, double (* const *funcs1)(void *, double),
                            const char * const *func2_names, double (* const *funcs2)(void *, double, double),
@@ -77,7 +77,7 @@ int av_expr_parse_and_eval(double *res, const pchar s,
  * @return >= 0 in case of success, a negative value corresponding to an
  * AVERROR code otherwise
  *)
-int av_expr_parse(AVExpr **expr, const pchar s,
+function cint av_expr_parse(AVExpr **expr, const pchar s,
                   const char * const *const_names,
                   const char * const *func1_names, double (* const *funcs1)(void *, double),
                   const char * const *func2_names, double (* const *funcs2)(void *, double, double),

@@ -544,20 +544,20 @@ int64_t av_frame_get_pkt_pos              (const AVFrame *frame);
 procedure    av_frame_set_pkt_pos              (AVFrame *frame, int64_t val);
 int64_t av_frame_get_channel_layout       (const AVFrame *frame);
 procedure    av_frame_set_channel_layout       (AVFrame *frame, int64_t val);
-int     av_frame_get_channels             (const AVFrame *frame);
+function cint     av_frame_get_channels             (const AVFrame *frame);
 procedure    av_frame_set_channels             (AVFrame *frame, int     val);
-int     av_frame_get_sample_rate          (const AVFrame *frame);
+function cint     av_frame_get_sample_rate          (const AVFrame *frame);
 procedure    av_frame_set_sample_rate          (AVFrame *frame, int     val);
 AVDictionary *av_frame_get_metadata       (const AVFrame *frame);
 procedure          av_frame_set_metadata       (AVFrame *frame, AVDictionary *val);
-int     av_frame_get_decode_error_flags   (const AVFrame *frame);
+function cint     av_frame_get_decode_error_flags   (const AVFrame *frame);
 procedure    av_frame_set_decode_error_flags   (AVFrame *frame, int     val);
-int     av_frame_get_pkt_size(const AVFrame *frame);
+function cint     av_frame_get_pkt_size(const AVFrame *frame);
 procedure    av_frame_set_pkt_size(AVFrame *frame, int val);
 AVDictionary **avpriv_frame_get_metadatap(AVFrame *frame);
 {$if FF_API_FRAME_QP}
 int8_t *av_frame_get_qp_table(AVFrame *f, int *stride, int *type);
-int av_frame_set_qp_table(AVFrame *f, AVBufferRef *buf, int stride, int type);
+function cint av_frame_set_qp_table(AVFrame *f, AVBufferRef *buf, int stride, int type);
 #endif
 enum AVColorSpace av_frame_get_colorspace(const AVFrame *frame);
 procedure    av_frame_set_colorspace(AVFrame *frame, enum AVColorSpace val);
@@ -606,7 +606,7 @@ procedure av_frame_free(AVFrame **frame);
  *
  * @return 0 on success, a negative AVERROR on error
  *)
-int av_frame_ref(AVFrame *dst, const AVFrame *src);
+function cint av_frame_ref(AVFrame *dst, const AVFrame *src);
 
 (**
  * Create a new frame that references the same data as src.
@@ -652,7 +652,7 @@ procedure av_frame_move_ref(AVFrame *dst, AVFrame *src);
  *
  * @return 0 on success, a negative AVERROR on error.
  *)
-int av_frame_get_buffer(AVFrame *frame, int align);
+function cint av_frame_get_buffer(AVFrame *frame, int align);
 
 (**
  * Check if the frame data is writable.
@@ -666,7 +666,7 @@ int av_frame_get_buffer(AVFrame *frame, int align);
  *
  * @see av_frame_make_writable(), av_buffer_is_writable()
  *)
-int av_frame_is_writable(AVFrame *frame);
+function cint av_frame_is_writable(AVFrame *frame);
 
 (**
  * Ensure that the frame data is writable, avoiding data copy if possible.
@@ -679,7 +679,7 @@ int av_frame_is_writable(AVFrame *frame);
  * @see av_frame_is_writable(), av_buffer_is_writable(),
  * av_buffer_make_writable()
  *)
-int av_frame_make_writable(AVFrame *frame);
+function cint av_frame_make_writable(AVFrame *frame);
 
 (**
  * Copy the frame data from src to dst.
@@ -692,7 +692,7 @@ int av_frame_make_writable(AVFrame *frame);
  *
  * @return >= 0 on success, a negative AVERROR on error.
  *)
-int av_frame_copy(AVFrame *dst, const AVFrame *src);
+function cint av_frame_copy(AVFrame *dst, const AVFrame *src);
 
 (**
  * Copy only "metadata" fields from src to dst.
@@ -702,7 +702,7 @@ int av_frame_copy(AVFrame *dst, const AVFrame *src);
  * aspect ratio (for video), but not width/height or channel layout.
  * Side data is also copied.
  *)
-int av_frame_copy_props(AVFrame *dst, const AVFrame *src);
+function cint av_frame_copy_props(AVFrame *dst, const AVFrame *src);
 
 (**
  * Get the buffer reference a given data plane is stored in.

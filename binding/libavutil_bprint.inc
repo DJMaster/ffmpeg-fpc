@@ -204,7 +204,7 @@ static inline int av_bprint_is_complete(const AVBPrint *buf)
  *                    if NULL, the buffer is discarded and freed
  * @return  0 for success or error code (probably AVERROR(ENOMEM))
  *)
-int av_bprint_finalize(AVBPrint *buf, char **ret_str);
+function cint av_bprint_finalize(AVBPrint *buf, char **ret_str);
 
 (**
  * Escape the content in src and append it to dstbuf.

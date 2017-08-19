@@ -72,7 +72,7 @@ struct AVSHA512 *av_sha512_alloc();
  * @param bits    number of bits in digest (224, 256, 384 or 512 bits)
  * @return        zero if initialization succeeded, -1 otherwise
  *)
-int av_sha512_init(struct AVSHA512* context, int bits);
+function cint av_sha512_init(struct AVSHA512* context, int bits);
 
 (**
  * Update hash value.
