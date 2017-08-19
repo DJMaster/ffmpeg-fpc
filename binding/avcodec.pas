@@ -223,7 +223,8 @@ interface
  * After adding new codec IDs, do not forget to add an entry to the codec
  * descriptor list and bump libavcodec minor version.
  *)
-enum AVCodecID {
+type
+  AVCodecID = (
     AV_CODEC_ID_NONE,
 
     (* video codecs *)
@@ -697,7 +698,7 @@ enum AVCodecID {
                                 * stream (only used by libavformat) *)
     AV_CODEC_ID_FFMETADATA = $21000,   ///< Dummy codec for streams containing only metadata information.
     AV_CODEC_ID_WRAPPED_AVFRAME = $21001, ///< Passthrough codec, AVFrames wrapped in AVPacket
-};
+  );
 
 (**
  * This struct describes the properties of a single codec described by an
@@ -1332,57 +1333,60 @@ const
  * This specifies the area which should be displayed.
  * Note there may be multiple such areas for one frame.
  *)
-typedef struct AVPanScan{
+type
+  PAVPanScan = ^AVPanScan;
+  AVPanScan = record
     (**
      * id
      * - encoding: Set by user.
      * - decoding: Set by libavcodec.
      *)
-    int id;
+    id: cint;
 
     (**
      * width and height in 1/16 pel
      * - encoding: Set by user.
      * - decoding: Set by libavcodec.
      *)
-    int width;
-    int height;
+    width: cint;
+    height: cint;
 
     (**
      * position of the top left corner in 1/16 pel for up to 3 fields/frames
      * - encoding: Set by user.
      * - decoding: Set by libavcodec.
      *)
-    int16_t position[3][2];
-}AVPanScan;
+    position: array[0..2][0..1] of cint16_t;
+  end;
 
 (**
  * This structure describes the bitrate properties of an encoded bitstream. It
  * roughly corresponds to a subset the VBV parameters for MPEG-2 or HRD
  * parameters for H.264/HEVC.
  *)
-typedef struct AVCPBProperties {
+  PAVCPBProperties = ^AVCPBProperties;
+  AVCPBProperties = record
     (**
      * Maximum bitrate of the stream, in bits per second.
      * Zero if unknown or unspecified.
      *)
-    int max_bitrate;
+    max_bitrate: cint;
     (**
      * Minimum bitrate of the stream, in bits per second.
      * Zero if unknown or unspecified.
      *)
-    int min_bitrate;
+    min_bitrate: cint;
     (**
      * Average bitrate of the stream, in bits per second.
      * Zero if unknown or unspecified.
      *)
-    int avg_bitrate;
+    avg_bitrate: cint;
 
     (**
      * The size of the buffer to which the ratecontrol is applied, in bits.
      * Zero if unknown or unspecified.
      *)
-    int buffer_size;
+    buffer_size: cint;
 
     (**
      * The delay between the time the packet this structure is associated with
@@ -1391,10 +1395,11 @@ typedef struct AVCPBProperties {
      *
      * UINT64_MAX when unknown or unspecified.
      *)
-    uint64_t vbv_delay;
-} AVCPBProperties;
+    vbv_delay: cuint64_t;
+  end;
 
 {$if FF_API_QSCALE_TYPE}
+const
   FF_QSCALE_TYPE_MPEG1 = 0;
   FF_QSCALE_TYPE_MPEG2 = 1;
   FF_QSCALE_TYPE_H264 = 2;
@@ -1404,6 +1409,7 @@ typedef struct AVCPBProperties {
 (**
  * The decoder will keep a reference to the frame and may reuse it later.
  *)
+const
   AV_GET_BUFFER_FLAG_REF = (1 shl 0);
 
 (**
@@ -1412,7 +1418,8 @@ typedef struct AVCPBProperties {
  * Types and functions for working with AVPacket.
  * @{
  *)
-enum AVPacketSideDataType {
+type
+  AVPacketSideDataType = (
     (**
      * An AV_PKT_DATA_PALETTE side data packet contains exactly AVPALETTE_SIZE
      * bytes worth of palette. This side data signals that a new palette is
@@ -1611,15 +1618,18 @@ enum AVPacketSideDataType {
      * needs to be updated as it assumes it to be smaller than other limits.
      *)
     AV_PKT_DATA_NB
-};
+  );
 
+const
   AV_PKT_DATA_QUALITY_FACTOR = AV_PKT_DATA_QUALITY_STATS; //DEPRECATED;
 
-typedef struct AVPacketSideData {
-    uint8_t *data;
-    int      size;
-    enum AVPacketSideDataType type;
-} AVPacketSideData;
+type
+  PAVPacketSideData = ^AVPacketSideData;
+  AVPacketSideData = record
+    data: pcuint8_t;
+    size: cint;
+    type_: AVPacketSideDataType;
+  end;
 
 (**
  * This structure stores compressed data. It is typically exported by demuxers
@@ -1649,13 +1659,15 @@ typedef struct AVPacketSideData {
  * @see av_packet_ref
  * @see av_packet_unref
  *)
-typedef struct AVPacket {
+type
+  PAVPacket = ^AVPacket;
+  AVPacket = record
     (**
      * A reference to the reference-counted buffer where the packet data is
      * stored.
      * May be NULL, then the packet data is not reference-counted.
      *)
-    AVBufferRef *buf;
+    buf: PAVBufferRef;
     (**
      * Presentation timestamp in AVStream->time_base units; the time at which
      * the decompressed packet will be presented to the user.
@@ -1665,34 +1677,34 @@ typedef struct AVPacket {
      * the terms dts and pts/cts to mean something different. Such timestamps
      * must be converted to true pts/dts before they are stored in AVPacket.
      *)
-    int64_t pts;
+    pts: cint64_t;
     (**
      * Decompression timestamp in AVStream->time_base units; the time at which
      * the packet is decompressed.
      * Can be AV_NOPTS_VALUE if it is not stored in the file.
      *)
-    int64_t dts;
-    uint8_t *data;
-    int   size;
-    int   stream_index;
+    dts: cint64_t ;
+    data: pcuint8_t;
+    size: cint;
+    stream_index: cint;
     (**
      * A combination of AV_PKT_FLAG values
      *)
-    int   flags;
+    flags: cint;
     (**
      * Additional packet data that can be provided by the container.
      * Packet can contain several types of side information.
      *)
-    AVPacketSideData *side_data;
-    int side_data_elems;
+    side_data: PAVPacketSideData;
+    side_data_elems: cint;
 
     (**
      * Duration of this packet in AVStream->time_base units, 0 if unknown.
      * Equals next_pts - this_pts in presentation order.
      *)
-    int64_t duration;
+    duration: cint64_t;
 
-    int64_t pos;                            ///< byte position in stream, -1 if unknown
+    pos: cint64_t;                            ///< byte position in stream, -1 if unknown
 
 {$if FF_API_CONVERGENCE_DURATION}
     (**
@@ -1701,9 +1713,11 @@ typedef struct AVPacket {
      * duration field was still an int.
      *)
     attribute_deprecated
-    int64_t convergence_duration;
+    convergence_duration: cint64_t;
 {$endif}
-} AVPacket;
+  end;
+
+const
   AV_PKT_FLAG_KEY = $0001; ///< The packet contains a keyframe
   AV_PKT_FLAG_CORRUPT = $0002; ///< The packet content is corrupted
 (**
@@ -1713,26 +1727,30 @@ typedef struct AVPacket {
  **)
   AV_PKT_FLAG_DISCARD = $0004;
 
-enum AVSideDataParamChangeFlags {
-    AV_SIDE_DATA_PARAM_CHANGE_CHANNEL_COUNT  = $0001,
+type
+  AVSideDataParamChangeFlags = (
+    AV_SIDE_DATA_PARAM_CHANGE_CHANNEL_COUNT = $0001,
     AV_SIDE_DATA_PARAM_CHANGE_CHANNEL_LAYOUT = $0002,
-    AV_SIDE_DATA_PARAM_CHANGE_SAMPLE_RATE    = $0004,
-    AV_SIDE_DATA_PARAM_CHANGE_DIMENSIONS     = $0008,
-};
+    AV_SIDE_DATA_PARAM_CHANGE_SAMPLE_RATE = $0004,
+    AV_SIDE_DATA_PARAM_CHANGE_DIMENSIONS = $0008
+  );
 (**
  * @}
  *)
 
-struct AVCodecInternal;
+type
+  PAVCodecInternal = ^AVCodecInternal;
+  AVCodecInternal = record
+  end;
 
-enum AVFieldOrder {
+  AVFieldOrder = (
     AV_FIELD_UNKNOWN,
     AV_FIELD_PROGRESSIVE,
     AV_FIELD_TT,          //< Top coded_first, top displayed first
     AV_FIELD_BB,          //< Bottom coded first, bottom displayed first
     AV_FIELD_TB,          //< Top coded first, bottom displayed first
-    AV_FIELD_BT,          //< Bottom coded first, top displayed first
-};
+    AV_FIELD_BT           //< Bottom coded first, top displayed first
+  );
 
 (**
  * main external API structure.
@@ -1747,24 +1765,25 @@ enum AVFieldOrder {
  * structure field names for historic reasons or brevity.
  * sizeof(AVCodecContext) must not be used outside libav*.
  *)
-typedef struct AVCodecContext {
+  PAVCodecContext = ^AVCodecContext;
+  AVCodecContext = record
     (**
      * information on struct for av_log
      * - set by avcodec_alloc_context3
      *)
-    const AVClass *av_class;
-    int log_level_offset;
+    av_class: PAVClass;
+    log_level_offset: cint;
 
-    enum AVMediaType codec_type; (* see AVMEDIA_TYPE_xxx *)
-    const struct AVCodec  *codec;
+    codec_type: AVMediaType ; (* see AVMEDIA_TYPE_xxx *)
+    codec: PAVCodec;
 {$if FF_API_CODEC_NAME}
     (**
      * @deprecated this field is not used for anything in libavcodec
      *)
     attribute_deprecated
-    char             codec_name[32];
+    codec_name: array[0..31] of cchar;
 {$endif}
-    enum AVCodecID     codec_id; (* see AV_CODEC_ID_xxx *)
+    codec_id: AVCodecID; (* see AV_CODEC_ID_xxx *)
 
     (**
      * fourcc (LSB first, so "ABCD" -> ('D'<<24) + ('C'<<16) + ('B'<<8) + 'A').
@@ -1779,17 +1798,17 @@ typedef struct AVCodecContext {
      * - encoding: Set by user, if not then the default based on codec_id will be used.
      * - decoding: Set by user, will be converted to uppercase by libavcodec during init.
      *)
-    unsigned int codec_tag;
+    codec_tag: cuint;
 
 {$if FF_API_STREAM_CODEC_TAG}
     (**
      * @deprecated this field is unused
      *)
     attribute_deprecated
-    unsigned int stream_codec_tag;
+    stream_codec_tag: cuint;
 {$endif}
 
-    void *priv_data;
+    priv_data: pointer;
 
     (**
      * Private context used for internal data.
@@ -1797,14 +1816,14 @@ typedef struct AVCodecContext {
      * Unlike priv_data, this is not codec-specific. It is used in general
      * libavcodec functions.
      *)
-    struct AVCodecInternal *internal;
+    internal: PAVCodecInternal;
 
     (**
      * Private data of the user, can be used to carry app specific stuff.
      * - encoding: Set by user.
      * - decoding: Set by user.
      *)
-    void *opaque;
+    opaque: pointer;
 
     (**
      * the average bitrate
@@ -1812,7 +1831,7 @@ typedef struct AVCodecContext {
      * - decoding: Set by user, may be overwritten by libavcodec
      *             if this info is available in the stream
      *)
-    int64_t bit_rate;
+    bit_rate: cint64_t;
 
     (**
      * number of bits the bitstream is allowed to diverge from the reference.
@@ -1820,7 +1839,7 @@ typedef struct AVCodecContext {
      * - encoding: Set by user; unused for constant quantizer encoding.
      * - decoding: unused
      *)
-    int bit_rate_tolerance;
+    bit_rate_tolerance: cint;
 
     (**
      * Global quality for codecs which cannot change it per frame.
@@ -1828,13 +1847,13 @@ typedef struct AVCodecContext {
      * - encoding: Set by user.
      * - decoding: unused
      *)
-    int global_quality;
+    global_quality: cint;
 
     (**
      * - encoding: Set by user.
      * - decoding: unused
      *)
-    int compression_level;
+    compression_level: cint ;
   FF_COMPRESSION_DEFAULT = -1
 
     (**
@@ -1842,14 +1861,14 @@ typedef struct AVCodecContext {
      * - encoding: Set by user.
      * - decoding: Set by user.
      *)
-    int flags;
+    flags: cint;
 
     (**
      * AV_CODEC_FLAG2_*
      * - encoding: Set by user.
      * - decoding: Set by user.
      *)
-    int flags2;
+    flags2: cint;
 
     (**
      * some codecs need / can use extradata like Huffman tables.
@@ -1862,8 +1881,8 @@ typedef struct AVCodecContext {
      * - encoding: Set/allocated/freed by libavcodec.
      * - decoding: Set/allocated/freed by user.
      *)
-    uint8_t *extradata;
-    int extradata_size;
+    extradata: pcuint8_t;
+    extradata_size: cint;
 
     (**
      * This is the fundamental unit of time (in seconds) in terms
@@ -1884,7 +1903,7 @@ typedef struct AVCodecContext {
      * - decoding: the use of this field for decoding is deprecated.
      *             Use framerate instead.
      *)
-    AVRational time_base;
+    time_base: AVRational;
 
     (**
      * For some codecs, the time base is closer to the field rate than the frame rate.
@@ -1893,7 +1912,7 @@ typedef struct AVCodecContext {
      *
      * Set to time_base ticks per frame. Default 1, e.g., H.264/MPEG-2 set it to 2.
      *)
-    int ticks_per_frame;
+    ticks_per_frame: cint;
 
     (**
      * Codec delay.
@@ -1917,7 +1936,7 @@ typedef struct AVCodecContext {
      * - encoding: Set by libavcodec.
      * - decoding: Set by libavcodec.
      *)
-    int delay;
+    delay: cint;
 
 
     (* video only *)
@@ -1934,7 +1953,7 @@ typedef struct AVCodecContext {
      *             to be set by the caller. During decoding, the decoder may
      *             overwrite those values as required while parsing the data.
      *)
-    int width, height;
+    width, height: cint;
 
     (**
      * Bitstream width / height, may be different from width/height e.g. when
@@ -1949,7 +1968,7 @@ typedef struct AVCodecContext {
      *             e.g. from the container. During decoding, the decoder may
      *             overwrite those values as required while parsing the data.
      *)
-    int coded_width, coded_height;
+    coded_width, coded_height: cint;
 
 {$if FF_API_ASPECT_EXTENDED}
   FF_ASPECT_EXTENDED = 15;
@@ -1960,7 +1979,7 @@ typedef struct AVCodecContext {
      * - encoding: Set by user.
      * - decoding: unused
      *)
-    int gop_size;
+    gop_size: cint;
 
     (**
      * Pixel format, see AV_PIX_FMT_xxx.
@@ -1975,14 +1994,14 @@ typedef struct AVCodecContext {
      * - decoding: Set by user if known, overridden by libavcodec while
      *             parsing the data.
      *)
-    enum AVPixelFormat pix_fmt;
+    pix_fmt: AVPixelFormat;
 
 {$if FF_API_MOTION_EST}
     (**
      * This option does nothing
      * @deprecated use codec private options instead
      *)
-    attribute_deprecated int me_method;
+    attribute_deprecated me_method: cint;
 {$endif}
 
     (**
@@ -2033,7 +2052,7 @@ typedef struct AVCodecContext {
      * - encoding: Set by user.
      * - decoding: unused
      *)
-    int max_b_frames;
+    max_b_frames: cint;
 
     (**
      * qscale factor between IP and B-frames
@@ -2042,18 +2061,18 @@ typedef struct AVCodecContext {
      * - encoding: Set by user.
      * - decoding: unused
      *)
-    float b_quant_factor;
+    b_quant_factor: cfloat;
 
 {$if FF_API_RC_STRATEGY}
     (** @deprecated use codec private option instead *)
-    attribute_deprecated int rc_strategy;
+    attribute_deprecated rc_strategy: cint;
   FF_RC_STRATEGY_XVID = 1;
 {$endif}
 
 {$if FF_API_PRIVATE_OPT}
     (** @deprecated use encoder private options instead *)
     attribute_deprecated
-    int b_frame_strategy;
+    b_frame_strategy: cint;
 {$endif}
 
     (**
@@ -2061,7 +2080,7 @@ typedef struct AVCodecContext {
      * - encoding: Set by user.
      * - decoding: unused
      *)
-    float b_quant_offset;
+    b_quant_offset: cfloat;
 
     (**
      * Size of the frame reordering buffer in the decoder.
@@ -2069,12 +2088,12 @@ typedef struct AVCodecContext {
      * - encoding: Set by libavcodec.
      * - decoding: Set by libavcodec.
      *)
-    int has_b_frames;
+    has_b_frames: cint;
 
 {$if FF_API_PRIVATE_OPT}
     (** @deprecated use encoder private options instead *)
     attribute_deprecated
-    int mpeg_quant;
+    mpeg_quant: cint;
 {$endif}
 
     (**
@@ -2084,61 +2103,61 @@ typedef struct AVCodecContext {
      * - encoding: Set by user.
      * - decoding: unused
      *)
-    float i_quant_factor;
+    i_quant_factor: cfloat;
 
     (**
      * qscale offset between P and I-frames
      * - encoding: Set by user.
      * - decoding: unused
      *)
-    float i_quant_offset;
+    i_quant_offset: cfloat;
 
     (**
      * luminance masking (0-> disabled)
      * - encoding: Set by user.
      * - decoding: unused
      *)
-    float lumi_masking;
+    lumi_masking: cfloat;
 
     (**
      * temporary complexity masking (0-> disabled)
      * - encoding: Set by user.
      * - decoding: unused
      *)
-    float temporal_cplx_masking;
+    temporal_cplx_masking: cfloat;
 
     (**
      * spatial complexity masking (0-> disabled)
      * - encoding: Set by user.
      * - decoding: unused
      *)
-    float spatial_cplx_masking;
+    spatial_cplx_masking: cfloat;
 
     (**
      * p block masking (0-> disabled)
      * - encoding: Set by user.
      * - decoding: unused
      *)
-    float p_masking;
+    p_masking: cfloat;
 
     (**
      * darkness masking (0-> disabled)
      * - encoding: Set by user.
      * - decoding: unused
      *)
-    float dark_masking;
+    dark_masking: cfloat;
 
     (**
      * slice count
      * - encoding: Set by libavcodec.
      * - decoding: Set by user (or 0).
      *)
-    int slice_count;
+    slice_count: cint;
 
 {$if FF_API_PRIVATE_OPT}
     (** @deprecated use encoder private options instead *)
     attribute_deprecated
-     int prediction_method;
+     prediction_method: cint;
   FF_PRED_LEFT = 0;
   FF_PRED_PLANE = 1;
   FF_PRED_MEDIAN = 2;
@@ -2149,7 +2168,7 @@ typedef struct AVCodecContext {
      * - encoding: Set/allocated by libavcodec.
      * - decoding: Set/allocated by user (or NULL).
      *)
-    int *slice_offset;
+    slice_offset: pcint;
 
     (**
      * sample aspect ratio (0 if unknown)
@@ -2158,32 +2177,32 @@ typedef struct AVCodecContext {
      * - encoding: Set by user.
      * - decoding: Set by libavcodec.
      *)
-    AVRational sample_aspect_ratio;
+    sample_aspect_ratio: AVRational;
 
     (**
      * motion estimation comparison function
      * - encoding: Set by user.
      * - decoding: unused
      *)
-    int me_cmp;
+    me_cmp: cint;
     (**
      * subpixel motion estimation comparison function
      * - encoding: Set by user.
      * - decoding: unused
      *)
-    int me_sub_cmp;
+    me_sub_cmp: cint;
     (**
      * macroblock comparison function (not supported yet)
      * - encoding: Set by user.
      * - decoding: unused
      *)
-    int mb_cmp;
+    mb_cmp: cint;
     (**
      * interlaced DCT comparison function
      * - encoding: Set by user.
      * - decoding: unused
      *)
-    int ildct_cmp;
+    ildct_cmp: cint;
   FF_CMP_SAD = 0;
   FF_CMP_SSE = 1;
   FF_CMP_SATD = 2;
@@ -2207,19 +2226,19 @@ typedef struct AVCodecContext {
      * - encoding: Set by user.
      * - decoding: unused
      *)
-    int dia_size;
+    dia_size: cint;
 
     (**
      * amount of previous MV predictors (2a+1 x 2a+1 square)
      * - encoding: Set by user.
      * - decoding: unused
      *)
-    int last_predictor_count;
+    last_predictor_count: cint;
 
 {$if FF_API_PRIVATE_OPT}
     (** @deprecated use encoder private options instead *)
     attribute_deprecated
-    int pre_me;
+    pre_me: cint;
 {$endif}
 
     (**
@@ -2227,21 +2246,21 @@ typedef struct AVCodecContext {
      * - encoding: Set by user.
      * - decoding: unused
      *)
-    int me_pre_cmp;
+    me_pre_cmp: cint;
 
     (**
      * ME prepass diamond size & shape
      * - encoding: Set by user.
      * - decoding: unused
      *)
-    int pre_dia_size;
+    pre_dia_size: cint;
 
     (**
      * subpel ME quality
      * - encoding: Set by user.
      * - decoding: unused
      *)
-    int me_subpel_quality;
+    me_subpel_quality: cint;
 
 {$if FF_API_AFD}
     (**
@@ -2253,7 +2272,7 @@ typedef struct AVCodecContext {
      * - decoding: Set by decoder.
      * @deprecated Deprecated in favor of AVSideData
      *)
-    attribute_deprecated int dtg_active_format;
+    attribute_deprecated dtg_active_format: cint;
   FF_DTG_AFD_SAME = 8;
   FF_DTG_AFD_4_3 = 9;
   FF_DTG_AFD_16_9 = 10;
@@ -2270,19 +2289,19 @@ typedef struct AVCodecContext {
      * - encoding: Set by user.
      * - decoding: unused
      *)
-    int me_range;
+    me_range: cint;
 
 {$if FF_API_QUANT_BIAS}
     (**
      * @deprecated use encoder private option instead
      *)
-    attribute_deprecated int intra_quant_bias;
+    attribute_deprecated intra_quant_bias: cint;
   FF_DEFAULT_QUANT_BIAS = 999999;
 
     (**
      * @deprecated use encoder private option instead
      *)
-    attribute_deprecated int inter_quant_bias;
+    attribute_deprecated inter_quant_bias: cint;
 {$endif}
 
     (**
@@ -2290,7 +2309,7 @@ typedef struct AVCodecContext {
      * - encoding: unused
      * - decoding: Set by user.
      *)
-    int slice_flags;
+    slice_flags: cint;
   SLICE_FLAG_CODED_ORDER = $0001; ///< draw_horiz_band() is called in coded order instead of display
   SLICE_FLAG_ALLOW_FIELD = $0002; ///< allow draw_horiz_band() with field slices (MPEG-2 field pics)
   SLICE_FLAG_ALLOW_PLANE = $0004; ///< allow draw_horiz_band() with 1 component at a time (SVQ1)
@@ -2302,7 +2321,7 @@ typedef struct AVCodecContext {
      * - decoding: set by decoder
      * @deprecated XvMC doesn't need it anymore.
      *)
-    attribute_deprecated int xvmc_acceleration;
+    attribute_deprecated xvmc_acceleration: cint;
 {$endif} (* FF_API_XVMC *)
 
     (**
@@ -2310,7 +2329,7 @@ typedef struct AVCodecContext {
      * - encoding: Set by user.
      * - decoding: unused
      *)
-    int mb_decision;
+    mb_decision: cint;
   FF_MB_DECISION_SIMPLE = 0; ///< uses mb_cmp
   FF_MB_DECISION_BITS = 1;   ///< chooses the one which needs the fewest bits
   FF_MB_DECISION_RD = 2;     ///< rate distortion
@@ -2320,23 +2339,23 @@ typedef struct AVCodecContext {
      * - encoding: Set by user, can be NULL.
      * - decoding: Set by libavcodec.
      *)
-    uint16_t *intra_matrix;
+    intra_matrix: pcuint16_t;
 
     (**
      * custom inter quantization matrix
      * - encoding: Set by user, can be NULL.
      * - decoding: Set by libavcodec.
      *)
-    uint16_t *inter_matrix;
+    inter_matrix: pcuint16_t;
 
 {$if FF_API_PRIVATE_OPT}
     (** @deprecated use encoder private options instead *)
     attribute_deprecated
-    int scenechange_threshold;
+    scenechange_threshold: cint;
 
     (** @deprecated use encoder private options instead *)
     attribute_deprecated
-    int noise_reduction;
+    noise_reduction: cint;
 {$endif}
 
 {$if FF_API_MPV_OPT}
@@ -2344,13 +2363,13 @@ typedef struct AVCodecContext {
      * @deprecated this field is unused
      *)
     attribute_deprecated
-    int me_threshold;
+    me_threshold: cint;
 
     (**
      * @deprecated this field is unused
      *)
     attribute_deprecated
-    int mb_threshold;
+    mb_threshold: cint;
 {$endif}
 
     (**
@@ -2358,28 +2377,28 @@ typedef struct AVCodecContext {
      * - encoding: Set by user.
      * - decoding: Set by libavcodec
      *)
-    int intra_dc_precision;
+    intra_dc_precision: cint;
 
     (**
      * Number of macroblock rows at the top which are skipped.
      * - encoding: unused
      * - decoding: Set by user.
      *)
-    int skip_top;
+    skip_top: cint;
 
     (**
      * Number of macroblock rows at the bottom which are skipped.
      * - encoding: unused
      * - decoding: Set by user.
      *)
-    int skip_bottom;
+    skip_bottom: cint;
 
 {$if FF_API_MPV_OPT}
     (**
      * @deprecated use encoder private options instead
      *)
     attribute_deprecated
-    float border_masking;
+    border_masking: cfloat;
 {$endif}
 
     (**
@@ -2387,33 +2406,33 @@ typedef struct AVCodecContext {
      * - encoding: Set by user.
      * - decoding: unused
      *)
-    int mb_lmin;
+    mb_lmin: cint;
 
     (**
      * maximum MB Lagrange multiplier
      * - encoding: Set by user.
      * - decoding: unused
      *)
-    int mb_lmax;
+    mb_lmax: cint;
 
 {$if FF_API_PRIVATE_OPT}
     (**
      * @deprecated use encoder private options instead
      *)
     attribute_deprecated
-    int me_penalty_compensation;
+    me_penalty_compensation: int;
 {$endif}
 
     (**
      * - encoding: Set by user.
      * - decoding: unused
      *)
-    int bidir_refine;
+    bidir_refine: cint;
 
 {$if FF_API_PRIVATE_OPT}
     (** @deprecated use encoder private options instead *)
     attribute_deprecated
-    int brd_scale;
+    brd_scale: cint;
 {$endif}
 
     (**
@@ -2421,19 +2440,19 @@ typedef struct AVCodecContext {
      * - encoding: Set by user.
      * - decoding: unused
      *)
-    int keyint_min;
+    keyint_min: cint;
 
     (**
      * number of reference frames
      * - encoding: Set by user.
      * - decoding: Set by lavc.
      *)
-    int refs;
+    refs: cint;
 
 {$if FF_API_PRIVATE_OPT}
     (** @deprecated use encoder private options instead *)
     attribute_deprecated
-    int chromaoffset;
+    chromaoffset: cint;
 {$endif}
 
 {$if FF_API_UNUSED_MEMBERS}
@@ -2442,7 +2461,7 @@ typedef struct AVCodecContext {
      * - encoding: Set by user.
      * - decoding: unused
      *)
-    attribute_deprecated int scenechange_factor;
+    attribute_deprecated scenechange_factor: cint;
 {$endif}
 
     (**
@@ -2450,12 +2469,12 @@ typedef struct AVCodecContext {
      * - encoding: Set by user.
      * - decoding: unused
      *)
-    int mv0_threshold;
+    mv0_threshold: cint;
 
 {$if FF_API_PRIVATE_OPT}
     (** @deprecated use encoder private options instead *)
     attribute_deprecated
-    int b_sensitivity;
+    b_sensitivity: cint;
 {$endif}
 
     (**
@@ -2463,35 +2482,35 @@ typedef struct AVCodecContext {
      * - encoding: Set by user
      * - decoding: Set by libavcodec
      *)
-    enum AVColorPrimaries color_primaries;
+    color_primaries: AVColorPrimaries;
 
     (**
      * Color Transfer Characteristic.
      * - encoding: Set by user
      * - decoding: Set by libavcodec
      *)
-    enum AVColorTransferCharacteristic color_trc;
+    color_trc: AVColorTransferCharacteristic;
 
     (**
      * YUV colorspace type.
      * - encoding: Set by user
      * - decoding: Set by libavcodec
      *)
-    enum AVColorSpace colorspace;
+    colorspace: AVColorSpace;
 
     (**
      * MPEG vs JPEG YUV range.
      * - encoding: Set by user
      * - decoding: Set by libavcodec
      *)
-    enum AVColorRange color_range;
+    color_range: AVColorRange;
 
     (**
      * This defines the location of chroma samples.
      * - encoding: Set by user
      * - decoding: Set by libavcodec
      *)
-    enum AVChromaLocation chroma_sample_location;
+    chroma_sample_location: AVChromaLocation;
 
     (**
      * Number of slices.
@@ -2500,24 +2519,24 @@ typedef struct AVCodecContext {
      * - encoding: Set by user
      * - decoding: unused
      *)
-    int slices;
+    slices: cint;
 
     (** Field order
      * - encoding: set by libavcodec
      * - decoding: Set by user.
      *)
-    enum AVFieldOrder field_order;
+    field_order: AVFieldOrder;
 
     (* audio only *)
-    int sample_rate; ///< samples per second
-    int channels;    ///< number of audio channels
+    sample_rate: cint; ///< samples per second
+    channels: cint;    ///< number of audio channels
 
     (**
      * audio sample format
      * - encoding: Set by user.
      * - decoding: Set by libavcodec.
      *)
-    enum AVSampleFormat sample_fmt;  ///< sample format
+    sample_fmt: AVSampleFormat;  ///< sample format
 
     (* The following data should not be initialized. *)
     (**
@@ -2529,7 +2548,7 @@ typedef struct AVCodecContext {
      *   frame size is not restricted.
      * - decoding: may be set by some decoders to indicate constant frame size
      *)
-    int frame_size;
+    frame_size: cint;
 
     (**
      * Frame counter, set by libavcodec.
@@ -2540,41 +2559,41 @@ typedef struct AVCodecContext {
      *   @note the counter is not incremented if encoding/decoding resulted in
      *   an error.
      *)
-    int frame_number;
+    frame_number: cint;
 
     (**
      * number of bytes per packet if constant and known or 0
      * Used by some WAV based audio codecs.
      *)
-    int block_align;
+    block_align: cint;
 
     (**
      * Audio cutoff bandwidth (0 means "automatic")
      * - encoding: Set by user.
      * - decoding: unused
      *)
-    int cutoff;
+    cutoff: cint;
 
     (**
      * Audio channel layout.
      * - encoding: set by user.
      * - decoding: set by user, may be overwritten by libavcodec.
      *)
-    uint64_t channel_layout;
+    channel_layout: cuint64_t;
 
     (**
      * Request decoder to use this channel layout if it can (0 for default)
      * - encoding: unused
      * - decoding: Set by user.
      *)
-    uint64_t request_channel_layout;
+    request_channel_layout: cuint64_t;
 
     (**
      * Type of service that the audio stream conveys.
      * - encoding: Set by user.
      * - decoding: Set by libavcodec.
      *)
-    enum AVAudioServiceType audio_service_type;
+    audio_service_type: AVAudioServiceType;
 
     (**
      * desired sample format
@@ -2582,7 +2601,7 @@ typedef struct AVCodecContext {
      * - decoding: Set by user.
      * Decoder will decode to this format if it can.
      *)
-    enum AVSampleFormat request_sample_fmt;
+    request_sample_fmt: AVSampleFormat;
 
     (**
      * This callback is called at the beginning of each frame to get data
@@ -2664,7 +2683,7 @@ typedef struct AVCodecContext {
      * - encoding: unused
      * - decoding: Set by libavcodec, user can override.
      *)
-    int (*get_buffer2)(struct AVCodecContext *s, AVFrame *frame, int flags);
+    cint (*get_buffer2)(struct AVCodecContext *s, AVFrame *frame, int flags);
 
     (**
      * If non-zero, the decoded audio and video frames returned from
@@ -2679,44 +2698,44 @@ typedef struct AVCodecContext {
      * - encoding: unused
      * - decoding: set by the caller before avcodec_open2().
      *)
-    int refcounted_frames;
+    refcounted_frames: cint;
 
     (* - encoding parameters *)
-    float qcompress;  ///< amount of qscale change between easy & hard scenes (0.0-1.0)
-    float qblur;      ///< amount of qscale smoothing over time (0.0-1.0)
+    qcompress: cfloat;  ///< amount of qscale change between easy & hard scenes (0.0-1.0)
+    qblur: cfloat;      ///< amount of qscale smoothing over time (0.0-1.0)
 
     (**
      * minimum quantizer
      * - encoding: Set by user.
      * - decoding: unused
      *)
-    int qmin;
+    qmin: cint;
 
     (**
      * maximum quantizer
      * - encoding: Set by user.
      * - decoding: unused
      *)
-    int qmax;
+    qmax: cint;
 
     (**
      * maximum quantizer difference between frames
      * - encoding: Set by user.
      * - decoding: unused
      *)
-    int max_qdiff;
+    max_qdiff: cint;
 
 {$if FF_API_MPV_OPT}
     (**
      * @deprecated use encoder private options instead
      *)
     attribute_deprecated
-    float rc_qsquish;
+    rc_qsquish: cfloat;
 
     attribute_deprecated
-    float rc_qmod_amp;
+    rc_qmod_amp: cfloat;
     attribute_deprecated
-    int rc_qmod_freq;
+    rc_qmod_freq: cint;
 {$endif}
 
     (**
@@ -2724,22 +2743,22 @@ typedef struct AVCodecContext {
      * - encoding: Set by user.
      * - decoding: unused
      *)
-    int rc_buffer_size;
+    rc_buffer_size: cint;
 
     (**
      * ratecontrol override, see RcOverride
      * - encoding: Allocated/set/freed by user.
      * - decoding: unused
      *)
-    int rc_override_count;
-    RcOverride *rc_override;
+    rc_override_count: cint;
+    rc_override: PRcOverride;
 
 {$if FF_API_MPV_OPT}
     (**
      * @deprecated use encoder private options instead
      *)
     attribute_deprecated
-    const pchar rc_eq;
+    const rc_eq: pchar;
 {$endif}
 
     (**
@@ -2747,24 +2766,24 @@ typedef struct AVCodecContext {
      * - encoding: Set by user.
      * - decoding: Set by user, may be overwritten by libavcodec.
      *)
-    int64_t rc_max_rate;
+    rc_max_rate: cint64_t;
 
     (**
      * minimum bitrate
      * - encoding: Set by user.
      * - decoding: unused
      *)
-    int64_t rc_min_rate;
+    rc_min_rate: cint64_t;
 
 {$if FF_API_MPV_OPT}
     (**
      * @deprecated use encoder private options instead
      *)
     attribute_deprecated
-    float rc_buffer_aggressivity;
+    rc_buffer_aggressivity: cfloat;
 
     attribute_deprecated
-    float rc_initial_cplx;
+    rc_initial_cplx: cfloat;
 {$endif}
 
     (**
@@ -2772,21 +2791,21 @@ typedef struct AVCodecContext {
      * - encoding: Set by user.
      * - decoding: unused.
      *)
-    float rc_max_available_vbv_use;
+    rc_max_available_vbv_use: cfloat;
 
     (**
      * Ratecontrol attempt to use, at least, <value> times the amount needed to prevent a vbv overflow.
      * - encoding: Set by user.
      * - decoding: unused.
      *)
-    float rc_min_vbv_overflow_use;
+    rc_min_vbv_overflow_use: cfloat;
 
     (**
      * Number of bits which should be loaded into the rc buffer before decoding starts.
      * - encoding: Set by user.
      * - decoding: unused
      *)
-    int rc_initial_buffer_occupancy;
+    rc_initial_buffer_occupancy: cint;
 
 {$if FF_API_CODER_TYPE}
   FF_CODER_TYPE_VLC = 0;
@@ -2800,13 +2819,13 @@ typedef struct AVCodecContext {
      * @deprecated use encoder private options instead
      *)
     attribute_deprecated
-    int coder_type;
+    coder_type: cint;
 {$endif} (* FF_API_CODER_TYPE *)
 
 {$if FF_API_PRIVATE_OPT}
     (** @deprecated use encoder private options instead *)
     attribute_deprecated
-    int context_model;
+    context_model: cint;
 {$endif}
 
 {$if FF_API_MPV_OPT}
@@ -2814,31 +2833,31 @@ typedef struct AVCodecContext {
      * @deprecated use encoder private options instead
      *)
     attribute_deprecated
-    int lmin;
+    lmin: cint;
 
     (**
      * @deprecated use encoder private options instead
      *)
     attribute_deprecated
-    int lmax;
+    lmax: cint;
 {$endif}
 
 {$if FF_API_PRIVATE_OPT}
     (** @deprecated use encoder private options instead *)
     attribute_deprecated
-    int frame_skip_threshold;
+    frame_skip_threshold: cint;
 
     (** @deprecated use encoder private options instead *)
     attribute_deprecated
-    int frame_skip_factor;
+    frame_skip_factor: cint;
 
     (** @deprecated use encoder private options instead *)
     attribute_deprecated
-    int frame_skip_exp;
+    frame_skip_exp: cint;
 
     (** @deprecated use encoder private options instead *)
     attribute_deprecated
-    int frame_skip_cmp;
+    frame_skip_cmp: cint;
 {$endif} (* FF_API_PRIVATE_OPT *)
 
     (**
@@ -2846,20 +2865,20 @@ typedef struct AVCodecContext {
      * - encoding: Set by user.
      * - decoding: unused
      *)
-    int trellis;
+    trellis: cint;
 
 {$if FF_API_PRIVATE_OPT}
     (** @deprecated use encoder private options instead *)
     attribute_deprecated
-    int min_prediction_order;
+    min_prediction_order: cint;
 
     (** @deprecated use encoder private options instead *)
     attribute_deprecated
-    int max_prediction_order;
+    max_prediction_order: cint;
 
     (** @deprecated use encoder private options instead *)
     attribute_deprecated
-    int64_t timecode_frame_start;
+    timecode_frame_start: cint64_t;
 {$endif}
 
 {$if FF_API_RTP_CALLBACK}
@@ -2879,7 +2898,7 @@ typedef struct AVCodecContext {
 {$if FF_API_PRIVATE_OPT}
     (** @deprecated use encoder private options instead *)
     attribute_deprecated
-    int rtp_payload_size;   (* The size of the RTP payload: the coder will  *)
+    rtp_payload_size: cint; (* The size of the RTP payload: the coder will  *)
                             (* do its best to deliver a chunk with size     *)
                             (* below rtp_payload_size, the chunk will start *)
                             (* with a start code on some codecs like H.263. *)
@@ -2890,25 +2909,25 @@ typedef struct AVCodecContext {
 {$if FF_API_STAT_BITS}
     (* statistics, used for 2-pass encoding *)
     attribute_deprecated
-    int mv_bits;
+    mv_bits: cint;
     attribute_deprecated
-    int header_bits;
+    header_bits: int;
     attribute_deprecated
-    int i_tex_bits;
+    i_tex_bits: cint;
     attribute_deprecated
-    int p_tex_bits;
+    p_tex_bits: cint;
     attribute_deprecated
-    int i_count;
+    i_count: cint;
     attribute_deprecated
-    int p_count;
+    p_count: cint;
     attribute_deprecated
-    int skip_count;
+    skip_count: cint;
     attribute_deprecated
-    int misc_bits;
+    misc_bits: cint;
 
     (** @deprecated this field is unused *)
     attribute_deprecated
-    int frame_bits;
+    frame_bits: cint;
 {$endif}
 
     (**
@@ -2916,7 +2935,7 @@ typedef struct AVCodecContext {
      * - encoding: Set by libavcodec.
      * - decoding: unused
      *)
-    char *stats_out;
+    stats_out: pchar;
 
     (**
      * pass2 encoding statistics input buffer
@@ -2924,14 +2943,14 @@ typedef struct AVCodecContext {
      * - encoding: Allocated/set/freed by user.
      * - decoding: unused
      *)
-    char *stats_in;
+    stats_in: pchar;
 
     (**
      * Work around bugs in encoders which sometimes cannot be detected automatically.
      * - encoding: Set by user
      * - decoding: Set by user
      *)
-    int workaround_bugs;
+    workaround_bugs: cint;
   FF_BUG_AUTODETECT = 1;  ///< autodetection
 {$if FF_API_OLD_MSMPEG4}
   FF_BUG_OLD_MSMPEG4 = 2;
@@ -2966,7 +2985,7 @@ typedef struct AVCodecContext {
      * when they can) unless they are explicitly asked to behave stupidly
      * (=strictly conform to the specs)
      *)
-    int strict_std_compliance;
+    strict_std_compliance: cint;
   FF_COMPLIANCE_VERY_STRICT = 2; ///< Strictly conform to an older more strict version of the spec or reference software.
   FF_COMPLIANCE_STRICT = 1; ///< Strictly conform to all the things in the spec no matter what consequences.
   FF_COMPLIANCE_NORMAL = 0;
@@ -2978,7 +2997,7 @@ typedef struct AVCodecContext {
      * - encoding: unused
      * - decoding: Set by user.
      *)
-    int error_concealment;
+    error_concealment: cint;
   FF_EC_GUESS_MVS = 1;
   FF_EC_DEBLOCK = 2;
   FF_EC_FAVOR_INTER = 256;
@@ -2988,7 +3007,7 @@ typedef struct AVCodecContext {
      * - encoding: Set by user.
      * - decoding: Set by user.
      *)
-    int debug;
+    debug: cint;
   FF_DEBUG_PICT_INFO = 1;
   FF_DEBUG_RC = 2;
   FF_DEBUG_BITSTREAM = 4;
@@ -3024,7 +3043,7 @@ typedef struct AVCodecContext {
      * - encoding: Set by user.
      * - decoding: Set by user.
      *)
-    int debug_mv;
+    debug_mv: cint;
   FF_DEBUG_VIS_MV_P_FOR = $00000001;  // visualize forward predicted MVs of P-frames
   FF_DEBUG_VIS_MV_B_FOR = $00000002;  // visualize forward predicted MVs of B-frames
   FF_DEBUG_VIS_MV_B_BACK = $00000004; // visualize backward predicted MVs of B-frames
@@ -3035,7 +3054,7 @@ typedef struct AVCodecContext {
      * - encoding: unused
      * - decoding: Set by user.
      *)
-    int err_recognition;
+    err_recognition: cint;
 
 (**
  * Verify checksums embedded in the bitstream (could be of either encoded or
@@ -3060,14 +3079,14 @@ typedef struct AVCodecContext {
      * - encoding: unused
      * - decoding: Set by user.
      *)
-    int64_t reordered_opaque;
+    reordered_opaque: cint64_t;
 
     (**
      * Hardware accelerator in use
      * - encoding: unused.
      * - decoding: Set by libavcodec
      *)
-    struct AVHWAccel *hwaccel;
+    hwaccel: PAVHWAccel;
 
     (**
      * Hardware accelerator context.
@@ -3079,21 +3098,21 @@ typedef struct AVCodecContext {
      * - encoding: unused
      * - decoding: Set by user
      *)
-    void *hwaccel_context;
+    hwaccel_context: pointer;
 
     (**
      * error
      * - encoding: Set by libavcodec if flags & AV_CODEC_FLAG_PSNR.
      * - decoding: unused
      *)
-    uint64_t error[AV_NUM_DATA_POINTERS];
+    error: array[0..AV_NUM_DATA_POINTERS-1] of cuint64_t;
 
     (**
      * DCT algorithm, see FF_DCT_* below
      * - encoding: Set by user.
      * - decoding: unused
      *)
-    int dct_algo;
+    dct_algo: cint;
   FF_DCT_AUTO = 0;
   FF_DCT_FASTINT = 1;
   FF_DCT_INT = 2;
@@ -3106,7 +3125,7 @@ typedef struct AVCodecContext {
      * - encoding: Set by user.
      * - decoding: Set by user.
      *)
-    int idct_algo;
+    idct_algo: cint;
   FF_IDCT_AUTO = 0;
   FF_IDCT_INT = 1;
   FF_IDCT_SIMPLE = 2;
@@ -3141,14 +3160,14 @@ typedef struct AVCodecContext {
      * - encoding: Set by libavcodec.
      * - decoding: Set by user.
      *)
-     int bits_per_coded_sample;
+     bits_per_coded_sample: cint;
 
     (**
      * Bits per sample/pixel of internal libavcodec pixel/sample format.
      * - encoding: set by user.
      * - decoding: set by libavcodec.
      *)
-    int bits_per_raw_sample;
+    bits_per_raw_sample: cint;
 
 {$if FF_API_LOWRES}
     (**
@@ -3156,7 +3175,7 @@ typedef struct AVCodecContext {
      * - encoding: unused
      * - decoding: Set by user.
      *)
-     int lowres;
+     lowres: cint;
 {$endif}
 
 {$if FF_API_CODED_FRAME}
@@ -3167,7 +3186,7 @@ typedef struct AVCodecContext {
      *
      * @deprecated use the quality factor packet side data instead
      *)
-    attribute_deprecated AVFrame *coded_frame;
+    attribute_deprecated coded_frame: PAVFrame;
 {$endif}
 
     (**
@@ -3176,7 +3195,7 @@ typedef struct AVCodecContext {
      * - encoding: Set by user.
      * - decoding: Set by user.
      *)
-    int thread_count;
+    thread_count: cint;
 
     (**
      * Which multithreading methods to use.
@@ -3186,7 +3205,7 @@ typedef struct AVCodecContext {
      * - encoding: Set by user, otherwise the default is used.
      * - decoding: Set by user, otherwise the default is used.
      *)
-    int thread_type;
+    thread_type: cint;
   FF_THREAD_FRAME = 1; ///< Decode more than one frame at once
   FF_THREAD_SLICE = 2; ///< Decode more than one part of a single frame at once
 
@@ -3195,7 +3214,7 @@ typedef struct AVCodecContext {
      * - encoding: Set by libavcodec.
      * - decoding: Set by libavcodec.
      *)
-    int active_thread_type;
+    active_thread_type: cint;
 
     (**
      * Set by the client if its custom get_buffer() callback can be called
@@ -3205,7 +3224,7 @@ typedef struct AVCodecContext {
      * - encoding: Set by user.
      * - decoding: Set by user.
      *)
-    int thread_safe_callbacks;
+    thread_safe_callbacks: cint;
 
     (**
      * The codec may call this to execute several independent things.
@@ -3216,7 +3235,7 @@ typedef struct AVCodecContext {
      * - encoding: Set by libavcodec, user can override.
      * - decoding: Set by libavcodec, user can override.
      *)
-    int (*execute)(struct AVCodecContext *c, int (*func)(struct AVCodecContext *c2, void *arg), void *arg2, int *ret, int count, int size);
+    cint (*execute)(struct AVCodecContext *c, int (*func)(struct AVCodecContext *c2, void *arg), void *arg2, int *ret, int count, int size);
 
     (**
      * The codec may call this to execute several independent things.
@@ -3236,21 +3255,21 @@ typedef struct AVCodecContext {
      * - encoding: Set by libavcodec, user can override.
      * - decoding: Set by libavcodec, user can override.
      *)
-    int (*execute2)(struct AVCodecContext *c, int (*func)(struct AVCodecContext *c2, void *arg, int jobnr, int threadnr), void *arg2, int *ret, int count);
+    cint (*execute2)(struct AVCodecContext *c, int (*func)(struct AVCodecContext *c2, void *arg, int jobnr, int threadnr), void *arg2, int *ret, int count);
 
     (**
      * noise vs. sse weight for the nsse comparison function
      * - encoding: Set by user.
      * - decoding: unused
      *)
-     int nsse_weight;
+     nsse_weight: cint;
 
     (**
      * profile
      * - encoding: Set by user.
      * - decoding: Set by libavcodec.
      *)
-     int profile;
+     profile: cint;
   FF_PROFILE_UNKNOWN = -99;
   FF_PROFILE_RESERVED = -100;
 
@@ -3356,21 +3375,21 @@ typedef struct AVCodecContext {
      * - encoding: unused
      * - decoding: Set by user.
      *)
-    enum AVDiscard skip_loop_filter;
+    skip_loop_filter: AVDiscard;
 
     (**
      * Skip IDCT/dequantization for selected frames.
      * - encoding: unused
      * - decoding: Set by user.
      *)
-    enum AVDiscard skip_idct;
+    skip_idct: AVDiscard;
 
     (**
      * Skip decoding for selected frames.
      * - encoding: unused
      * - decoding: Set by user.
      *)
-    enum AVDiscard skip_frame;
+    skip_frame: AVDiscard;
 
     (**
      * Header containing style information for text subtitles.
@@ -3380,8 +3399,8 @@ typedef struct AVCodecContext {
      * - encoding: Set/allocated/freed by user (before avcodec_open2())
      * - decoding: Set/allocated/freed by libavcodec (by avcodec_open2())
      *)
-    uint8_t *subtitle_header;
-    int subtitle_header_size;
+    subtitle_header: pcuint8_t;
+    subtitle_header_size: cint;
 
 {$if FF_API_ERROR_RATE}
     (**
@@ -3389,7 +3408,7 @@ typedef struct AVCodecContext {
      * encoders
      *)
     attribute_deprecated
-    int error_rate;
+    error_rate: cint;
 {$endif}
 
 {$if FF_API_VBV_DELAY}
@@ -3402,7 +3421,7 @@ typedef struct AVCodecContext {
      * AV_PKT_DATA_CPB_PROPERTIES packet side data
      *)
     attribute_deprecated
-    uint64_t vbv_delay;
+    vbv_delay: cuint64_t;
 {$endif}
 
 {$if FF_API_SIDEDATA_ONLY_PKT}
@@ -3417,7 +3436,7 @@ typedef struct AVCodecContext {
      *             it is kept only for compatibility.
      *)
     attribute_deprecated
-    int side_data_only_packets;
+    side_data_only_packets: cint;
 {$endif}
 
     (**
@@ -3435,7 +3454,7 @@ typedef struct AVCodecContext {
      *             0, the timestamp of the first output packet will be
      *             -initial_padding.
      *)
-    int initial_padding;
+    initial_padding: cint;
 
     (**
      * - decoding: For codecs that store a framerate value in the compressed
@@ -3444,28 +3463,28 @@ typedef struct AVCodecContext {
      * - encoding: May be used to signal the framerate of CFR content to an
      *             encoder.
      *)
-    AVRational framerate;
+    framerate: AVRational;
 
     (**
      * Nominal unaccelerated pixel format, see AV_PIX_FMT_xxx.
      * - encoding: unused.
      * - decoding: Set by libavcodec before calling get_format()
      *)
-    enum AVPixelFormat sw_pix_fmt;
+    sw_pix_fmt: AVPixelFormat;
 
     (**
      * Timebase in which pkt_dts/pts and AVPacket.dts/pts are.
      * - encoding unused.
      * - decoding set by user.
      *)
-    AVRational pkt_timebase;
+    pkt_timebase: AVRational;
 
     (**
      * AVCodecDescriptor
      * - encoding: unused.
      * - decoding: set by libavcodec.
      *)
-    const AVCodecDescriptor *codec_descriptor;
+    const codec_descriptor: PAVCodecDescriptor;
 
 {$if not FF_API_LOWRES}
     (**
@@ -3473,7 +3492,7 @@ typedef struct AVCodecContext {
      * - encoding: unused
      * - decoding: Set by user.
      *)
-     int lowres;
+     lowres: cint;
 {$endif}
 
     (**
@@ -3481,17 +3500,17 @@ typedef struct AVCodecContext {
      * - decoding: maintained and used by libavcodec, not intended to be used by user apps
      * - encoding: unused
      *)
-    int64_t pts_correction_num_faulty_pts; /// Number of incorrect PTS values so far
-    int64_t pts_correction_num_faulty_dts; /// Number of incorrect DTS values so far
-    int64_t pts_correction_last_pts;       /// PTS of the last frame
-    int64_t pts_correction_last_dts;       /// DTS of the last frame
+    pts_correction_num_faulty_pts: cint64_t; /// Number of incorrect PTS values so far
+    pts_correction_num_faulty_dts: cint64_t; /// Number of incorrect DTS values so far
+    pts_correction_last_pts: cint64_t;       /// PTS of the last frame
+    pts_correction_last_dts: cint64_t;       /// DTS of the last frame
 
     (**
      * Character encoding of the input subtitles file.
      * - decoding: set by user
      * - encoding: unused
      *)
-    char *sub_charenc;
+    sub_charenc: pchar;
 
     (**
      * Subtitles character encoding mode. Formats or codecs might be adjusting
@@ -3499,7 +3518,7 @@ typedef struct AVCodecContext {
      * - decoding: set by libavcodec
      * - encoding: unused
      *)
-    int sub_charenc_mode;
+    sub_charenc_mode: cint;
   FF_SUB_CHARENC_MODE_DO_NOTHING = -1; ///< do nothing (demuxer outputs a stream supposed to be already in UTF-8, or the codec is bitmap for instance)
   FF_SUB_CHARENC_MODE_AUTOMATIC = 0;   ///< libavcodec will select the mode itself
   FF_SUB_CHARENC_MODE_PRE_DECODER = 1; ///< the AVPacket data needs to be recoded to UTF-8 before being fed to the decoder, requires iconv
@@ -3516,14 +3535,14 @@ typedef struct AVCodecContext {
      * - decoding: set by user
      * - encoding: unused
      *)
-    int skip_alpha;
+    skip_alpha: cint;
 
     (**
      * Number of samples to skip after a discontinuity
      * - decoding: unused
      * - encoding: set by libavcodec
      *)
-    int seek_preroll;
+    seek_preroll: cint;
 
 {$if not FF_API_DEBUG_MV}
     (**
@@ -3531,7 +3550,7 @@ typedef struct AVCodecContext {
      * - encoding: Set by user.
      * - decoding: Set by user.
      *)
-    int debug_mv;
+    debug_mv: cint;
   FF_DEBUG_VIS_MV_P_FOR = $00000001;  //visualize forward predicted MVs of P frames
   FF_DEBUG_VIS_MV_B_FOR = $00000002;  //visualize forward predicted MVs of B frames
   FF_DEBUG_VIS_MV_B_BACK = $00000004; //visualize backward predicted MVs of B frames
@@ -3542,7 +3561,7 @@ typedef struct AVCodecContext {
      * - encoding: Set by user, can be NULL.
      * - decoding: unused.
      *)
-    uint16_t *chroma_intra_matrix;
+    chroma_intra_matrix: pcuint16_t;
 
     (**
      * dump format separator.
@@ -3550,7 +3569,7 @@ typedef struct AVCodecContext {
      * - encoding: Set by user.
      * - decoding: Set by user.
      *)
-    uint8_t *dump_separator;
+    dump_separator: pcuint8_t;
 
     (**
      * ',' separated list of allowed decoders.
@@ -3558,14 +3577,14 @@ typedef struct AVCodecContext {
      * - encoding: unused
      * - decoding: set by user
      *)
-    char *codec_whitelist;
+    codec_whitelist: pchar;
 
     (*
      * Properties of the stream that gets decoded
      * - encoding: unused
      * - decoding: set by libavcodec
      *)
-    unsigned properties;
+    properties: cunsigned;
   FF_CODEC_PROPERTY_LOSSLESS = $00000001;
   FF_CODEC_PROPERTY_CLOSED_CAPTIONS = $00000002;
 
@@ -3575,8 +3594,8 @@ typedef struct AVCodecContext {
      * - decoding: unused
      * - encoding: may be set by libavcodec after avcodec_open2().
      *)
-    AVPacketSideData *coded_side_data;
-    int            nb_coded_side_data;
+    coded_side_data: PAVPacketSideData;
+    nb_coded_side_data: cint;
 
     (**
      * A reference to the AVHWFramesContext describing the input (for encoding)
@@ -3600,14 +3619,14 @@ typedef struct AVCodecContext {
      *
      *             This field should be set before avcodec_open2() is called.
      *)
-    AVBufferRef *hw_frames_ctx;
+    hw_frames_ctx: PAVBufferRef;
 
     (**
      * Control the form of AVSubtitle.rects[N]->ass
      * - decoding: set by user
      * - encoding: unused
      *)
-    int sub_text_format;
+    sub_text_format: cint;
   FF_SUB_TEXT_FMT_ASS = 0;
 {$if FF_API_ASS_TIMING}
   FF_SUB_TEXT_FMT_ASS_WITH_TIMINGS = 1;
@@ -3622,7 +3641,7 @@ typedef struct AVCodecContext {
      * - decoding: unused
      * - encoding: unused
      *)
-    int trailing_padding;
+    trailing_padding: cint;
 
     (**
      * The number of pixels per image to maximally accept.
@@ -3630,7 +3649,7 @@ typedef struct AVCodecContext {
      * - decoding: set by user
      * - encoding: set by user
      *)
-    int64_t max_pixels;
+    max_pixels: cint64_t;
 
     (**
      * A reference to the AVHWDeviceContext describing the device which will
@@ -3652,7 +3671,7 @@ typedef struct AVCodecContext {
      * order to support hw_frames_ctx at all - in that case, all frames
      * contexts used must be created on the same device.
      *)
-    AVBufferRef *hw_device_ctx;
+    hw_device_ctx: PAVBufferRef;
 
     (**
      * Bit set of AV_HWACCEL_FLAG_* flags, which affect hardware accelerated
@@ -3661,14 +3680,14 @@ typedef struct AVCodecContext {
      * - decoding: Set by user (either before avcodec_open2(), or in the
      *             AVCodecContext.get_format callback)
      *)
-    int hwaccel_flags;
-} AVCodecContext;
+    hwaccel_flags: cint;
+  end;
 
 AVRational av_codec_get_pkt_timebase         (const AVCodecContext *avctx);
-void       av_codec_set_pkt_timebase         (AVCodecContext *avctx, AVRational val);
+procedure av_codec_set_pkt_timebase         (AVCodecContext *avctx, AVRational val);
 
 const AVCodecDescriptor *av_codec_get_codec_descriptor(const AVCodecContext *avctx);
-void                     av_codec_set_codec_descriptor(AVCodecContext *avctx, const AVCodecDescriptor *desc);
+procedure av_codec_set_codec_descriptor(AVCodecContext *avctx, const AVCodecDescriptor *desc);
 
 unsigned av_codec_get_codec_properties(const AVCodecContext *avctx);
 
