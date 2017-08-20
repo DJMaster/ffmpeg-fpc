@@ -30,6 +30,10 @@ unit avcodec;
 
 interface
 
+const
+   LIB_LIBAVCODEC = 'avcodec-57.dll';
+
+
 // #ifndef AVCODEC_AVCODEC_H
 // #define AVCODEC_AVCODEC_H
 
@@ -1683,7 +1687,7 @@ type
      * the packet is decompressed.
      * Can be AV_NOPTS_VALUE if it is not stored in the file.
      *)
-    dts: cint64_t ;
+    dts: cint64_t;
     data: pcuint8_t;
     size: cint;
     stream_index: cint;
@@ -3683,34 +3687,40 @@ type
     hwaccel_flags: cint;
   end;
 
-AVRational av_codec_get_pkt_timebase         (const AVCodecContext *avctx);
-procedure av_codec_set_pkt_timebase         (AVCodecContext *avctx, AVRational val);
+function av_codec_get_pkt_timebase(const AVCodecContext *avctx): AVRational; cdecl; external LIB_LIBAVCODEC;
+procedure av_codec_set_pkt_timebase(AVCodecContext *avctx, AVRational val); cdecl; external LIB_LIBAVCODEC;
 
-const AVCodecDescriptor *av_codec_get_codec_descriptor(const AVCodecContext *avctx);
-procedure av_codec_set_codec_descriptor(AVCodecContext *avctx, const AVCodecDescriptor *desc);
+function av_codec_get_codec_descriptor(const AVCodecContext *avctx): PAVCodecDescriptor; cdecl; external LIB_LIBAVCODEC;
+procedure av_codec_set_codec_descriptor(AVCodecContext *avctx, const AVCodecDescriptor *desc); cdecl; external LIB_LIBAVCODEC;
 
-unsigned av_codec_get_codec_properties(const AVCodecContext *avctx);
+function av_codec_get_codec_properties(const AVCodecContext *avctx): cunsigned; cdecl; external LIB_LIBAVCODEC;
 
-function cint  av_codec_get_lowres(const AVCodecContext *avctx);
-procedure av_codec_set_lowres(AVCodecContext *avctx, int val);
+function av_codec_get_lowres(const AVCodecContext *avctx): cint; cdecl; external LIB_LIBAVCODEC;
+procedure av_codec_set_lowres(AVCodecContext *avctx, int val); cdecl; external LIB_LIBAVCODEC;
 
-function cint  av_codec_get_seek_preroll(const AVCodecContext *avctx);
-procedure av_codec_set_seek_preroll(AVCodecContext *avctx, int val);
+function av_codec_get_seek_preroll(const AVCodecContext *avctx): cint; cdecl; external LIB_LIBAVCODEC;
+procedure av_codec_set_seek_preroll(AVCodecContext *avctx, int val); cdecl; external LIB_LIBAVCODEC;
 
-uint16_t *av_codec_get_chroma_intra_matrix(const AVCodecContext *avctx);
-procedure av_codec_set_chroma_intra_matrix(AVCodecContext *avctx, uint16_t *val);
+function av_codec_get_chroma_intra_matrix(const AVCodecContext *avctx): pcuint16_t; cdecl; external LIB_LIBAVCODEC;
+procedure av_codec_set_chroma_intra_matrix(AVCodecContext *avctx, uint16_t *val); cdecl; external LIB_LIBAVCODEC;
 
 (**
  * AVProfile.
  *)
-typedef struct AVProfile {
-    int profile;
-    const pchar name; ///< short name for the profile
-} AVProfile;
+type
+  PAVProfile = ^AVProfile;
+  AVProfile = record
+    profile: cint;
+    name: pchar; ///< short name for the profile
+  end;
 
-typedef struct AVCodecDefault AVCodecDefault;
+  PAVCodecDefault = ^AVCodecDefault;
+  AVCodecDefault = record
+  end;
 
-struct AVSubtitle;
+  PAVSubtitle = ^AVSubtitle;
+  AVSubtitle = record
+  end;
 
 (**
  * AVCodec.
@@ -3827,7 +3837,7 @@ typedef struct AVCodec {
     int caps_internal;
 } AVCodec;
 
-function cint av_codec_get_max_lowres(const AVCodec *codec);
+function av_codec_get_max_lowres(const AVCodec *codec): cint; cdecl; external LIB_LIBAVCODEC;
 
 struct MpegEncContext;
 
@@ -4248,22 +4258,22 @@ typedef struct AVCodecParameters {
  * if c is non-NULL, returns the next registered codec after c,
  * or NULL if c is the last one.
  *)
-AVCodec *av_codec_next(const AVCodec *c);
+function av_codec_next(const AVCodec *c): PAVCodec; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Return the LIBAVCODEC_VERSION_INT constant.
  *)
-unsigned avcodec_version();
+function avcodec_version(): cunsigned; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Return the libavcodec build-time configuration.
  *)
-const pchar avcodec_configuration();
+function avcodec_configuration(): pchar; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Return the libavcodec license.
  *)
-const pchar avcodec_license();
+function avcodec_license(): pchar; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Register the codec codec and initialize libavcodec.
@@ -4273,7 +4283,7 @@ const pchar avcodec_license();
  *
  * @see avcodec_register_all()
  *)
-procedure avcodec_register(AVCodec *codec);
+procedure avcodec_register(AVCodec *codec); cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Register all the codecs, parsers and bitstream filters which were enabled at
@@ -4285,7 +4295,7 @@ procedure avcodec_register(AVCodec *codec);
  * @see av_register_codec_parser
  * @see av_register_bitstream_filter
  *)
-procedure avcodec_register_all();
+procedure avcodec_register_all(); cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Allocate an AVCodecContext and set its fields to default values. The
@@ -4300,13 +4310,13 @@ procedure avcodec_register_all();
  *
  * @return An AVCodecContext filled with default values or NULL on failure.
  *)
-AVCodecContext *avcodec_alloc_context3(const AVCodec *codec);
+function avcodec_alloc_context3(const AVCodec *codec): PAVCodecContext; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Free the codec context and everything associated with it and write NULL to
  * the provided pointer.
  *)
-procedure avcodec_free_context(AVCodecContext **avctx);
+procedure avcodec_free_context(AVCodecContext **avctx); cdecl; external LIB_LIBAVCODEC;
 
 {$if FF_API_GET_CONTEXT_DEFAULTS}
 (**
@@ -4314,7 +4324,7 @@ procedure avcodec_free_context(AVCodecContext **avctx);
  * context multiple time is not supported. A new codec context should be
  * allocated for each new use.
  *)
-function cint avcodec_get_context_defaults3(AVCodecContext *s, const AVCodec *codec);
+function avcodec_get_context_defaults3(AVCodecContext *s, const AVCodec *codec): cint; cdecl; external LIB_LIBAVCODEC;
 {$endif}
 
 (**
@@ -4323,7 +4333,7 @@ function cint avcodec_get_context_defaults3(AVCodecContext *s, const AVCodec *co
  *
  * @see av_opt_find().
  *)
-const AVClass *avcodec_get_class();
+function avcodec_get_class(): PAVClass; cdecl; external LIB_LIBAVCODEC;
 
 {$if FF_API_COPY_CONTEXT}
 (**
@@ -4332,7 +4342,7 @@ const AVClass *avcodec_get_class();
  *
  * @see av_opt_find().
  *)
-const AVClass *avcodec_get_frame_class();
+function avcodec_get_frame_class(): PAVClass; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Get the AVClass for AVSubtitleRect. It can be used in combination with
@@ -4340,7 +4350,7 @@ const AVClass *avcodec_get_frame_class();
  *
  * @see av_opt_find().
  *)
-const AVClass *avcodec_get_subtitle_rect_class();
+function avcodec_get_subtitle_rect_class(): PAVClass; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Copy the settings of the source AVCodecContext into the destination
@@ -4360,7 +4370,7 @@ const AVClass *avcodec_get_subtitle_rect_class();
  * functions.
  *)
 attribute_deprecated
-function cint avcodec_copy_context(AVCodecContext *dest, const AVCodecContext *src);
+function avcodec_copy_context(AVCodecContext *dest, const AVCodecContext *src): cint; cdecl; external LIB_LIBAVCODEC;
 {$endif}
 
 (**
@@ -4368,13 +4378,13 @@ function cint avcodec_copy_context(AVCodecContext *dest, const AVCodecContext *s
  * (unknown/invalid/0). The returned struct must be freed with
  * avcodec_parameters_free().
  *)
-AVCodecParameters *avcodec_parameters_alloc();
+function avcodec_parameters_alloc(): PAVCodecParameters; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Free an AVCodecParameters instance and everything associated with it and
  * write NULL to the supplied pointer.
  *)
-procedure avcodec_parameters_free(AVCodecParameters **par);
+procedure avcodec_parameters_free(AVCodecParameters **par); cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Copy the contents of src to dst. Any allocated fields in dst are freed and
@@ -4382,7 +4392,7 @@ procedure avcodec_parameters_free(AVCodecParameters **par);
  *
  * @return >= 0 on success, a negative AVERROR code on failure.
  *)
-function cint avcodec_parameters_copy(AVCodecParameters *dst, const AVCodecParameters *src);
+function avcodec_parameters_copy(AVCodecParameters *dst, const AVCodecParameters *src): cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Fill the parameters struct based on the values from the supplied codec
@@ -4391,8 +4401,8 @@ function cint avcodec_parameters_copy(AVCodecParameters *dst, const AVCodecParam
  *
  * @return >= 0 on success, a negative AVERROR code on failure
  *)
-function cint avcodec_parameters_from_context(AVCodecParameters *par,
-                                    const AVCodecContext *codec);
+function avcodec_parameters_from_context(AVCodecParameters *par,
+                                    const AVCodecContext *codec): cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Fill the codec context based on the values from the supplied codec
@@ -4402,8 +4412,8 @@ function cint avcodec_parameters_from_context(AVCodecParameters *par,
  *
  * @return >= 0 on success, a negative AVERROR code on failure.
  *)
-function cint avcodec_parameters_to_context(AVCodecContext *codec,
-                                  const AVCodecParameters *par);
+function avcodec_parameters_to_context(AVCodecContext *codec,
+                                  const AVCodecParameters *par): cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Initialize the AVCodecContext to use the given AVCodec. Prior to using this
@@ -4443,7 +4453,7 @@ function cint avcodec_parameters_to_context(AVCodecContext *codec,
  * @see avcodec_alloc_context3(), avcodec_find_decoder(), avcodec_find_encoder(),
  *      av_dict_set(), av_opt_find().
  *)
-function cint avcodec_open2(AVCodecContext *avctx, const AVCodec *codec, AVDictionary **options);
+function avcodec_open2(AVCodecContext *avctx, const AVCodec *codec, AVDictionary **options): cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Close a given AVCodecContext and free all the data associated with it
@@ -4458,14 +4468,14 @@ function cint avcodec_open2(AVCodecContext *avctx, const AVCodec *codec, AVDicti
  * multiple times is not supported anymore -- use multiple codec contexts
  * instead.
  *)
-function cint avcodec_close(AVCodecContext *avctx);
+function avcodec_close(AVCodecContext *avctx): cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Free all allocated data in the given subtitle struct.
  *
  * @param sub AVSubtitle to free.
  *)
-procedure avsubtitle_free(AVSubtitle *sub);
+procedure avsubtitle_free(AVSubtitle *sub); cdecl; external LIB_LIBAVCODEC;
 
 (**
  * @}
@@ -4487,7 +4497,7 @@ procedure avsubtitle_free(AVSubtitle *sub);
  *
  * @see av_new_packet
  *)
-AVPacket *av_packet_alloc();
+function av_packet_alloc(): PAVPacket; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Create a new packet that references the same data as src.
@@ -4499,7 +4509,7 @@ AVPacket *av_packet_alloc();
  * @see av_packet_alloc
  * @see av_packet_ref
  *)
-AVPacket *av_packet_clone(const AVPacket *src);
+function av_packet_clone(const AVPacket *src): PAVPacket; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Free the packet, if the packet is reference counted, it will be
@@ -4508,7 +4518,7 @@ AVPacket *av_packet_clone(const AVPacket *src);
  * @param packet packet to be freed. The pointer will be set to NULL.
  * @note passing NULL is a no-op.
  *)
-procedure av_packet_free(AVPacket **pkt);
+procedure av_packet_free(AVPacket **pkt); cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Initialize optional fields of a packet with default values.
@@ -4518,7 +4528,7 @@ procedure av_packet_free(AVPacket **pkt);
  *
  * @param pkt packet
  *)
-procedure av_init_packet(AVPacket *pkt);
+procedure av_init_packet(AVPacket *pkt); cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Allocate the payload of a packet and initialize its fields with
@@ -4528,7 +4538,7 @@ procedure av_init_packet(AVPacket *pkt);
  * @param size wanted payload size
  * @return 0 if OK, AVERROR_xxx otherwise
  *)
-function cint av_new_packet(AVPacket *pkt, int size);
+function av_new_packet(AVPacket *pkt, int size): cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Reduce packet size, correctly zeroing padding
@@ -4536,7 +4546,7 @@ function cint av_new_packet(AVPacket *pkt, int size);
  * @param pkt packet
  * @param size new size
  *)
-procedure av_shrink_packet(AVPacket *pkt, int size);
+procedure av_shrink_packet(AVPacket *pkt, int size); cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Increase packet size, correctly zeroing padding
@@ -4544,7 +4554,7 @@ procedure av_shrink_packet(AVPacket *pkt, int size);
  * @param pkt packet
  * @param grow_by number of bytes by which to increase the size of the packet
  *)
-function cint av_grow_packet(AVPacket *pkt, int grow_by);
+function av_grow_packet(AVPacket *pkt, int grow_by): cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Initialize a reference-counted packet from av_malloc()ed data.
@@ -4559,7 +4569,7 @@ function cint av_grow_packet(AVPacket *pkt, int grow_by);
  *
  * @return 0 on success, a negative AVERROR on error
  *)
-function cint av_packet_from_data(AVPacket *pkt, uint8_t *data, int size);
+function av_packet_from_data(AVPacket *pkt, uint8_t *data, int size): cint; cdecl; external LIB_LIBAVCODEC;
 
 {$if FF_API_AVPACKET_OLD_API}
 (**
@@ -4569,20 +4579,20 @@ function cint av_packet_from_data(AVPacket *pkt, uint8_t *data, int size);
  * @deprecated Use av_packet_ref
  *)
 attribute_deprecated
-function cint av_dup_packet(AVPacket *pkt);
+function av_dup_packet(AVPacket *pkt): cint; cdecl; external LIB_LIBAVCODEC;
 (**
  * Copy packet, including contents
  *
  * @return 0 on success, negative AVERROR on fail
  *)
-function cint av_copy_packet(AVPacket *dst, const AVPacket *src);
+function av_copy_packet(AVPacket *dst, const AVPacket *src): cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Copy packet side data
  *
  * @return 0 on success, negative AVERROR on fail
  *)
-function cint av_copy_packet_side_data(AVPacket *dst, const AVPacket *src);
+function av_copy_packet_side_data(AVPacket *dst, const AVPacket *src): cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Free a packet.
@@ -4592,7 +4602,7 @@ function cint av_copy_packet_side_data(AVPacket *dst, const AVPacket *src);
  * @param pkt packet to free
  *)
 attribute_deprecated
-procedure av_free_packet(AVPacket *pkt);
+procedure av_free_packet(AVPacket *pkt); cdecl; external LIB_LIBAVCODEC;
 {$endif}
 (**
  * Allocate new information of a packet.
@@ -4602,8 +4612,8 @@ procedure av_free_packet(AVPacket *pkt);
  * @param size side information size
  * @return pointer to fresh allocated data or NULL otherwise
  *)
-uint8_t* av_packet_new_side_data(AVPacket *pkt, enum AVPacketSideDataType type,
-                                 int size);
+function av_packet_new_side_data(AVPacket *pkt, enum AVPacketSideDataType type,
+                                 int size): pcuint8_t; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Wrap an existing array as a packet side data.
@@ -4618,8 +4628,8 @@ uint8_t* av_packet_new_side_data(AVPacket *pkt, enum AVPacketSideDataType type,
  *         failure. On failure, the packet is unchanged and the data remains
  *         owned by the caller.
  *)
-function cint av_packet_add_side_data(AVPacket *pkt, enum AVPacketSideDataType type,
-                            uint8_t *data, size_t size);
+function av_packet_add_side_data(AVPacket *pkt, enum AVPacketSideDataType type,
+                            uint8_t *data, size_t size): cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Shrink the already allocated side data buffer
@@ -4629,8 +4639,8 @@ function cint av_packet_add_side_data(AVPacket *pkt, enum AVPacketSideDataType t
  * @param size new side information size
  * @return 0 on success, < 0 on failure
  *)
-function cint av_packet_shrink_side_data(AVPacket *pkt, enum AVPacketSideDataType type,
-                               int size);
+function av_packet_shrink_side_data(AVPacket *pkt, enum AVPacketSideDataType type,
+                               int size): cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Get side information from packet.
@@ -4640,18 +4650,18 @@ function cint av_packet_shrink_side_data(AVPacket *pkt, enum AVPacketSideDataTyp
  * @param size pointer for side information size to store (optional)
  * @return pointer to data if present or NULL otherwise
  *)
-uint8_t* av_packet_get_side_data(const AVPacket *pkt, enum AVPacketSideDataType type,
-                                 int *size);
+function av_packet_get_side_data(const AVPacket *pkt, enum AVPacketSideDataType type,
+                                 int *size): pcuint8_t; cdecl; external LIB_LIBAVCODEC;
 
 {$if FF_API_MERGE_SD_API}
 attribute_deprecated
-function cint av_packet_merge_side_data(AVPacket *pkt);
+function av_packet_merge_side_data(AVPacket *pkt): cint; cdecl; external LIB_LIBAVCODEC;
 
 attribute_deprecated
-function cint av_packet_split_side_data(AVPacket *pkt);
+function av_packet_split_side_data(AVPacket *pkt): cint; cdecl; external LIB_LIBAVCODEC;
 {$endif}
 
-const pchar av_packet_side_data_name(enum AVPacketSideDataType type);
+function av_packet_side_data_name(enum AVPacketSideDataType type): pchar; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Pack a dictionary for use in side_data.
@@ -4660,7 +4670,7 @@ const pchar av_packet_side_data_name(enum AVPacketSideDataType type);
  * @param size pointer to store the size of the returned data
  * @return pointer to data if successful, NULL otherwise
  *)
-uint8_t *av_packet_pack_dictionary(AVDictionary *dict, int *size);
+function av_packet_pack_dictionary(AVDictionary *dict, int *size): pcuint8_t; cdecl; external LIB_LIBAVCODEC;
 (**
  * Unpack a dictionary from side_data.
  *
@@ -4669,7 +4679,7 @@ uint8_t *av_packet_pack_dictionary(AVDictionary *dict, int *size);
  * @param dict the metadata storage dictionary
  * @return 0 on success, < 0 on failure
  *)
-function cint av_packet_unpack_dictionary(const uint8_t *data, int size, AVDictionary **dict);
+function av_packet_unpack_dictionary(const uint8_t *data, int size, AVDictionary **dict): cint; cdecl; external LIB_LIBAVCODEC;
 
 
 (**
@@ -4678,7 +4688,7 @@ function cint av_packet_unpack_dictionary(const uint8_t *data, int size, AVDicti
  *
  * @param pkt packet
  *)
-procedure av_packet_free_side_data(AVPacket *pkt);
+procedure av_packet_free_side_data(AVPacket *pkt); cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Setup a new reference to the data described by a given packet
@@ -4696,7 +4706,7 @@ procedure av_packet_free_side_data(AVPacket *pkt);
  *
  * @return 0 on success, a negative AVERROR on error.
  *)
-function cint av_packet_ref(AVPacket *dst, const AVPacket *src);
+function av_packet_ref(AVPacket *dst, const AVPacket *src): cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Wipe the packet.
@@ -4706,7 +4716,7 @@ function cint av_packet_ref(AVPacket *dst, const AVPacket *src);
  *
  * @param pkt The packet to be unreferenced.
  *)
-procedure av_packet_unref(AVPacket *pkt);
+procedure av_packet_unref(AVPacket *pkt); cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Move every field in src to dst and reset src.
@@ -4716,7 +4726,7 @@ procedure av_packet_unref(AVPacket *pkt);
  * @param src Source packet, will be reset
  * @param dst Destination packet
  *)
-procedure av_packet_move_ref(AVPacket *dst, AVPacket *src);
+procedure av_packet_move_ref(AVPacket *dst, AVPacket *src); cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Copy only "properties" fields from src to dst.
@@ -4729,7 +4739,7 @@ procedure av_packet_move_ref(AVPacket *dst, AVPacket *src);
  *
  * @return 0 on success AVERROR on failure.
  *)
-function cint av_packet_copy_props(AVPacket *dst, const AVPacket *src);
+function av_packet_copy_props(AVPacket *dst, const AVPacket *src): cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Convert valid timing fields (timestamps / durations) in a packet from one
@@ -4742,7 +4752,7 @@ function cint av_packet_copy_props(AVPacket *dst, const AVPacket *src);
  * @param tb_dst destination timebase, to which the timing fields will be
  *               converted
  *)
-procedure av_packet_rescale_ts(AVPacket *pkt, AVRational tb_src, AVRational tb_dst);
+procedure av_packet_rescale_ts(AVPacket *pkt, AVRational tb_src, AVRational tb_dst); cdecl; external LIB_LIBAVCODEC;
 
 (**
  * @}
@@ -4759,7 +4769,7 @@ procedure av_packet_rescale_ts(AVPacket *pkt, AVRational tb_src, AVRational tb_d
  * @param id AVCodecID of the requested decoder
  * @return A decoder if one was found, NULL otherwise.
  *)
-AVCodec *avcodec_find_decoder(enum AVCodecID id);
+function avcodec_find_decoder(id: AVCodecID): PAVCodec; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Find a registered decoder with the specified name.
@@ -4767,14 +4777,14 @@ AVCodec *avcodec_find_decoder(enum AVCodecID id);
  * @param name name of the requested decoder
  * @return A decoder if one was found, NULL otherwise.
  *)
-AVCodec *avcodec_find_decoder_by_name(const name: pchar);
+function avcodec_find_decoder_by_name(const name: pchar): PAVCodec; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * The default callback for AVCodecContext.get_buffer2(). It is made public so
  * it can be called by custom get_buffer2() implementations for decoders without
  * AV_CODEC_CAP_DR1 set.
  *)
-function cint avcodec_default_get_buffer2(AVCodecContext *s, AVFrame *frame, int flags);
+function avcodec_default_get_buffer2(AVCodecContext *s, AVFrame *frame, int flags): cint; cdecl; external LIB_LIBAVCODEC;
 
 {$if FF_API_EMU_EDGE}
 (**
@@ -4788,7 +4798,7 @@ function cint avcodec_default_get_buffer2(AVCodecContext *s, AVFrame *frame, int
  * needed
  *)
 attribute_deprecated
-unsigned avcodec_get_edge_width();
+function avcodec_get_edge_width(): cunsigned; cdecl; external LIB_LIBAVCODEC;
 {$endif}
 
 (**
@@ -4798,7 +4808,7 @@ unsigned avcodec_get_edge_width();
  *
  * May only be used if a codec with AV_CODEC_CAP_DR1 has been opened.
  *)
-procedure avcodec_align_dimensions(AVCodecContext *s, int *width, int *height);
+procedure avcodec_align_dimensions(AVCodecContext *s, int *width, int *height); cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Modify width and height values so that they will result in a memory
@@ -4808,7 +4818,7 @@ procedure avcodec_align_dimensions(AVCodecContext *s, int *width, int *height);
  * May only be used if a codec with AV_CODEC_CAP_DR1 has been opened.
  *)
 procedure avcodec_align_dimensions2(AVCodecContext *s, int *width, int *height,
-                               int linesize_align[AV_NUM_DATA_POINTERS]);
+                               int linesize_align[AV_NUM_DATA_POINTERS]); cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Converts AVChromaLocation to swscale x/y chroma position.
@@ -4819,7 +4829,7 @@ procedure avcodec_align_dimensions2(AVCodecContext *s, int *width, int *height,
  * @param xpos  horizontal chroma sample position
  * @param ypos  vertical   chroma sample position
  *)
-function cint avcodec_enum_to_chroma_pos(int *xpos, int *ypos, enum AVChromaLocation pos);
+function avcodec_enum_to_chroma_pos(int *xpos, int *ypos, enum AVChromaLocation pos): cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Converts swscale x/y chroma position to AVChromaLocation.
@@ -4830,7 +4840,7 @@ function cint avcodec_enum_to_chroma_pos(int *xpos, int *ypos, enum AVChromaLoca
  * @param xpos  horizontal chroma sample position
  * @param ypos  vertical   chroma sample position
  *)
-enum AVChromaLocation avcodec_chroma_pos_to_enum(int xpos, int ypos);
+function avcodec_chroma_pos_to_enum(int xpos, int ypos): AVChromaLocation; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Decode the audio frame of size avpkt->size from avpkt->data into frame.
@@ -4886,8 +4896,8 @@ enum AVChromaLocation avcodec_chroma_pos_to_enum(int xpos, int ypos);
 * @deprecated Use avcodec_send_packet() and avcodec_receive_frame().
  *)
 attribute_deprecated
-function cint avcodec_decode_audio4(AVCodecContext *avctx, AVFrame *frame,
-                          int *got_frame_ptr, const AVPacket *avpkt);
+function avcodec_decode_audio4(AVCodecContext *avctx, AVFrame *frame,
+                          int *got_frame_ptr, const AVPacket *avpkt): cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Decode the video frame of size avpkt->size from avpkt->data into picture.
@@ -4935,9 +4945,9 @@ function cint avcodec_decode_audio4(AVCodecContext *avctx, AVFrame *frame,
  * @deprecated Use avcodec_send_packet() and avcodec_receive_frame().
  *)
 attribute_deprecated
-function cint avcodec_decode_video2(AVCodecContext *avctx, AVFrame *picture,
+function avcodec_decode_video2(AVCodecContext *avctx, AVFrame *picture,
                          int *got_picture_ptr,
-                         const AVPacket *avpkt);
+                         const AVPacket *avpkt): cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Decode a subtitle message.
@@ -4966,9 +4976,9 @@ function cint avcodec_decode_video2(AVCodecContext *avctx, AVFrame *picture,
  * @param[in,out] got_sub_ptr Zero if no subtitle could be decompressed, otherwise, it is nonzero.
  * @param[in] avpkt The input AVPacket containing the input buffer.
  *)
-function cint avcodec_decode_subtitle2(AVCodecContext *avctx, AVSubtitle *sub,
+function avcodec_decode_subtitle2(AVCodecContext *avctx, AVSubtitle *sub,
                             int *got_sub_ptr,
-                            AVPacket *avpkt);
+                            AVPacket *avpkt): cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Supply raw packet data as input to a decoder.
@@ -5020,7 +5030,7 @@ function cint avcodec_decode_subtitle2(AVCodecContext *avctx, AVSubtitle *sub,
  *      AVERROR(ENOMEM):   failed to add packet to internal queue, or similar
  *      other errors: legitimate decoding errors
  *)
-function cint avcodec_send_packet(AVCodecContext *avctx, const AVPacket *avpkt);
+function avcodec_send_packet(AVCodecContext *avctx, const AVPacket *avpkt): cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Return decoded output data from a decoder.
@@ -5040,7 +5050,7 @@ function cint avcodec_send_packet(AVCodecContext *avctx, const AVPacket *avpkt);
  *      AVERROR(EINVAL):   codec not opened, or it is an encoder
  *      other negative values: legitimate decoding errors
  *)
-function cint avcodec_receive_frame(AVCodecContext *avctx, AVFrame *frame);
+function avcodec_receive_frame(AVCodecContext *avctx, AVFrame *frame): cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Supply a raw video or audio frame to the encoder. Use avcodec_receive_packet()
@@ -5077,7 +5087,7 @@ function cint avcodec_receive_frame(AVCodecContext *avctx, AVFrame *frame);
  *      AVERROR(ENOMEM):   failed to add packet to internal queue, or similar
  *      other errors: legitimate decoding errors
  *)
-function cint avcodec_send_frame(AVCodecContext *avctx, const AVFrame *frame);
+function avcodec_send_frame(AVCodecContext *avctx, const AVFrame *frame): cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Read encoded data from the encoder.
@@ -5094,20 +5104,20 @@ function cint avcodec_send_frame(AVCodecContext *avctx, const AVFrame *frame);
  *      AVERROR(EINVAL):   codec not opened, or it is an encoder
  *      other errors: legitimate decoding errors
  *)
-function cint avcodec_receive_packet(AVCodecContext *avctx, AVPacket *avpkt);
+function avcodec_receive_packet(AVCodecContext *avctx, AVPacket *avpkt): cint; cdecl; external LIB_LIBAVCODEC;
 
 
 (**
  * @defgroup lavc_parsing Frame parsing
  * @{
  *)
-
-enum AVPictureStructure {
+type
+  AVPictureStructure = (
     AV_PICTURE_STRUCTURE_UNKNOWN,      //< unknown
     AV_PICTURE_STRUCTURE_TOP_FIELD,    //< coded as top field
     AV_PICTURE_STRUCTURE_BOTTOM_FIELD, //< coded as bottom field
-    AV_PICTURE_STRUCTURE_FRAME,        //< coded as frame
-};
+    AV_PICTURE_STRUCTURE_FRAME         //< coded as frame
+  );
 
 typedef struct AVCodecParserContext {
     void *priv_data;
@@ -5291,10 +5301,10 @@ typedef struct AVCodecParser {
     struct AVCodecParser *next;
 } AVCodecParser;
 
-AVCodecParser *av_parser_next(const AVCodecParser *c);
+function av_parser_next(const AVCodecParser *c): PAVCodecParser; cdecl; external LIB_LIBAVCODEC;
 
-procedure av_register_codec_parser(AVCodecParser *parser);
-AVCodecParserContext *av_parser_init(int codec_id);
+procedure av_register_codec_parser(AVCodecParser *parser); cdecl; external LIB_LIBAVCODEC;
+function av_parser_init(int codec_id): PAVCodecParserContext; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Parse a packet.
@@ -5327,22 +5337,22 @@ AVCodecParserContext *av_parser_init(int codec_id);
  *   }
  * @endcode
  *)
-function cint av_parser_parse2(AVCodecParserContext *s,
+function av_parser_parse2(AVCodecParserContext *s,
                      AVCodecContext *avctx,
                      uint8_t **poutbuf, int *poutbuf_size,
                      const uint8_t *buf, int buf_size,
                      int64_t pts, int64_t dts,
-                     int64_t pos);
+                     int64_t pos): cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * @return 0 if the output buffer is a subset of the input, 1 if it is allocated and must be freed
  * @deprecated use AVBitStreamFilter
  *)
-function cint av_parser_change(AVCodecParserContext *s,
+function av_parser_change(AVCodecParserContext *s,
                      AVCodecContext *avctx,
                      uint8_t **poutbuf, int *poutbuf_size,
-                     const uint8_t *buf, int buf_size, int keyframe);
-procedure av_parser_close(AVCodecParserContext *s);
+                     const uint8_t *buf, int buf_size, int keyframe): cint; cdecl; external LIB_LIBAVCODEC;
+procedure av_parser_close(AVCodecParserContext *s); cdecl; external LIB_LIBAVCODEC;
 
 (**
  * @}
@@ -5360,7 +5370,7 @@ procedure av_parser_close(AVCodecParserContext *s);
  * @param id AVCodecID of the requested encoder
  * @return An encoder if one was found, NULL otherwise.
  *)
-AVCodec *avcodec_find_encoder(enum AVCodecID id);
+function avcodec_find_encoder(enum AVCodecID id): PAVCodec; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Find a registered encoder with the specified name.
@@ -5368,7 +5378,7 @@ AVCodec *avcodec_find_encoder(enum AVCodecID id);
  * @param name name of the requested encoder
  * @return An encoder if one was found, NULL otherwise.
  *)
-AVCodec *avcodec_find_encoder_by_name(const name: pchar);
+function avcodec_find_encoder_by_name(const name: pchar): PAVCodec; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Encode a frame of audio.
@@ -5411,8 +5421,8 @@ AVCodec *avcodec_find_encoder_by_name(const name: pchar);
  * @deprecated use avcodec_send_frame()/avcodec_receive_packet() instead
  *)
 attribute_deprecated
-function cint avcodec_encode_audio2(AVCodecContext *avctx, AVPacket *avpkt,
-                          const AVFrame *frame, int *got_packet_ptr);
+function avcodec_encode_audio2(AVCodecContext *avctx, AVPacket *avpkt,
+                          const AVFrame *frame, int *got_packet_ptr): cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Encode a frame of video.
@@ -5450,11 +5460,11 @@ function cint avcodec_encode_audio2(AVCodecContext *avctx, AVPacket *avpkt,
  * @deprecated use avcodec_send_frame()/avcodec_receive_packet() instead
  *)
 attribute_deprecated
-function cint avcodec_encode_video2(AVCodecContext *avctx, AVPacket *avpkt,
-                          const AVFrame *frame, int *got_packet_ptr);
+function avcodec_encode_video2(AVCodecContext *avctx, AVPacket *avpkt,
+                          const AVFrame *frame, int *got_packet_ptr): cint; cdecl; external LIB_LIBAVCODEC;
 
-function cint avcodec_encode_subtitle(AVCodecContext *avctx, uint8_t *buf, int buf_size,
-                            const AVSubtitle *sub);
+function avcodec_encode_subtitle(AVCodecContext *avctx, uint8_t *buf, int buf_size,
+                            const AVSubtitle *sub): cint; cdecl; external LIB_LIBAVCODEC;
 
 
 (**
@@ -5491,15 +5501,15 @@ typedef struct ReSampleContext ReSampleContext;
  * @return allocated ReSampleContext, NULL if error occurred
  *)
 attribute_deprecated
-ReSampleContext *av_audio_resample_init(int output_channels, int input_channels,
+function av_audio_resample_init(int output_channels, int input_channels,
                                         int output_rate, int input_rate,
                                         enum AVSampleFormat sample_fmt_out,
                                         enum AVSampleFormat sample_fmt_in,
                                         int filter_length, int log2_phase_count,
-                                        int linear, double cutoff);
+                                        int linear, double cutoff): PReSampleContext; cdecl; external LIB_LIBAVCODEC;
 
 attribute_deprecated
-function cint audio_resample(ReSampleContext *s, short *output, short *input, int nb_samples);
+function audio_resample(ReSampleContext *s, short *output, short *input, int nb_samples): cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Free resample context.
@@ -5508,7 +5518,7 @@ function cint audio_resample(ReSampleContext *s, short *output, short *input, in
  *          created with av_audio_resample_init()
  *)
 attribute_deprecated
-void audio_resample_close(ReSampleContext *s);
+procedure audio_resample_close(ReSampleContext *s); cdecl; external LIB_LIBAVCODEC;
 
 
 (**
@@ -5521,7 +5531,7 @@ void audio_resample_close(ReSampleContext *s);
  * @param cutoff cutoff frequency, 1.0 corresponds to half the output sampling rate
  *)
 attribute_deprecated
-struct AVResampleContext *av_resample_init(int out_rate, int in_rate, int filter_length, int log2_phase_count, int linear, double cutoff);
+function av_resample_init(int out_rate, int in_rate, int filter_length, int log2_phase_count, int linear, double cutoff): PAVResampleContext; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Resample an array of samples using a previously configured context.
@@ -5533,7 +5543,7 @@ struct AVResampleContext *av_resample_init(int out_rate, int in_rate, int filter
  * @return the number of samples written in dst or -1 if an error occurred
  *)
 attribute_deprecated
-function cint av_resample(struct AVResampleContext *c, short *dst, short *src, int *consumed, int src_size, int dst_size, int update_ctx);
+function av_resample(struct AVResampleContext *c, short *dst, short *src, int *consumed, int src_size, int dst_size, int update_ctx): cint; cdecl; external LIB_LIBAVCODEC;
 
 
 (**
@@ -5549,9 +5559,9 @@ function cint av_resample(struct AVResampleContext *c, short *dst, short *src, i
  * especially if the compensation_distance is large and the in_rate used during init is small
  *)
 attribute_deprecated
-procedure av_resample_compensate(struct AVResampleContext *c, int sample_delta, int compensation_distance);
+procedure av_resample_compensate(struct AVResampleContext *c, int sample_delta, int compensation_distance); cdecl; external LIB_LIBAVCODEC;
 attribute_deprecated
-procedure av_resample_close(struct AVResampleContext *c);
+procedure av_resample_close(struct AVResampleContext *c); cdecl; external LIB_LIBAVCODEC;
 
 (**
  * @}
@@ -5568,55 +5578,55 @@ procedure av_resample_close(struct AVResampleContext *c);
  * @deprecated unused
  *)
 attribute_deprecated
-function cint avpicture_alloc(AVPicture *picture, enum AVPixelFormat pix_fmt, int width, int height);
+function avpicture_alloc(AVPicture *picture, enum AVPixelFormat pix_fmt, int width, int height): cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * @deprecated unused
  *)
 attribute_deprecated
-procedure avpicture_free(AVPicture *picture);
+procedure avpicture_free(AVPicture *picture); cdecl; external LIB_LIBAVCODEC;
 
 (**
  * @deprecated use av_image_fill_arrays() instead.
  *)
 attribute_deprecated
-function cint avpicture_fill(AVPicture *picture, const uint8_t *ptr,
-                   enum AVPixelFormat pix_fmt, int width, int height);
+function avpicture_fill(AVPicture *picture, const uint8_t *ptr,
+                   enum AVPixelFormat pix_fmt, int width, int height): cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * @deprecated use av_image_copy_to_buffer() instead.
  *)
 attribute_deprecated
-function cint avpicture_layout(const AVPicture *src, enum AVPixelFormat pix_fmt,
+function avpicture_layout(const AVPicture *src, enum AVPixelFormat pix_fmt,
                      int width, int height,
-                     unsigned char *dest, int dest_size);
+                     unsigned char *dest, int dest_size): cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * @deprecated use av_image_get_buffer_size() instead.
  *)
 attribute_deprecated
-function cint avpicture_get_size(enum AVPixelFormat pix_fmt, int width, int height);
+function avpicture_get_size(enum AVPixelFormat pix_fmt, int width, int height): cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * @deprecated av_image_copy() instead.
  *)
 attribute_deprecated
 procedure av_picture_copy(AVPicture *dst, const AVPicture *src,
-                     enum AVPixelFormat pix_fmt, int width, int height);
+                     enum AVPixelFormat pix_fmt, int width, int height); cdecl; external LIB_LIBAVCODEC;
 
 (**
  * @deprecated unused
  *)
 attribute_deprecated
-function cint av_picture_crop(AVPicture *dst, const AVPicture *src,
-                    enum AVPixelFormat pix_fmt, int top_band, int left_band);
+function av_picture_crop(AVPicture *dst, const AVPicture *src,
+                    enum AVPixelFormat pix_fmt, int top_band, int left_band): cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * @deprecated unused
  *)
 attribute_deprecated
-function cint av_picture_pad(AVPicture *dst, const AVPicture *src, int height, int width, enum AVPixelFormat pix_fmt,
-            int padtop, int padbottom, int padleft, int padright, int *color);
+function av_picture_pad(AVPicture *dst, const AVPicture *src, int height, int width, enum AVPixelFormat pix_fmt,
+            int padtop, int padbottom, int padleft, int padright, int *color): cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * @}
@@ -5654,20 +5664,20 @@ function cint av_picture_pad(AVPicture *dst, const AVPicture *src, int height, i
  * @see av_pix_fmt_get_chroma_sub_sample
  *)
 
-procedure avcodec_get_chroma_sub_sample(enum AVPixelFormat pix_fmt, int *h_shift, int *v_shift);
+procedure avcodec_get_chroma_sub_sample(enum AVPixelFormat pix_fmt, int *h_shift, int *v_shift); cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Return a value representing the fourCC code associated to the
  * pixel format pix_fmt, or 0 if no associated fourCC code can be
  * found.
  *)
-unsigned int avcodec_pix_fmt_to_codec_tag(enum AVPixelFormat pix_fmt);
+function avcodec_pix_fmt_to_codec_tag(enum AVPixelFormat pix_fmt): cuint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * @deprecated see av_get_pix_fmt_loss()
  *)
-function cint avcodec_get_pix_fmt_loss(enum AVPixelFormat dst_pix_fmt, enum AVPixelFormat src_pix_fmt,
-                             int has_alpha);
+function avcodec_get_pix_fmt_loss(enum AVPixelFormat dst_pix_fmt, enum AVPixelFormat src_pix_fmt,
+                             int has_alpha): cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Find the best pixel format to convert to given a certain source pixel
@@ -5686,21 +5696,21 @@ function cint avcodec_get_pix_fmt_loss(enum AVPixelFormat dst_pix_fmt, enum AVPi
  * @param[out] loss_ptr Combination of flags informing you what kind of losses will occur.
  * @return The best pixel format to convert to or -1 if none was found.
  *)
-enum AVPixelFormat avcodec_find_best_pix_fmt_of_list(const enum AVPixelFormat *pix_fmt_list,
+function avcodec_find_best_pix_fmt_of_list(const enum AVPixelFormat *pix_fmt_list,
                                             enum AVPixelFormat src_pix_fmt,
-                                            int has_alpha, int *loss_ptr);
+                                            int has_alpha, int *loss_ptr): AVPixelFormat; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * @deprecated see av_find_best_pix_fmt_of_2()
  *)
-enum AVPixelFormat avcodec_find_best_pix_fmt_of_2(enum AVPixelFormat dst_pix_fmt1, enum AVPixelFormat dst_pix_fmt2,
-                                            enum AVPixelFormat src_pix_fmt, int has_alpha, int *loss_ptr);
+function avcodec_find_best_pix_fmt_of_2(enum AVPixelFormat dst_pix_fmt1, enum AVPixelFormat dst_pix_fmt2,
+                                            enum AVPixelFormat src_pix_fmt, int has_alpha, int *loss_ptr): AVPixelFormat; cdecl; external LIB_LIBAVCODEC;
 
 attribute_deprecated
-enum AVPixelFormat avcodec_find_best_pix_fmt2(enum AVPixelFormat dst_pix_fmt1, enum AVPixelFormat dst_pix_fmt2,
-                                            enum AVPixelFormat src_pix_fmt, int has_alpha, int *loss_ptr);
+function avcodec_find_best_pix_fmt2(enum AVPixelFormat dst_pix_fmt1, enum AVPixelFormat dst_pix_fmt2,
+                                            enum AVPixelFormat src_pix_fmt, int has_alpha, int *loss_ptr): AVPixelFormat; cdecl; external LIB_LIBAVCODEC;
 
-enum AVPixelFormat avcodec_default_get_format(struct AVCodecContext *s, const enum AVPixelFormat * fmt);
+function avcodec_default_get_format(struct AVCodecContext *s, const enum AVPixelFormat * fmt): AVPixelFormat; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * @}
@@ -5711,7 +5721,7 @@ enum AVPixelFormat avcodec_default_get_format(struct AVCodecContext *s, const en
  * @deprecated this function is not supposed to be used from outside of lavc
  *)
 attribute_deprecated
-procedure avcodec_set_dimensions(AVCodecContext *s, int width, int height);
+procedure avcodec_set_dimensions(AVCodecContext *s, int width, int height); cdecl; external LIB_LIBAVCODEC;
 {$endif}
 
 {$if FF_API_TAG_STRING}
@@ -5727,10 +5737,10 @@ procedure avcodec_set_dimensions(AVCodecContext *s, int width, int height);
  * @deprecated see av_fourcc_make_string() and av_fourcc2str().
  *)
 attribute_deprecated
-size_t av_get_codec_tag_string(char *buf, size_t buf_size, unsigned int codec_tag);
+function av_get_codec_tag_string(char *buf, size_t buf_size, unsigned int codec_tag): csize_t; cdecl; external LIB_LIBAVCODEC;
 {$endif}
 
-procedure avcodec_string(char *buf, int buf_size, AVCodecContext *enc, int encode);
+procedure avcodec_string(char *buf, int buf_size, AVCodecContext *enc, int encode); cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Return a name for the specified profile, if available.
@@ -5739,7 +5749,7 @@ procedure avcodec_string(char *buf, int buf_size, AVCodecContext *enc, int encod
  * @param profile the profile value for which a name is requested
  * @return A name for the profile if found, NULL otherwise.
  *)
-const pchar av_get_profile_name(const AVCodec *codec, int profile);
+function av_get_profile_name(const AVCodec *codec, int profile): pchar; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Return a name for the specified profile, if available.
@@ -5752,10 +5762,10 @@ const pchar av_get_profile_name(const AVCodec *codec, int profile);
  *       supported by a specific decoder or encoder implementation, this
  *       function searches the list of profiles from the AVCodecDescriptor
  *)
-const pchar avcodec_profile_name(enum AVCodecID codec_id, int profile);
+function avcodec_profile_name(enum AVCodecID codec_id, int profile): pchar; cdecl; external LIB_LIBAVCODEC;
 
-function cint avcodec_default_execute(AVCodecContext *c, int (*func)(AVCodecContext *c2, void *arg2),void *arg, int *ret, int count, int size);
-function cint avcodec_default_execute2(AVCodecContext *c, int (*func)(AVCodecContext *c2, void *arg2, int, int),void *arg, int *ret, int count);
+function  avcodec_default_execute(AVCodecContext *c, int (*func)(AVCodecContext *c2, void *arg2),void *arg, int *ret, int count, int size): cint; cdecl; external LIB_LIBAVCODEC;
+function avcodec_default_execute2(AVCodecContext *c, int (*func)(AVCodecContext *c2, void *arg2, int, int),void *arg, int *ret, int count): cint; cdecl; external LIB_LIBAVCODEC;
 //FIXME func typedef
 
 (**
@@ -5781,9 +5791,9 @@ function cint avcodec_default_execute2(AVCodecContext *c, int (*func)(AVCodecCon
  * @todo return the size in bytes required to store the samples in
  * case of success, at the next libavutil bump
  *)
-function cint avcodec_fill_audio_frame(AVFrame *frame, int nb_channels,
+function avcodec_fill_audio_frame(AVFrame *frame, int nb_channels,
                              enum AVSampleFormat sample_fmt, const uint8_t *buf,
-                             int buf_size, int align);
+                             int buf_size, int align): cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Reset the internal decoder state / flush internal buffers. Should be called
@@ -5794,7 +5804,7 @@ function cint avcodec_fill_audio_frame(AVFrame *frame, int nb_channels,
  * refcounted frames are used, the decoder just releases any references it might
  * keep internally, but the caller's reference remains valid.
  *)
-procedure avcodec_flush_buffers(AVCodecContext *avctx);
+procedure avcodec_flush_buffers(AVCodecContext *avctx); cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Return codec bits per sample.
@@ -5802,7 +5812,7 @@ procedure avcodec_flush_buffers(AVCodecContext *avctx);
  * @param[in] codec_id the codec
  * @return Number of bits per sample or zero if unknown for the given codec.
  *)
-function cint av_get_bits_per_sample(enum AVCodecID codec_id);
+function av_get_bits_per_sample(enum AVCodecID codec_id): cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Return the PCM codec associated with a sample format.
@@ -5810,7 +5820,7 @@ function cint av_get_bits_per_sample(enum AVCodecID codec_id);
  *            -1 (or anything else) for native
  * @return  AV_CODEC_ID_PCM_* or AV_CODEC_ID_NONE
  *)
-enum AVCodecID av_get_pcm_codec(enum AVSampleFormat fmt, int be);
+function av_get_pcm_codec(enum AVSampleFormat fmt, int be): AVCodecID; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Return codec bits per sample.
@@ -5820,7 +5830,7 @@ enum AVCodecID av_get_pcm_codec(enum AVSampleFormat fmt, int be);
  * @param[in] codec_id the codec
  * @return Number of bits per sample or zero if unknown for the given codec.
  *)
-function cint av_get_exact_bits_per_sample(enum AVCodecID codec_id);
+function av_get_exact_bits_per_sample(enum AVCodecID codec_id): cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Return audio frame duration.
@@ -5830,13 +5840,13 @@ function cint av_get_exact_bits_per_sample(enum AVCodecID codec_id);
  * @return             frame duration, in samples, if known. 0 if not able to
  *                     determine.
  *)
-function cint av_get_audio_frame_duration(AVCodecContext *avctx, int frame_bytes);
+function av_get_audio_frame_duration(AVCodecContext *avctx, int frame_bytes): cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * This function is the same as av_get_audio_frame_duration(), except it works
  * with AVCodecParameters instead of an AVCodecContext.
  *)
-function cint av_get_audio_frame_duration2(AVCodecParameters *par, int frame_bytes);
+function av_get_audio_frame_duration2(AVCodecParameters *par, int frame_bytes): cint; cdecl; external LIB_LIBAVCODEC;
 
 {$if FF_API_OLD_BSF}
 typedef struct AVBitStreamFilterContext {
@@ -5959,7 +5969,7 @@ typedef struct AVBitStreamFilter {
  * @see avcodec_register_all()
  *)
 attribute_deprecated
-procedure av_register_bitstream_filter(AVBitStreamFilter *bsf);
+procedure av_register_bitstream_filter(AVBitStreamFilter *bsf); cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Create and initialize a bitstream filter context given a bitstream
@@ -5972,7 +5982,7 @@ procedure av_register_bitstream_filter(AVBitStreamFilter *bsf);
  * and successfully initialized, NULL otherwise
  *)
 attribute_deprecated
-AVBitStreamFilterContext *av_bitstream_filter_init(const name: pchar);
+function av_bitstream_filter_init(const name: pchar): PAVBitStreamFilterContext; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Filter bitstream.
@@ -6004,10 +6014,10 @@ AVBitStreamFilterContext *av_bitstream_filter_init(const name: pchar);
  * *poutbuf_size was set to 0, which indicates the packet should be dropped.
  *)
 attribute_deprecated
-function cint av_bitstream_filter_filter(AVBitStreamFilterContext *bsfc,
+function av_bitstream_filter_filter(AVBitStreamFilterContext *bsfc,
                                AVCodecContext *avctx, const pchar args,
                                uint8_t **poutbuf, int *poutbuf_size,
-                               const uint8_t *buf, int buf_size, int keyframe);
+                               const uint8_t *buf, int buf_size, int keyframe): cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Release bitstream filter context.
@@ -6016,7 +6026,7 @@ function cint av_bitstream_filter_filter(AVBitStreamFilterContext *bsfc,
  * av_bitstream_filter_init(), can be NULL
  *)
 attribute_deprecated
-procedure av_bitstream_filter_close(AVBitStreamFilterContext *bsf);
+procedure av_bitstream_filter_close(AVBitStreamFilterContext *bsf); cdecl; external LIB_LIBAVCODEC;
 
 (**
  * If f is NULL, return the first registered bitstream filter,
@@ -6027,14 +6037,14 @@ procedure av_bitstream_filter_close(AVBitStreamFilterContext *bsf);
  * filters.
  *)
 attribute_deprecated
-AVBitStreamFilter *av_bitstream_filter_next(const AVBitStreamFilter *f);
+function av_bitstream_filter_next(const AVBitStreamFilter *f): PAVBitStreamFilter; cdecl; external LIB_LIBAVCODEC;
 {$endif}
 
 (**
  * @return a bitstream filter with the specified name or NULL if no such
  *         bitstream filter exists.
  *)
-const AVBitStreamFilter *av_bsf_get_by_name(const name: pchar);
+function av_bsf_get_by_name(const name: pchar): PAVBitStreamFilter; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Iterate over all registered bitstream filters.
@@ -6045,7 +6055,7 @@ const AVBitStreamFilter *av_bsf_get_by_name(const name: pchar);
  * @return the next registered bitstream filter or NULL when the iteration is
  *         finished
  *)
-const AVBitStreamFilter *av_bsf_next(void **opaque);
+function av_bsf_next(void **opaque): PAVBitStreamFilter; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Allocate a context for a given bitstream filter. The caller must fill in the
@@ -6059,13 +6069,13 @@ const AVBitStreamFilter *av_bsf_next(void **opaque);
  *
  * @return 0 on success, a negative AVERROR code on failure
  *)
-function cint av_bsf_alloc(const AVBitStreamFilter *filter, AVBSFContext **ctx);
+function av_bsf_alloc(const AVBitStreamFilter *filter, AVBSFContext **ctx): cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Prepare the filter for use, after all the parameters and options have been
  * set.
  *)
-function cint av_bsf_init(AVBSFContext *ctx);
+function av_bsf_init(AVBSFContext *ctx):  cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Submit a packet for filtering.
@@ -6083,7 +6093,7 @@ function cint av_bsf_init(AVBSFContext *ctx);
  *
  * @return 0 on success, a negative AVERROR on error.
  *)
-function cint av_bsf_send_packet(AVBSFContext *ctx, AVPacket *pkt);
+function av_bsf_send_packet(AVBSFContext *ctx, AVPacket *pkt): cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Retrieve a filtered packet.
@@ -6109,13 +6119,13 @@ function cint av_bsf_send_packet(AVBSFContext *ctx, AVPacket *pkt);
  * output fewer packets than were sent to it, so this function may return
  * AVERROR(EAGAIN) immediately after a successful av_bsf_send_packet() call.
  *)
-function cint av_bsf_receive_packet(AVBSFContext *ctx, AVPacket *pkt);
+function av_bsf_receive_packet(AVBSFContext *ctx, AVPacket *pkt): cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Free a bitstream filter context and everything associated with it; write NULL
  * into the supplied pointer.
  *)
-procedure av_bsf_free(AVBSFContext **ctx);
+procedure av_bsf_free(AVBSFContext **ctx); cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Get the AVClass for AVBSFContext. It can be used in combination with
@@ -6123,7 +6133,7 @@ procedure av_bsf_free(AVBSFContext **ctx);
  *
  * @see av_opt_find().
  *)
-const AVClass *av_bsf_get_class();
+function av_bsf_get_class(): PAVClass; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Structure for chain/list of bitstream filters.
@@ -6138,14 +6148,14 @@ typedef struct AVBSFList AVBSFList;
  *
  * @return Pointer to @ref AVBSFList on success, NULL in case of failure
  *)
-AVBSFList *av_bsf_list_alloc();
+function av_bsf_list_alloc(): PAVBSFList; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Free list of bitstream filters.
  *
  * @param lst Pointer to pointer returned by av_bsf_list_alloc()
  *)
-procedure av_bsf_list_free(AVBSFList **lst);
+procedure av_bsf_list_free(AVBSFList **lst); cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Append bitstream filter to the list of bitstream filters.
@@ -6155,7 +6165,7 @@ procedure av_bsf_list_free(AVBSFList **lst);
  *
  * @return >=0 on success, negative AVERROR in case of failure
  *)
-function cint av_bsf_list_append(AVBSFList *lst, AVBSFContext *bsf);
+function av_bsf_list_append(AVBSFList *lst, AVBSFContext *bsf): cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Construct new bitstream filter context given it's name and options
@@ -6167,7 +6177,7 @@ function cint av_bsf_list_append(AVBSFList *lst, AVBSFContext *bsf);
  *
  * @return >=0 on success, negative AVERROR in case of failure
  *)
-function cint av_bsf_list_append2(AVBSFList *lst, const pchar  bsf_name, AVDictionary **options);
+function av_bsf_list_append2(AVBSFList *lst, const pchar  bsf_name, AVDictionary **options): cint; cdecl; external LIB_LIBAVCODEC;
 (**
  * Finalize list of bitstream filters.
  *
@@ -6184,7 +6194,7 @@ function cint av_bsf_list_append2(AVBSFList *lst, const pchar  bsf_name, AVDicti
  *
  * @return >=0 on success, negative AVERROR in case of failure
  *)
-function cint av_bsf_list_finalize(AVBSFList **lst, AVBSFContext **bsf);
+function av_bsf_list_finalize(AVBSFList **lst, AVBSFContext **bsf): cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Parse string describing list of bitstream filters and create single
@@ -6199,7 +6209,7 @@ function cint av_bsf_list_finalize(AVBSFList **lst, AVBSFContext **bsf);
  *
  * @return >=0 on success, negative AVERROR in case of failure
  *)
-function cint av_bsf_list_parse_str(const pchar str, AVBSFContext **bsf);
+function av_bsf_list_parse_str(const pchar str, AVBSFContext **bsf): cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Get null/pass-through bitstream filter.
@@ -6208,7 +6218,7 @@ function cint av_bsf_list_parse_str(const pchar str, AVBSFContext **bsf);
  *
  * @return
  *)
-function cint av_bsf_get_null_filter(AVBSFContext **bsf);
+function av_bsf_get_null_filter(AVBSFContext **bsf): cint; cdecl; external LIB_LIBAVCODEC;
 
 (* memory *)
 
@@ -6219,13 +6229,13 @@ function cint av_bsf_get_null_filter(AVBSFContext **bsf);
  * In addition the whole buffer will initially and after resizes
  * be 0-initialized so that no uninitialized data will ever appear.
  *)
-procedure av_fast_padded_malloc(void *ptr, unsigned int *size, size_t min_size);
+procedure av_fast_padded_malloc(void *ptr, unsigned int *size, size_t min_size); cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Same behaviour av_fast_padded_malloc except that buffer will always
  * be 0-initialized after call.
  *)
-procedure av_fast_padded_mallocz(void *ptr, unsigned int *size, size_t min_size);
+procedure av_fast_padded_mallocz(void *ptr, unsigned int *size, size_t min_size); cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Encode extradata length to a buffer. Used by xiph codecs.
@@ -6234,7 +6244,7 @@ procedure av_fast_padded_mallocz(void *ptr, unsigned int *size, size_t min_size)
  * @param v size of extradata in bytes
  * @return number of bytes written to the buffer.
  *)
-unsigned int av_xiphlacing(unsigned char *s, unsigned int v);
+function av_xiphlacing(unsigned char *s, unsigned int v): cuint; cdecl; external LIB_LIBAVCODEC;
 
 {$if FF_API_MISSING_SAMPLE}
 (**
@@ -6251,7 +6261,7 @@ unsigned int av_xiphlacing(unsigned char *s, unsigned int v);
  * @deprecated Use avpriv_report_missing_feature() instead.
  *)
 attribute_deprecated
-procedure av_log_missing_feature(void *avc, const pchar feature, int want_sample);
+procedure av_log_missing_feature(void *avc, const pchar feature, int want_sample); cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Log a generic warning message asking for a sample. This function is
@@ -6263,31 +6273,31 @@ procedure av_log_missing_feature(void *avc, const pchar feature, int want_sample
  * @deprecated Use avpriv_request_sample() instead.
  *)
 attribute_deprecated
-procedure av_log_ask_for_sample(void *avc, const pchar msg, ...) av_printf_format(2, 3);
+procedure av_log_ask_for_sample(void *avc, const pchar msg, ...) av_printf_format(2, 3); cdecl; external LIB_LIBAVCODEC;
 {$endif} (* FF_API_MISSING_SAMPLE *)
 
 (**
  * Register the hardware accelerator hwaccel.
  *)
-procedure av_register_hwaccel(AVHWAccel *hwaccel);
+procedure av_register_hwaccel(AVHWAccel *hwaccel); cdecl; external LIB_LIBAVCODEC;
 
 (**
  * If hwaccel is NULL, returns the first registered hardware accelerator,
  * if hwaccel is non-NULL, returns the next registered hardware accelerator
  * after hwaccel, or NULL if hwaccel is the last one.
  *)
-AVHWAccel *av_hwaccel_next(const AVHWAccel *hwaccel);
-
+function av_hwaccel_next(const AVHWAccel *hwaccel): PAVHWAccel; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Lock operation used by lockmgr
  *)
-enum AVLockOp {
-  AV_LOCK_CREATE,  ///< Create a mutex
-  AV_LOCK_OBTAIN,  ///< Lock the mutex
-  AV_LOCK_RELEASE, ///< Unlock the mutex
-  AV_LOCK_DESTROY, ///< Free mutex resources
-};
+type
+  AVLockOp = (
+    AV_LOCK_CREATE,  ///< Create a mutex
+    AV_LOCK_OBTAIN,  ///< Lock the mutex
+    AV_LOCK_RELEASE, ///< Unlock the mutex
+    AV_LOCK_DESTROY  ///< Free mutex resources
+  );
 
 (**
  * Register a user provided lock manager supporting the operations
@@ -6312,39 +6322,39 @@ enum AVLockOp {
  *           implement your lock manager). If cb is set to NULL the
  *           lockmgr will be unregistered.
  *)
-function cint av_lockmgr_register(int (*cb)(void **mutex, enum AVLockOp op));
+function av_lockmgr_register(int (*cb)(void **mutex, enum AVLockOp op)): cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Get the type of the given codec.
  *)
-enum AVMediaType avcodec_get_type(enum AVCodecID codec_id);
+function avcodec_get_type(enum AVCodecID codec_id): AVMediaType; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Get the name of a codec.
  * @return  a static string identifying the codec; never NULL
  *)
-const pchar avcodec_get_name(enum AVCodecID id);
+function avcodec_get_name(enum AVCodecID id): pchar; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * @return a positive value if s is open (i.e. avcodec_open2() was called on it
  * with no corresponding avcodec_close()), 0 otherwise.
  *)
-function cint avcodec_is_open(AVCodecContext *s);
+function avcodec_is_open(AVCodecContext *s): cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * @return a non-zero number if codec is an encoder, zero otherwise
  *)
-function cint av_codec_is_encoder(const AVCodec *codec);
+function av_codec_is_encoder(const AVCodec *codec): cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * @return a non-zero number if codec is a decoder, zero otherwise
  *)
-function cint av_codec_is_decoder(const AVCodec *codec);
+function av_codec_is_decoder(const AVCodec *codec): cint; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * @return descriptor for given codec ID or NULL if no descriptor exists.
  *)
-const AVCodecDescriptor *avcodec_descriptor_get(enum AVCodecID id);
+function avcodec_descriptor_get(enum AVCodecID id): PAVCodecDescriptor; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Iterate over all codec descriptors known to libavcodec.
@@ -6353,13 +6363,13 @@ const AVCodecDescriptor *avcodec_descriptor_get(enum AVCodecID id);
  *
  * @return next descriptor or NULL after the last descriptor
  *)
-const AVCodecDescriptor *avcodec_descriptor_next(const AVCodecDescriptor *prev);
+function avcodec_descriptor_next(const AVCodecDescriptor *prev): PAVCodecDescriptor; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * @return codec descriptor with the given name or NULL if no such descriptor
  *         exists.
  *)
-const AVCodecDescriptor *avcodec_descriptor_get_by_name(const name: pchar);
+function avcodec_descriptor_get_by_name(const name: pchar): PAVCodecDescriptor; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * Allocate a CPB properties structure and initialize its fields to default
@@ -6370,7 +6380,7 @@ const AVCodecDescriptor *avcodec_descriptor_get_by_name(const name: pchar);
  *
  * @return the newly allocated struct or NULL on failure
  *)
-AVCPBProperties *av_cpb_properties_alloc(size_t *size);
+function av_cpb_properties_alloc(size: pcsize_t): PAVCPBProperties; cdecl; external LIB_LIBAVCODEC;
 
 (**
  * @}
