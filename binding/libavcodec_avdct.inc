@@ -83,9 +83,9 @@
  *
  * To free it use av_free()
  *)
-function avcodec_dct_alloc(): PAVDCT; cdecl; external LIB_LIBAVCODEC;
-function avcodec_dct_init(dct: PAVDCT): cint; cdecl; external LIB_LIBAVCODEC;
+function avcodec_dct_alloc(): PAVDCT; cdecl; external LIB_AVCODEC;
+function avcodec_dct_init(dct: PAVDCT): cint; cdecl; external LIB_AVCODEC;
 
-function avcodec_dct_get_class(): PAVClass; cdecl; external LIB_LIBAVCODEC;
+function avcodec_dct_get_class(): PAVClass; cdecl; external LIB_AVCODEC;
 
 // #endif (* AVCODEC_AVDCT_H *)

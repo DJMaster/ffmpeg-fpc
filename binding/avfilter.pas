@@ -654,7 +654,7 @@ function cint avfilter_link_get_channels(AVFilterLink *link);
  * @deprecated applications are not supposed to mess with links, they should
  * close the sinks.
  *)
-attribute_deprecated
+//TODO attribute_deprecated
 procedure avfilter_link_set_closed(AVFilterLink *link, int closed);
 
 (**
@@ -679,7 +679,7 @@ procedure avfilter_register_all();
 
 {$if FF_API_OLD_FILTER_REGISTER}
 (** Uninitialize the filter system. Unregister all filters. *)
-attribute_deprecated
+//TODO attribute_deprecated
 procedure avfilter_uninit();
 {$endif}
 
@@ -722,8 +722,8 @@ const AVFilter *avfilter_next(const AVFilter *prev);
  * was already reached.
  * @deprecated use avfilter_next()
  *)
-attribute_deprecated
-AVFilter **av_filter_next(AVFilter **filter);
+//TODO attribute_deprecated
+function AVFilter **av_filter_next(AVFilter **filter);
 {$endif}
 
 {$if FF_API_AVFILTER_OPEN}
@@ -737,7 +737,7 @@ AVFilter **av_filter_next(AVFilter **filter);
  * @return >= 0 in case of success, a negative error code otherwise
  * @deprecated use avfilter_graph_alloc_filter() instead
  *)
-attribute_deprecated
+//TODO attribute_deprecated
 function cint avfilter_open(AVFilterContext **filter_ctx, AVFilter *filter, const pchar inst_name);
 {$endif}
 
@@ -753,7 +753,7 @@ function cint avfilter_open(AVFilterContext **filter_ctx, AVFilter *filter, cons
  *               of this parameter varies by filter.
  * @return       zero on success
  *)
-attribute_deprecated
+//TODO attribute_deprecated
 function cint avfilter_init_filter(AVFilterContext *filter, const pchar args, void *opaque);
 {$endif}
 
@@ -856,7 +856,8 @@ typedef struct AVFilterGraph {
 
     char *scale_sws_opts; ///< sws options to use for the auto-inserted scale filters
 {$if FF_API_LAVR_OPTS}
-    attribute_deprecated char *resample_lavr_opts;   ///< libavresample options to use for the auto-inserted resample filters
+    //TODO attribute_deprecated
+    char *resample_lavr_opts; ///< libavresample options to use for the auto-inserted resample filters
 {$endif}
 
     (**
@@ -966,7 +967,7 @@ AVFilterContext *avfilter_graph_get_filter(AVFilterGraph *graph, const pchar nam
  * @deprecated use avfilter_graph_alloc_filter() to allocate a filter in a
  * filter graph
  *)
-attribute_deprecated
+//TODO attribute_deprecated
 function cint avfilter_graph_add_filter(AVFilterGraph *graphctx, AVFilterContext *filter);
 {$endif}
 

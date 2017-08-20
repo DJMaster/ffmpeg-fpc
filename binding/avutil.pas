@@ -34,7 +34,7 @@ uses
   ctypes;
 
 const
-  LIB_LIBAVUTIL = 'avutil-55.dll';
+  LIB_AVUTIL = 'avutil-55.dll';
 
 // #ifndef AVUTIL_AVUTIL_H
 // #define AVUTIL_AVUTIL_H

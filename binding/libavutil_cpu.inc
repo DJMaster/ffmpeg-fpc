@@ -93,7 +93,8 @@ procedure av_force_cpu_flags(int flags);
  * This function is mainly useful for testing.
  * Please use av_force_cpu_flags() and av_get_cpu_flags() instead which are more flexible
  *)
-attribute_deprecated procedure av_set_cpu_flags_mask(int mask);
+//TODO attribute_deprecated
+procedure av_set_cpu_flags_mask(int mask);
 
 (**
  * Parse CPU flags from a string.
@@ -104,7 +105,7 @@ attribute_deprecated procedure av_set_cpu_flags_mask(int mask);
  * Please use av_parse_cpu_caps() when possible.
  * @return a combination of AV_CPU_* flags, negative on error.
  *)
-attribute_deprecated
+//TODO attribute_deprecated
 function cint av_parse_cpu_flags(const pchar s);
 
 (**

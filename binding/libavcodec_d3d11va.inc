@@ -111,7 +111,7 @@ type
  *
  * @return Newly-allocated AVD3D11VAContext or NULL on failure.
  *)
-function av_d3d11va_alloc_context(): PAVD3D11VAContext; cdecl; external LIB_LIBAVCODEC;
+function av_d3d11va_alloc_context(): PAVD3D11VAContext; cdecl; external LIB_AVCODEC;
 
 (**
  * @}

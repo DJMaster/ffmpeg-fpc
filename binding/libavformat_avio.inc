@@ -548,7 +548,7 @@ function cint avio_feof(AVIOContext *s);
 (**
  * @deprecated use avio_feof()
  *)
-attribute_deprecated
+//TODO attribute_deprecated
 function cint url_feof(AVIOContext *s);
 {$endif}
 

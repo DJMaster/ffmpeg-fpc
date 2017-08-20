@@ -901,7 +901,7 @@ typedef struct AVStream {
     (**
      * @deprecated use the codecpar struct instead
      *)
-    attribute_deprecated
+    //TODO attribute_deprecated
     AVCodecContext *codec;
 {$endif}
     void *priv_data;
@@ -910,7 +910,7 @@ typedef struct AVStream {
     (**
      * @deprecated this field is unused
      *)
-    attribute_deprecated
+    //TODO attribute_deprecated
     struct AVFrac pts;
 {$endif}
 
@@ -1877,7 +1877,7 @@ typedef struct AVFormatContext {
      *
      * @deprecated Use io_open and io_close.
      *)
-    attribute_deprecated
+    //TODO attribute_deprecated
     int (*open_cb)(struct AVFormatContext *s, AVIOContext **p, const pchar url, int flags, const AVIOInterruptCB *int_cb, AVDictionary **options);
 {$endif}
 
@@ -1936,23 +1936,25 @@ typedef struct AVFormatContext {
  * compatibility, and do not need to be used anymore.
  *)
 function cint av_format_get_probe_score(const AVFormatContext *s);
-AVCodec * av_format_get_video_codec(const AVFormatContext *s);
+function AVCodec * av_format_get_video_codec(const AVFormatContext *s);
 procedure      av_format_set_video_codec(AVFormatContext *s, AVCodec *c);
-AVCodec * av_format_get_audio_codec(const AVFormatContext *s);
+function AVCodec * av_format_get_audio_codec(const AVFormatContext *s);
 procedure      av_format_set_audio_codec(AVFormatContext *s, AVCodec *c);
-AVCodec * av_format_get_subtitle_codec(const AVFormatContext *s);
+function AVCodec * av_format_get_subtitle_codec(const AVFormatContext *s);
 procedure      av_format_set_subtitle_codec(AVFormatContext *s, AVCodec *c);
-AVCodec * av_format_get_data_codec(const AVFormatContext *s);
+function AVCodec * av_format_get_data_codec(const AVFormatContext *s);
 procedure      av_format_set_data_codec(AVFormatContext *s, AVCodec *c);
 function cint       av_format_get_metadata_header_padding(const AVFormatContext *s);
 procedure      av_format_set_metadata_header_padding(AVFormatContext *s, int c);
-void *    av_format_get_opaque(const AVFormatContext *s);
+function void *    av_format_get_opaque(const AVFormatContext *s);
 procedure      av_format_set_opaque(AVFormatContext *s, void *opaque);
-av_format_control_message av_format_get_control_message_cb(const AVFormatContext *s);
+function av_format_control_message av_format_get_control_message_cb(const AVFormatContext *s);
 procedure      av_format_set_control_message_cb(AVFormatContext *s, av_format_control_message callback);
 {$if FF_API_OLD_OPEN_CALLBACKS}
-attribute_deprecated AVOpenCallback av_format_get_open_cb(const AVFormatContext *s);
-attribute_deprecated procedure av_format_set_open_cb(AVFormatContext *s, AVOpenCallback callback);
+//TODO attribute_deprecated
+function AVOpenCallback av_format_get_open_cb(const AVFormatContext *s);
+//TODO attribute_deprecated
+procedure av_format_set_open_cb(AVFormatContext *s, AVOpenCallback callback);
 {$endif}
 
 (**
@@ -2239,7 +2241,7 @@ function cint av_probe_input_buffer(AVIOContext *pb, AVInputFormat **fmt,
  *)
 function cint avformat_open_input(AVFormatContext **ps, const pchar url, AVInputFormat *fmt, AVDictionary **options);
 
-attribute_deprecated
+//TODO attribute_deprecated
 function cint av_demuxer_open(AVFormatContext *ic);
 
 (**
@@ -2978,7 +2980,7 @@ function cint avformat_queue_attached_pictures(AVFormatContext *s);
  *          AVERROR code on failure
  *)
 {$if FF_API_OLD_BSF}
-attribute_deprecated
+//TODO attribute_deprecated
 function cint av_apply_bitstream_filters(AVCodecContext *codec, AVPacket *pkt,
                                AVBitStreamFilterContext *bsfc);
 {$endif}

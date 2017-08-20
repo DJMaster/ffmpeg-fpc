@@ -281,7 +281,7 @@ typedef struct AVFrame {
      * PTS copied from the AVPacket that was decoded to produce this frame.
      * @deprecated use the pts field instead
      *)
-    attribute_deprecated
+    //TODO attribute_deprecated
     int64_t pkt_pts;
 #endif
 
@@ -315,7 +315,7 @@ typedef struct AVFrame {
     (**
      * @deprecated unused
      *)
-    attribute_deprecated
+    //TODO attribute_deprecated
     uint64_t error[AV_NUM_DATA_POINTERS];
 #endif
 
@@ -501,15 +501,15 @@ typedef struct AVFrame {
     (**
      * QP table
      *)
-    attribute_deprecated
+    //TODO attribute_deprecated
     int8_t *qscale_table;
     (**
      * QP store stride
      *)
-    attribute_deprecated
+    //TODO attribute_deprecated
     int qstride;
 
-    attribute_deprecated
+    //TODO attribute_deprecated
     int qscale_type;
 
     AVBufferRef *qp_table_buf;
