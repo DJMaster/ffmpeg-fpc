@@ -31,6 +31,12 @@ unit avfilter;
 
 interface
 
+uses
+  ctypes;
+
+const
+   LIB_AVFILTER = 'avfilter-6.dll';
+
 // #ifndef AVFILTER_AVFILTER_H
 // #define AVFILTER_AVFILTER_H
 

@@ -28,6 +28,12 @@ unit avdevice;
 
 interface
 
+uses
+  ctypes;
+
+const
+   LIB_AVDEVICE = 'avdevice-57.dll';
+
 // #ifndef AVDEVICE_AVDEVICE_H
 // #define AVDEVICE_AVDEVICE_H
 

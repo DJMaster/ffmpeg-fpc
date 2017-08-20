@@ -30,6 +30,12 @@ unit avresample;
 
 interface
 
+uses
+  ctypes;
+
+const
+   LIB_AVRESAMPLE = 'avresample-3.dll';
+
 // #ifndef AVRESAMPLE_AVRESAMPLE_H
 // #define AVRESAMPLE_AVRESAMPLE_H
 

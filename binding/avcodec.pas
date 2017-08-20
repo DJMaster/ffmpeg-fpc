@@ -30,9 +30,11 @@ unit avcodec;
 
 interface
 
+uses
+  ctypes;
+
 const
    LIB_AVCODEC = 'avcodec-57.dll';
-
 
 // #ifndef AVCODEC_AVCODEC_H
 // #define AVCODEC_AVCODEC_H

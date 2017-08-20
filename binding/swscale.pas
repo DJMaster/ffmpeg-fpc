@@ -30,6 +30,12 @@ unit swscale;
 
 interface
 
+uses
+  ctypes;
+
+const
+  LIB_SWSCALE = 'swscale-4.dll';
+
 // #ifndef SWSCALE_SWSCALE_H
 // #define SWSCALE_SWSCALE_H
 

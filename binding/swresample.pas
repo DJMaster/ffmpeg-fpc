@@ -30,6 +30,12 @@ unit swresample;
 
 interface
 
+uses
+  ctypes;
+
+const
+  LIB_SWRESAMPLE = 'swresample-2.dll';
+
 // #ifndef SWRESAMPLE_SWRESAMPLE_H
 // #define SWRESAMPLE_SWRESAMPLE_H
 

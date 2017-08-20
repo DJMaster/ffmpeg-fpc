@@ -30,6 +30,12 @@ unit postprocess;
 
 interface
 
+uses
+  ctypes;
+
+const
+  LIB_POSTPROCESS = 'postproc-54.dll';
+
 // #ifndef POSTPROC_POSTPROCESS_H
 // #define POSTPROC_POSTPROCESS_H
 
