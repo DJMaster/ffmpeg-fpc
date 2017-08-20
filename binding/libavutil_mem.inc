@@ -266,7 +266,7 @@ void *av_calloc(size_t nmemb, size_t size) av_malloc_attrib;
  * @see av_fast_realloc()
  * @see av_reallocp()
  *)
-void *av_realloc(void *ptr, size_t size) av_alloc_size(2);
+void *av_realloc(ptr: pointer, size_t size) av_alloc_size(2);
 
 (**
  * Allocate, reallocate, or free a block of memory through a pointer to a
@@ -288,7 +288,7 @@ void *av_realloc(void *ptr, size_t size) av_alloc_size(2);
  *          correctly aligned.
  *)
 av_warn_unused_result
-function cint av_reallocp(void *ptr, size_t size);
+function cint av_reallocp(ptr: pointer, size_t size);
 
 (**
  * Allocate, reallocate, or free a block of memory.
@@ -305,7 +305,7 @@ function cint av_reallocp(void *ptr, size_t size);
  *   @endcode
  *   pattern.
  *)
-void *av_realloc_f(void *ptr, size_t nelem, size_t elsize);
+void *av_realloc_f(ptr: pointer, size_t nelem, size_t elsize);
 
 (**
  * Allocate, reallocate, or free an array.
@@ -325,7 +325,7 @@ void *av_realloc_f(void *ptr, size_t nelem, size_t elsize);
  *          correctly aligned.
  * @see av_reallocp_array()
  *)
-av_alloc_size(2, 3) void *av_realloc_array(void *ptr, size_t nmemb, size_t size);
+av_alloc_size(2, 3) void *av_realloc_array(ptr: pointer, size_t nmemb, size_t size);
 
 (**
  * Allocate, reallocate, or free an array through a pointer to a pointer.
@@ -344,7 +344,7 @@ av_alloc_size(2, 3) void *av_realloc_array(void *ptr, size_t nmemb, size_t size)
  * @warning Unlike av_malloc(), the allocated memory is not guaranteed to be
  *          correctly aligned.
  *)
-av_alloc_size(2, 3) int av_reallocp_array(void *ptr, size_t nmemb, size_t size);
+av_alloc_size(2, 3) int av_reallocp_array(ptr: pointer, size_t nmemb, size_t size);
 
 (**
  * Reallocate the given buffer if it is not large enough, otherwise do nothing.
@@ -378,7 +378,7 @@ av_alloc_size(2, 3) int av_reallocp_array(void *ptr, size_t nmemb, size_t size);
  * @see av_realloc()
  * @see av_fast_malloc()
  *)
-void *av_fast_realloc(void *ptr, unsigned int *size, size_t min_size);
+void *av_fast_realloc(ptr: pointer, unsigned int *size, size_t min_size);
 
 (**
  * Allocate a buffer, reusing the given one if large enough.
@@ -409,7 +409,7 @@ void *av_fast_realloc(void *ptr, unsigned int *size, size_t min_size);
  * @see av_realloc()
  * @see av_fast_mallocz()
  *)
-procedure av_fast_malloc(void *ptr, unsigned int *size, size_t min_size);
+procedure av_fast_malloc(ptr: pointer, unsigned int *size, size_t min_size);
 
 (**
  * Allocate and clear a buffer, reusing the given one if large enough.
@@ -429,7 +429,7 @@ procedure av_fast_malloc(void *ptr, unsigned int *size, size_t min_size);
  * @param[in]     min_size New size of buffer `*ptr`
  * @see av_fast_malloc()
  *)
-procedure av_fast_mallocz(void *ptr, unsigned int *size, size_t min_size);
+procedure av_fast_mallocz(ptr: pointer, unsigned int *size, size_t min_size);
 
 (**
  * Free a memory block which has been allocated with a function of av_malloc()
@@ -442,7 +442,7 @@ procedure av_fast_mallocz(void *ptr, unsigned int *size, size_t min_size);
  *       behind dangling pointers.
  * @see av_freep()
  *)
-procedure av_free(void *ptr);
+procedure av_free(ptr: pointer);
 
 (**
  * Free a memory block which has been allocated with a function of av_malloc()
@@ -465,7 +465,7 @@ procedure av_free(void *ptr);
  * @note `*ptr = NULL` is safe and leads to no action.
  * @see av_free()
  *)
-procedure av_freep(void *ptr);
+procedure av_freep(ptr: pointer);
 
 (**
  * Duplicate a string.

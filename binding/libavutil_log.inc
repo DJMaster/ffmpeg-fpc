@@ -311,7 +311,7 @@ procedure av_log_default_callback(void *avcl, int level, const pchar fmt,
  * @return The AVClass class_name
  *)
 const char* av_default_item_name(void* ctx);
-AVClassCategory av_default_get_category(void *ptr);
+AVClassCategory av_default_get_category(ptr: pointer);
 
 (**
  * Format a line of log the same way as the default callback.
@@ -320,7 +320,7 @@ AVClassCategory av_default_get_category(void *ptr);
  * @param print_prefix  used to store whether the prefix must be printed;
  *                      must point to a persistent integer initially set to 1
  *)
-procedure av_log_format_line(void *ptr, int level, const pchar fmt, va_list vl,
+procedure av_log_format_line(ptr: pointer, int level, const pchar fmt, va_list vl,
                         char *line, int line_size, int *print_prefix);
 
 (**
@@ -337,7 +337,7 @@ procedure av_log_format_line(void *ptr, int level, const pchar fmt, va_list vl,
  *         character. If the return value is not less than line_size, it means
  *         that the log message was truncated to fit the buffer.
  *)
-function cint av_log_format_line2(void *ptr, int level, const pchar fmt, va_list vl,
+function cint av_log_format_line2(ptr: pointer, int level, const pchar fmt, va_list vl,
                         char *line, int line_size, int *print_prefix);
 
 {$if FF_API_DLOG}

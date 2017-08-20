@@ -6235,13 +6235,13 @@ function av_bsf_get_null_filter(AVBSFContext **bsf): cint; cdecl; external LIB_A
  * In addition the whole buffer will initially and after resizes
  * be 0-initialized so that no uninitialized data will ever appear.
  *)
-procedure av_fast_padded_malloc(void *ptr, unsigned int *size, size_t min_size); cdecl; external LIB_AVCODEC;
+procedure av_fast_padded_malloc(ptr: pointer, unsigned int *size, size_t min_size); cdecl; external LIB_AVCODEC;
 
 (**
  * Same behaviour av_fast_padded_malloc except that buffer will always
  * be 0-initialized after call.
  *)
-procedure av_fast_padded_mallocz(void *ptr, unsigned int *size, size_t min_size); cdecl; external LIB_AVCODEC;
+procedure av_fast_padded_mallocz(ptr: pointer, unsigned int *size, size_t min_size); cdecl; external LIB_AVCODEC;
 
 (**
  * Encode extradata length to a buffer. Used by xiph codecs.
@@ -6250,7 +6250,7 @@ procedure av_fast_padded_mallocz(void *ptr, unsigned int *size, size_t min_size)
  * @param v size of extradata in bytes
  * @return number of bytes written to the buffer.
  *)
-function av_xiphlacing(unsigned char *s, unsigned int v): cuint; cdecl; external LIB_AVCODEC;
+function av_xiphlacing(s: pcuchar; v: cuint): cuint; cdecl; external LIB_AVCODEC;
 
 {$if FF_API_MISSING_SAMPLE}
 (**
@@ -6267,7 +6267,7 @@ function av_xiphlacing(unsigned char *s, unsigned int v): cuint; cdecl; external
  * @deprecated Use avpriv_report_missing_feature() instead.
  *)
 //TODO attribute_deprecated
-procedure av_log_missing_feature(void *avc, const pchar feature, int want_sample); cdecl; external LIB_AVCODEC;
+procedure av_log_missing_feature(avc: pointer; const feature: pchar; want_sample: cint); cdecl; external LIB_AVCODEC;
 
 (**
  * Log a generic warning message asking for a sample. This function is
@@ -6279,7 +6279,7 @@ procedure av_log_missing_feature(void *avc, const pchar feature, int want_sample
  * @deprecated Use avpriv_request_sample() instead.
  *)
 //TODO attribute_deprecated
-procedure av_log_ask_for_sample(void *avc, const pchar msg, ...) av_printf_format(2, 3); cdecl; external LIB_AVCODEC;
+procedure av_log_ask_for_sample(avc: pointer; const msg: pchar; ...) av_printf_format(2, 3); cdecl; external LIB_AVCODEC;
 {$endif} (* FF_API_MISSING_SAMPLE *)
 
 (**
