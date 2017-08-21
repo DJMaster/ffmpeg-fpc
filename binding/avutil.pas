@@ -186,24 +186,24 @@ const
 (**
  * Return the LIBAVUTIL_VERSION_INT constant.
  *)
-unsigned avutil_version();
+function avutil_version(): cunsigned;
 
 (**
  * Return an informative version string. This usually is the actual release
  * version number or a git commit description. This string has no fixed format
  * and can change any time. It should never be parsed by code.
  *)
-const pchar av_version_info();
+function av_version_info(): pchar;
 
 (**
  * Return the libavutil build-time configuration.
  *)
-const pchar avutil_configuration();
+function avutil_configuration(): pchar;
 
 (**
  * Return the libavutil license.
  *)
-const pchar avutil_license();
+function avutil_license(): pchar;
 
 (**
  * @}
@@ -213,8 +213,8 @@ const pchar avutil_license();
  * @addtogroup lavu_media Media Type
  * @brief Media Type
  *)
-
-enum AVMediaType {
+type
+  AVMediaType = (
     AVMEDIA_TYPE_UNKNOWN = -1,  ///< Usually treated as AVMEDIA_TYPE_DATA
     AVMEDIA_TYPE_VIDEO,
     AVMEDIA_TYPE_AUDIO,
@@ -222,13 +222,13 @@ enum AVMediaType {
     AVMEDIA_TYPE_SUBTITLE,
     AVMEDIA_TYPE_ATTACHMENT,    ///< Opaque data information usually sparse
     AVMEDIA_TYPE_NB
-};
+  );
 
 (**
  * Return a string describing the media_type enum, NULL if media_type
  * is unknown.
  *)
-const pchar av_get_media_type_string(enum AVMediaType media_type);
+function av_get_media_type_string(enum AVMediaType media_type): pchar;
 
 (**
  * @defgroup lavu_const Constants
@@ -239,7 +239,7 @@ const pchar av_get_media_type_string(enum AVMediaType media_type);
  * @note those definition should move to avcodec
  * @{
  *)
-
+const
   FF_LAMBDA_SHIFT = 7;
   FF_LAMBDA_SCALE = (1 shl FF_LAMBDA_SHIFT);
   FF_QP2LAMBDA = 118; ///< factor to convert from H.263 QP to lambda
@@ -286,17 +286,17 @@ const pchar av_get_media_type_string(enum AVMediaType media_type);
  *
  * @{
  *)
-
-enum AVPictureType {
+type
+  AVPictureType = (
     AV_PICTURE_TYPE_NONE = 0, ///< Undefined
-    AV_PICTURE_TYPE_I,     ///< Intra
-    AV_PICTURE_TYPE_P,     ///< Predicted
-    AV_PICTURE_TYPE_B,     ///< Bi-dir predicted
-    AV_PICTURE_TYPE_S,     ///< S(GMC)-VOP MPEG-4
-    AV_PICTURE_TYPE_SI,    ///< Switching Intra
-    AV_PICTURE_TYPE_SP,    ///< Switching Predicted
-    AV_PICTURE_TYPE_BI,    ///< BI type
-};
+    AV_PICTURE_TYPE_I, ///< Intra
+    AV_PICTURE_TYPE_P, ///< Predicted
+    AV_PICTURE_TYPE_B, ///< Bi-dir predicted
+    AV_PICTURE_TYPE_S, ///< S(GMC)-VOP MPEG-4
+    AV_PICTURE_TYPE_SI, ///< Switching Intra
+    AV_PICTURE_TYPE_SP, ///< Switching Predicted
+    AV_PICTURE_TYPE_BI ///< BI type
+  );
 
 (**
  * Return a single letter to describe the given picture type
@@ -305,7 +305,7 @@ enum AVPictureType {
  * @param[in] pict_type the picture type @return a single character
  * representing the picture type, '?' if pict_type is unknown
  *)
-char av_get_picture_type_char(enum AVPictureType pict_type);
+function av_get_picture_type_char(enum AVPictureType pict_type): cchar;
 
 (**
  * @}
@@ -359,8 +359,9 @@ FILE *av_fopen_utf8(const pchar path, const pchar mode);
 (**
  * Return the fractional representation of the internal time base.
  *)
-AVRational av_get_time_base_q();
+function av_get_time_base_q(): AVRational;
 
+const
   AV_FOURCC_MAX_STRING_SIZE = 32;
 
 #define av_fourcc2str(fourcc) av_fourcc_make_string((char[AV_FOURCC_MAX_STRING_SIZE]){0}, fourcc)
@@ -373,7 +374,7 @@ AVRational av_get_time_base_q();
  * @param fourcc the fourcc to represent
  * @return the buffer in input
  *)
-char *av_fourcc_make_string(char *buf, uint32_t fourcc);
+function av_fourcc_make_string(char *buf, uint32_t fourcc): pchar;
 
 (**
  * @}
