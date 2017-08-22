@@ -354,7 +354,7 @@ unsigned av_int_list_length_for_size(unsigned elsize,
  * The API of this function matches POSIX fopen(), errors are returned through
  * errno.
  *)
-FILE *av_fopen_utf8(const pchar path, const pchar mode);
+function av_fopen_utf8(const pchar path, const pchar mode): file;
 
 (**
  * Return the fractional representation of the internal time base.
@@ -374,7 +374,7 @@ const
  * @param fourcc the fourcc to represent
  * @return the buffer in input
  *)
-function av_fourcc_make_string(char *buf, uint32_t fourcc): pchar;
+function av_fourcc_make_string(buf: pchar; fourcc: cuint32_t): pchar;
 
 (**
  * @}

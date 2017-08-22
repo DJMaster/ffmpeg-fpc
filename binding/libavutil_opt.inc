@@ -384,14 +384,14 @@ typedef struct AVOptionRanges {
  * options for which it is !(opt->flags & req_flags).
  * @param av_log_obj log context to use for showing the options
  *)
-function cint av_opt_show2(void *obj, void *av_log_obj, int req_flags, int rej_flags);
+function av_opt_show2(obj: pointer; av_log_obj: pointer; req_flags: cint; rej_flags: cint): cint;
 
 (**
  * Set the values of all AVOption fields to their default values.
  *
  * @param s an AVOption-enabled struct (its first member must be a pointer to AVClass)
  *)
-procedure av_opt_set_defaults(void *s);
+procedure av_opt_set_defaults(s: pointer);
 
 (**
  * Set the values of all AVOption fields to their default values. Only these
@@ -402,7 +402,7 @@ procedure av_opt_set_defaults(void *s);
  * @param mask combination of AV_OPT_FLAG_*
  * @param flags combination of AV_OPT_FLAG_*
  *)
-procedure av_opt_set_defaults2(void *s, int mask, int flags);
+procedure av_opt_set_defaults2(s: pointer; mask: cint; flags: cint);
 
 (**
  * Parse the key/value pairs list in opts. For each key/value pair
@@ -421,8 +421,7 @@ procedure av_opt_set_defaults2(void *s, int mask, int flags);
  * the error code issued by av_opt_set() if a key/value pair
  * cannot be set
  *)
-function cint av_set_options_string(void *ctx, const pchar opts,
-                          const pchar key_val_sep, const pchar pairs_sep);
+function cint av_set_options_string(ctx: pointer; const opts: pchar; const key_val_sep: pchar; const pairs_sep: pchar);
 
 (**
  * Parse the key-value pairs list in opts. For each key=value pair found,
@@ -451,13 +450,12 @@ function cint av_set_options_string(void *ctx, const pchar opts,
  * Separators must use characters distinct from option names and from each
  * other.
  *)
-function cint av_opt_set_from_string(void *ctx, const pchar opts,
-                           const pchar const *shorthand,
-                           const pchar key_val_sep, const pchar pairs_sep);
+function av_opt_set_from_string(ctx: pointer; const opts: pchar; const shorthand: ppchar; const key_val_sep: pchar; const pairs_sep: pchar): cint;
+
 (**
  * Free all allocated objects in obj.
  *)
-procedure av_opt_free(void *obj);
+procedure av_opt_free(obj: pointer);
 
 (**
  * Check whether a particular flag is set in a flags field.
@@ -467,7 +465,7 @@ procedure av_opt_free(void *obj);
  * @return non-zero if the flag is set, zero if the flag isn't set,
  *         isn't of the right type, or the flags field doesn't exist.
  *)
-function cint av_opt_flag_is_set(void *obj, const pchar field_name, const pchar flag_name);
+function cint av_opt_flag_is_set(obj: pointer; const field_name: pchar; const flag_name: pchar);
 
 (**
  * Set all the options from a given dictionary on an object.
@@ -483,7 +481,7 @@ function cint av_opt_flag_is_set(void *obj, const pchar field_name, const pchar 
  *
  * @see av_dict_copy()
  *)
-function cint av_opt_set_dict(void *obj, struct AVDictionary **options);
+function cint av_opt_set_dict(obj: pointer; options: PPAVDictionary);
 
 
 (**
@@ -501,7 +499,7 @@ function cint av_opt_set_dict(void *obj, struct AVDictionary **options);
  *
  * @see av_dict_copy()
  *)
-function cint av_opt_set_dict2(void *obj, struct AVDictionary **options, int search_flags);
+function av_opt_set_dict2(obj: pointer; options: PPAVDictionary; search_flags: cint): cint;
 
 (**
  * Extract a key-value pair from the beginning of a string.
@@ -550,12 +548,12 @@ enum {
  *
  * @return 0 on success, a negative number on failure.
  *)
-function cint av_opt_eval_flags (void *obj, const AVOption *o, const pchar val, int        *flags_out);
-function cint av_opt_eval_int   (void *obj, const AVOption *o, const pchar val, int        *int_out);
-function cint av_opt_eval_int64 (void *obj, const AVOption *o, const pchar val, int64_t    *int64_out);
-function cint av_opt_eval_float (void *obj, const AVOption *o, const pchar val, float      *float_out);
-function cint av_opt_eval_double(void *obj, const AVOption *o, const pchar val, double     *double_out);
-function cint av_opt_eval_q     (void *obj, const AVOption *o, const pchar val, AVRational *q_out);
+function cint av_opt_eval_flags (obj: pointer; const AVOption *o, const pchar val, int        *flags_out);
+function cint av_opt_eval_int   (obj: pointer; const AVOption *o, const pchar val, int        *int_out);
+function cint av_opt_eval_int64 (obj: pointer; const AVOption *o, const pchar val, int64_t    *int64_out);
+function cint av_opt_eval_float (obj: pointer; const AVOption *o, const pchar val, float      *float_out);
+function cint av_opt_eval_double(obj: pointer; const AVOption *o, const pchar val, double     *double_out);
+function cint av_opt_eval_q     (obj: pointer; const AVOption *o, const pchar val, AVRational *q_out);
 (**
  * @}
  *)
@@ -605,7 +603,7 @@ function cint av_opt_eval_q     (void *obj, const AVOption *o, const pchar val, 
  * AVDictionary (e.g. avformat_open_input()) to set options found with this
  * flag.
  *)
-const AVOption *av_opt_find(void *obj, const pchar name, const pchar unit,
+const AVOption *av_opt_find(obj: pointer; const pchar name, const pchar unit,
                             int opt_flags, int search_flags);
 
 (**
@@ -629,7 +627,7 @@ const AVOption *av_opt_find(void *obj, const pchar name, const pchar unit,
  * @return A pointer to the option found, or NULL if no option
  *         was found.
  *)
-const AVOption *av_opt_find2(void *obj, const pchar name, const pchar unit,
+const AVOption *av_opt_find2(obj: pointer; const pchar name, const pchar unit,
                              int opt_flags, int search_flags, void **target_obj);
 
 (**
@@ -641,7 +639,7 @@ const AVOption *av_opt_find2(void *obj, const pchar name, const pchar unit,
  *             or NULL
  * @return next AVOption or NULL
  *)
-const AVOption *av_opt_next(const void *obj, const AVOption *prev);
+const AVOption *av_opt_next(const obj: pointer; const AVOption *prev);
 
 (**
  * Iterate over AVOptions-enabled children of obj.
@@ -649,7 +647,7 @@ const AVOption *av_opt_next(const void *obj, const AVOption *prev);
  * @param prev result of a previous call to this function or NULL
  * @return next AVOptions-enabled child or NULL
  *)
-void *av_opt_child_next(void *obj, void *prev);
+function av_opt_child_next(obj: pointer; prev: pointer): pointer;
 
 (**
  * Iterate over potential AVOptions-enabled children of parent.
@@ -685,21 +683,21 @@ const AVClass *av_opt_child_class_next(const AVClass *parent, const AVClass *pre
  * AVERROR(ERANGE) if the value is out of range
  * AVERROR(EINVAL) if the value is not valid
  *)
-function cint av_opt_set         (void *obj, const pchar name, const pchar val, int search_flags);
-function cint av_opt_set_int     (void *obj, const pchar name, int64_t     val, int search_flags);
-function cint av_opt_set_double  (void *obj, const pchar name, double      val, int search_flags);
-function cint av_opt_set_q       (void *obj, const pchar name, AVRational  val, int search_flags);
-function cint av_opt_set_bin     (void *obj, const pchar name, const uint8_t *val, int size, int search_flags);
-function cint av_opt_set_image_size(void *obj, const pchar name, int w, int h, int search_flags);
-function cint av_opt_set_pixel_fmt (void *obj, const pchar name, enum AVPixelFormat fmt, int search_flags);
-function cint av_opt_set_sample_fmt(void *obj, const pchar name, enum AVSampleFormat fmt, int search_flags);
-function cint av_opt_set_video_rate(void *obj, const pchar name, AVRational val, int search_flags);
-function cint av_opt_set_channel_layout(void *obj, const pchar name, int64_t ch_layout, int search_flags);
+function cint av_opt_set         (obj: pointer; const pchar name, const pchar val, int search_flags);
+function cint av_opt_set_int     (obj: pointer; const pchar name, int64_t     val, int search_flags);
+function cint av_opt_set_double  (obj: pointer; const pchar name, double      val, int search_flags);
+function cint av_opt_set_q       (obj: pointer; const pchar name, AVRational  val, int search_flags);
+function cint av_opt_set_bin     (obj: pointer; const pchar name, const uint8_t *val, int size, int search_flags);
+function cint av_opt_set_image_size(obj: pointer; const pchar name, int w, int h, int search_flags);
+function cint av_opt_set_pixel_fmt (obj: pointer; const pchar name, enum AVPixelFormat fmt, int search_flags);
+function cint av_opt_set_sample_fmt(obj: pointer; const pchar name, enum AVSampleFormat fmt, int search_flags);
+function cint av_opt_set_video_rate(obj: pointer; const pchar name, AVRational val, int search_flags);
+function cint av_opt_set_channel_layout(obj: pointer; const pchar name, int64_t ch_layout, int search_flags);
 (**
  * @note Any old dictionary present is discarded and replaced with a copy of the new one. The
  * caller still owns val is and responsible for freeing it.
  *)
-function cint av_opt_set_dict_val(void *obj, const pchar name, const AVDictionary *val, int search_flags);
+function cint av_opt_set_dict_val(obj: pointer; const pchar name, const AVDictionary *val, int search_flags);
 
 (**
  * Set a binary option to an integer list.
@@ -740,20 +738,20 @@ function cint av_opt_set_dict_val(void *obj, const pchar name, const AVDictionar
  * AV_OPT_TYPE_STRING or AV_OPT_TYPE_BINARY and is set to NULL, *out_val will be set
  * to NULL instead of an allocated empty string.
  *)
-function cint av_opt_get         (void *obj, const pchar name, int search_flags, uint8_t   **out_val);
-function cint av_opt_get_int     (void *obj, const pchar name, int search_flags, int64_t    *out_val);
-function cint av_opt_get_double  (void *obj, const pchar name, int search_flags, double     *out_val);
-function cint av_opt_get_q       (void *obj, const pchar name, int search_flags, AVRational *out_val);
-function cint av_opt_get_image_size(void *obj, const pchar name, int search_flags, int *w_out, int *h_out);
-function cint av_opt_get_pixel_fmt (void *obj, const pchar name, int search_flags, enum AVPixelFormat *out_fmt);
-function cint av_opt_get_sample_fmt(void *obj, const pchar name, int search_flags, enum AVSampleFormat *out_fmt);
-function cint av_opt_get_video_rate(void *obj, const pchar name, int search_flags, AVRational *out_val);
-function cint av_opt_get_channel_layout(void *obj, const pchar name, int search_flags, int64_t *ch_layout);
+function cint av_opt_get         (obj: pointer; const pchar name, int search_flags, uint8_t   **out_val);
+function cint av_opt_get_int     (obj: pointer; const pchar name, int search_flags, int64_t    *out_val);
+function cint av_opt_get_double  (obj: pointer; const pchar name, int search_flags, double     *out_val);
+function cint av_opt_get_q       (obj: pointer; const pchar name, int search_flags, AVRational *out_val);
+function cint av_opt_get_image_size(obj: pointer; const pchar name, int search_flags, int *w_out, int *h_out);
+function cint av_opt_get_pixel_fmt (obj: pointer; const pchar name, int search_flags, enum AVPixelFormat *out_fmt);
+function cint av_opt_get_sample_fmt(obj: pointer; const pchar name, int search_flags, enum AVSampleFormat *out_fmt);
+function cint av_opt_get_video_rate(obj: pointer; const pchar name, int search_flags, AVRational *out_val);
+function cint av_opt_get_channel_layout(obj: pointer; const pchar name, int search_flags, int64_t *ch_layout);
 (**
  * @param[out] out_val The returned dictionary is a copy of the actual value and must
  * be freed with av_dict_free() by the caller
  *)
-function cint av_opt_get_dict_val(void *obj, const pchar name, int search_flags, AVDictionary **out_val);
+function cint av_opt_get_dict_val(obj: pointer; const pchar name, int search_flags, AVDictionary **out_val);
 (**
  * @}
  *)
@@ -765,7 +763,7 @@ function cint av_opt_get_dict_val(void *obj, const pchar name, int search_flags,
  * @returns a pointer to the field, it can be cast to the correct type and read
  *          or written to.
  *)
-void *av_opt_ptr(const AVClass *avclass, void *obj, const pchar name);
+function av_opt_ptr(const AVClass *avclass, obj: pointer; const pchar name): pointer;
 
 (**
  * Free an AVOptionRanges struct and set it to NULL.
@@ -785,7 +783,7 @@ procedure av_opt_freep_ranges(AVOptionRanges **ranges);
  *
  * @return number of compontents returned on success, a negative errro code otherwise
  *)
-function cint av_opt_query_ranges(AVOptionRanges **, void *obj, const pchar key, int flags);
+function cint av_opt_query_ranges(AVOptionRanges **, obj: pointer; const pchar key, int flags);
 
 (**
  * Copy options from src object into dest object.
@@ -797,7 +795,7 @@ function cint av_opt_query_ranges(AVOptionRanges **, void *obj, const pchar key,
  * @param src  Object to copy into
  * @return 0 on success, negative on error
  *)
-function cint av_opt_copy(void *dest, const void *src);
+function av_opt_copy(dest: pointer; const src: pointer): cint;
 
 (**
  * Get a default list of allowed ranges for the given option.
@@ -813,7 +811,7 @@ function cint av_opt_copy(void *dest, const void *src);
  *
  * @return number of compontents returned on success, a negative errro code otherwise
  *)
-function cint av_opt_query_ranges_default(AVOptionRanges **, void *obj, const pchar key, int flags);
+function cint av_opt_query_ranges_default(AVOptionRanges **, obj: pointer; const pchar key, int flags);
 
 (**
  * Check if given option is set to its default value.
@@ -827,7 +825,7 @@ function cint av_opt_query_ranges_default(AVOptionRanges **, void *obj, const pc
  *              0 when option is not set its default,
  *             <0 on error
  *)
-function cint av_opt_is_set_to_default(void *obj, const AVOption *o);
+function cint av_opt_is_set_to_default(obj: pointer; const AVOption *o);
 
 (**
  * Check if given option is set to its default value.
@@ -839,7 +837,7 @@ function cint av_opt_is_set_to_default(void *obj, const AVOption *o);
  *                     0 when option is not set its default,
  *                     <0 on error
  *)
-function cint av_opt_is_set_to_default_by_name(void *obj, const pchar name, int search_flags);
+function cint av_opt_is_set_to_default_by_name(obj: pointer; const pchar name, int search_flags);
 
 
   AV_OPT_SERIALIZE_SKIP_DEFAULTS = $00000001  ///< Serialize options that are not set to default values only.
@@ -863,7 +861,7 @@ function cint av_opt_is_set_to_default_by_name(void *obj, const pchar name, int 
  * @return                   >= 0 on success, negative on error
  * @warning Separators cannot be neither '\\' nor '\0'. They also cannot be the same.
  *)
-function cint av_opt_serialize(void *obj, int opt_flags, int flags, char **buffer,
+function cint av_opt_serialize(obj: pointer; int opt_flags, int flags, char **buffer,
                      const char key_val_sep, const char pairs_sep);
 (**
  * @}

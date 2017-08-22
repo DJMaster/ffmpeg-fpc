@@ -52,14 +52,17 @@
  * - Supports multiple channels with either planar or packed sample format.
  * - Automatic reallocation when writing to a full buffer.
  *)
-typedef struct AVAudioFifo AVAudioFifo;
+type
+  PAVAudioFifo = ^AVAudioFifo;
+  AVAudioFifo = record
+  end;
 
 (**
  * Free an AVAudioFifo.
  *
  * @param af  AVAudioFifo to free
  *)
-procedure av_audio_fifo_free(AVAudioFifo *af);
+procedure av_audio_fifo_free(af: PAVAudioFifo);
 
 (**
  * Allocate an AVAudioFifo.
@@ -69,8 +72,7 @@ procedure av_audio_fifo_free(AVAudioFifo *af);
  * @param nb_samples  initial allocation size, in samples
  * @return            newly allocated AVAudioFifo, or NULL on error
  *)
-AVAudioFifo *av_audio_fifo_alloc(enum AVSampleFormat sample_fmt, int channels,
-                                 int nb_samples);
+function av_audio_fifo_alloc(sample_fmt: AVSampleFormat; channels: cint; nb_samples: cint): PAVAudioFifo;
 
 (**
  * Reallocate an AVAudioFifo.
@@ -79,8 +81,8 @@ AVAudioFifo *av_audio_fifo_alloc(enum AVSampleFormat sample_fmt, int channels,
  * @param nb_samples  new allocation size, in samples
  * @return            0 if OK, or negative AVERROR code on failure
  *)
-av_warn_unused_result
-function cint av_audio_fifo_realloc(AVAudioFifo *af, int nb_samples);
+//TODO av_warn_unused_result
+function av_audio_fifo_realloc(af: PAVAudioFifo; nb_samples: cint): cint;
 
 (**
  * Write data to an AVAudioFifo.
@@ -98,7 +100,7 @@ function cint av_audio_fifo_realloc(AVAudioFifo *af, int nb_samples);
  *                    code on failure. If successful, the number of samples
  *                    actually written will always be nb_samples.
  *)
-function cint av_audio_fifo_write(AVAudioFifo *af, void **data, int nb_samples);
+function av_audio_fifo_write(af: PAVAudioFifo; data: ppointer; nb_samples: cint): cint;
 
 (**
  * Peek data from an AVAudioFifo.
@@ -114,7 +116,7 @@ function cint av_audio_fifo_write(AVAudioFifo *af, void **data, int nb_samples);
  *                    be greater than nb_samples, and will only be less than
  *                    nb_samples if av_audio_fifo_size is less than nb_samples.
  *)
-function cint av_audio_fifo_peek(AVAudioFifo *af, void **data, int nb_samples);
+function av_audio_fifo_peek(af: PAVAudioFifo; data: ppointer; nb_samples: cint): cint;
 
 (**
  * Peek data from an AVAudioFifo.
@@ -131,7 +133,7 @@ function cint av_audio_fifo_peek(AVAudioFifo *af, void **data, int nb_samples);
  *                    be greater than nb_samples, and will only be less than
  *                    nb_samples if av_audio_fifo_size is less than nb_samples.
  *)
-function cint av_audio_fifo_peek_at(AVAudioFifo *af, void **data, int nb_samples, int offset);
+function av_audio_fifo_peek_at(af: PAVAudioFifo; data: ppointer; nb_samples: cint; offset: cint): cint;
 
 (**
  * Read data from an AVAudioFifo.
@@ -147,7 +149,7 @@ function cint av_audio_fifo_peek_at(AVAudioFifo *af, void **data, int nb_samples
  *                    be greater than nb_samples, and will only be less than
  *                    nb_samples if av_audio_fifo_size is less than nb_samples.
  *)
-function cint av_audio_fifo_read(AVAudioFifo *af, void **data, int nb_samples);
+function av_audio_fifo_read(af: PAVAudioFifo; data: ppointer; nb_samples: cint): cint;
 
 (**
  * Drain data from an AVAudioFifo.
@@ -158,7 +160,7 @@ function cint av_audio_fifo_read(AVAudioFifo *af, void **data, int nb_samples);
  * @param nb_samples  number of samples to drain
  * @return            0 if OK, or negative AVERROR code on failure
  *)
-function cint av_audio_fifo_drain(AVAudioFifo *af, int nb_samples);
+function av_audio_fifo_drain(af: PAVAudioFifo; nb_samples: cint): cint;
 
 (**
  * Reset the AVAudioFifo buffer.
@@ -167,7 +169,7 @@ function cint av_audio_fifo_drain(AVAudioFifo *af, int nb_samples);
  *
  * @param af  AVAudioFifo to reset
  *)
-procedure av_audio_fifo_reset(AVAudioFifo *af);
+procedure av_audio_fifo_reset(af: PAVAudioFifo);
 
 (**
  * Get the current number of samples in the AVAudioFifo available for reading.
@@ -175,7 +177,7 @@ procedure av_audio_fifo_reset(AVAudioFifo *af);
  * @param af  the AVAudioFifo to query
  * @return    number of samples available for reading
  *)
-function cint av_audio_fifo_size(AVAudioFifo *af);
+function av_audio_fifo_size(af: PAVAudioFifo): cint;
 
 (**
  * Get the current number of samples in the AVAudioFifo available for writing.
@@ -183,7 +185,7 @@ function cint av_audio_fifo_size(AVAudioFifo *af);
  * @param af  the AVAudioFifo to query
  * @return    number of samples available for writing
  *)
-function cint av_audio_fifo_space(AVAudioFifo *af);
+function av_audio_fifo_space(af: PAVAudioFifo): cint;
 
 (**
  * @}

@@ -77,11 +77,11 @@ function cint av_expr_parse_and_eval(double *res, const pchar s,
  * @return >= 0 in case of success, a negative value corresponding to an
  * AVERROR code otherwise
  *)
-function cint av_expr_parse(AVExpr **expr, const pchar s,
+function av_expr_parse(AVExpr **expr, const pchar s,
                   const char * const *const_names,
                   const char * const *func1_names, double (* const *funcs1)(void *, double),
                   const char * const *func2_names, double (* const *funcs2)(void *, double, double),
-                  int log_offset, void *log_ctx);
+                  int log_offset, log_ctx: pointer): cint;
 
 (**
  * Evaluate a previously parsed expression.
@@ -90,7 +90,7 @@ function cint av_expr_parse(AVExpr **expr, const pchar s,
  * @param opaque a pointer which will be passed to all functions from funcs1 and funcs2
  * @return the value of the expression
  *)
-double av_expr_eval(AVExpr *e, const double *const_values, void *opaque);
+function av_expr_eval(AVExpr *e, const double *const_values, opaque: pointer): cdouble;
 
 (**
  * Free a parsed expression previously created with av_expr_parse().

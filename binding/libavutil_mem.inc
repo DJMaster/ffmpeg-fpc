@@ -188,7 +188,9 @@
  *         be allocated
  * @see av_mallocz()
  *)
-void *av_malloc(size_t size) av_malloc_attrib av_alloc_size(1);
+//TODO av_malloc_attrib
+//TODO av_alloc_size(1)
+function av_malloc(size_t size): pointer;
 
 (**
  * Allocate a memory block with alignment suitable for all memory accesses
@@ -199,7 +201,9 @@ void *av_malloc(size_t size) av_malloc_attrib av_alloc_size(1);
  * @return Pointer to the allocated block, or `NULL` if it cannot be allocated
  * @see av_malloc()
  *)
-void *av_mallocz(size_t size) av_malloc_attrib av_alloc_size(1);
+//TODO av_malloc_attrib
+//TODO av_alloc_size(1)
+function av_mallocz(size_t size): pointer;
 
 (**
  * Allocate a memory block for an array with av_malloc().
@@ -212,7 +216,8 @@ void *av_mallocz(size_t size) av_malloc_attrib av_alloc_size(1);
  *         be allocated
  * @see av_malloc()
  *)
-av_alloc_size(1, 2) static inline void *av_malloc_array(size_t nmemb, size_t size)
+//TODO av_alloc_size(1, 2)
+static inline void *av_malloc_array(size_t nmemb, size_t size)
 {
     if (!size || nmemb >= INT_MAX / size)
         return NULL;
@@ -232,7 +237,8 @@ av_alloc_size(1, 2) static inline void *av_malloc_array(size_t nmemb, size_t siz
  * @see av_mallocz()
  * @see av_malloc_array()
  *)
-av_alloc_size(1, 2) static inline void *av_mallocz_array(size_t nmemb, size_t size)
+//TODO av_alloc_size(1, 2)
+static inline void *av_mallocz_array(size_t nmemb, size_t size)
 {
     if (!size || nmemb >= INT_MAX / size)
         return NULL;
@@ -244,7 +250,8 @@ av_alloc_size(1, 2) static inline void *av_mallocz_array(size_t nmemb, size_t si
  *
  * Created for symmetry with the calloc() C function.
  *)
-void *av_calloc(size_t nmemb, size_t size) av_malloc_attrib;
+//TODO av_malloc_attrib
+function av_calloc(size_t nmemb, size_t size): pointer;
 
 (**
  * Allocate, reallocate, or free a block of memory.
@@ -266,7 +273,8 @@ void *av_calloc(size_t nmemb, size_t size) av_malloc_attrib;
  * @see av_fast_realloc()
  * @see av_reallocp()
  *)
-void *av_realloc(ptr: pointer, size_t size) av_alloc_size(2);
+//TODO av_alloc_size(2)
+function av_realloc(ptr: pointer; size: csize_t): pointer;
 
 (**
  * Allocate, reallocate, or free a block of memory through a pointer to a
@@ -305,7 +313,7 @@ function cint av_reallocp(ptr: pointer, size_t size);
  *   @endcode
  *   pattern.
  *)
-void *av_realloc_f(ptr: pointer, size_t nelem, size_t elsize);
+function av_realloc_f(ptr: pointer, size_t nelem, size_t elsize): pointer;
 
 (**
  * Allocate, reallocate, or free an array.
@@ -325,7 +333,8 @@ void *av_realloc_f(ptr: pointer, size_t nelem, size_t elsize);
  *          correctly aligned.
  * @see av_reallocp_array()
  *)
-av_alloc_size(2, 3) void *av_realloc_array(ptr: pointer, size_t nmemb, size_t size);
+//TODO av_alloc_size(2, 3)
+function av_realloc_array(ptr: pointer, size_t nmemb, size_t size): pointer;
 
 (**
  * Allocate, reallocate, or free an array through a pointer to a pointer.
@@ -344,7 +353,8 @@ av_alloc_size(2, 3) void *av_realloc_array(ptr: pointer, size_t nmemb, size_t si
  * @warning Unlike av_malloc(), the allocated memory is not guaranteed to be
  *          correctly aligned.
  *)
-av_alloc_size(2, 3) int av_reallocp_array(ptr: pointer, size_t nmemb, size_t size);
+//TODO av_alloc_size(2, 3)
+function av_reallocp_array(ptr: pointer; nmemb: csize_t; size: csize_t): cint;
 
 (**
  * Reallocate the given buffer if it is not large enough, otherwise do nothing.
