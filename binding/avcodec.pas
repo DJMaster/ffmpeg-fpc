@@ -665,7 +665,7 @@ type
     AV_CODEC_ID_DVB_TELETEXT,
     AV_CODEC_ID_SRT,
 
-    AV_CODEC_ID_MICRODVD   = $17800,
+    AV_CODEC_ID_MICRODVD = $17800,
     AV_CODEC_ID_EIA_608,
     AV_CODEC_ID_JACOSUB,
     AV_CODEC_ID_SAMI,
@@ -686,7 +686,7 @@ type
     AV_CODEC_ID_TTF = $18000,
 
     AV_CODEC_ID_SCTE_35, ///< Contain timestamp estimated through PCR of program stream.
-    AV_CODEC_ID_BINTEXT    = $18800,
+    AV_CODEC_ID_BINTEXT = $18800,
     AV_CODEC_ID_XBIN,
     AV_CODEC_ID_IDF,
     AV_CODEC_ID_OTF,

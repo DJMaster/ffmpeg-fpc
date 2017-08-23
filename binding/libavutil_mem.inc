@@ -584,8 +584,8 @@ procedure av_memcpy_backptr(uint8_t *dst, int back, int cnt);
  * memcpy(addr, &to_be_added, sizeof(to_be_added));
  *
  * // Shortcut of the above.
- * type *addr = av_dynarray2_add((void **)&array, &nb, sizeof(*array),
- *                               (const void *)&to_be_added2);
+ * type *addr = av_dynarray2_add(( void ** )&array, &nb, sizeof(*array),
+ *                               ( const void * )&to_be_added2);
  * if (!addr)
  *     return AVERROR(ENOMEM);
  *

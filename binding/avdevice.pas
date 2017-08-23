@@ -170,8 +170,8 @@ enum AVAppToDevMessageType {
      *
      * data: NULL
      *)
-    AV_APP_TO_DEV_PAUSE        = MKBETAG('P', 'A', 'U', ' '),
-    AV_APP_TO_DEV_PLAY         = MKBETAG('P', 'L', 'A', 'Y'),
+    AV_APP_TO_DEV_PAUSE = MKBETAG('P', 'A', 'U', ' '),
+    AV_APP_TO_DEV_PLAY = MKBETAG('P', 'L', 'A', 'Y'),
     AV_APP_TO_DEV_TOGGLE_PAUSE = MKBETAG('P', 'A', 'U', 'T'),
 
     (**
@@ -194,8 +194,8 @@ enum AVAppToDevMessageType {
      *
      * data: NULL.
      *)
-    AV_APP_TO_DEV_MUTE        = MKBETAG(' ', 'M', 'U', 'T'),
-    AV_APP_TO_DEV_UNMUTE      = MKBETAG('U', 'M', 'U', 'T'),
+    AV_APP_TO_DEV_MUTE = MKBETAG(' ', 'M', 'U', 'T'),
+    AV_APP_TO_DEV_UNMUTE = MKBETAG('U', 'M', 'U', 'T'),
     AV_APP_TO_DEV_TOGGLE_MUTE = MKBETAG('T', 'M', 'U', 'T'),
 
     (**
@@ -207,7 +207,7 @@ enum AVAppToDevMessageType {
      * data: NULL.
      *)
     AV_APP_TO_DEV_GET_VOLUME = MKBETAG('G', 'V', 'O', 'L'),
-    AV_APP_TO_DEV_GET_MUTE   = MKBETAG('G', 'M', 'U', 'T'),
+    AV_APP_TO_DEV_GET_MUTE = MKBETAG('G', 'M', 'U', 'T'),
 };
 
 (**

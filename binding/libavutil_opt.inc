@@ -237,13 +237,13 @@ enum AVOptionType{
     AV_OPT_TYPE_UINT64,
     AV_OPT_TYPE_CONST = 128,
     AV_OPT_TYPE_IMAGE_SIZE = MKBETAG('S','I','Z','E'), ///< offset must point to two consecutive integers
-    AV_OPT_TYPE_PIXEL_FMT  = MKBETAG('P','F','M','T'),
+    AV_OPT_TYPE_PIXEL_FMT = MKBETAG('P','F','M','T'),
     AV_OPT_TYPE_SAMPLE_FMT = MKBETAG('S','F','M','T'),
     AV_OPT_TYPE_VIDEO_RATE = MKBETAG('V','R','A','T'), ///< offset must point to AVRational
-    AV_OPT_TYPE_DURATION   = MKBETAG('D','U','R',' '),
-    AV_OPT_TYPE_COLOR      = MKBETAG('C','O','L','R'),
+    AV_OPT_TYPE_DURATION = MKBETAG('D','U','R',' '),
+    AV_OPT_TYPE_COLOR = MKBETAG('C','O','L','R'),
     AV_OPT_TYPE_CHANNEL_LAYOUT = MKBETAG('C','H','L','A'),
-    AV_OPT_TYPE_BOOL           = MKBETAG('B','O','O','L'),
+    AV_OPT_TYPE_BOOL = MKBETAG('B','O','O','L'),
 };
 
 (**
