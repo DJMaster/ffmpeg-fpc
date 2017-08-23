@@ -190,7 +190,7 @@
  *)
 //TODO av_malloc_attrib
 //TODO av_alloc_size(1)
-function av_malloc(size_t size): pointer;
+function av_malloc(size: csize_t): pointer; cdecl; external LIB_AVUTIL;
 
 (**
  * Allocate a memory block with alignment suitable for all memory accesses
@@ -203,7 +203,7 @@ function av_malloc(size_t size): pointer;
  *)
 //TODO av_malloc_attrib
 //TODO av_alloc_size(1)
-function av_mallocz(size_t size): pointer;
+function av_mallocz(size: csize_t): pointer; cdecl; external LIB_AVUTIL;
 
 (**
  * Allocate a memory block for an array with av_malloc().
@@ -251,7 +251,7 @@ static inline void *av_mallocz_array(size_t nmemb, size_t size)
  * Created for symmetry with the calloc() C function.
  *)
 //TODO av_malloc_attrib
-function av_calloc(size_t nmemb, size_t size): pointer;
+function av_calloc(nmemb: csize_t; size: csize_t): pointer; cdecl; external LIB_AVUTIL;
 
 (**
  * Allocate, reallocate, or free a block of memory.
@@ -274,7 +274,7 @@ function av_calloc(size_t nmemb, size_t size): pointer;
  * @see av_reallocp()
  *)
 //TODO av_alloc_size(2)
-function av_realloc(ptr: pointer; size: csize_t): pointer;
+function av_realloc(ptr: pointer; size: csize_t): pointer; cdecl; external LIB_AVUTIL;
 
 (**
  * Allocate, reallocate, or free a block of memory through a pointer to a
@@ -296,7 +296,7 @@ function av_realloc(ptr: pointer; size: csize_t): pointer;
  *          correctly aligned.
  *)
 av_warn_unused_result
-function cint av_reallocp(ptr: pointer, size_t size);
+function cint av_reallocp(ptr: pointer; size: csize_t); cdecl; external LIB_AVUTIL;
 
 (**
  * Allocate, reallocate, or free a block of memory.
@@ -313,7 +313,7 @@ function cint av_reallocp(ptr: pointer, size_t size);
  *   @endcode
  *   pattern.
  *)
-function av_realloc_f(ptr: pointer, size_t nelem, size_t elsize): pointer;
+function av_realloc_f(ptr: pointer; nelem: csize_t; elsize: csize_t): pointer; cdecl; external LIB_AVUTIL;
 
 (**
  * Allocate, reallocate, or free an array.
@@ -334,7 +334,7 @@ function av_realloc_f(ptr: pointer, size_t nelem, size_t elsize): pointer;
  * @see av_reallocp_array()
  *)
 //TODO av_alloc_size(2, 3)
-function av_realloc_array(ptr: pointer, size_t nmemb, size_t size): pointer;
+function av_realloc_array(ptr: pointer; nmemb: csize_t; size: csize_t): pointer; cdecl; external LIB_AVUTIL;
 
 (**
  * Allocate, reallocate, or free an array through a pointer to a pointer.
@@ -354,7 +354,7 @@ function av_realloc_array(ptr: pointer, size_t nmemb, size_t size): pointer;
  *          correctly aligned.
  *)
 //TODO av_alloc_size(2, 3)
-function av_reallocp_array(ptr: pointer; nmemb: csize_t; size: csize_t): cint;
+function av_reallocp_array(ptr: pointer; nmemb: csize_t; size: csize_t): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Reallocate the given buffer if it is not large enough, otherwise do nothing.
@@ -388,7 +388,7 @@ function av_reallocp_array(ptr: pointer; nmemb: csize_t; size: csize_t): cint;
  * @see av_realloc()
  * @see av_fast_malloc()
  *)
-void *av_fast_realloc(ptr: pointer, unsigned int *size, size_t min_size);
+function av_fast_realloc(ptr: pointer; size: pcuint; min_size: csize_t): pointer; cdecl; external LIB_AVUTIL;
 
 (**
  * Allocate a buffer, reusing the given one if large enough.
@@ -419,7 +419,7 @@ void *av_fast_realloc(ptr: pointer, unsigned int *size, size_t min_size);
  * @see av_realloc()
  * @see av_fast_mallocz()
  *)
-procedure av_fast_malloc(ptr: pointer, unsigned int *size, size_t min_size);
+procedure av_fast_malloc(ptr: pointer; size: pcuint; min_size: csize_t); cdecl; external LIB_AVUTIL;
 
 (**
  * Allocate and clear a buffer, reusing the given one if large enough.
@@ -439,7 +439,7 @@ procedure av_fast_malloc(ptr: pointer, unsigned int *size, size_t min_size);
  * @param[in]     min_size New size of buffer `*ptr`
  * @see av_fast_malloc()
  *)
-procedure av_fast_mallocz(ptr: pointer, unsigned int *size, size_t min_size);
+procedure av_fast_mallocz(ptr: pointer; size: pcuint; min_size: csize_t); cdecl; external LIB_AVUTIL;
 
 (**
  * Free a memory block which has been allocated with a function of av_malloc()
@@ -452,7 +452,7 @@ procedure av_fast_mallocz(ptr: pointer, unsigned int *size, size_t min_size);
  *       behind dangling pointers.
  * @see av_freep()
  *)
-procedure av_free(ptr: pointer);
+procedure av_free(ptr: pointer); cdecl; external LIB_AVUTIL;
 
 (**
  * Free a memory block which has been allocated with a function of av_malloc()
@@ -475,7 +475,7 @@ procedure av_free(ptr: pointer);
  * @note `*ptr = NULL` is safe and leads to no action.
  * @see av_free()
  *)
-procedure av_freep(ptr: pointer);
+procedure av_freep(ptr: pointer); cdecl; external LIB_AVUTIL;
 
 (**
  * Duplicate a string.
@@ -485,7 +485,8 @@ procedure av_freep(ptr: pointer);
  *         copy of `s` or `NULL` if the string cannot be allocated
  * @see av_strndup()
  *)
-char *av_strdup(const pchar s) av_malloc_attrib;
+//TODO av_malloc_attrib
+function av_strdup(const s: pchar): pchar; cdecl; external LIB_AVUTIL;
 
 (**
  * Duplicate a substring of a string.
@@ -496,7 +497,8 @@ char *av_strdup(const pchar s) av_malloc_attrib;
  * @return Pointer to a newly-allocated string containing a
  *         substring of `s` or `NULL` if the string cannot be allocated
  *)
-char *av_strndup(const pchar s, size_t len) av_malloc_attrib;
+//TODO av_malloc_attrib
+function av_strndup(const s: pchar; len: csize_t): pointer; cdecl; external LIB_AVUTIL;
 
 (**
  * Duplicate a buffer with av_malloc().
@@ -506,7 +508,7 @@ char *av_strndup(const pchar s, size_t len) av_malloc_attrib;
  * @return Pointer to a newly allocated buffer containing a
  *         copy of `p` or `NULL` if the buffer cannot be allocated
  *)
-void *av_memdup(const void *p, size_t size);
+function av_memdup(const p: pointer; size: csize_t): pointer; cdecl; external LIB_AVUTIL;
 
 (**
  * Overlapping memcpy() implementation.
@@ -519,7 +521,7 @@ void *av_memdup(const void *p, size_t size);
  * @note `cnt > back` is valid, this will copy the bytes we just copied,
  *       thus creating a repeating pattern with a period length of `back`.
  *)
-procedure av_memcpy_backptr(uint8_t *dst, int back, int cnt);
+procedure av_memcpy_backptr(dst: pcuint8_t; back: cint; cnt: cint); cdecl; external LIB_AVUTIL;
 
 (**
  * @}
@@ -621,7 +623,7 @@ procedure av_memcpy_backptr(uint8_t *dst, int back, int cnt);
  * @param[in]     elem    Element to add
  * @see av_dynarray_add_nofree(), av_dynarray2_add()
  *)
-procedure av_dynarray_add(void *tab_ptr, int *nb_ptr, void *elem);
+procedure av_dynarray_add(tab_ptr: pointer; nb_ptr: pcint; elem: pointer); cdecl; external LIB_AVUTIL;
 
 (**
  * Add an element to a dynamic array.
@@ -633,8 +635,8 @@ procedure av_dynarray_add(void *tab_ptr, int *nb_ptr, void *elem);
  * @return >=0 on success, negative otherwise
  * @see av_dynarray_add(), av_dynarray2_add()
  *)
-av_warn_unused_result
-function cint av_dynarray_add_nofree(void *tab_ptr, int *nb_ptr, void *elem);
+//TODO av_warn_unused_result
+function av_dynarray_add_nofree(tab_ptr: pointer; nb_ptr: pcint; elem: pointer): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Add an element of size `elem_size` to a dynamic array.
@@ -659,8 +661,7 @@ function cint av_dynarray_add_nofree(void *tab_ptr, int *nb_ptr, void *elem);
  *         space
  * @see av_dynarray_add(), av_dynarray_add_nofree()
  *)
-void *av_dynarray2_add(void **tab_ptr, int *nb_ptr, size_t elem_size,
-                       const uint8_t *elem_data);
+function av_dynarray2_add(tab_ptr: ppointer; nb_ptr: pcint; elem_size: csize_t; const elem_data: pcuint8_t): pointer; cdecl; external LIB_AVUTIL;
 
 (**
  * @}
@@ -705,7 +706,7 @@ static inline int av_size_mult(size_t a, size_t b, size_t *r)
  * @warning Exercise extreme caution when using this function. Don't touch
  *          this if you do not understand the full consequence of doing so.
  *)
-procedure av_max_alloc(size_t max);
+procedure av_max_alloc(max: csize_t); cdecl; external LIB_AVUTIL;
 
 (**
  * @}

@@ -61,7 +61,8 @@
  * linesize is the buffer size, in bytes, for the 1 plane.
  *
  *)
-enum AVSampleFormat {
+type
+  AVSampleFormat = (
     AV_SAMPLE_FMT_NONE = -1,
     AV_SAMPLE_FMT_U8, ///< unsigned 8 bits
     AV_SAMPLE_FMT_S16, ///< signed 16 bits
@@ -78,19 +79,19 @@ enum AVSampleFormat {
     AV_SAMPLE_FMT_S64P, ///< signed 64 bits, planar
 
     AV_SAMPLE_FMT_NB ///< Number of sample formats. DO NOT USE if linking dynamically
-};
+  );
 
 (**
  * Return the name of sample_fmt, or NULL if sample_fmt is not
  * recognized.
  *)
-const pchar av_get_sample_fmt_name(enum AVSampleFormat sample_fmt);
+function av_get_sample_fmt_name(sample_fmt: AVSampleFormat): pchar; cdecl; external LIB_AVUTIL;
 
 (**
  * Return a sample format corresponding to name, or AV_SAMPLE_FMT_NONE
  * on error.
  *)
-enum AVSampleFormat av_get_sample_fmt(const name: pchar);
+function av_get_sample_fmt(const name: pchar): AVSampleFormat; cdecl; external LIB_AVUTIL;
 
 (**
  * Return the planar<->packed alternative form of the given sample format, or
@@ -98,7 +99,7 @@ enum AVSampleFormat av_get_sample_fmt(const name: pchar);
  * requested planar/packed format, the format returned is the same as the
  * input.
  *)
-enum AVSampleFormat av_get_alt_sample_fmt(enum AVSampleFormat sample_fmt, int planar);
+function av_get_alt_sample_fmt(sample_fmt: AVSampleFormat; planar: cint): AVSampleFormat; cdecl; external LIB_AVUTIL;
 
 (**
  * Get the packed alternative form of the given sample format.
@@ -109,7 +110,7 @@ enum AVSampleFormat av_get_alt_sample_fmt(enum AVSampleFormat sample_fmt, int pl
  * @return  the packed alternative form of the given sample format or
             AV_SAMPLE_FMT_NONE on error.
  *)
-enum AVSampleFormat av_get_packed_sample_fmt(enum AVSampleFormat sample_fmt);
+function av_get_packed_sample_fmt(sample_fmt: AVSampleFormat): AVSampleFormat; cdecl; external LIB_AVUTIL;
 
 (**
  * Get the planar alternative form of the given sample format.
@@ -120,7 +121,7 @@ enum AVSampleFormat av_get_packed_sample_fmt(enum AVSampleFormat sample_fmt);
  * @return  the planar alternative form of the given sample format or
             AV_SAMPLE_FMT_NONE on error.
  *)
-enum AVSampleFormat av_get_planar_sample_fmt(enum AVSampleFormat sample_fmt);
+function av_get_planar_sample_fmt(sample_fmt: AVSampleFormat): AVSampleFormat; cdecl; external LIB_AVUTIL;
 
 (**
  * Generate a string corresponding to the sample format with
@@ -134,7 +135,7 @@ enum AVSampleFormat av_get_planar_sample_fmt(enum AVSampleFormat sample_fmt);
  * @return the pointer to the filled buffer or NULL if sample_fmt is
  * unknown or in case of other errors
  *)
-char *av_get_sample_fmt_string(char *buf, int buf_size, enum AVSampleFormat sample_fmt);
+function av_get_sample_fmt_string(buf: pchar; buf_size: cint; sample_fmt: AVSampleFormat): pchar; cdecl; external LIB_AVUTIL;
 
 (**
  * Return number of bytes per sample.
@@ -143,7 +144,7 @@ char *av_get_sample_fmt_string(char *buf, int buf_size, enum AVSampleFormat samp
  * @return number of bytes per sample or zero if unknown for the given
  * sample format
  *)
-function cint av_get_bytes_per_sample(enum AVSampleFormat sample_fmt);
+function av_get_bytes_per_sample(sample_fmtsample_fmt: AVSampleFormat): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Check if the sample format is planar.
@@ -151,7 +152,7 @@ function cint av_get_bytes_per_sample(enum AVSampleFormat sample_fmt);
  * @param sample_fmt the sample format to inspect
  * @return 1 if the sample format is planar, 0 if it is interleaved
  *)
-function cint av_sample_fmt_is_planar(enum AVSampleFormat sample_fmt);
+function av_sample_fmt_is_planar(sample_fmt: AVSampleFormat): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Get the required buffer size for the given audio parameters.
@@ -163,8 +164,7 @@ function cint av_sample_fmt_is_planar(enum AVSampleFormat sample_fmt);
  * @param align         buffer size alignment (0 = default, 1 = no alignment)
  * @return              required buffer size, or negative error code on failure
  *)
-function cint av_samples_get_buffer_size(int *linesize, int nb_channels, int nb_samples,
-                               enum AVSampleFormat sample_fmt, int align);
+function av_samples_get_buffer_size(linesize: pcint; nb_channels: cint; nb_samples: cint; sample_fmt: AVSampleFormat; align: cint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * @}
@@ -205,10 +205,7 @@ function cint av_samples_get_buffer_size(int *linesize, int nb_channels, int nb_
  * @todo return minimum size in bytes required for the buffer in case
  * of success at the next bump
  *)
-function cint av_samples_fill_arrays(uint8_t **audio_data, int *linesize,
-                           const uint8_t *buf,
-                           int nb_channels, int nb_samples,
-                           enum AVSampleFormat sample_fmt, int align);
+function cint av_samples_fill_arrays(audio_data: ppcuint8_t; linesize: pcint; const buf: pcuint8_t; nb_channels: cint; nb_samples: cint; sample_fmt: AVSampleFormat; align: cint); cdecl; external LIB_AVUTIL;
 
 (**
  * Allocate a samples buffer for nb_samples samples, and fill data pointers and
@@ -229,8 +226,7 @@ function cint av_samples_fill_arrays(uint8_t **audio_data, int *linesize,
  * @see av_samples_fill_arrays()
  * @see av_samples_alloc_array_and_samples()
  *)
-function cint av_samples_alloc(uint8_t **audio_data, int *linesize, int nb_channels,
-                     int nb_samples, enum AVSampleFormat sample_fmt, int align);
+function av_samples_alloc(audio_data: ppcuint8_t; linesize: pcint; nb_channels: cint; nb_samples: cint; sample_fmt: AVSampleFormat; align: cint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Allocate a data pointers array, samples buffer for nb_samples
@@ -241,8 +237,7 @@ function cint av_samples_alloc(uint8_t **audio_data, int *linesize, int nb_chann
  *
  * @see av_samples_alloc()
  *)
-function cint av_samples_alloc_array_and_samples(uint8_t ***audio_data, int *linesize, int nb_channels,
-                                       int nb_samples, enum AVSampleFormat sample_fmt, int align);
+function av_samples_alloc_array_and_samples(audio_data: pppcuint8_t; linesize: pcint; nb_channels: cint; nb_samples: cint; sample_fmt: AVSampleFormat; align: cint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Copy samples from src to dst.
@@ -255,9 +250,7 @@ function cint av_samples_alloc_array_and_samples(uint8_t ***audio_data, int *lin
  * @param nb_channels number of audio channels
  * @param sample_fmt audio sample format
  *)
-function cint av_samples_copy(uint8_t **dst, uint8_t * const *src, int dst_offset,
-                    int src_offset, int nb_samples, int nb_channels,
-                    enum AVSampleFormat sample_fmt);
+function av_samples_copy(dst: ppcuint8_t; src: ppcuint8_t; dst_offset: cint; src_offset: cint; nb_samples: cint; nb_channels: cint; sample_fmt: AVSampleFormat): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Fill an audio buffer with silence.
@@ -268,8 +261,7 @@ function cint av_samples_copy(uint8_t **dst, uint8_t * const *src, int dst_offse
  * @param nb_channels number of audio channels
  * @param sample_fmt  audio sample format
  *)
-function cint av_samples_set_silence(uint8_t **audio_data, int offset, int nb_samples,
-                           int nb_channels, enum AVSampleFormat sample_fmt);
+function av_samples_set_silence(audio_data: ppcuint8_t; offset: cint; nb_samples: cint; nb_channels: cint; sample_fmt: AVSampleFormat): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * @}

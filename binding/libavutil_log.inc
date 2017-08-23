@@ -32,7 +32,8 @@
 #include "attributes.h"
 #include "version.h"
 
-typedef enum {
+type
+  AVClassCategory = (
     AV_CLASS_CATEGORY_NA = 0,
     AV_CLASS_CATEGORY_INPUT,
     AV_CLASS_CATEGORY_OUTPUT,
@@ -50,8 +51,8 @@ typedef enum {
     AV_CLASS_CATEGORY_DEVICE_AUDIO_INPUT,
     AV_CLASS_CATEGORY_DEVICE_OUTPUT,
     AV_CLASS_CATEGORY_DEVICE_INPUT,
-    AV_CLASS_CATEGORY_NB  ///< not part of ABI/API
-}AVClassCategory;
+    AV_CLASS_CATEGORY_NB ///< not part of ABI/API
+  );
 
 #define AV_IS_INPUT_DEVICE(category) \
     (((category) == AV_CLASS_CATEGORY_DEVICE_VIDEO_INPUT) || \
@@ -158,6 +159,7 @@ typedef struct AVClass {
  * @{
  *)
 
+const
 (**
  * Print no output.
  *)
@@ -237,8 +239,8 @@ typedef struct AVClass {
  * @param fmt The format string (printf-compatible) that specifies how
  *        subsequent arguments are converted to output.
  *)
-procedure av_log(void *avcl, int level, const pchar fmt, ...) av_printf_format(3, 4);
-
+//TODO av_printf_format(3, 4)
+procedure av_log(avcl: pointer; level: cint; const fmt: pchar; ...); cdecl; external LIB_AVUTIL;
 
 (**
  * Send the specified message to the log if the level is less than or equal
@@ -255,7 +257,7 @@ procedure av_log(void *avcl, int level, const pchar fmt, ...) av_printf_format(3
  *        subsequent arguments are converted to output.
  * @param vl The arguments referenced by the format string.
  *)
-procedure av_vlog(void *avcl, int level, const pchar fmt, va_list vl);
+procedure av_vlog(avcl: pointer; level: cint; const fmt: pchar; vl: va_list); cdecl; external LIB_AVUTIL;
 
 (**
  * Get the current log level
@@ -264,7 +266,7 @@ procedure av_vlog(void *avcl, int level, const pchar fmt, va_list vl);
  *
  * @return Current log level
  *)
-function cint av_log_get_level();
+function av_log_get_level(): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Set the log level
@@ -273,7 +275,7 @@ function cint av_log_get_level();
  *
  * @param level Logging level
  *)
-procedure av_log_set_level(int level);
+procedure av_log_set_level(level: cint); cdecl; external LIB_AVUTIL;
 
 (**
  * Set the logging callback
@@ -285,7 +287,10 @@ procedure av_log_set_level(int level);
  *
  * @param callback A logging function with a compatible signature.
  *)
-procedure av_log_set_callback(void (*callback)(void*, int, const char*, va_list));
+type
+  callback_proc: procedure (arg1: pointer; arg2: cint; const arg3: pchar; vl: va_list); cdecl;
+
+procedure av_log_set_callback(callback: callback_proc); cdecl; external LIB_AVUTIL;
 
 (**
  * Default logging callback
@@ -300,8 +305,7 @@ procedure av_log_set_callback(void (*callback)(void*, int, const char*, va_list)
  *        subsequent arguments are converted to output.
  * @param vl The arguments referenced by the format string.
  *)
-procedure av_log_default_callback(void *avcl, int level, const pchar fmt,
-                             va_list vl);
+procedure av_log_default_callback(avcl: pointer; level: cint; const fmt: pchar; vl: va_list); cdecl; external LIB_AVUTIL;
 
 (**
  * Return the context name
@@ -310,8 +314,8 @@ procedure av_log_default_callback(void *avcl, int level, const pchar fmt,
  *
  * @return The AVClass class_name
  *)
-const char* av_default_item_name(void* ctx);
-AVClassCategory av_default_get_category(ptr: pointer);
+function av_default_item_name(ctx: pointer): pchar; cdecl; external LIB_AVUTIL;
+function av_default_get_category(ptr: pointer): AVClassCategory; cdecl; external LIB_AVUTIL;
 
 (**
  * Format a line of log the same way as the default callback.
@@ -320,8 +324,7 @@ AVClassCategory av_default_get_category(ptr: pointer);
  * @param print_prefix  used to store whether the prefix must be printed;
  *                      must point to a persistent integer initially set to 1
  *)
-procedure av_log_format_line(ptr: pointer, int level, const pchar fmt, va_list vl,
-                        char *line, int line_size, int *print_prefix);
+procedure av_log_format_line(ptr: pointer; level: cint; const fmt: pchar; vl: va_list; line: pchar; line_size: cint; print_prefix: pcint ); cdecl; external LIB_AVUTIL;
 
 (**
  * Format a line of log the same way as the default callback.
@@ -337,8 +340,7 @@ procedure av_log_format_line(ptr: pointer, int level, const pchar fmt, va_list v
  *         character. If the return value is not less than line_size, it means
  *         that the log message was truncated to fit the buffer.
  *)
-function cint av_log_format_line2(ptr: pointer, int level, const pchar fmt, va_list vl,
-                        char *line, int line_size, int *print_prefix);
+function av_log_format_line2(ptr: pointer; level: cint; const fmt: pchar; vl: va_list; line: pchar; line_size: cint; print_prefix: pcint): cint; cdecl; external LIB_AVUTIL;
 
 {$if FF_API_DLOG}
 (**
@@ -362,6 +364,7 @@ function cint av_log_format_line2(ptr: pointer, int level, const pchar fmt, va_l
  * Also to receive the last, "last repeated" line if any, the user app must
  * call av_log(NULL, AV_LOG_QUIET, "%s", ""); at the end
  *)
+const
   AV_LOG_SKIP_REPEATED = 1;
 
 (**
@@ -372,8 +375,8 @@ function cint av_log_format_line2(ptr: pointer, int level, const pchar fmt, va_l
  *)
   AV_LOG_PRINT_LEVEL = 2;
 
-procedure av_log_set_flags(int arg);
-function cint av_log_get_flags();
+procedure av_log_set_flags(arg: cint); cdecl; external LIB_AVUTIL;
+function av_log_get_flags(): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * @}
