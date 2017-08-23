@@ -186,24 +186,24 @@ const
 (**
  * Return the LIBAVUTIL_VERSION_INT constant.
  *)
-function avutil_version(): cunsigned;
+function avutil_version(): cunsigned; cdecl; external LIB_AVUTIL;
 
 (**
  * Return an informative version string. This usually is the actual release
  * version number or a git commit description. This string has no fixed format
  * and can change any time. It should never be parsed by code.
  *)
-function av_version_info(): pchar;
+function av_version_info(): pchar; cdecl; external LIB_AVUTIL;
 
 (**
  * Return the libavutil build-time configuration.
  *)
-function avutil_configuration(): pchar;
+function avutil_configuration(): pchar; cdecl; external LIB_AVUTIL;
 
 (**
  * Return the libavutil license.
  *)
-function avutil_license(): pchar;
+function avutil_license(): pchar; cdecl; external LIB_AVUTIL;
 
 (**
  * @}
@@ -228,7 +228,7 @@ type
  * Return a string describing the media_type enum, NULL if media_type
  * is unknown.
  *)
-function av_get_media_type_string(enum AVMediaType media_type): pchar;
+function av_get_media_type_string(media_type: AVMediaType): pchar; cdecl; external LIB_AVUTIL;
 
 (**
  * @defgroup lavu_const Constants
@@ -305,7 +305,7 @@ type
  * @param[in] pict_type the picture type @return a single character
  * representing the picture type, '?' if pict_type is unknown
  *)
-function av_get_picture_type_char(enum AVPictureType pict_type): cchar;
+function av_get_picture_type_char(pict_type: AVPictureType): cchar; cdecl; external LIB_AVUTIL;
 
 (**
  * @}
@@ -323,7 +323,7 @@ function av_get_picture_type_char(enum AVPictureType pict_type): cchar;
 (**
  * Return x default pointer in case p is NULL.
  *)
-static inline void *av_x_if_null(const void *p, const void *x)
+function av_x_if_null(const p: pointer: const x: pointer): pointer; inline;
 {
     return (void *)(intptr_t)(p ? p : x);
 }
@@ -336,8 +336,8 @@ static inline void *av_x_if_null(const void *p, const void *x)
  * @param list    pointer to the list
  * @return  length of the list, in elements, not counting the terminator
  *)
-unsigned av_int_list_length_for_size(unsigned elsize,
-                                     const void *list, uint64_t term) av_pure;
+//TODO av_pure
+function av_int_list_length_for_size(elsize: cunsigned; const list: pointer; term: cuint64_t): cunsigned; cdecl; external LIB_AVUTIL;
 
 (**
  * Compute the length of an integer list.
@@ -354,12 +354,12 @@ unsigned av_int_list_length_for_size(unsigned elsize,
  * The API of this function matches POSIX fopen(), errors are returned through
  * errno.
  *)
-function av_fopen_utf8(const pchar path, const pchar mode): file;
+function av_fopen_utf8(const path_ pchar: const mode: pchar): file; cdecl; external LIB_AVUTIL;
 
 (**
  * Return the fractional representation of the internal time base.
  *)
-function av_get_time_base_q(): AVRational;
+function av_get_time_base_q(): AVRational; cdecl; external LIB_AVUTIL;
 
 const
   AV_FOURCC_MAX_STRING_SIZE = 32;
@@ -374,7 +374,7 @@ const
  * @param fourcc the fourcc to represent
  * @return the buffer in input
  *)
-function av_fourcc_make_string(buf: pchar; fourcc: cuint32_t): pchar;
+function av_fourcc_make_string(buf: pchar; fourcc: cuint32_t): pchar; cdecl; external LIB_AVUTIL;
 
 (**
  * @}

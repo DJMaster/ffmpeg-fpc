@@ -70,17 +70,17 @@ const
 (**
  * Return the LIBAVFILTER_VERSION_INT constant.
  *)
-unsigned avfilter_version();
+function avfilter_version(): cunsigned; cdecl; external LIB_AVFILTER;
 
 (**
  * Return the libavfilter build-time configuration.
  *)
-const pchar avfilter_configuration();
+function avfilter_configuration(): pchar; cdecl; external LIB_AVFILTER;
 
 (**
  * Return the libavfilter license.
  *)
-const pchar avfilter_license();
+function avfilter_license(): pchar; cdecl; external LIB_AVFILTER;
 
 typedef struct AVFilterContext AVFilterContext;
 typedef struct AVFilterLink    AVFilterLink;
@@ -91,7 +91,7 @@ typedef struct AVFilterFormats AVFilterFormats;
  * Get the number of elements in a NULL-terminated array of AVFilterPads (e.g.
  * AVFilter.inputs/outputs).
  *)
-function cint avfilter_pad_count(const AVFilterPad *pads);
+function avfilter_pad_count(const pads: PAVFilterPad): cint; cdecl; external LIB_AVFILTER;
 
 (**
  * Get the name of an AVFilterPad.
@@ -102,7 +102,7 @@ function cint avfilter_pad_count(const AVFilterPad *pads);
  *
  * @return name of the pad_idx'th pad in pads
  *)
-const pchar avfilter_pad_get_name(const AVFilterPad *pads, int pad_idx);
+function avfilter_pad_get_name(const pads: PAVFilterPad; pad_idx: cint): pchar; cdecl; external LIB_AVFILTER;
 
 (**
  * Get the type of an AVFilterPad.
@@ -113,7 +113,7 @@ const pchar avfilter_pad_get_name(const AVFilterPad *pads, int pad_idx);
  *
  * @return type of the pad_idx'th pad in pads
  *)
-enum AVMediaType avfilter_pad_get_type(const AVFilterPad *pads, int pad_idx);
+function avfilter_pad_get_type(const pads: PAVFilterPad; pad_idx: cint): AVMediaType; cdecl; external LIB_AVFILTER;
 
 (**
  * The number of the filter inputs is not determined just by AVFilter.inputs.
@@ -339,9 +339,9 @@ typedef struct AVFilterInternal AVFilterInternal;
 
 (** An instance of a filter *)
 struct AVFilterContext {
-    const AVClass *av_class;        ///< needed for av_log() and filters common options
+    PAVClass av_class;        ///< needed for av_log() and filters common options
 
-    const AVFilter *filter;         ///< the AVFilter of which this is an instance
+    PAVFilter filter;         ///< the AVFilter of which this is an instance
 
     char *name;                     ///< name of this filter instance
 
@@ -355,7 +355,7 @@ struct AVFilterContext {
 
     void *priv;                     ///< private data for use by the filter
 
-    struct AVFilterGraph *graph;    ///< filtergraph this filter belongs to
+    struct graph: PAVFilterGraph;    ///< filtergraph this filter belongs to
 
     (**
      * Type of multithreading being allowed/used. A combination of
@@ -496,7 +496,7 @@ struct AVFilterLink {
     (**
      * Graph the filter belongs to.
      *)
-    struct AVFilterGraph *graph;
+    struct graph: PAVFilterGraph;
 
     (**
      * Current timestamp of the link, as defined by the most recent
@@ -642,18 +642,17 @@ struct AVFilterLink {
  * @param dstpad index of the input pad on the destination filter
  * @return       zero on success
  *)
-function cint avfilter_link(AVFilterContext *src, unsigned srcpad,
-                  AVFilterContext *dst, unsigned dstpad);
+function avfilter_link(src: PAVFilterContext; srcpad: cunsigned; dst: PAVFilterContext; dstpad: cunsigned): cint; cdecl; external LIB_AVFILTER;
 
 (**
  * Free the link in *link, and set its pointer to NULL.
  *)
-procedure avfilter_link_free(AVFilterLink **link);
+procedure avfilter_link_free(link: PPAVFilterLink); cdecl; external LIB_AVFILTER;
 
 (**
  * Get the number of channels of a link.
  *)
-function cint avfilter_link_get_channels(AVFilterLink *link);
+function avfilter_link_get_channels(link: PAVFilterLink): cint; cdecl; external LIB_AVFILTER;
 
 (**
  * Set the closed field of a link.
@@ -661,7 +660,7 @@ function cint avfilter_link_get_channels(AVFilterLink *link);
  * close the sinks.
  *)
 //TODO attribute_deprecated
-procedure avfilter_link_set_closed(AVFilterLink *link, int closed);
+procedure avfilter_link_set_closed(link: PAVFilterLink; closed: cint); cdecl; external LIB_AVFILTER;
 
 (**
  * Negotiate the media format, dimensions, etc of all inputs to a filter.
@@ -669,7 +668,7 @@ procedure avfilter_link_set_closed(AVFilterLink *link, int closed);
  * @param filter the filter to negotiate the properties for its inputs
  * @return       zero on successful negotiation
  *)
-function cint avfilter_config_links(AVFilterContext *filter);
+function avfilter_config_links(filter: PAVFilterContext): cint; cdecl; external LIB_AVFILTER;
 
   AVFILTER_CMD_FLAG_ONE = 1;  ///< Stop once a filter understood the command (for target=all for example), fast filters are favored automatically
   AVFILTER_CMD_FLAG_FAST = 2; ///< Only execute command when its fast (like a video out that supports contrast adjustment in hw)
@@ -678,15 +677,15 @@ function cint avfilter_config_links(AVFilterContext *filter);
  * Make the filter instance process a command.
  * It is recommended to use avfilter_graph_send_command().
  *)
-function cint avfilter_process_command(AVFilterContext *filter, const pchar cmd, const pchar arg, char *res, int res_len, int flags);
+function avfilter_process_command(filter: PAVFilterContext; const cmd: pchar; const arg: pchar; res: pchar; res_len: cint; flags: cint): cint; cdecl; external LIB_AVFILTER;
 
 (** Initialize the filter system. Register all builtin filters. *)
-procedure avfilter_register_all();
+procedure avfilter_register_all(); cdecl; external LIB_AVFILTER;
 
 {$if FF_API_OLD_FILTER_REGISTER}
 (** Uninitialize the filter system. Unregister all filters. *)
 //TODO attribute_deprecated
-procedure avfilter_uninit();
+procedure avfilter_uninit(); cdecl; external LIB_AVFILTER;
 {$endif}
 
 (**
@@ -699,7 +698,7 @@ procedure avfilter_uninit();
  * @return 0 if the registration was successful, a negative value
  * otherwise
  *)
-function cint avfilter_register(AVFilter *filter);
+function avfilter_register(filter: PAVFilter): cint; cdecl; external LIB_AVFILTER;
 
 (**
  * Get a filter definition matching the given name.
@@ -711,14 +710,14 @@ function cint avfilter_register(AVFilter *filter);
 {$if not FF_API_NOCONST_GET_NAME}
 const
 {$endif}
-AVFilter *avfilter_get_by_name(const name: pchar);
+function avfilter_get_by_name(const name: pchar): PAVFilter; cdecl; external LIB_AVFILTER;
 
 (**
  * Iterate over all registered filters.
  * @return If prev is non-NULL, next registered filter after prev or NULL if
  * prev is the last filter. If prev is NULL, return the first registered filter.
  *)
-const AVFilter *avfilter_next(const AVFilter *prev);
+function avfilter_next(const prev: PAVFilter): PAVFilter; cdecl; external LIB_AVFILTER;
 
 {$if FF_API_OLD_FILTER_REGISTER}
 (**
@@ -729,7 +728,7 @@ const AVFilter *avfilter_next(const AVFilter *prev);
  * @deprecated use avfilter_next()
  *)
 //TODO attribute_deprecated
-function AVFilter **av_filter_next(AVFilter **filter);
+function av_filter_next(filter: PPAVFilter): PPAVFilter; cdecl; external LIB_AVFILTER;
 {$endif}
 
 {$if FF_API_AVFILTER_OPEN}
@@ -744,7 +743,7 @@ function AVFilter **av_filter_next(AVFilter **filter);
  * @deprecated use avfilter_graph_alloc_filter() instead
  *)
 //TODO attribute_deprecated
-function cint avfilter_open(AVFilterContext **filter_ctx, AVFilter *filter, const pchar inst_name);
+function avfilter_open(filter_ctx: PPAVFilterContext; filter: PAVFilter; const inst_name: pchar): cint; cdecl; external LIB_AVFILTER;
 {$endif}
 
 
@@ -760,7 +759,7 @@ function cint avfilter_open(AVFilterContext **filter_ctx, AVFilter *filter, cons
  * @return       zero on success
  *)
 //TODO attribute_deprecated
-function cint avfilter_init_filter(AVFilterContext *filter, const pchar args, void *opaque);
+function avfilter_init_filter(filter: PAVFilterContext; const args: pchar; opaque: pointer): cint; cdecl; external LIB_AVFILTER;
 {$endif}
 
 (**
@@ -773,7 +772,7 @@ function cint avfilter_init_filter(AVFilterContext *filter, const pchar args, vo
  *             AVOptions API or there are no options that need to be set.
  * @return 0 on success, a negative AVERROR on failure
  *)
-function cint avfilter_init_str(AVFilterContext *ctx, const pchar args);
+function avfilter_init_str(ctx: PAVFilterContext; const args: pchar): cint; cdecl; external LIB_AVFILTER;
 
 (**
  * Initialize a filter with the supplied dictionary of options.
@@ -795,7 +794,7 @@ function cint avfilter_init_str(AVFilterContext *ctx, const pchar args);
  * this function will leave those extra options in the options AVDictionary and
  * continue as usual.
  *)
-function cint avfilter_init_dict(AVFilterContext *ctx, AVDictionary **options);
+function avfilter_init_dict(ctx: PAVFilterContext; options: PPAVDictionary): cint; cdecl; external LIB_AVFILTER;
 
 (**
  * Free a filter context. This will also remove the filter from its
@@ -803,7 +802,7 @@ function cint avfilter_init_dict(AVFilterContext *ctx, AVDictionary **options);
  *
  * @param filter the filter to free
  *)
-procedure avfilter_free(AVFilterContext *filter);
+procedure avfilter_free(filter: PAVFilterContext); cdecl; external LIB_AVFILTER;
 
 (**
  * Insert a filter in the middle of an existing link.
@@ -814,15 +813,14 @@ procedure avfilter_free(AVFilterContext *filter);
  * @param filt_dstpad_idx the output pad on the filter to connect
  * @return     zero on success
  *)
-function cint avfilter_insert_filter(AVFilterLink *link, AVFilterContext *filt,
-                           unsigned filt_srcpad_idx, unsigned filt_dstpad_idx);
+function avfilter_insert_filter(link: PAVFilterLink; filt: PAVFilterContext; filt_srcpad_idx: cunsigned; filt_dstpad_idx: cunsigned): cint; cdecl; external LIB_AVFILTER;
 
 (**
  * @return AVClass for AVFilterContext.
  *
  * @see av_opt_find().
  *)
-const AVClass *avfilter_get_class();
+function avfilter_get_class(): PAVClass; cdecl; external LIB_AVFILTER;
 
 typedef struct AVFilterGraphInternal AVFilterGraphInternal;
 
@@ -838,7 +836,7 @@ typedef struct AVFilterGraphInternal AVFilterGraphInternal;
  *
  * @return 0 on success, a negative AVERROR on error
  *)
-typedef int (avfilter_action_func)(AVFilterContext *ctx, void *arg, int jobnr, int nb_jobs);
+typedef int (avfilter_action_func)(AVFilterContext *ctx, void *arg, int jobnr, int nb_jobs); cdecl;
 
 (**
  * A function executing multiple jobs, possibly in parallel.
@@ -853,7 +851,7 @@ typedef int (avfilter_action_func)(AVFilterContext *ctx, void *arg, int jobnr, i
  * @return 0 on success, a negative AVERROR on error
  *)
 typedef int (avfilter_execute_func)(AVFilterContext *ctx, avfilter_action_func *func,
-                                    void *arg, int *ret, int nb_jobs);
+                                    void *arg, int *ret, int nb_jobs); cdecl;
 
 typedef struct AVFilterGraph {
     const AVClass *av_class;
@@ -933,7 +931,7 @@ typedef struct AVFilterGraph {
  *
  * @return the allocated filter graph on success or NULL.
  *)
-AVFilterGraph *avfilter_graph_alloc();
+function avfilter_graph_alloc(): PAVFilterGraph; cdecl; external LIB_AVFILTER;
 
 (**
  * Create a new filter instance in a filter graph.
@@ -949,9 +947,7 @@ AVFilterGraph *avfilter_graph_alloc();
  *         also retrievable directly through AVFilterGraph.filters or with
  *         avfilter_graph_get_filter()) on success or NULL on failure.
  *)
-AVFilterContext *avfilter_graph_alloc_filter(AVFilterGraph *graph,
-                                             const AVFilter *filter,
-                                             const pchar name);
+function avfilter_graph_alloc_filter(graph: PAVFilterGraph; const filter: PAVFilter; const name: pchar): PAVFilterContext; cdecl; external LIB_AVFILTER;
 
 (**
  * Get a filter instance identified by instance name from graph.
@@ -961,7 +957,7 @@ AVFilterContext *avfilter_graph_alloc_filter(AVFilterGraph *graph,
  * @return the pointer to the found filter instance or NULL if it
  * cannot be found.
  *)
-AVFilterContext *avfilter_graph_get_filter(AVFilterGraph *graph, const pchar name);
+function avfilter_graph_get_filter(graph: PAVFilterGraph; const name: pchar): PAVFilterContext; cdecl; external LIB_AVFILTER;
 
 {$if FF_API_AVFILTER_OPEN}
 (**
@@ -974,7 +970,7 @@ AVFilterContext *avfilter_graph_get_filter(AVFilterGraph *graph, const pchar nam
  * filter graph
  *)
 //TODO attribute_deprecated
-function cint avfilter_graph_add_filter(AVFilterGraph *graphctx, AVFilterContext *filter);
+function avfilter_graph_add_filter(graphctx: PAVFilterGraph; filter: PAVFilterContext): cint; cdecl; external LIB_AVFILTER;
 {$endif}
 
 (**
@@ -990,9 +986,7 @@ function cint avfilter_graph_add_filter(AVFilterGraph *graphctx, AVFilterContext
  * @return a negative AVERROR error code in case of failure, a non
  * negative value otherwise
  *)
-function cint avfilter_graph_create_filter(AVFilterContext **filt_ctx, const AVFilter *filt,
-                                 const pchar name, const pchar args, void *opaque,
-                                 AVFilterGraph *graph_ctx);
+function avfilter_graph_create_filter(filt_ctx: PPAVFilterContext; const filt: PAVFilter; const name: pchar; const args: pchar; opaque: pointer; graph_ctx: PAVFilterGraph): cint; cdecl; external LIB_AVFILTER;
 
 (**
  * Enable or disable automatic format conversion inside the graph.
@@ -1002,7 +996,7 @@ function cint avfilter_graph_create_filter(AVFilterContext **filt_ctx, const AVF
  *
  * @param flags  any of the AVFILTER_AUTO_CONVERT_* constants
  *)
-procedure avfilter_graph_set_auto_convert(AVFilterGraph *graph, unsigned flags);
+procedure avfilter_graph_set_auto_convert(graph: PAVFilterGraph; flags: cunsigned); cdecl; external LIB_AVFILTER;
 
 enum {
     AVFILTER_AUTO_CONVERT_ALL  =  0, (**< all automatic conversions enabled *)
@@ -1016,13 +1010,13 @@ enum {
  * @param log_ctx context used for logging
  * @return >= 0 in case of success, a negative AVERROR code otherwise
  *)
-function cint avfilter_graph_config(AVFilterGraph *graphctx, void *log_ctx);
+function avfilter_graph_config(graphctx: PAVFilterGraph; log_ctx: pointer): cint; cdecl; external LIB_AVFILTER;
 
 (**
  * Free a graph, destroy its links, and set *graph to NULL.
  * If *graph is NULL, do nothing.
  *)
-procedure avfilter_graph_free(AVFilterGraph **graph);
+procedure avfilter_graph_free(graph: PPAVFilterGraph); cdecl; external LIB_AVFILTER;
 
 (**
  * A linked-list of the inputs/outputs of the filter chain.
@@ -1052,13 +1046,13 @@ typedef struct AVFilterInOut {
  * Must be freed with avfilter_inout_free().
  * @return allocated AVFilterInOut on success, NULL on failure.
  *)
-AVFilterInOut *avfilter_inout_alloc();
+function avfilter_inout_alloc(): PAVFilterInOut; cdecl; external LIB_AVFILTER;
 
 (**
  * Free the supplied list of AVFilterInOut and set *inout to NULL.
  * If *inout is NULL, do nothing.
  *)
-procedure avfilter_inout_free(AVFilterInOut **inout);
+procedure avfilter_inout_free(inout: PPAVFilterInOut); cdecl; external LIB_AVFILTER;
 
 (**
  * Add a graph described by a string to a graph.
@@ -1078,9 +1072,7 @@ procedure avfilter_inout_free(AVFilterInOut **inout);
  * @param outputs linked list to the outputs of the graph
  * @return zero on success, a negative AVERROR code on error
  *)
-function cint avfilter_graph_parse(AVFilterGraph *graph, const pchar filters,
-                         AVFilterInOut *inputs, AVFilterInOut *outputs,
-                         void *log_ctx);
+function avfilter_graph_parse(graph: PAVFilterGraph; const filters: pchar; inputs: PAVFilterInOut; outputs: PAVFilterInOut; log_ctx: pointer): cint; cdecl; external LIB_AVFILTER;
 
 (**
  * Add a graph described by a string to a graph.
@@ -1099,9 +1091,7 @@ function cint avfilter_graph_parse(AVFilterGraph *graph, const pchar filters,
  *                after the parsing, should be freed with avfilter_inout_free().
  * @return non negative on success, a negative AVERROR code on error
  *)
-function cint avfilter_graph_parse_ptr(AVFilterGraph *graph, const pchar filters,
-                             AVFilterInOut **inputs, AVFilterInOut **outputs,
-                             void *log_ctx);
+function avfilter_graph_parse_ptr(graph: PAVFilterGraph; const filters: pchar; inputs: PPAVFilterInOut; outputs: PPAVFilterInOut; log_ctx: pointer): cint; cdecl; external LIB_AVFILTER;
 
 (**
  * Add a graph described by a string to a graph.
@@ -1125,9 +1115,7 @@ function cint avfilter_graph_parse_ptr(AVFilterGraph *graph, const pchar filters
  * the outputs parameter will contain outputs of the newly created
  * filters.
  *)
-function cint avfilter_graph_parse2(AVFilterGraph *graph, const pchar filters,
-                          AVFilterInOut **inputs,
-                          AVFilterInOut **outputs);
+function avfilter_graph_parse2(graph: PAVFilterGraph; const filters: pchar; inputs: PPAVFilterInOut; outputs: PPAVFilterInOut): cint; cdecl; external LIB_AVFILTER;
 
 (**
  * Send a command to one or more filter instances.
@@ -1144,7 +1132,7 @@ function cint avfilter_graph_parse2(AVFilterGraph *graph, const pchar filters,
  * @returns >=0 on success otherwise an error code.
  *              AVERROR(ENOSYS) on unsupported commands
  *)
-function cint avfilter_graph_send_command(AVFilterGraph *graph, const pchar target, const pchar cmd, const pchar arg, char *res, int res_len, int flags);
+function avfilter_graph_send_command(graph: PAVFilterGraph; const target: pchar; const cmd: pchar; const arg: pchar; res: pchar; res_len: cint; flags: int): cint; cdecl; external LIB_AVFILTER;
 
 (**
  * Queue a command for one or more filter instances.
@@ -1161,7 +1149,7 @@ function cint avfilter_graph_send_command(AVFilterGraph *graph, const pchar targ
  * @note As this executes commands after this function returns, no return code
  *       from the filter is provided, also AVFILTER_CMD_FLAG_ONE is not supported.
  *)
-function cint avfilter_graph_queue_command(AVFilterGraph *graph, const pchar target, const pchar cmd, const pchar arg, int flags, double ts);
+function avfilter_graph_queue_command(graph: PAVFilterGraph; const target: pchar; const cmd: pchar; const arg: pchar; flags: cint; ts: cdouble): cint; cdecl; external LIB_AVFILTER;
 
 
 (**
@@ -1172,7 +1160,7 @@ function cint avfilter_graph_queue_command(AVFilterGraph *graph, const pchar tar
  * @return  a string, or NULL in case of memory allocation failure;
  *          the string must be freed using av_free
  *)
-char *avfilter_graph_dump(AVFilterGraph *graph, const pchar options);
+function avfilter_graph_dump(graph: PAVFilterGraph; const options: pchar): pchar; cdecl; external LIB_AVFILTER;
 
 (**
  * Request a frame on the oldest sink link.
@@ -1192,7 +1180,7 @@ char *avfilter_graph_dump(AVFilterGraph *graph, const pchar options);
  * @return  the return value of ff_request_frame(),
  *          or AVERROR_EOF if all links returned AVERROR_EOF
  *)
-function cint avfilter_graph_request_oldest(AVFilterGraph *graph);
+function avfilter_graph_request_oldest(graph: PAVFilterGraph): cint; cdecl; external LIB_AVFILTER;
 
 (**
  * @}

@@ -34,7 +34,10 @@
 
 #include <stdint.h>
 
-typedef struct AVVorbisParseContext AVVorbisParseContext;
+type
+  PAVVorbisParseContext = ^AVVorbisParseContext;
+  AVVorbisParseContext = record
+  end;
 
 (**
  * Allocate and initialize the Vorbis parser using headers in the extradata.
@@ -42,14 +45,14 @@ typedef struct AVVorbisParseContext AVVorbisParseContext;
  * @param avctx codec context
  * @param s     Vorbis parser context
  *)
-AVVorbisParseContext *av_vorbis_parse_init(const uint8_t *extradata,
-                                           int extradata_size);
+function av_vorbis_parse_init(const extradata: pcuint8_t; extradata_size: cint): PAVVorbisParseContext; cdecl; external LIB_AVCODEC;
 
 (**
  * Free the parser and everything associated with it.
  *)
-procedure av_vorbis_parse_free(AVVorbisParseContext **s);
+procedure av_vorbis_parse_free(s: PPAVVorbisParseContext); cdecl; external LIB_AVCODEC;
 
+const
   VORBIS_FLAG_HEADER = $00000001;
   VORBIS_FLAG_COMMENT = $00000002;
   VORBIS_FLAG_SETUP = $00000004;
@@ -65,8 +68,7 @@ procedure av_vorbis_parse_free(AVVorbisParseContext **s);
  * @param buf_size size of the buffer
  * @param flags    flags for special frames
  *)
-function cint av_vorbis_parse_frame_flags(AVVorbisParseContext *s, const uint8_t *buf,
-                                int buf_size, int *flags);
+function av_vorbis_parse_frame_flags(s: PAVVorbisParseContext; const buf: pcuint8_t; buf_size: cint; flags: pcint): cint; cdecl; external LIB_AVCODEC;
 
 (**
  * Get the duration for a Vorbis packet.
@@ -75,9 +77,8 @@ function cint av_vorbis_parse_frame_flags(AVVorbisParseContext *s, const uint8_t
  * @param buf      buffer containing a Vorbis frame
  * @param buf_size size of the buffer
  *)
-function cint av_vorbis_parse_frame(AVVorbisParseContext *s, const uint8_t *buf,
-                          int buf_size);
+function av_vorbis_parse_frame(s: PAVVorbisParseContext; const buf: pcuint8_t; buf_size: cint): cint; cdecl; external LIB_AVCODEC;
 
-procedure av_vorbis_parse_reset(AVVorbisParseContext *s);
+procedure av_vorbis_parse_reset(s: PAVVorbisParseContext); cdecl; external LIB_AVCODEC;
 
 // #endif (* AVCODEC_VORBIS_PARSER_H *)

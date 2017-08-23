@@ -121,15 +121,15 @@ const
  * @param colorspace One of the SWS_CS_* macros. If invalid,
  * SWS_CS_DEFAULT is used.
  *)
-function sws_getCoefficients(int colorspace): pcint; cdecl; external LIB_SWSCALE;
+function sws_getCoefficients(colorspace: cint): pcint; cdecl; external LIB_SWSCALE;
 
 // when used for filters they must have an odd number of elements
 // coeffs cannot be shared between vectors
 type
   PSwsVector = ^SwsVector;
   SwsVector = record
-    coeff: pcdouble;              ///< pointer to the list of coefficients
-    length: cint;                 ///< number of coefficients in the vector
+    coeff: pcdouble; ///< pointer to the list of coefficients
+    length: cint; ///< number of coefficients in the vector
   end;
 
 // vectors can be shared
@@ -149,20 +149,20 @@ type
  * Return a positive value if pix_fmt is a supported input format, 0
  * otherwise.
  *)
-function sws_isSupportedInput(enum AVPixelFormat pix_fmt): cint; cdecl; external LIB_SWSCALE;
+function sws_isSupportedInput(pix_fmt: AVPixelFormat): cint; cdecl; external LIB_SWSCALE;
 
 (**
  * Return a positive value if pix_fmt is a supported output format, 0
  * otherwise.
  *)
-function sws_isSupportedOutput(enum AVPixelFormat pix_fmt): cint; cdecl; external LIB_SWSCALE;
+function sws_isSupportedOutput(pix_fmt: AVPixelFormat): cint; cdecl; external LIB_SWSCALE;
 
 (**
  * @param[in]  pix_fmt the pixel format
  * @return a positive value if an endianness conversion for pix_fmt is
  * supported, 0 otherwise.
  *)
-function sws_isSupportedEndiannessConversion(enum AVPixelFormat pix_fmt): cint; cdecl; external LIB_SWSCALE;
+function sws_isSupportedEndiannessConversion(pix_fmt: AVPixelFormat): cint; cdecl; external LIB_SWSCALE;
 
 (**
  * Allocate an empty SwsContext. This must be filled and passed to
@@ -177,14 +177,14 @@ function sws_alloc_context(): PSwsContext; cdecl; external LIB_SWSCALE;
  * @return zero or positive value on success, a negative value on
  * error
  *)
-av_warn_unused_result
-function sws_init_context(struct SwsContext *sws_context, SwsFilter *srcFilter, SwsFilter *dstFilter): cint; cdecl; external LIB_SWSCALE;
+//TODO av_warn_unused_result
+function sws_init_context(sws_context: PSwsContext; srcFilter: PSwsFilter; dstFilter: PSwsFilter): cint; cdecl; external LIB_SWSCALE;
 
 (**
  * Free the swscaler context swsContext.
  * If swsContext is NULL, then does nothing.
  *)
-procedure sws_freeContext(struct SwsContext *swsContext); cdecl; external LIB_SWSCALE;
+procedure sws_freeContext(swsContext: PSwsContext); cdecl; external LIB_SWSCALE;
 
 (**
  * Allocate and return an SwsContext. You need it to perform
@@ -207,10 +207,7 @@ procedure sws_freeContext(struct SwsContext *swsContext); cdecl; external LIB_SW
  * @note this function is to be removed after a saner alternative is
  *       written
  *)
-function sws_getContext(int srcW, int srcH, enum AVPixelFormat srcFormat,
-                                  int dstW, int dstH, enum AVPixelFormat dstFormat,
-                                  int flags, SwsFilter *srcFilter,
-                                  SwsFilter *dstFilter, const double *param): PSwsContext; cdecl; external LIB_SWSCALE;
+function sws_getContext(srcW: cint; srcH: cint; srcFormat: AVPixelFormat; dstW: cint; dstH: cint; dstFormat: AVPixelFormat; flags: cint; srcFilter: PSwsFilter; dstFilter: PSwsFilter; const param: pcdouble): PSwsContext; cdecl; external LIB_SWSCALE;
 
 (**
  * Scale the image slice in srcSlice and put the resulting scaled
@@ -238,9 +235,9 @@ function sws_getContext(int srcW, int srcH, enum AVPixelFormat srcFormat,
  *                  the destination image
  * @return          the height of the output slice
  *)
-function sws_scale(struct SwsContext *c, const uint8_t *const srcSlice[],
-              const int srcStride[], int srcSliceY, int srcSliceH,
-              uint8_t *const dst[], const int dstStride[]): cint; cdecl; external LIB_SWSCALE;
+function sws_scale(c: PSwsContext; const srcSlice: array of pcuint8_t;
+              const srcStride: array of cint; srcSliceY: cint; srcSliceH: cint;
+              dst: array of pcuint8_t; const dstStride: array of cint): cint; cdecl; external LIB_SWSCALE;
 
 (**
  * @param dstRange flag indicating the while-black range of the output (1=jpeg / 0=mpeg)
@@ -252,16 +249,14 @@ function sws_scale(struct SwsContext *c, const uint8_t *const srcSlice[],
  * @param saturation 16.16 fixed point saturation correction
  * @return -1 if not supported
  *)
-function sws_setColorspaceDetails(struct SwsContext *c, const int inv_table[4],
+function sws_setColorspaceDetails(c: PSwsContext; const int inv_table[4],
                              int srcRange, const int table[4], int dstRange,
                              int brightness, int contrast, int saturation): cint; cdecl; external LIB_SWSCALE;
 
 (**
  * @return -1 if not supported
  *)
-function sws_getColorspaceDetails(struct SwsContext *c, int **inv_table,
-                             int *srcRange, int **table, int *dstRange,
-                             int *brightness, int *contrast, int *saturation): cint; cdecl; external LIB_SWSCALE;
+function sws_getColorspaceDetails(c: PSwsContext; inv_table: ppcint; srcRange: pcint; table: ppcint; dstRange: pcint; brightness: pcint; contrast: pcint; saturation: pcint): cint; cdecl; external LIB_SWSCALE;
 
 (**
  * Allocate and return an uninitialized vector with length coefficients.
@@ -277,39 +272,36 @@ function sws_getGaussianVec(double variance, double quality): PSwsVector; cdecl;
 (**
  * Scale all the coefficients of a by the scalar value.
  *)
-procedure sws_scaleVec(SwsVector *a, double scalar); cdecl; external LIB_SWSCALE;
+procedure sws_scaleVec(a: PSwsVector; double scalar); cdecl; external LIB_SWSCALE;
 
 (**
  * Scale all the coefficients of a so that their sum equals height.
  *)
-procedure sws_normalizeVec(SwsVector *a, double height); cdecl; external LIB_SWSCALE;
+procedure sws_normalizeVec(a: PSwsVector; double height); cdecl; external LIB_SWSCALE;
 
 {$if FF_API_SWS_VECTOR}
 //TODO attribute_deprecated
-function sws_getConstVec(double c, int length): PSwsVector; cdecl; external LIB_SWSCALE;
+function sws_getConstVec(c: cdouble; length: cint): PSwsVector; cdecl; external LIB_SWSCALE;
 //TODO attribute_deprecated
 function sws_getIdentityVec(): PSwsVector; cdecl; external LIB_SWSCALE;
 //TODO attribute_deprecated
-procedure sws_convVec(SwsVector *a, SwsVector *b); cdecl; external LIB_SWSCALE;
+procedure sws_convVec(a: PSwsVector; b: PSwsVector); cdecl; external LIB_SWSCALE;
 //TODO attribute_deprecated
-procedure sws_addVec(SwsVector *a, SwsVector *b); cdecl; external LIB_SWSCALE;
+procedure sws_addVec(a: PSwsVector; b: PSwsVector); cdecl; external LIB_SWSCALE;
 //TODO attribute_deprecated
-procedure sws_subVec(SwsVector *a, SwsVector *b); cdecl; external LIB_SWSCALE;
+procedure sws_subVec(a: PSwsVector; b: PSwsVector); cdecl; external LIB_SWSCALE;
 //TODO attribute_deprecated
-procedure sws_shiftVec(SwsVector *a, int shift); cdecl; external LIB_SWSCALE;
+procedure sws_shiftVec(a: PSwsVector; shift: cint); cdecl; external LIB_SWSCALE;
 //TODO attribute_deprecated
-function sws_cloneVec(SwsVector *a): PSwsVector; cdecl; external LIB_SWSCALE;
+function sws_cloneVec(a: PSwsVector): PSwsVector; cdecl; external LIB_SWSCALE;
 //TODO attribute_deprecated
-procedure sws_printVec2(SwsVector *a, AVClass *log_ctx, int log_level); cdecl; external LIB_SWSCALE;
+procedure sws_printVec2(a: PSwsVector; log_ctx: PAVClass; log_level: cint); cdecl; external LIB_SWSCALE;
 {$endif}
 
-procedure sws_freeVec(SwsVector *a); cdecl; external LIB_SWSCALE;
+procedure sws_freeVec(a: PSwsVector); cdecl; external LIB_SWSCALE;
 
-function sws_getDefaultFilter(float lumaGBlur, float chromaGBlur,
-                                float lumaSharpen, float chromaSharpen,
-                                float chromaHShift, float chromaVShift,
-                                int verbose): PSwsFilter; cdecl; external LIB_SWSCALE;
-procedure sws_freeFilter(SwsFilter *filter); cdecl; external LIB_SWSCALE;
+function sws_getDefaultFilter(lumaGBlur: cfloat; chromaGBlur: cfloat; lumaSharpen: cfloat; chromaSharpen: float; chromaHShift: cfloat; chromaVShift: float; verbose: cint): PSwsFilter; cdecl; external LIB_SWSCALE;
+procedure sws_freeFilter(filter: PSwsFilter); cdecl; external LIB_SWSCALE;
 
 (**
  * Check if context can be reused, otherwise reallocate a new one.
@@ -323,11 +315,7 @@ procedure sws_freeFilter(SwsFilter *filter); cdecl; external LIB_SWSCALE;
  * Be warned that srcFilter and dstFilter are not checked, they
  * are assumed to remain the same.
  *)
-function sws_getCachedContext(struct SwsContext *context,
-                                        int srcW, int srcH, enum AVPixelFormat srcFormat,
-                                        int dstW, int dstH, enum AVPixelFormat dstFormat,
-                                        int flags, SwsFilter *srcFilter,
-                                        SwsFilter *dstFilter, const double *param): PSwsContext; cdecl; external LIB_SWSCALE;
+function sws_getCachedContext(context: PSwsContext; srcW: cint; srcH: cint; srcFormat: AVPixelFormat; dstW: cint; dstH: cint; dstFormat: AVPixelFormat; flags: cint; srcFilter: PSwsFilter; dstFilter: PSwsFilter; const param: pcdouble ): PSwsContext; cdecl; external LIB_SWSCALE;
 
 (**
  * Convert an 8-bit paletted frame into a frame with a color depth of 32 bits.
@@ -339,7 +327,7 @@ function sws_getCachedContext(struct SwsContext *context,
  * @param num_pixels number of pixels to convert
  * @param palette    array with [256] entries, which must match color arrangement (RGB or BGR) of src
  *)
-procedure sws_convertPalette8ToPacked32(const uint8_t *src, uint8_t *dst, int num_pixels, const uint8_t *palette); cdecl; external LIB_SWSCALE;
+procedure sws_convertPalette8ToPacked32(const src: pcuint8_t; dst: pcuint8_t; num_pixels: cint; const palette: pcuint8_t); cdecl; external LIB_SWSCALE;
 
 (**
  * Convert an 8-bit paletted frame into a frame with a color depth of 24 bits.
@@ -351,7 +339,7 @@ procedure sws_convertPalette8ToPacked32(const uint8_t *src, uint8_t *dst, int nu
  * @param num_pixels number of pixels to convert
  * @param palette    array with [256] entries, which must match color arrangement (RGB or BGR) of src
  *)
-procedure sws_convertPalette8ToPacked24(const uint8_t *src, uint8_t *dst, int num_pixels, const uint8_t *palette); cdecl; external LIB_SWSCALE;
+procedure sws_convertPalette8ToPacked24(const src: pcuint8_t; dst: pcuint8_t; num_pixels: cint; const palette: pcuint8_t); cdecl; external LIB_SWSCALE;
 
 (**
  * Get the AVClass for swsContext. It can be used in combination with

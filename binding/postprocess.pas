@@ -89,11 +89,7 @@ extern const pchar const pp_help; ///< a simple help text
 extern const char pp_help[]; ///< a simple help text
 {$endif}
 
-procedure pp_postprocess(const uint8_t * src[3], const int srcStride[3],
-                     uint8_t * dst[3], const int dstStride[3],
-                     int horizontalSize, int verticalSize,
-                     const int8_t *QP_store,  int QP_stride,
-                     pp_mode *mode, pp_context *ppContext, int pict_type); cdecl; external LIB_POSTPROCESS;
+procedure pp_postprocess(const src: array[0..2] of pcuint8_t; const srcStride: array[0..2] of cint; dst: array[0..2] of pcuint8_t; const dstStride: array[0..2] of cint; horizontalSize: cint; verticalSize: cint; const QP_store: pcint8_t; QP_stride: cint; mode: Ppp_mode; ppContext: Ppp_context; pict_type: cint); cdecl; external LIB_POSTPROCESS;
 
 
 (**
@@ -102,11 +98,11 @@ procedure pp_postprocess(const uint8_t * src[3], const int srcStride[3],
  * @param name    the string after "-pp" on the command line
  * @param quality a number from 0 to PP_QUALITY_MAX
  *)
-function pp_get_mode_by_name_and_quality(const pchar name, int quality): Ppp_mode; cdecl; external LIB_POSTPROCESS;
-procedure pp_free_mode(pp_mode *mode); cdecl; external LIB_POSTPROCESS;
+function pp_get_mode_by_name_and_quality(const name: pchar; quality: cint): Ppp_mode; cdecl; external LIB_POSTPROCESS;
+procedure pp_free_mode(mode: Ppp_mode); cdecl; external LIB_POSTPROCESS;
 
-function pp_get_context(int width, int height, int flags): Ppp_context; cdecl; external LIB_POSTPROCESS;
-procedure pp_free_context(pp_context *ppContext); cdecl; external LIB_POSTPROCESS;
+function pp_get_context(width: cint; height: cint; flags: cint): Ppp_context; cdecl; external LIB_POSTPROCESS;
+procedure pp_free_context(ppContext: Ppp_context); cdecl; external LIB_POSTPROCESS;
 
 const
   PP_CPU_CAPS_MMX = $80000000;

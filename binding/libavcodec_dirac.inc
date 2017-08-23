@@ -48,6 +48,7 @@
  *
  * We use this instead of MAX_DECOMPOSITIONS to save some memory.
  *)
+const
   MAX_DWT_LEVELS = 5;
 
 (**
@@ -59,65 +60,67 @@
  * VC-2 Specification  ->
  * 10.4.1 Table 10.1
  *)
-
-enum DiracParseCodes {
-    DIRAC_PCODE_SEQ_HEADER      = $00,
-    DIRAC_PCODE_END_SEQ         = $10,
-    DIRAC_PCODE_AUX             = $20,
-    DIRAC_PCODE_PAD             = $30,
-    DIRAC_PCODE_PICTURE_CODED   = $08,
-    DIRAC_PCODE_PICTURE_RAW     = $48,
+type
+  DiracParseCodes = (
+    DIRAC_PCODE_SEQ_HEADER = $00,
+    DIRAC_PCODE_END_SEQ = $10,
+    DIRAC_PCODE_AUX = $20,
+    DIRAC_PCODE_PAD = $30,
+    DIRAC_PCODE_PICTURE_CODED = $08,
+    DIRAC_PCODE_PICTURE_RAW = $48,
     DIRAC_PCODE_PICTURE_LOW_DEL = $C8,
-    DIRAC_PCODE_PICTURE_HQ      = $E8,
+    DIRAC_PCODE_PICTURE_HQ = $E8,
     DIRAC_PCODE_INTER_NOREF_CO1 = $0A,
     DIRAC_PCODE_INTER_NOREF_CO2 = $09,
-    DIRAC_PCODE_INTER_REF_CO1   = $0D,
-    DIRAC_PCODE_INTER_REF_CO2   = $0E,
-    DIRAC_PCODE_INTRA_REF_CO    = $0C,
-    DIRAC_PCODE_INTRA_REF_RAW   = $4C,
-    DIRAC_PCODE_INTRA_REF_PICT  = $CC,
-    DIRAC_PCODE_MAGIC           = $42424344,
-};
+    DIRAC_PCODE_INTER_REF_CO1 = $0D,
+    DIRAC_PCODE_INTER_REF_CO2 = $0E,
+    DIRAC_PCODE_INTRA_REF_CO = $0C,
+    DIRAC_PCODE_INTRA_REF_RAW = $4C,
+    DIRAC_PCODE_INTRA_REF_PICT = $CC,
+    DIRAC_PCODE_MAGIC = $42424344,
+  );
 
-typedef struct DiracVersionInfo {
-    int major;
-    int minor;
-} DiracVersionInfo;
+  DiracVersionInfo = record
+    major: cint;
+    minor: cint;
+  end;
 
-typedef struct AVDiracSeqHeader {
-    unsigned width;
-    unsigned height;
-    uint8_t chroma_format;          ///< 0: 444  1: 422  2: 420
+  PPAVDiracSeqHeader = ^PAVDiracSeqHeader;
+  PAVDiracSeqHeader = ^AVDiracSeqHeader;
+  AVDiracSeqHeader = record
+    width: cunsigned;
+    height: cunsigned;
+    chroma_format: cuint8_t; ///< 0: 444  1: 422  2: 420
 
-    uint8_t interlaced;
-    uint8_t top_field_first;
+    interlaced: cuint8_t;
+    top_field_first: cuint8_t;
 
-    uint8_t frame_rate_index;       ///< index into dirac_frame_rate[]
-    uint8_t aspect_ratio_index;     ///< index into dirac_aspect_ratio[]
+    frame_rate_index: cuint8_t; ///< index into dirac_frame_rate[]
+    aspect_ratio_index: cuint8_t; ///< index into dirac_aspect_ratio[]
 
-    uint16_t clean_width;
-    uint16_t clean_height;
-    uint16_t clean_left_offset;
-    uint16_t clean_right_offset;
+    clean_width: cuint16_t;
+    clean_height: cuint16_t;
+    clean_left_offset: cuint16_t;
+    clean_right_offset: cuint16_t;
 
-    uint8_t pixel_range_index;      ///< index into dirac_pixel_range_presets[]
-    uint8_t color_spec_index;       ///< index into dirac_color_spec_presets[]
+    pixel_range_index: cuint8_t; ///< index into dirac_pixel_range_presets[]
+    color_spec_index: cuint8_t; ///< index into dirac_color_spec_presets[]
 
-    int profile;
-    int level;
+    profile: cint;
+    level: cint;
 
-    AVRational framerate;
-    AVRational sample_aspect_ratio;
+    framerate: AVRational;
+    sample_aspect_ratio: AVRational;
 
-    enum AVPixelFormat pix_fmt;
-    enum AVColorRange color_range;
-    enum AVColorPrimaries color_primaries;
-    enum AVColorTransferCharacteristic color_trc;
-    enum AVColorSpace colorspace;
+    pix_fmt: AVPixelFormat;
+    color_range: AVColorRange;
+    color_primaries: AVColorPrimaries;
+    color_trc: AVColorTransferCharacteristic;
+    colorspace: AVColorSpace;
 
-    DiracVersionInfo version;
-    int bit_depth;
-} AVDiracSeqHeader;
+    version: DiracVersionInfo;
+    bit_depth: cint;
+  end;
 
 (**
  * Parse a Dirac sequence header.
@@ -130,8 +133,6 @@ typedef struct AVDiracSeqHeader {
  * @param log_ctx if non-NULL, this function will log errors here
  * @return 0 on success, a negative AVERROR code on failure
  *)
-function cint av_dirac_parse_sequence_header(AVDiracSeqHeader **dsh,
-                                   const uint8_t *buf, size_t buf_size,
-                                   void *log_ctx);
+function av_dirac_parse_sequence_header(dsh: PPAVDiracSeqHeader; const buf: pcuint8_t; buf_size: csize_t; log_ctx: pointer): cint; cdecl; external LIB_AVCODEC;
 
 // #endif (* AVCODEC_DIRAC_H *)

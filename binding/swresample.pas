@@ -244,7 +244,7 @@ function swr_alloc(): PSwrContext; cdecl; external LIB_SWRESAMPLE;
  * @param[in,out]   s Swr context to initialize
  * @return AVERROR error code in case of failure.
  *)
-function swr_init(struct SwrContext *s): cint; cdecl; external LIB_SWRESAMPLE;
+function swr_init(s: PSwrContext): cint; cdecl; external LIB_SWRESAMPLE;
 
 (**
  * Check whether an swr context has been initialized or not.
@@ -253,7 +253,7 @@ function swr_init(struct SwrContext *s): cint; cdecl; external LIB_SWRESAMPLE;
  * @see swr_init()
  * @return positive if it has been initialized, 0 if not initialized
  *)
-function swr_is_initialized(struct SwrContext *s): cint; cdecl; external LIB_SWRESAMPLE;
+function swr_is_initialized(s: PSwrContext): cint; cdecl; external LIB_SWRESAMPLE;
 
 (**
  * Allocate SwrContext if needed and set/reset common parameters.
@@ -275,10 +275,7 @@ function swr_is_initialized(struct SwrContext *s): cint; cdecl; external LIB_SWR
  * @see swr_init(), swr_free()
  * @return NULL on error, allocated context otherwise
  *)
-function swr_alloc_set_opts(struct SwrContext *s,
-                                      int64_t out_ch_layout, enum AVSampleFormat out_sample_fmt, int out_sample_rate,
-                                      int64_t  in_ch_layout, enum AVSampleFormat  in_sample_fmt, int  in_sample_rate,
-                                      int log_offset, void *log_ctx): PSwrContext; cdecl; external LIB_SWRESAMPLE;
+function swr_alloc_set_opts(s: PSwrContext; out_ch_layout: cint64_t; out_sample_fmt: AVSampleFormat; out_sample_rate: cint; in_ch_layout: cint64_t; in_sample_fmt: AVSampleFormat; in_sample_rate: cint; log_offset: cint; log_ctx: pointer): PSwrContext; cdecl; external LIB_SWRESAMPLE;
 
 (**
  * @}
@@ -292,7 +289,7 @@ function swr_alloc_set_opts(struct SwrContext *s,
  *
  * @param[in] s a pointer to a pointer to Swr context
  *)
-procedure swr_free(struct SwrContext **s); cdecl; external LIB_SWRESAMPLE;
+procedure swr_free(s: PPSwrContext); cdecl; external LIB_SWRESAMPLE;
 
 (**
  * Closes the context so that swr_is_initialized() returns 0.
@@ -304,7 +301,7 @@ procedure swr_free(struct SwrContext **s); cdecl; external LIB_SWRESAMPLE;
  *
  * @param[in,out] s Swr context to be closed
  *)
-procedure swr_close(struct SwrContext *s); cdecl; external LIB_SWRESAMPLE;
+procedure swr_close(s: PSwrContext); cdecl; external LIB_SWRESAMPLE;
 
 (**
  * @}
@@ -331,8 +328,7 @@ procedure swr_close(struct SwrContext *s); cdecl; external LIB_SWRESAMPLE;
  *
  * @return number of samples output per channel, negative value on error
  *)
-function swr_convert(struct SwrContext *s, uint8_t **out, int out_count,
-                                const uint8_t **in , int in_count): cint; cdecl; external LIB_SWRESAMPLE;
+function swr_convert(s: PSwrContext; out_: ppcuint8_t; out_count: cint; const in_: ppcuint8_t; in_count: cint): cint; cdecl; external LIB_SWRESAMPLE;
 
 (**
  * Convert the next timestamp from input to output
@@ -351,7 +347,7 @@ function swr_convert(struct SwrContext *s, uint8_t **out, int out_count,
  *      function used internally for timestamp compensation.
  * @return the output timestamp for the next output sample
  *)
-function swr_next_pts(struct SwrContext *s, int64_t pts): cint64_t; cdecl; external LIB_SWRESAMPLE;
+function swr_next_pts(s: PSwrContext; pts: cint64_t): cint64_t; cdecl; external LIB_SWRESAMPLE;
 
 (**
  * @}
@@ -378,7 +374,7 @@ function swr_next_pts(struct SwrContext *s, int64_t pts): cint64_t; cdecl; exter
  *            @li compensation unsupported by resampler, or
  *            @li swr_init() fails when called.
  *)
-function swr_set_compensation(struct SwrContext *s, int sample_delta, int compensation_distance): cint; cdecl; external LIB_SWRESAMPLE;
+function swr_set_compensation(s: PSwrContext; sample_delta: cint; compensation_distance: cint): cint; cdecl; external LIB_SWRESAMPLE;
 
 (**
  * Set a customized input channel mapping.
@@ -388,7 +384,7 @@ function swr_set_compensation(struct SwrContext *s, int sample_delta, int compen
  *                            indexes, -1 for a muted channel)
  * @return >= 0 on success, or AVERROR error code in case of failure.
  *)
-function swr_set_channel_mapping(struct SwrContext *s, const int *channel_map): cint; cdecl; external LIB_SWRESAMPLE;
+function swr_set_channel_mapping(s: PSwrContext; const channel_map: pcint): cint; cdecl; external LIB_SWRESAMPLE;
 
 (**
  * Generate a channel mixing matrix.
@@ -413,12 +409,7 @@ function swr_set_channel_mapping(struct SwrContext *s, const int *channel_map): 
  * @param log_ctx             parent logging context, can be NULL
  * @return                    0 on success, negative AVERROR code on failure
  *)
-function swr_build_matrix(uint64_t in_layout, uint64_t out_layout,
-                     double center_mix_level, double surround_mix_level,
-                     double lfe_mix_level, double rematrix_maxval,
-                     double rematrix_volume, double *matrix,
-                     int stride, enum AVMatrixEncoding matrix_encoding,
-                     void *log_ctx): cint; cdecl; external LIB_SWRESAMPLE;
+function swr_build_matrix(in_layout: cuint64_t; out_layout: cuint64_t; center_mix_level: cdouble; surround_mix_level: cdouble; lfe_mix_level: cdouble; rematrix_maxval: cdouble; rematrix_volume: cdouble; matrix: pcdouble; stride: cint; matrix_encoding: AVMatrixEncoding; log_ctx: pointer): cint; cdecl; external LIB_SWRESAMPLE;
 
 (**
  * Set a customized remix matrix.
@@ -429,7 +420,7 @@ function swr_build_matrix(uint64_t in_layout, uint64_t out_layout,
  * @param stride  offset between lines of the matrix
  * @return  >= 0 on success, or AVERROR error code in case of failure.
  *)
-function swr_set_matrix(struct SwrContext *s, const double *matrix, int stride): cint; cdecl; external LIB_SWRESAMPLE;
+function swr_set_matrix(s: PSwrContext; const matrix: pcdouble; stride: cint): cint; cdecl; external LIB_SWRESAMPLE;
 
 (**
  * @}
@@ -449,7 +440,7 @@ function swr_set_matrix(struct SwrContext *s, const double *matrix, int stride):
  *
  * @return >= 0 on success, or a negative AVERROR code on failure
  *)
-function swr_drop_output(struct SwrContext *s, int count): cint; cdecl; external LIB_SWRESAMPLE;
+function swr_drop_output(s: PSwrContext; count: cint): cint; cdecl; external LIB_SWRESAMPLE;
 
 (**
  * Injects the specified number of silence samples.
@@ -462,7 +453,7 @@ function swr_drop_output(struct SwrContext *s, int count): cint; cdecl; external
  *
  * @return >= 0 on success, or a negative AVERROR code on failure
  *)
-function swr_inject_silence(struct SwrContext *s, int count): cint; cdecl; external LIB_SWRESAMPLE;
+function swr_inject_silence(s: PSwrContext; count: cint): cint; cdecl; external LIB_SWRESAMPLE;
 
 (**
  * Gets the delay the next input sample will experience relative to the next output sample.
@@ -488,7 +479,7 @@ function swr_inject_silence(struct SwrContext *s, int count): cint; cdecl; exter
  *                  returned
  * @returns     the delay in 1 / @c base units.
  *)
-function swr_get_delay(struct SwrContext *s, int64_t base): cint64_t; cdecl; external LIB_SWRESAMPLE;
+function swr_get_delay(s: PSwrContext; base: cint64_t): cint64_t; cdecl; external LIB_SWRESAMPLE;
 
 (**
  * Find an upper bound on the number of samples that the next swr_convert
@@ -506,7 +497,7 @@ function swr_get_delay(struct SwrContext *s, int64_t base): cint64_t; cdecl; ext
  * @returns an upper bound on the number of samples that the next swr_convert
  *          will output or a negative value to indicate an error
  *)
-function swr_get_out_samples(struct SwrContext *s, int in_samples): cint; cdecl; external LIB_SWRESAMPLE;
+function swr_get_out_samples(s: PSwrContext; in_samples: cint): cint; cdecl; external LIB_SWRESAMPLE;
 
 (**
  * @}
@@ -580,8 +571,7 @@ function swresample_license(): pchar; cdecl; external LIB_SWRESAMPLE;
  * @return                0 on success, AVERROR on failure or nonmatching
  *                        configuration.
  *)
-function swr_convert_frame(SwrContext *swr,
-                      AVFrame *output, const AVFrame *input): cint; cdecl; external LIB_SWRESAMPLE;
+function swr_convert_frame(swr: PSwrContext; output: PAVFrame; const input: PAVFrame): cint; cdecl; external LIB_SWRESAMPLE;
 
 (**
  * Configure or reconfigure the SwrContext using the information
@@ -597,7 +587,7 @@ function swr_convert_frame(SwrContext *swr,
  * @param input           input AVFrame
  * @return                0 on success, AVERROR on failure.
  *)
-function swr_config_frame(SwrContext *swr, const AVFrame *out, const AVFrame *in): cint; cdecl; external LIB_SWRESAMPLE;
+function swr_config_frame(swr: PSwrContext; const out_: PAVFrame; const in_: PAVFrame): cint; cdecl; external LIB_SWRESAMPLE;
 
 (**
  * @}

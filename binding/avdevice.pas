@@ -71,22 +71,22 @@ const
 (**
  * Return the LIBAVDEVICE_VERSION_INT constant.
  *)
-unsigned avdevice_version();
+function avdevice_version(): cunsigned; cdecl; external LIB_AVDEVICE;
 
 (**
  * Return the libavdevice build-time configuration.
  *)
-const pchar avdevice_configuration();
+function avdevice_configuration(): pchar; cdecl; external LIB_AVDEVICE;
 
 (**
  * Return the libavdevice license.
  *)
-const pchar avdevice_license();
+function avdevice_license(): pchar; cdecl; external LIB_AVDEVICE;
 
 (**
  * Initialize libavdevice and register all the input and output devices.
  *)
-procedure avdevice_register_all();
+procedure avdevice_register_all(); cdecl; external LIB_AVDEVICE;
 
 (**
  * Audio input devices iterator.
@@ -95,7 +95,7 @@ procedure avdevice_register_all();
  * if d is non-NULL, returns the next registered input audio/video device after d
  * or NULL if d is the last one.
  *)
-AVInputFormat *av_input_audio_device_next(AVInputFormat  *d);
+function av_input_audio_device_next(d: PAVInputFormat): PAVInputFormat; cdecl; external LIB_AVDEVICE;
 
 (**
  * Video input devices iterator.
@@ -104,7 +104,7 @@ AVInputFormat *av_input_audio_device_next(AVInputFormat  *d);
  * if d is non-NULL, returns the next registered input audio/video device after d
  * or NULL if d is the last one.
  *)
-AVInputFormat *av_input_video_device_next(AVInputFormat  *d);
+function av_input_video_device_next(d: PAVInputFormat): PAVInputFormat; cdecl; external LIB_AVDEVICE;
 
 (**
  * Audio output devices iterator.
@@ -113,7 +113,7 @@ AVInputFormat *av_input_video_device_next(AVInputFormat  *d);
  * if d is non-NULL, returns the next registered output audio/video device after d
  * or NULL if d is the last one.
  *)
-AVOutputFormat *av_output_audio_device_next(AVOutputFormat *d);
+function av_output_audio_device_next(d: PAVOutputFormat): PAVOutputFormat; cdecl; external LIB_AVDEVICE;
 
 (**
  * Video output devices iterator.
@@ -122,7 +122,7 @@ AVOutputFormat *av_output_audio_device_next(AVOutputFormat *d);
  * if d is non-NULL, returns the next registered output audio/video device after d
  * or NULL if d is the last one.
  *)
-AVOutputFormat *av_output_video_device_next(AVOutputFormat *d);
+function av_output_video_device_next(d: PAVOutputFormat): PAVOutputFormat; cdecl; external LIB_AVDEVICE;
 
 typedef struct AVDeviceRect {
     int x;      (**< x coordinate of top left corner *)
@@ -321,9 +321,7 @@ enum AVDevToAppMessageType {
  * @return >= 0 on success, negative on error.
  *         AVERROR(ENOSYS) when device doesn't implement handler of the message.
  *)
-function cint avdevice_app_to_dev_control_message(struct AVFormatContext *s,
-                                        enum AVAppToDevMessageType type,
-                                        void *data, size_t data_size);
+function avdevice_app_to_dev_control_message(s: PAVFormatContext; type_: AVAppToDevMessageType; data: pointer; data_size: csize_t): cint; cdecl; external LIB_AVDEVICE;
 
 (**
  * Send control message from device to application.
@@ -335,9 +333,7 @@ function cint avdevice_app_to_dev_control_message(struct AVFormatContext *s,
  * @return >= 0 on success, negative on error.
  *         AVERROR(ENOSYS) when application doesn't implement handler of the message.
  *)
-function cint avdevice_dev_to_app_control_message(struct AVFormatContext *s,
-                                        enum AVDevToAppMessageType type,
-                                        void *data, size_t data_size);
+function avdevice_dev_to_app_control_message(s: PAVFormatContext; type_: AVDevToAppMessageType; data: pointer; data_size: csize_t): cint; cdecl; external LIB_AVDEVICE;
 
 (**
  * Following API allows user to probe device capabilities (supported codecs,
@@ -453,8 +449,7 @@ extern const AVOption av_device_capabilities[];
  *
  * @return >= 0 on success, negative otherwise.
  *)
-function cint avdevice_capabilities_create(AVDeviceCapabilitiesQuery **caps, AVFormatContext *s,
-                                 AVDictionary **device_options);
+function cint avdevice_capabilities_create(caps: PPAVDeviceCapabilitiesQuery; s: PAVFormatContext; device_options: PPAVDictionary); cdecl; external LIB_AVDEVICE;
 
 (**
  * Free resources created by avdevice_capabilities_create()
@@ -462,7 +457,7 @@ function cint avdevice_capabilities_create(AVDeviceCapabilitiesQuery **caps, AVF
  * @param caps Device capabilities data to be freed.
  * @param s    Context of the device.
  *)
-procedure avdevice_capabilities_free(AVDeviceCapabilitiesQuery **caps, AVFormatContext *s);
+procedure avdevice_capabilities_free(caps: PPAVDeviceCapabilitiesQuery; s: PAVFormatContext); cdecl; external LIB_AVDEVICE;
 
 (**
  * Structure describes basic parameters of the device.
@@ -494,14 +489,14 @@ typedef struct AVDeviceInfoList {
  * @param[out] device_list list of autodetected devices.
  * @return count of autodetected devices, negative on error.
  *)
-function cint avdevice_list_devices(struct AVFormatContext *s, AVDeviceInfoList **device_list);
+function avdevice_list_devices(s: PAVFormatContext; device_list: PPAVDeviceInfoList): cint; cdecl; external LIB_AVDEVICE;
 
 (**
  * Convenient function to free result of avdevice_list_devices().
  *
  * @param devices device list to be freed.
  *)
-procedure avdevice_free_list_devices(AVDeviceInfoList **device_list);
+procedure avdevice_free_list_devices(device_list: PPAVDeviceInfoList); cdecl; external LIB_AVDEVICE;
 
 (**
  * List devices.
@@ -520,10 +515,8 @@ procedure avdevice_free_list_devices(AVDeviceInfoList **device_list);
  * @return count of autodetected devices, negative on error.
  * @note device argument takes precedence over device_name when both are set.
  *)
-function cint avdevice_list_input_sources(struct AVInputFormat *device, const pchar device_name,
-                                AVDictionary *device_options, AVDeviceInfoList **device_list);
-function cint avdevice_list_output_sinks(struct AVOutputFormat *device, const pchar device_name,
-                               AVDictionary *device_options, AVDeviceInfoList **device_list);
+function avdevice_list_input_sources(device: PAVInputFormat; const device_name: pchar; device_options: PAVDictionary; device_list: PPAVDeviceInfoList): cint; cdecl; external LIB_AVDEVICE;
+function avdevice_list_output_sinks(device: PAVOutputFormat; const device_name: pchar; device_options: PAVDictionary; device_list: PPAVDeviceInfoList): cint; cdecl; external LIB_AVDEVICE;
 
 (**
  * @}
