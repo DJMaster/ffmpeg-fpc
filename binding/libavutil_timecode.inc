@@ -45,10 +45,10 @@ enum AVTimecodeFlag {
 };
 
 typedef struct {
-    int start;          ///< timecode frame start (first base frame number)
-    uint32_t flags;     ///< flags such as drop frame, +24 hours support, ...
-    AVRational rate;    ///< frame rate in rational form
-    unsigned fps;       ///< frame per second; must be consistent with the rate field
+    int start; ///< timecode frame start (first base frame number)
+    uint32_t flags; ///< flags such as drop frame, +24 hours support, ...
+    AVRational rate; ///< frame rate in rational form
+    unsigned fps; ///< frame per second; must be consistent with the rate field
 } AVTimecode;
 
 (**

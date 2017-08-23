@@ -129,9 +129,9 @@ typedef struct AVSphericalMapping {
      * ^ - the default up vector
      * @endcode
      *)
-    int32_t yaw;   ///< Rotation around the up vector [-180, 180].
+    int32_t yaw; ///< Rotation around the up vector [-180, 180].
     int32_t pitch; ///< Rotation around the right vector [-90, 90].
-    int32_t roll;  ///< Rotation around the forward vector [-180, 180].
+    int32_t roll; ///< Rotation around the forward vector [-180, 180].
     (**
      * @}
      *)
@@ -170,9 +170,9 @@ typedef struct AVSphericalMapping {
      *       projection type (@ref AV_SPHERICAL_EQUIRECTANGULAR_TILE),
      *       and should be ignored in all other cases.
      *)
-    uint32_t bound_left;   ///< Distance from the left edge
-    uint32_t bound_top;    ///< Distance from the top edge
-    uint32_t bound_right;  ///< Distance from the right edge
+    uint32_t bound_left; ///< Distance from the left edge
+    uint32_t bound_top; ///< Distance from the top edge
+    uint32_t bound_right; ///< Distance from the right edge
     uint32_t bound_bottom; ///< Distance from the bottom edge
     (**
      * @}

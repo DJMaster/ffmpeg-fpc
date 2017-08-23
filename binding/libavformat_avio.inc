@@ -90,20 +90,20 @@ enum AVIODirEntryType {
  * Rest of fields are protocol or/and platform dependent and might be unknown.
  *)
 typedef struct AVIODirEntry {
-    char *name;                           (**< Filename *)
-    int type;                             (**< Type of the entry *)
-    int utf8;                             (**< Set to 1 when name is encoded with UTF-8, 0 otherwise.
-                                               Name can be encoded with UTF-8 even though 0 is set. *)
-    int64_t size;                         (**< File size in bytes, -1 if unknown. *)
-    int64_t modification_timestamp;       (**< Time of last modification in microseconds since unix
-                                               epoch, -1 if unknown. *)
-    int64_t access_timestamp;             (**< Time of last access in microseconds since unix epoch,
-                                               -1 if unknown. *)
-    int64_t status_change_timestamp;      (**< Time of last status change in microseconds since unix
-                                               epoch, -1 if unknown. *)
-    int64_t user_id;                      (**< User ID of owner, -1 if unknown. *)
-    int64_t group_id;                     (**< Group ID of owner, -1 if unknown. *)
-    int64_t filemode;                     (**< Unix file mode, -1 if unknown. *)
+    char *name; (**< Filename *)
+    int type; (**< Type of the entry *)
+    int utf8; (**< Set to 1 when name is encoded with UTF-8, 0 otherwise.
+                     Name can be encoded with UTF-8 even though 0 is set. *)
+    int64_t size; (**< File size in bytes, -1 if unknown. *)
+    int64_t modification_timestamp; (**< Time of last modification in microseconds since unix
+                                           epoch, -1 if unknown. *)
+    int64_t access_timestamp; (**< Time of last access in microseconds since unix epoch,
+                                     -1 if unknown. *)
+    int64_t status_change_timestamp; (**< Time of last status change in microseconds since unix
+                                            epoch, -1 if unknown. *)
+    int64_t user_id; (**< User ID of owner, -1 if unknown. *)
+    int64_t group_id; (**< Group ID of owner, -1 if unknown. *)
+    int64_t filemode; (**< Unix file mode, -1 if unknown. *)
 } AVIODirEntry;
 
 typedef struct AVIODirContext {
@@ -219,27 +219,27 @@ typedef struct AVIOContext {
      *               +--------------------------+-----------------------------------+
      *
      *)
-    unsigned char *buffer;  (**< Start of the buffer. *)
-    int buffer_size;        (**< Maximum buffer size *)
+    unsigned char *buffer; (**< Start of the buffer. *)
+    int buffer_size; (**< Maximum buffer size *)
     unsigned char *buf_ptr; (**< Current position in the buffer *)
     unsigned char *buf_end; (**< End of the data, may be less than
                                  buffer+buffer_size if the read function returned
                                  less data than requested, e.g. for streams where
                                  no more data has been received yet. *)
-    void *opaque;           (**< A private pointer, passed to the read/write/seek/...
+    void *opaque; (**< A private pointer, passed to the read/write/seek/...
                                  functions. *)
     int (*read_packet)(void *opaque, uint8_t *buf, int buf_size);
     int (*write_packet)(void *opaque, uint8_t *buf, int buf_size);
     int64_t (*seek)(void *opaque, int64_t offset, int whence);
-    int64_t pos;            (**< position in the file of the current buffer *)
-    int must_flush;         (**< true if the next seek should flush *)
-    int eof_reached;        (**< true if eof reached *)
-    int write_flag;         (**< true if open for writing *)
+    int64_t pos; (**< position in the file of the current buffer *)
+    int must_flush; (**< true if the next seek should flush *)
+    int eof_reached; (**< true if eof reached *)
+    int write_flag; (**< true if open for writing *)
     int max_packet_size;
     unsigned long checksum;
     unsigned char *checksum_ptr;
     unsigned long (*update_checksum)(unsigned long checksum, const uint8_t *buf, unsigned int size);
-    int error;              (**< contains the error code or 0 if no error happened *)
+    int error; (**< contains the error code or 0 if no error happened *)
     (**
      * Pause or resume playback for network streaming protocols - e.g. MMS.
      *)
@@ -623,8 +623,8 @@ function cint avio_get_str16be(AVIOContext *pb, int maxlen, char *buf, int bufle
  * constants, optionally ORed with other flags.
  * @{
  *)
-  AVIO_FLAG_READ = 1;                                      (**< read-only *)
-  AVIO_FLAG_WRITE = 2;                                     (**< write-only *)
+  AVIO_FLAG_READ = 1; (**< read-only *)
+  AVIO_FLAG_WRITE = 2; (**< write-only *)
   AVIO_FLAG_READ_WRITE = (AVIO_FLAG_READ|AVIO_FLAG_WRITE); (**< read-write pseudo flag *)
 (**
  * @}

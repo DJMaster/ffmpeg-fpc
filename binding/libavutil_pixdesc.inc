@@ -89,7 +89,7 @@ typedef struct AVComponentDescriptor {
  *)
 typedef struct AVPixFmtDescriptor {
     const pchar name;
-    uint8_t nb_components;  ///< The number of components each pixel has, (1-4)
+    uint8_t nb_components; ///< The number of components each pixel has, (1-4)
 
     (**
      * Amount to shift the luma width right to find the chroma width.

@@ -312,9 +312,9 @@ function cint av_match_name(const pchar name, const pchar names);
 char *av_append_path_component(const pchar path, const pchar component);
 
 enum AVEscapeMode {
-    AV_ESCAPE_MODE_AUTO,      ///< Use auto-selected escaping mode.
+    AV_ESCAPE_MODE_AUTO, ///< Use auto-selected escaping mode.
     AV_ESCAPE_MODE_BACKSLASH, ///< Use backslash escaping.
-    AV_ESCAPE_MODE_QUOTE,     ///< Use single-quote escaping.
+    AV_ESCAPE_MODE_QUOTE, ///< Use single-quote escaping.
 };
 
 (**

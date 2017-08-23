@@ -232,7 +232,7 @@ enum AVOptionType{
     AV_OPT_TYPE_FLOAT,
     AV_OPT_TYPE_STRING,
     AV_OPT_TYPE_RATIONAL,
-    AV_OPT_TYPE_BINARY,  ///< offset must point to a pointer immediately followed by an int for the length
+    AV_OPT_TYPE_BINARY, ///< offset must point to a pointer immediately followed by an int for the length
     AV_OPT_TYPE_DICT,
     AV_OPT_TYPE_UINT64,
     AV_OPT_TYPE_CONST = 128,
@@ -275,14 +275,14 @@ typedef struct AVOption {
         (* TODO those are unused now *)
         AVRational q;
     } default_val;
-    double min;                 ///< minimum valid value for the option
-    double max;                 ///< maximum valid value for the option
+    double min; ///< minimum valid value for the option
+    double max; ///< maximum valid value for the option
 
     int flags;
-  AV_OPT_FLAG_ENCODING_PARAM = 1   ///< a generic parameter which can be set by the user for muxing or encoding
-  AV_OPT_FLAG_DECODING_PARAM = 2   ///< a generic parameter which can be set by the user for demuxing or decoding
+  AV_OPT_FLAG_ENCODING_PARAM = 1 ///< a generic parameter which can be set by the user for muxing or encoding
+  AV_OPT_FLAG_DECODING_PARAM = 2 ///< a generic parameter which can be set by the user for demuxing or decoding
 {$if FF_API_OPT_TYPE_METADATA}
-  AV_OPT_FLAG_METADATA = 4   ///< some data extracted or inserted into the file like title, comment, ...
+  AV_OPT_FLAG_METADATA = 4 ///< some data extracted or inserted into the file like title, comment, ...
 #endif
   AV_OPT_FLAG_AUDIO_PARAM = 8
   AV_OPT_FLAG_VIDEO_PARAM = 16
@@ -840,8 +840,8 @@ function cint av_opt_is_set_to_default(obj: pointer; const AVOption *o);
 function cint av_opt_is_set_to_default_by_name(obj: pointer; const pchar name, int search_flags);
 
 
-  AV_OPT_SERIALIZE_SKIP_DEFAULTS = $00000001  ///< Serialize options that are not set to default values only.
-  AV_OPT_SERIALIZE_OPT_FLAGS_EXACT = $00000002  ///< Serialize options that exactly match opt_flags only.
+  AV_OPT_SERIALIZE_SKIP_DEFAULTS = $00000001 ///< Serialize options that are not set to default values only.
+  AV_OPT_SERIALIZE_OPT_FLAGS_EXACT = $00000002 ///< Serialize options that exactly match opt_flags only.
 
 (**
  * Serialize object's options.

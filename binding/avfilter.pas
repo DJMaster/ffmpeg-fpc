@@ -284,7 +284,7 @@ typedef struct AVFilter {
      *)
     int (*query_formats)(AVFilterContext *);
 
-    int priv_size;      ///< size of private data to allocate for the filter
+    int priv_size; ///< size of private data to allocate for the filter
 
     int flags_internal; ///< Additional flags for avfilter internal use only.
 
@@ -339,23 +339,23 @@ typedef struct AVFilterInternal AVFilterInternal;
 
 (** An instance of a filter *)
 struct AVFilterContext {
-    PAVClass av_class;        ///< needed for av_log() and filters common options
+    PAVClass av_class; ///< needed for av_log() and filters common options
 
-    PAVFilter filter;         ///< the AVFilter of which this is an instance
+    PAVFilter filter; ///< the AVFilter of which this is an instance
 
-    char *name;                     ///< name of this filter instance
+    char *name; ///< name of this filter instance
 
-    AVFilterPad   *input_pads;      ///< array of input pads
-    AVFilterLink **inputs;          ///< array of pointers to input links
-    unsigned    nb_inputs;          ///< number of input pads
+    AVFilterPad   *input_pads; ///< array of input pads
+    AVFilterLink **inputs; ///< array of pointers to input links
+    unsigned    nb_inputs; ///< number of input pads
 
-    AVFilterPad   *output_pads;     ///< array of output pads
-    AVFilterLink **outputs;         ///< array of pointers to output links
-    unsigned    nb_outputs;         ///< number of output pads
+    AVFilterPad   *output_pads; ///< array of output pads
+    AVFilterLink **outputs; ///< array of pointers to output links
+    unsigned    nb_outputs; ///< number of output pads
 
-    void *priv;                     ///< private data for use by the filter
+    void *priv; ///< private data for use by the filter
 
-    struct graph: PAVFilterGraph;    ///< filtergraph this filter belongs to
+    struct graph: PAVFilterGraph; ///< filtergraph this filter belongs to
 
     (**
      * Type of multithreading being allowed/used. A combination of
@@ -382,10 +382,10 @@ struct AVFilterContext {
 
     struct AVFilterCommand *command_queue;
 
-    char *enable_str;               ///< enable expression string
-    void *enable;                   ///< parsed expression (AVExpr*)
-    double *var_values;             ///< variable values for the enable expression
-    int is_disabled;                ///< the enabled state from the last expression evaluation
+    char *enable_str; ///< enable expression string
+    void *enable; ///< parsed expression (AVExpr*)
+    double *var_values; ///< variable values for the enable expression
+    int is_disabled; ///< the enabled state from the last expression evaluation
 
     (**
      * For filters which will create hardware frames, sets the device the
@@ -424,23 +424,23 @@ struct AVFilterContext {
  * implementation.
  *)
 struct AVFilterLink {
-    AVFilterContext *src;       ///< source filter
-    AVFilterPad *srcpad;        ///< output pad on the source filter
+    AVFilterContext *src; ///< source filter
+    AVFilterPad *srcpad; ///< output pad on the source filter
 
-    AVFilterContext *dst;       ///< dest filter
-    AVFilterPad *dstpad;        ///< input pad on the dest filter
+    AVFilterContext *dst; ///< dest filter
+    AVFilterPad *dstpad; ///< input pad on the dest filter
 
-    enum AVMediaType type;      ///< filter media type
+    enum AVMediaType type; ///< filter media type
 
     (* These parameters apply only to video *)
-    int w;                      ///< agreed upon image width
-    int h;                      ///< agreed upon image height
+    int w; ///< agreed upon image width
+    int h; ///< agreed upon image height
     AVRational sample_aspect_ratio; ///< agreed upon sample aspect ratio
     (* These parameters apply only to audio *)
-    uint64_t channel_layout;    ///< channel layout of current buffer (see libavutil/channel_layout.h)
-    int sample_rate;            ///< samples per second
+    uint64_t channel_layout; ///< channel layout of current buffer (see libavutil/channel_layout.h)
+    int sample_rate; ///< samples per second
 
-    int format;                 ///< agreed upon media format
+    int format; ///< agreed upon media format
 
     (**
      * Define the time base used by the PTS of the frames/samples
@@ -488,9 +488,9 @@ struct AVFilterLink {
 
     (** stage of the initialization of the link properties (dimensions, etc) *)
     enum {
-        AVLINK_UNINIT = 0,      ///< not started
-        AVLINK_STARTINIT,       ///< started, but incomplete
-        AVLINK_INIT             ///< complete
+        AVLINK_UNINIT = 0, ///< not started
+        AVLINK_STARTINIT, ///< started, but incomplete
+        AVLINK_INIT ///< complete
     } init_state;
 
     (**
@@ -670,7 +670,7 @@ procedure avfilter_link_set_closed(link: PAVFilterLink; closed: cint); cdecl; ex
  *)
 function avfilter_config_links(filter: PAVFilterContext): cint; cdecl; external LIB_AVFILTER;
 
-  AVFILTER_CMD_FLAG_ONE = 1;  ///< Stop once a filter understood the command (for target=all for example), fast filters are favored automatically
+  AVFILTER_CMD_FLAG_ONE = 1; ///< Stop once a filter understood the command (for target=all for example), fast filters are favored automatically
   AVFILTER_CMD_FLAG_FAST = 2; ///< Only execute command when its fast (like a video out that supports contrast adjustment in hw)
 
 (**

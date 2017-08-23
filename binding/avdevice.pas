@@ -125,9 +125,9 @@ function av_output_audio_device_next(d: PAVOutputFormat): PAVOutputFormat; cdecl
 function av_output_video_device_next(d: PAVOutputFormat): PAVOutputFormat; cdecl; external LIB_AVDEVICE;
 
 typedef struct AVDeviceRect {
-    int x;      (**< x coordinate of top left corner *)
-    int y;      (**< y coordinate of top left corner *)
-    int width;  (**< width *)
+    int x; (**< x coordinate of top left corner *)
+    int y; (**< y coordinate of top left corner *)
+    int width; (**< width *)
     int height; (**< height *)
 } AVDeviceRect;
 
@@ -463,17 +463,17 @@ procedure avdevice_capabilities_free(caps: PPAVDeviceCapabilitiesQuery; s: PAVFo
  * Structure describes basic parameters of the device.
  *)
 typedef struct AVDeviceInfo {
-    char *device_name;                   (**< device name, format depends on device *)
-    char *device_description;            (**< human friendly name *)
+    char *device_name; (**< device name, format depends on device *)
+    char *device_description; (**< human friendly name *)
 } AVDeviceInfo;
 
 (**
  * List of devices.
  *)
 typedef struct AVDeviceInfoList {
-    AVDeviceInfo **devices;              (**< list of autodetected devices *)
-    int nb_devices;                      (**< number of autodetected devices *)
-    int default_device;                  (**< index of default device or -1 if no default *)
+    AVDeviceInfo **devices; (**< list of autodetected devices *)
+    int nb_devices; (**< number of autodetected devices *)
+    int default_device; (**< index of default device or -1 if no default *)
 } AVDeviceInfoList;
 
 (**

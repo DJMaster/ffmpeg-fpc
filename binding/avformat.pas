@@ -487,41 +487,41 @@ const
   AVPROBE_SCORE_STREAM_RETRY = (AVPROBE_SCORE_MAX/4-1);
 
   AVPROBE_SCORE_EXTENSION = 50; ///< score for file extension
-  AVPROBE_SCORE_MIME = 75;      ///< score for file mime type
-  AVPROBE_SCORE_MAX = 100;      ///< maximum score
+  AVPROBE_SCORE_MIME = 75; ///< score for file mime type
+  AVPROBE_SCORE_MAX = 100; ///< maximum score
 
-  AVPROBE_PADDING_SIZE = 32;    ///< extra allocated bytes at the end of the probe buffer
+  AVPROBE_PADDING_SIZE = 32; ///< extra allocated bytes at the end of the probe buffer
 
 /// Demuxer will use avio_open, no opened file should be provided by the caller.
   AVFMT_NOFILE = $0001;
-  AVFMT_NEEDNUMBER = $0002;      (**< Needs '%d' in filename. *)
-  AVFMT_SHOW_IDS = $0008;        (**< Show format stream IDs numbers. *)
+  AVFMT_NEEDNUMBER = $0002; (**< Needs '%d' in filename. *)
+  AVFMT_SHOW_IDS = $0008; (**< Show format stream IDs numbers. *)
 {$if FF_API_LAVF_FMT_RAWPICTURE}
-  AVFMT_RAWPICTURE = $0020;      (**< Format wants AVPicture structure for
-                                      raw picture data. @deprecated Not used anymore *)
+  AVFMT_RAWPICTURE = $0020; (**< Format wants AVPicture structure for
+                                 raw picture data. @deprecated Not used anymore *)
 {$endif}
-  AVFMT_GLOBALHEADER = $0040;    (**< Format wants global header. *)
-  AVFMT_NOTIMESTAMPS = $0080;    (**< Format does not need / have any timestamps. *)
-  AVFMT_GENERIC_INDEX = $0100;   (**< Use generic index building code. *)
-  AVFMT_TS_DISCONT = $0200;      (**< Format allows timestamp discontinuities. Note, muxers always require valid (monotone) timestamps *)
-  AVFMT_VARIABLE_FPS = $0400;    (**< Format allows variable fps. *)
-  AVFMT_NODIMENSIONS = $0800;    (**< Format does not need width/height *)
-  AVFMT_NOSTREAMS = $1000;       (**< Format does not require any streams *)
-  AVFMT_NOBINSEARCH = $2000;     (**< Format does not allow to fall back on binary search via read_timestamp *)
-  AVFMT_NOGENSEARCH = $4000;     (**< Format does not allow to fall back on generic search *)
-  AVFMT_NO_BYTE_SEEK = $8000;    (**< Format does not allow seeking by bytes *)
-  AVFMT_ALLOW_FLUSH = $10000;    (**< Format allows flushing. If not set, the muxer will not receive a NULL packet in the write_packet function. *)
-  AVFMT_TS_NONSTRICT = $20000;     (**< Format does not require strictly
-                                        increasing timestamps, but they must
-                                        still be monotonic *)
-  AVFMT_TS_NEGATIVE = $40000;      (**< Format allows muxing negative
-                                        timestamps. If not set the timestamp
-                                        will be shifted in av_write_frame and
-                                        av_interleaved_write_frame so they
-                                        start from 0.
-                                        The user or muxer can override this through
-                                        AVFormatContext.avoid_negative_ts
-                                        *)
+  AVFMT_GLOBALHEADER = $0040; (**< Format wants global header. *)
+  AVFMT_NOTIMESTAMPS = $0080; (**< Format does not need / have any timestamps. *)
+  AVFMT_GENERIC_INDEX = $0100; (**< Use generic index building code. *)
+  AVFMT_TS_DISCONT = $0200; (**< Format allows timestamp discontinuities. Note, muxers always require valid (monotone) timestamps *)
+  AVFMT_VARIABLE_FPS = $0400; (**< Format allows variable fps. *)
+  AVFMT_NODIMENSIONS = $0800; (**< Format does not need width/height *)
+  AVFMT_NOSTREAMS = $1000; (**< Format does not require any streams *)
+  AVFMT_NOBINSEARCH = $2000; (**< Format does not allow to fall back on binary search via read_timestamp *)
+  AVFMT_NOGENSEARCH = $4000; (**< Format does not allow to fall back on generic search *)
+  AVFMT_NO_BYTE_SEEK = $8000; (**< Format does not allow seeking by bytes *)
+  AVFMT_ALLOW_FLUSH = $10000; (**< Format allows flushing. If not set, the muxer will not receive a NULL packet in the write_packet function. *)
+  AVFMT_TS_NONSTRICT = $20000; (**< Format does not require strictly
+                                    increasing timestamps, but they must
+                                    still be monotonic *)
+  AVFMT_TS_NEGATIVE = $40000; (**< Format allows muxing negative
+                                   timestamps. If not set the timestamp
+                                   will be shifted in av_write_frame and
+                                   av_interleaved_write_frame so they
+                                   start from 0.
+                                   The user or muxer can override this through
+                                   AVFormatContext.avoid_negative_ts
+                                   *)
 
   AVFMT_SEEK_TO_PTS = $4000000 (**< Seeking is based on PTS *)
 
@@ -540,8 +540,8 @@ typedef struct AVOutputFormat {
     const pchar mime_type;
     const pchar extensions; (**< comma-separated filename extensions *)
     (* output support *)
-    enum AVCodecID audio_codec;    (**< default audio codec *)
-    enum AVCodecID video_codec;    (**< default video codec *)
+    enum AVCodecID audio_codec; (**< default audio codec *)
+    enum AVCodecID video_codec; (**< default video codec *)
     enum AVCodecID subtitle_codec; (**< default subtitle codec *)
     (**
      * can use flags: AVFMT_NOFILE, AVFMT_NEEDNUMBER,
@@ -816,30 +816,30 @@ typedef struct AVInputFormat {
 
 enum AVStreamParseType {
     AVSTREAM_PARSE_NONE,
-    AVSTREAM_PARSE_FULL,       (**< full parsing and repack *)
-    AVSTREAM_PARSE_HEADERS,    (**< Only parse headers, do not repack. *)
+    AVSTREAM_PARSE_FULL, (**< full parsing and repack *)
+    AVSTREAM_PARSE_HEADERS, (**< Only parse headers, do not repack. *)
     AVSTREAM_PARSE_TIMESTAMPS, (**< full parsing and interpolation of timestamps for frames not starting on a packet boundary *)
-    AVSTREAM_PARSE_FULL_ONCE,  (**< full parsing and repack of the first frame only, only implemented for H.264 currently *)
-    AVSTREAM_PARSE_FULL_RAW=MKTAG(0,'R','A','W'),       (**< full parsing and repack with timestamp and position generation by parser for raw
-                                                             this assumes that each packet in the file contains no demuxer level headers and
-                                                             just codec level data, otherwise position generation would fail *)
+    AVSTREAM_PARSE_FULL_ONCE, (**< full parsing and repack of the first frame only, only implemented for H.264 currently *)
+    AVSTREAM_PARSE_FULL_RAW=MKTAG(0,'R','A','W'), (**< full parsing and repack with timestamp and position generation by parser for raw
+                                                       this assumes that each packet in the file contains no demuxer level headers and
+                                                       just codec level data, otherwise position generation would fail *)
 };
 
 typedef struct AVIndexEntry {
     int64_t pos;
-    int64_t timestamp;        (**<
-                               * Timestamp in AVStream.time_base units, preferably the time from which on correctly decoded frames are available
-                               * when seeking to this entry. That means preferable PTS on keyframe based formats.
-                               * But demuxers can choose to store a different timestamp, if it is more convenient for the implementation or nothing better
-                               * is known
-                               *)
+    int64_t timestamp; (**<
+                          * Timestamp in AVStream.time_base units, preferably the time from which on correctly decoded frames are available
+                          * when seeking to this entry. That means preferable PTS on keyframe based formats.
+                          * But demuxers can choose to store a different timestamp, if it is more convenient for the implementation or nothing better
+                          * is known
+                          *)
   AVINDEX_KEYFRAME = $0001;
   AVINDEX_DISCARD_FRAME = $0002;    (**
-                                          * Flag is used to indicate which frame should be discarded after decoding.
-                                          *)
+                                      * Flag is used to indicate which frame should be discarded after decoding.
+                                      *)
     int flags:2;
     int size:30; //Yeah, trying to keep the size of this small to reduce memory requirements (it is 24 vs. 32 bytes due to possible 8-byte alignment).
-    int min_distance;         (**< Minimum distance between this and the previous keyframe, used to avoid unneeded searching. *)
+    int min_distance; (**< Minimum distance between this and the previous keyframe, used to avoid unneeded searching. *)
 } AVIndexEntry;
 
 const
@@ -856,9 +856,9 @@ const
  * even when user did not explicitly ask for subtitles.
  *)
   AV_DISPOSITION_FORCED = $0040;
-  AV_DISPOSITION_HEARING_IMPAIRED = $0080;  (**< stream for hearing impaired audiences *)
-  AV_DISPOSITION_VISUAL_IMPAIRED = $0100;  (**< stream for visual impaired audiences *)
-  AV_DISPOSITION_CLEAN_EFFECTS = $0200;  (**< stream without voice *)
+  AV_DISPOSITION_HEARING_IMPAIRED = $0080; (**< stream for hearing impaired audiences *)
+  AV_DISPOSITION_VISUAL_IMPAIRED = $0100; (**< stream for visual impaired audiences *)
+  AV_DISPOSITION_CLEAN_EFFECTS = $0200; (**< stream without voice *)
 (**
  * The stream is stored in the file as an attached picture/"cover art" (e.g.
  * APIC frame in ID3v2). The first (usually only) packet associated with it
@@ -885,9 +885,9 @@ typedef struct AVStreamInternal AVStreamInternal;
 (**
  * Options for behavior on timestamp wrap detection.
  *)
-  AV_PTS_WRAP_IGNORE = 0;   ///< ignore the wrap
-  AV_PTS_WRAP_ADD_OFFSET = 1;   ///< add the format specific offset on wrap detection
-  AV_PTS_WRAP_SUB_OFFSET = -1;  ///< subtract the format specific offset on wrap detection
+  AV_PTS_WRAP_IGNORE = 0; ///< ignore the wrap
+  AV_PTS_WRAP_ADD_OFFSET = 1; ///< add the format specific offset on wrap detection
+  AV_PTS_WRAP_SUB_OFFSET = -1; ///< subtract the format specific offset on wrap detection
 
 (**
  * Stream structure.
@@ -897,7 +897,7 @@ typedef struct AVStreamInternal AVStreamInternal;
  * sizeof(AVStream) must not be used outside libav*.
  *)
 typedef struct AVStream {
-    int index;    (**< stream index in AVFormatContext *)
+    int index; (**< stream index in AVFormatContext *)
     (**
      * Format-specific stream ID.
      * decoding: set by libavformat
@@ -955,7 +955,7 @@ typedef struct AVStream {
      *)
     int64_t duration;
 
-    int64_t nb_frames;                 ///< number of frames in this stream if known or 0
+    int64_t nb_frames; ///< number of frames in this stream if known or 0
 
     int disposition; (**< AV_DISPOSITION_* bit field *)
 
@@ -1287,7 +1287,7 @@ const
 typedef struct AVProgram {
     int            id;
     int            flags;
-    enum AVDiscard discard;        ///< selects which program to discard and which to feed to the caller
+    enum AVDiscard discard; ///< selects which program to discard and which to feed to the caller
     unsigned int   *stream_index;
     unsigned int   nb_stream_indexes;
     AVDictionary *metadata;
@@ -1306,8 +1306,8 @@ typedef struct AVProgram {
     int64_t start_time;
     int64_t end_time;
 
-    int64_t pts_wrap_reference;    ///< reference dts for wrap detection
-    int pts_wrap_behavior;         ///< behavior on wrap detection
+    int64_t pts_wrap_reference; ///< reference dts for wrap detection
+    int pts_wrap_behavior; ///< behavior on wrap detection
 } AVProgram;
 
 const
@@ -1315,9 +1315,9 @@ const
                                          (streams are added dynamically) *)
 
 typedef struct AVChapter {
-    int id;                 ///< unique ID to identify the chapter
-    AVRational time_base;   ///< time base in which the start/end timestamps are specified
-    int64_t start, end;     ///< chapter start/end time in time_base units
+    int id; ///< unique ID to identify the chapter
+    AVRational time_base; ///< time base in which the start/end timestamps are specified
+    int64_t start, end; ///< chapter start/end time in time_base units
     AVDictionary *metadata;
 } AVChapter;
 
@@ -1335,7 +1335,7 @@ type
  * to know how the duration was estimated.
  *)
 enum AVDurationEstimationMethod {
-    AVFMT_DURATION_FROM_PTS,    ///< Duration accurately estimated from PTSes
+    AVFMT_DURATION_FROM_PTS, ///< Duration accurately estimated from PTSes
     AVFMT_DURATION_FROM_STREAM, ///< Duration estimated from a stream with a known duration
     AVFMT_DURATION_FROM_BITRATE ///< Duration estimated from bitrate (less accurate)
 };
