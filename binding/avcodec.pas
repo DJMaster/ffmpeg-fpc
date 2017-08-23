@@ -6293,6 +6293,7 @@ type
  *)
 type
   cb_func = function (mutex: ppointer; op: AVLockOp): cint; cdecl;
+
 function av_lockmgr_register(cb: cb_func): cint; cdecl; external LIB_AVCODEC;
 
 (**

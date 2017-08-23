@@ -384,14 +384,14 @@ typedef struct AVOptionRanges {
  * options for which it is !(opt->flags & req_flags).
  * @param av_log_obj log context to use for showing the options
  *)
-function av_opt_show2(obj: pointer; av_log_obj: pointer; req_flags: cint; rej_flags: cint): cint;
+function av_opt_show2(obj: pointer; av_log_obj: pointer; req_flags: cint; rej_flags: cint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Set the values of all AVOption fields to their default values.
  *
  * @param s an AVOption-enabled struct (its first member must be a pointer to AVClass)
  *)
-procedure av_opt_set_defaults(s: pointer);
+procedure av_opt_set_defaults(s: pointer); cdecl; external LIB_AVUTIL;
 
 (**
  * Set the values of all AVOption fields to their default values. Only these
@@ -402,7 +402,7 @@ procedure av_opt_set_defaults(s: pointer);
  * @param mask combination of AV_OPT_FLAG_*
  * @param flags combination of AV_OPT_FLAG_*
  *)
-procedure av_opt_set_defaults2(s: pointer; mask: cint; flags: cint);
+procedure av_opt_set_defaults2(s: pointer; mask: cint; flags: cint); cdecl; external LIB_AVUTIL;
 
 (**
  * Parse the key/value pairs list in opts. For each key/value pair
@@ -421,7 +421,7 @@ procedure av_opt_set_defaults2(s: pointer; mask: cint; flags: cint);
  * the error code issued by av_opt_set() if a key/value pair
  * cannot be set
  *)
-function cint av_set_options_string(ctx: pointer; const opts: pchar; const key_val_sep: pchar; const pairs_sep: pchar);
+function cint av_set_options_string(ctx: pointer; const opts: pchar; const key_val_sep: pchar; const pairs_sep: pchar); cdecl; external LIB_AVUTIL;
 
 (**
  * Parse the key-value pairs list in opts. For each key=value pair found,
@@ -450,12 +450,12 @@ function cint av_set_options_string(ctx: pointer; const opts: pchar; const key_v
  * Separators must use characters distinct from option names and from each
  * other.
  *)
-function av_opt_set_from_string(ctx: pointer; const opts: pchar; const shorthand: ppchar; const key_val_sep: pchar; const pairs_sep: pchar): cint;
+function av_opt_set_from_string(ctx: pointer; const opts: pchar; const shorthand: ppchar; const key_val_sep: pchar; const pairs_sep: pchar): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Free all allocated objects in obj.
  *)
-procedure av_opt_free(obj: pointer);
+procedure av_opt_free(obj: pointer); cdecl; external LIB_AVUTIL;
 
 (**
  * Check whether a particular flag is set in a flags field.
@@ -465,7 +465,7 @@ procedure av_opt_free(obj: pointer);
  * @return non-zero if the flag is set, zero if the flag isn't set,
  *         isn't of the right type, or the flags field doesn't exist.
  *)
-function cint av_opt_flag_is_set(obj: pointer; const field_name: pchar; const flag_name: pchar);
+function cint av_opt_flag_is_set(obj: pointer; const field_name: pchar; const flag_name: pchar); cdecl; external LIB_AVUTIL;
 
 (**
  * Set all the options from a given dictionary on an object.
@@ -481,8 +481,7 @@ function cint av_opt_flag_is_set(obj: pointer; const field_name: pchar; const fl
  *
  * @see av_dict_copy()
  *)
-function cint av_opt_set_dict(obj: pointer; options: PPAVDictionary);
-
+function cint av_opt_set_dict(obj: pointer; options: PPAVDictionary); cdecl; external LIB_AVUTIL;
 
 (**
  * Set all the options from a given dictionary on an object.
@@ -499,7 +498,7 @@ function cint av_opt_set_dict(obj: pointer; options: PPAVDictionary);
  *
  * @see av_dict_copy()
  *)
-function av_opt_set_dict2(obj: pointer; options: PPAVDictionary; search_flags: cint): cint;
+function av_opt_set_dict2(obj: pointer; options: PPAVDictionary; search_flags: cint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Extract a key-value pair from the beginning of a string.
@@ -523,7 +522,7 @@ function av_opt_set_dict2(obj: pointer; options: PPAVDictionary; search_flags: c
 function cint av_opt_get_key_value(const ppchar ropts,
                          const pchar key_val_sep, const pchar pairs_sep,
                          unsigned flags,
-                         char **rkey, char **rval);
+                         char **rkey, char **rval); cdecl; external LIB_AVUTIL;
 
 enum {
 
@@ -548,16 +547,16 @@ enum {
  *
  * @return 0 on success, a negative number on failure.
  *)
-function cint av_opt_eval_flags (obj: pointer; const AVOption *o, const pchar val, int        *flags_out);
-function cint av_opt_eval_int   (obj: pointer; const AVOption *o, const pchar val, int        *int_out);
-function cint av_opt_eval_int64 (obj: pointer; const AVOption *o, const pchar val, int64_t    *int64_out);
-function cint av_opt_eval_float (obj: pointer; const AVOption *o, const pchar val, float      *float_out);
-function cint av_opt_eval_double(obj: pointer; const AVOption *o, const pchar val, double     *double_out);
-function cint av_opt_eval_q     (obj: pointer; const AVOption *o, const pchar val, AVRational *q_out);
+function av_opt_eval_flags (obj: pointer; const o: PAVOption; const val: pchar; flags_out: pcint): cint; cdecl; external LIB_AVUTIL;
+function av_opt_eval_int   (obj: pointer; const o: PAVOption; const val: pchar; int_out: pcint): cint; cdecl; external LIB_AVUTIL;
+function av_opt_eval_int64 (obj: pointer; const o: PAVOption; const val: pchar; int64_out: pcint64_t): cint; cdecl; external LIB_AVUTIL;
+function av_opt_eval_float (obj: pointer; const o: PAVOption; const val: pchar; float_out: pcfloat): cint; cdecl; external LIB_AVUTIL;
+function av_opt_eval_double(obj: pointer; const o: PAVOption; const val: pchar; double_out: pcdouble): cint; cdecl; external LIB_AVUTIL;
+function av_opt_eval_q     (obj: pointer; const o: PAVOption; const val: pchar; q_out: PAVRational): cint; cdecl; external LIB_AVUTIL;
 (**
  * @}
  *)
-
+const
   AV_OPT_SEARCH_CHILDREN = (1 shl 0) (**< Search in possible children of the
                                                given object first. *)
 (**
@@ -603,8 +602,7 @@ function cint av_opt_eval_q     (obj: pointer; const AVOption *o, const pchar va
  * AVDictionary (e.g. avformat_open_input()) to set options found with this
  * flag.
  *)
-const AVOption *av_opt_find(obj: pointer; const pchar name, const pchar unit,
-                            int opt_flags, int search_flags);
+function av_opt_find(obj: pointer; const name: pchar; const unit_: pchar; opt_flags: cint; search_flags: cint): PAVOption; cdecl; external LIB_AVUTIL;
 
 (**
  * Look for an option in an object. Consider only options which
@@ -627,8 +625,7 @@ const AVOption *av_opt_find(obj: pointer; const pchar name, const pchar unit,
  * @return A pointer to the option found, or NULL if no option
  *         was found.
  *)
-const AVOption *av_opt_find2(obj: pointer; const pchar name, const pchar unit,
-                             int opt_flags, int search_flags, void **target_obj);
+function av_opt_find2(obj: pointer; const name: pchar; const unit_: pchar; opt_flags: cint; search_flags: cint; target_obj: ppointer): PAVOption; cdecl; external LIB_AVUTIL;
 
 (**
  * Iterate over all AVOptions belonging to obj.
@@ -639,7 +636,7 @@ const AVOption *av_opt_find2(obj: pointer; const pchar name, const pchar unit,
  *             or NULL
  * @return next AVOption or NULL
  *)
-const AVOption *av_opt_next(const obj: pointer; const AVOption *prev);
+function av_opt_next(const obj: pointer; const prev: PAVOption): PAVOption; cdecl; external LIB_AVUTIL;
 
 (**
  * Iterate over AVOptions-enabled children of obj.
@@ -647,7 +644,7 @@ const AVOption *av_opt_next(const obj: pointer; const AVOption *prev);
  * @param prev result of a previous call to this function or NULL
  * @return next AVOptions-enabled child or NULL
  *)
-function av_opt_child_next(obj: pointer; prev: pointer): pointer;
+function av_opt_child_next(obj: pointer; prev: pointer): pointer; cdecl; external LIB_AVUTIL;
 
 (**
  * Iterate over potential AVOptions-enabled children of parent.
@@ -655,7 +652,7 @@ function av_opt_child_next(obj: pointer; prev: pointer): pointer;
  * @param prev result of a previous call to this function or NULL
  * @return AVClass corresponding to next potential child or NULL
  *)
-const AVClass *av_opt_child_class_next(const AVClass *parent, const AVClass *prev);
+function av_opt_child_class_next(const parent: PAVClass; const prev: PAVClass): PAVClass; cdecl; external LIB_AVUTIL;
 
 (**
  * @defgroup opt_set_funcs Option setting functions
@@ -683,21 +680,21 @@ const AVClass *av_opt_child_class_next(const AVClass *parent, const AVClass *pre
  * AVERROR(ERANGE) if the value is out of range
  * AVERROR(EINVAL) if the value is not valid
  *)
-function cint av_opt_set         (obj: pointer; const pchar name, const pchar val, int search_flags);
-function cint av_opt_set_int     (obj: pointer; const pchar name, int64_t     val, int search_flags);
-function cint av_opt_set_double  (obj: pointer; const pchar name, double      val, int search_flags);
-function cint av_opt_set_q       (obj: pointer; const pchar name, AVRational  val, int search_flags);
-function cint av_opt_set_bin     (obj: pointer; const pchar name, const uint8_t *val, int size, int search_flags);
-function cint av_opt_set_image_size(obj: pointer; const pchar name, int w, int h, int search_flags);
-function cint av_opt_set_pixel_fmt (obj: pointer; const pchar name, enum AVPixelFormat fmt, int search_flags);
-function cint av_opt_set_sample_fmt(obj: pointer; const pchar name, enum AVSampleFormat fmt, int search_flags);
-function cint av_opt_set_video_rate(obj: pointer; const pchar name, AVRational val, int search_flags);
-function cint av_opt_set_channel_layout(obj: pointer; const pchar name, int64_t ch_layout, int search_flags);
+function av_opt_set(obj: pointer; const name: pchar; const pchar val, int search_flags): cint; cdecl; external LIB_AVUTIL;
+function av_opt_set_int(obj: pointer; const name: pchar; int64_t     val, int search_flags): cint; cdecl; external LIB_AVUTIL;
+function av_opt_set_double(obj: pointer; const name: pchar; double      val, int search_flags): cint; cdecl; external LIB_AVUTIL;
+function av_opt_set_q(obj: pointer; const name: pchar; AVRational  val, int search_flags): cint; cdecl; external LIB_AVUTIL;
+function av_opt_set_bin(obj: pointer; const name: pchar; const uint8_t *val, int size, int search_flags): cint; cdecl; external LIB_AVUTIL;
+function av_opt_set_image_size(obj: pointer; const name: pchar; int w, int h, int search_flags): cint; cdecl; external LIB_AVUTIL;
+function av_opt_set_pixel_fmt(obj: pointer; const name: pchar; enum AVPixelFormat fmt, int search_flags): cint; cdecl; external LIB_AVUTIL;
+function av_opt_set_sample_fmt(obj: pointer; const name: pchar; enum AVSampleFormat fmt, int search_flags): cint; cdecl; external LIB_AVUTIL;
+function av_opt_set_video_rate(obj: pointer; const name: pchar; AVRational val, int search_flags): cint; cdecl; external LIB_AVUTIL;
+function av_opt_set_channel_layout(obj: pointer; const name: pchar; int64_t ch_layout, int search_flags): cint; cdecl; external LIB_AVUTIL;
 (**
  * @note Any old dictionary present is discarded and replaced with a copy of the new one. The
  * caller still owns val is and responsible for freeing it.
  *)
-function cint av_opt_set_dict_val(obj: pointer; const pchar name, const AVDictionary *val, int search_flags);
+function av_opt_set_dict_val(obj: pointer; const name: pchar; const val: PAVDictionary; search_flags: cint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Set a binary option to an integer list.
@@ -738,20 +735,20 @@ function cint av_opt_set_dict_val(obj: pointer; const pchar name, const AVDictio
  * AV_OPT_TYPE_STRING or AV_OPT_TYPE_BINARY and is set to NULL, *out_val will be set
  * to NULL instead of an allocated empty string.
  *)
-function cint av_opt_get         (obj: pointer; const pchar name, int search_flags, uint8_t   **out_val);
-function cint av_opt_get_int     (obj: pointer; const pchar name, int search_flags, int64_t    *out_val);
-function cint av_opt_get_double  (obj: pointer; const pchar name, int search_flags, double     *out_val);
-function cint av_opt_get_q       (obj: pointer; const pchar name, int search_flags, AVRational *out_val);
-function cint av_opt_get_image_size(obj: pointer; const pchar name, int search_flags, int *w_out, int *h_out);
-function cint av_opt_get_pixel_fmt (obj: pointer; const pchar name, int search_flags, enum AVPixelFormat *out_fmt);
-function cint av_opt_get_sample_fmt(obj: pointer; const pchar name, int search_flags, enum AVSampleFormat *out_fmt);
-function cint av_opt_get_video_rate(obj: pointer; const pchar name, int search_flags, AVRational *out_val);
-function cint av_opt_get_channel_layout(obj: pointer; const pchar name, int search_flags, int64_t *ch_layout);
+function cint av_opt_get         (obj: pointer; const name: pchar; int search_flags, uint8_t   **out_val); cdecl; external LIB_AVUTIL;
+function cint av_opt_get_int     (obj: pointer; const name: pchar; int search_flags, int64_t    *out_val); cdecl; external LIB_AVUTIL;
+function cint av_opt_get_double  (obj: pointer; const name: pchar; int search_flags, double     *out_val); cdecl; external LIB_AVUTIL;
+function cint av_opt_get_q       (obj: pointer; const name: pchar; int search_flags, AVRational *out_val); cdecl; external LIB_AVUTIL;
+function cint av_opt_get_image_size(obj: pointer; const name: pchar; int search_flags, int *w_out, int *h_out); cdecl; external LIB_AVUTIL;
+function cint av_opt_get_pixel_fmt (obj: pointer; const name: pchar; int search_flags, enum AVPixelFormat *out_fmt); cdecl; external LIB_AVUTIL;
+function cint av_opt_get_sample_fmt(obj: pointer; const name: pchar; int search_flags, enum AVSampleFormat *out_fmt); cdecl; external LIB_AVUTIL;
+function cint av_opt_get_video_rate(obj: pointer; const name: pchar; int search_flags, AVRational *out_val); cdecl; external LIB_AVUTIL;
+function cint av_opt_get_channel_layout(obj: pointer; const name: pchar; int search_flags, int64_t *ch_layout); cdecl; external LIB_AVUTIL;
 (**
  * @param[out] out_val The returned dictionary is a copy of the actual value and must
  * be freed with av_dict_free() by the caller
  *)
-function cint av_opt_get_dict_val(obj: pointer; const pchar name, int search_flags, AVDictionary **out_val);
+function cint av_opt_get_dict_val(obj: pointer; const name: pchar; int search_flags, AVDictionary **out_val); cdecl; external LIB_AVUTIL;
 (**
  * @}
  *)
@@ -763,12 +760,12 @@ function cint av_opt_get_dict_val(obj: pointer; const pchar name, int search_fla
  * @returns a pointer to the field, it can be cast to the correct type and read
  *          or written to.
  *)
-function av_opt_ptr(const AVClass *avclass, obj: pointer; const pchar name): pointer;
+function av_opt_ptr(const AVClass *avclass, obj: pointer; const pchar name): pointer; cdecl; external LIB_AVUTIL;
 
 (**
  * Free an AVOptionRanges struct and set it to NULL.
  *)
-procedure av_opt_freep_ranges(AVOptionRanges **ranges);
+procedure av_opt_freep_ranges(AVOptionRanges **ranges); cdecl; external LIB_AVUTIL;
 
 (**
  * Get a list of allowed ranges for the given option.
@@ -783,7 +780,7 @@ procedure av_opt_freep_ranges(AVOptionRanges **ranges);
  *
  * @return number of compontents returned on success, a negative errro code otherwise
  *)
-function cint av_opt_query_ranges(AVOptionRanges **, obj: pointer; const pchar key, int flags);
+function cint av_opt_query_ranges(AVOptionRanges **, obj: pointer; const pchar key, int flags); cdecl; external LIB_AVUTIL;
 
 (**
  * Copy options from src object into dest object.
@@ -795,7 +792,7 @@ function cint av_opt_query_ranges(AVOptionRanges **, obj: pointer; const pchar k
  * @param src  Object to copy into
  * @return 0 on success, negative on error
  *)
-function av_opt_copy(dest: pointer; const src: pointer): cint;
+function av_opt_copy(dest: pointer; const src: pointer): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Get a default list of allowed ranges for the given option.
@@ -811,7 +808,7 @@ function av_opt_copy(dest: pointer; const src: pointer): cint;
  *
  * @return number of compontents returned on success, a negative errro code otherwise
  *)
-function cint av_opt_query_ranges_default(AVOptionRanges **, obj: pointer; const pchar key, int flags);
+function cint av_opt_query_ranges_default(AVOptionRanges **, obj: pointer; const pchar key, int flags); cdecl; external LIB_AVUTIL;
 
 (**
  * Check if given option is set to its default value.
@@ -825,7 +822,7 @@ function cint av_opt_query_ranges_default(AVOptionRanges **, obj: pointer; const
  *              0 when option is not set its default,
  *             <0 on error
  *)
-function cint av_opt_is_set_to_default(obj: pointer; const AVOption *o);
+function av_opt_is_set_to_default(obj: pointer; const o: PAVOption): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Check if given option is set to its default value.
@@ -837,11 +834,11 @@ function cint av_opt_is_set_to_default(obj: pointer; const AVOption *o);
  *                     0 when option is not set its default,
  *                     <0 on error
  *)
-function cint av_opt_is_set_to_default_by_name(obj: pointer; const pchar name, int search_flags);
+function av_opt_is_set_to_default_by_name(obj: pointer; const name: pchar; search_flags: cint): cint; cdecl; external LIB_AVUTIL;
 
-
-  AV_OPT_SERIALIZE_SKIP_DEFAULTS = $00000001 ///< Serialize options that are not set to default values only.
-  AV_OPT_SERIALIZE_OPT_FLAGS_EXACT = $00000002 ///< Serialize options that exactly match opt_flags only.
+const
+  AV_OPT_SERIALIZE_SKIP_DEFAULTS = $00000001; ///< Serialize options that are not set to default values only.
+  AV_OPT_SERIALIZE_OPT_FLAGS_EXACT = $00000002; ///< Serialize options that exactly match opt_flags only.
 
 (**
  * Serialize object's options.
@@ -861,8 +858,7 @@ function cint av_opt_is_set_to_default_by_name(obj: pointer; const pchar name, i
  * @return                   >= 0 on success, negative on error
  * @warning Separators cannot be neither '\\' nor '\0'. They also cannot be the same.
  *)
-function cint av_opt_serialize(obj: pointer; int opt_flags, int flags, char **buffer,
-                     const char key_val_sep, const char pairs_sep);
+function av_opt_serialize(obj: pointer; opt_flags: cint; flags: cint; buffer: ppchar; const key_val_sep: char; const pairs_sep: char): cint; cdecl; external LIB_AVUTIL;
 (**
  * @}
  *)
