@@ -47,7 +47,7 @@ const
  * @param ts the timestamp to represent
  * @return the buffer in input
  *)
-static inline char *av_ts_make_string(char *buf, int64_t ts)
+function av_ts_make_string(buf: pchar; ts: cint64_t): pchar; inline;
 {
     if (ts == AV_NOPTS_VALUE) snprintf(buf, AV_TS_MAX_STRING_SIZE, "NOPTS");
     else                      snprintf(buf, AV_TS_MAX_STRING_SIZE, "%" PRId64, ts);

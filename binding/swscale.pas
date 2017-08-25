@@ -235,9 +235,7 @@ function sws_getContext(srcW: cint; srcH: cint; srcFormat: AVPixelFormat; dstW: 
  *                  the destination image
  * @return          the height of the output slice
  *)
-function sws_scale(c: PSwsContext; const srcSlice: array of pcuint8_t;
-              const srcStride: array of cint; srcSliceY: cint; srcSliceH: cint;
-              dst: array of pcuint8_t; const dstStride: array of cint): cint; cdecl; external LIB_SWSCALE;
+function sws_scale(c: PSwsContext; const srcSlice: array of pcuint8_t; const srcStride: array of cint; srcSliceY: cint; srcSliceH: cint; dst: array of pcuint8_t; const dstStride: array of cint): cint; cdecl; external LIB_SWSCALE;
 
 (**
  * @param dstRange flag indicating the while-black range of the output (1=jpeg / 0=mpeg)
@@ -249,9 +247,7 @@ function sws_scale(c: PSwsContext; const srcSlice: array of pcuint8_t;
  * @param saturation 16.16 fixed point saturation correction
  * @return -1 if not supported
  *)
-function sws_setColorspaceDetails(c: PSwsContext; const int inv_table[4],
-                             int srcRange, const int table[4], int dstRange,
-                             int brightness, int contrast, int saturation): cint; cdecl; external LIB_SWSCALE;
+function sws_setColorspaceDetails(c: PSwsContext; const inv_table: array[0..3] of cint; srcRange: cint; const table: array[0..3] of cint; dstRange: cint; brightness: cint; contrast: cint; saturation: cint): cint; cdecl; external LIB_SWSCALE;
 
 (**
  * @return -1 if not supported
@@ -261,23 +257,23 @@ function sws_getColorspaceDetails(c: PSwsContext; inv_table: ppcint; srcRange: p
 (**
  * Allocate and return an uninitialized vector with length coefficients.
  *)
-function sws_allocVec(int length): PSwsVector; cdecl; external LIB_SWSCALE;
+function sws_allocVec(length: cint): PSwsVector; cdecl; external LIB_SWSCALE;
 
 (**
  * Return a normalized Gaussian curve used to filter stuff
  * quality = 3 is high quality, lower is lower quality.
  *)
-function sws_getGaussianVec(double variance, double quality): PSwsVector; cdecl; external LIB_SWSCALE;
+function sws_getGaussianVec(variance: cdouble; quality: cdouble): PSwsVector; cdecl; external LIB_SWSCALE;
 
 (**
  * Scale all the coefficients of a by the scalar value.
  *)
-procedure sws_scaleVec(a: PSwsVector; double scalar); cdecl; external LIB_SWSCALE;
+procedure sws_scaleVec(a: PSwsVector; scalar: cdouble); cdecl; external LIB_SWSCALE;
 
 (**
  * Scale all the coefficients of a so that their sum equals height.
  *)
-procedure sws_normalizeVec(a: PSwsVector; double height); cdecl; external LIB_SWSCALE;
+procedure sws_normalizeVec(a: PSwsVector; height: cdouble); cdecl; external LIB_SWSCALE;
 
 {$if FF_API_SWS_VECTOR}
 //TODO attribute_deprecated

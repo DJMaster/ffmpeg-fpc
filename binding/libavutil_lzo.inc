@@ -35,10 +35,11 @@
  * @{
  *)
 
-#include <stdint.h>
+// #include <stdint.h>
 
 (** @name Error flags returned by av_lzo1x_decode
  * @{ *)
+const
 /// end of the input buffer reached before decoding finished
   AV_LZO_INPUT_DEPLETED = 1;
 /// decoded data did not fit into output buffer
@@ -63,7 +64,7 @@
  * Make sure all buffers are appropriately padded, in must provide
  * AV_LZO_INPUT_PADDING, out must provide AV_LZO_OUTPUT_PADDING additional bytes.
  *)
-function cint av_lzo1x_decode(void *out, int *outlen, const void *in, int *inlen);
+function av_lzo1x_decode(out_: pointer; outlen: pcint; const in_: pointer;, inlen: pcint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * @}

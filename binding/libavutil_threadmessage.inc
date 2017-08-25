@@ -25,18 +25,19 @@
 // #ifndef AVUTIL_THREADMESSAGE_H
 // #define AVUTIL_THREADMESSAGE_H
 
-typedef struct AVThreadMessageQueue AVThreadMessageQueue;
+type
+  PAVThreadMessageQueue = ^AVThreadMessageQueue;
+  AVThreadMessageQueue = record
+  end;
 
-typedef enum AVThreadMessageFlags {
-
+  AVThreadMessageFlags = (
     (**
      * Perform non-blocking operation.
      * If this flag is set, send and recv operations are non-blocking and
      * return AVERROR(EAGAIN) immediately if they can not proceed.
      *)
-    AV_THREAD_MESSAGE_NONBLOCK = 1,
-
-} AVThreadMessageFlags;
+    AV_THREAD_MESSAGE_NONBLOCK = 1
+  );
 
 (**
  * Allocate a new message queue.
@@ -47,30 +48,24 @@ typedef enum AVThreadMessageFlags {
  * @return  >=0 for success; <0 for error, in particular AVERROR(ENOSYS) if
  *          lavu was built without thread support
  *)
-function av_thread_message_queue_alloc(AVThreadMessageQueue **mq,
-                                  unsigned nelem,
-                                  unsigned elsize): cint;
+function av_thread_message_queue_alloc(mq: PPAVThreadMessageQueue; nelem: cunsigned; elsize: cunsigned): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Free a message queue.
  *
  * The message queue must no longer be in use by another thread.
  *)
-procedure av_thread_message_queue_free(AVThreadMessageQueue **mq);
+procedure av_thread_message_queue_free(mq: PPAVThreadMessageQueue); cdecl; external LIB_AVUTIL;
 
 (**
  * Send a message on the queue.
  *)
-function av_thread_message_queue_send(AVThreadMessageQueue *mq,
-                                          void *msg,
-                                          unsigned flags): cint;
+function av_thread_message_queue_send(mq: PAVThreadMessageQueue; msg: pointer; flags: cunsigned): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Receive a message from the queue.
  *)
-function av_thread_message_queue_recv(AVThreadMessageQueue *mq,
-                                          void *msg,
-                                          unsigned flags): cint;
+function av_thread_message_queue_recv(mq: PAVThreadMessageQueue; msg: pointer; flags: cunsigned): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Set the sending error code.
@@ -80,8 +75,7 @@ function av_thread_message_queue_recv(AVThreadMessageQueue *mq,
  * AVERROR(EAGAIN), can be used to cause the sending thread to stop or
  * suspend its operation.
  *)
-procedure av_thread_message_queue_set_err_send(AVThreadMessageQueue *mq,
-                                          int err);
+procedure av_thread_message_queue_set_err_send(mq: PAVThreadMessageQueue; err: cint); cdecl; external LIB_AVUTIL;
 
 (**
  * Set the receiving error code.
@@ -91,15 +85,16 @@ procedure av_thread_message_queue_set_err_send(AVThreadMessageQueue *mq,
  * Conventional values, such as AVERROR_EOF or AVERROR(EAGAIN), can be used
  * to cause the receiving thread to stop or suspend its operation.
  *)
-procedure av_thread_message_queue_set_err_recv(AVThreadMessageQueue *mq,
-                                          int err);
+procedure av_thread_message_queue_set_err_recv(mq: PAVThreadMessageQueue; err: cint); cdecl; external LIB_AVUTIL;
 
 (**
  * Set the optional free message callback function which will be called if an
  * operation is removing messages from the queue.
  *)
-procedure av_thread_message_queue_set_free_func(AVThreadMessageQueue *mq,
-                                           void (*free_func)(void *msg));
+type
+  free_func = procedure (msg: pointer); cdecl;
+
+procedure av_thread_message_queue_set_free_func(mq: PAVThreadMessageQueue; free: free_func); cdecl; external LIB_AVUTIL;
 
 (**
  * Flush the message queue
@@ -108,6 +103,6 @@ procedure av_thread_message_queue_set_free_func(AVThreadMessageQueue *mq,
  * except that it will be done in a single operation (no lock/unlock between
  * reads).
  *)
-procedure av_thread_message_flush(AVThreadMessageQueue *mq);
+procedure av_thread_message_flush(mq: PAVThreadMessageQueue); cdecl; external LIB_AVUTIL;
 
 // #endif (* AVUTIL_THREADMESSAGE_H *)

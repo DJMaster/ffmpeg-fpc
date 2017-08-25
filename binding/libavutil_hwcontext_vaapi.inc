@@ -64,11 +64,13 @@ enum {
  *
  * Allocated as AVHWDeviceContext.hwctx
  *)
-typedef struct AVVAAPIDeviceContext {
+type
+  PAVVAAPIDeviceContext = ^AVVAAPIDeviceContext;
+  AVVAAPIDeviceContext = record
     (**
      * The VADisplay handle, to be filled by the user.
      *)
-    VADisplay display;
+    display: VADisplay;
     (**
      * Driver quirks to apply - this is filled by av_hwdevice_ctx_init(),
      * with reference to a table of known drivers, unless the
@@ -76,41 +78,43 @@ typedef struct AVVAAPIDeviceContext {
      * may need to refer to this field when performing any later
      * operations using VAAPI with the same VADisplay.
      *)
-    unsigned int driver_quirks;
-} AVVAAPIDeviceContext;
+    driver_quirks: cuint;
+  end;
 
 (**
  * VAAPI-specific data associated with a frame pool.
  *
  * Allocated as AVHWFramesContext.hwctx.
  *)
-typedef struct AVVAAPIFramesContext {
+  PAVVAAPIFramesContext = ^AVVAAPIFramesContext;
+  AVVAAPIFramesContext = record
     (**
      * Set by the user to apply surface attributes to all surfaces in
      * the frame pool.  If null, default settings are used.
      *)
-    VASurfaceAttrib *attributes;
-    int           nb_attributes;
+    attributes: PVASurfaceAttrib;
+    nb_attributes: cint;
     (**
      * The surfaces IDs of all surfaces in the pool after creation.
      * Only valid if AVHWFramesContext.initial_pool_size was positive.
      * These are intended to be used as the render_targets arguments to
      * vaCreateContext().
      *)
-    VASurfaceID     *surface_ids;
-    int           nb_surfaces;
-} AVVAAPIFramesContext;
+    surface_ids: PVASurfaceID;
+    nb_surfaces: cint;
+  end;
 
 (**
  * VAAPI hardware pipeline configuration details.
  *
  * Allocated with av_hwdevice_hwconfig_alloc().
  *)
-typedef struct AVVAAPIHWConfig {
+  PAVVAAPIHWConfig = ^AVVAAPIHWConfig;
+  AVVAAPIHWConfig = record
     (**
      * ID of a VAAPI pipeline configuration.
      *)
-    VAConfigID config_id;
-} AVVAAPIHWConfig;
+    config_id: VAConfigID;
+  end;
 
 // #endif (* AVUTIL_HWCONTEXT_VAAPI_H *)

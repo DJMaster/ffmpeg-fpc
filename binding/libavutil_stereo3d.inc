@@ -34,7 +34,8 @@
 (**
  * List of possible 3D Types
  *)
-enum AVStereo3DType {
+type
+  AVStereo3DType = (
     (**
      * Video is not stereoscopic (and metadata has to be there).
      *)
@@ -110,13 +111,13 @@ enum AVStereo3DType {
      *    LRLRLRLR
      *    ...
      *)
-    AV_STEREO3D_COLUMNS,
-};
-
+    AV_STEREO3D_COLUMNS
+  );
 
 (**
  * Inverted views, Right/Bottom represents the left view.
  *)
+const
   AV_STEREO3D_FLAG_INVERT = (1 shl 0);
 
 (**
@@ -126,17 +127,19 @@ enum AVStereo3DType {
  * @note The struct must be allocated with av_stereo3d_alloc() and
  *       its size is not a part of the public ABI.
  *)
-typedef struct AVStereo3D {
+type
+  PAVStereo3D = ^AVStereo3D;
+  AVStereo3D = record
     (**
      * How views are packed within the video.
      *)
-    enum AVStereo3DType type;
+    type_: AVStereo3DType;
 
     (**
      * Additional information about the frame packing.
      *)
-    int flags;
-} AVStereo3D;
+    flags: cint;
+  end;
 
 (**
  * Allocate an AVStereo3D structure and set its fields to default values.
@@ -144,7 +147,7 @@ typedef struct AVStereo3D {
  *
  * @return An AVStereo3D filled with default values or NULL on failure.
  *)
-AVStereo3D *av_stereo3d_alloc();
+function av_stereo3d_alloc(): PAVStereo3D; cdecl; external LIB_AVUTIL;
 
 (**
  * Allocate a complete AVFrameSideData and add it to the frame.
@@ -153,7 +156,7 @@ AVStereo3D *av_stereo3d_alloc();
  *
  * @return The AVStereo3D structure to be filled by caller.
  *)
-AVStereo3D *av_stereo3d_create_side_data(AVFrame *frame);
+function av_stereo3d_create_side_data(frame: PAVFrame): PAVStereo3D; cdecl; external LIB_AVUTIL;
 
 (**
  * Provide a human-readable name of a given stereo3d type.
@@ -162,7 +165,7 @@ AVStereo3D *av_stereo3d_create_side_data(AVFrame *frame);
  *
  * @return The name of the stereo3d value, or "unknown".
  *)
-const pchar av_stereo3d_type_name(unsigned int type);
+function av_stereo3d_type_name(type_: cuint): pchar; cdecl; external LIB_AVUTIL;
 
 (**
  * Get the AVStereo3DType form a human-readable name.
@@ -171,6 +174,6 @@ const pchar av_stereo3d_type_name(unsigned int type);
  *
  * @return The AVStereo3DType value, or -1 if not found.
  *)
-function cint av_stereo3d_from_name(const name: pchar);
+function av_stereo3d_from_name(const name: pchar): cint; cdecl; external LIB_AVUTIL;
 
 // #endif (* AVUTIL_STEREO3D_H *)

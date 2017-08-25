@@ -58,12 +58,15 @@
 
 extern const int av_sha512_size;
 
-struct AVSHA512;
+type
+  PAVSHA512 = ^AVSHA512;
+  AVSHA512 = record
+  end;
 
 (**
  * Allocate an AVSHA512 context.
  *)
-struct AVSHA512 *av_sha512_alloc();
+function av_sha512_alloc(): PAVSHA512; cdecl; external LIB_AVUTIL;
 
 (**
  * Initialize SHA-2 512 hashing.
@@ -72,7 +75,7 @@ struct AVSHA512 *av_sha512_alloc();
  * @param bits    number of bits in digest (224, 256, 384 or 512 bits)
  * @return        zero if initialization succeeded, -1 otherwise
  *)
-function cint av_sha512_init(struct AVSHA512* context, int bits);
+function av_sha512_init(context: PAVSHA512; bits: cint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Update hash value.
@@ -81,7 +84,7 @@ function cint av_sha512_init(struct AVSHA512* context, int bits);
  * @param data    input data to update hash with
  * @param len     input data length
  *)
-procedure av_sha512_update(struct AVSHA512* context, const uint8_t* data, unsigned int len);
+procedure av_sha512_update(context: PAVSHA512; const data: pcuint8_t; len: cuint); cdecl; external LIB_AVUTIL;
 
 (**
  * Finish hashing and output digest value.
@@ -89,7 +92,7 @@ procedure av_sha512_update(struct AVSHA512* context, const uint8_t* data, unsign
  * @param context hash function context
  * @param digest  buffer where output digest value is stored
  *)
-procedure av_sha512_final(struct AVSHA512* context, uint8_t *digest);
+procedure av_sha512_final(context: PAVSHA512; digest: pcuint8_t); cdecl; external LIB_AVUTIL;
 
 (**
  * @}

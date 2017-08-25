@@ -56,12 +56,15 @@
 
 extern const int av_sha_size;
 
-struct AVSHA;
+type
+  PAVSHA = ^AVSHA;
+  AVSHA = record
+  end;
 
 (**
  * Allocate an AVSHA context.
  *)
-struct AVSHA *av_sha_alloc();
+function av_sha_alloc(): PAVSHA; cdecl; external LIB_AVUTIL;
 
 (**
  * Initialize SHA-1 or SHA-2 hashing.
@@ -70,7 +73,7 @@ struct AVSHA *av_sha_alloc();
  * @param bits    number of bits in digest (SHA-1 - 160 bits, SHA-2 224 or 256 bits)
  * @return        zero if initialization succeeded, -1 otherwise
  *)
-function cint av_sha_init(struct AVSHA* context, int bits);
+function av_sha_init(context: PAVSHA; bits: cint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Update hash value.
@@ -79,7 +82,7 @@ function cint av_sha_init(struct AVSHA* context, int bits);
  * @param data    input data to update hash with
  * @param len     input data length
  *)
-procedure av_sha_update(struct AVSHA* context, const uint8_t* data, unsigned int len);
+procedure av_sha_update(context: PAVSHA; const data: pcuint8_t; len: cuint); cdecl; external LIB_AVUTIL;
 
 (**
  * Finish hashing and output digest value.
@@ -87,7 +90,7 @@ procedure av_sha_update(struct AVSHA* context, const uint8_t* data, unsigned int
  * @param context hash function context
  * @param digest  buffer where output digest value is stored
  *)
-procedure av_sha_final(struct AVSHA* context, uint8_t *digest);
+procedure av_sha_final(context: PAVSHA; digest: pcuint8_t); cdecl; external LIB_AVUTIL;
 
 (**
  * @}

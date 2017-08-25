@@ -38,15 +38,17 @@
  * @{
  *)
 
-extern const int av_tea_size;
+extern const cint av_tea_size;
 
-struct AVTEA;
+  PAVTEA = ^AVTEA;
+  AVTEA = record
+  end;
 
 (**
   * Allocate an AVTEA context
   * To free the struct: av_free(ptr)
   *)
-struct AVTEA *av_tea_alloc();
+function av_tea_alloc(): PAVTEA; cdecl; external LIB_AVUTIL;
 
 (**
  * Initialize an AVTEA context.
@@ -55,7 +57,7 @@ struct AVTEA *av_tea_alloc();
  * @param key a key of 16 bytes used for encryption/decryption
  * @param rounds the number of rounds in TEA (64 is the "standard")
  *)
-procedure av_tea_init(struct AVTEA *ctx, const uint8_t key[16], int rounds);
+procedure av_tea_init(ctx: PAVTEA; const key: array[0..15] of cuint8_t; rounds: cint); cdecl; external LIB_AVUTIL;
 
 (**
  * Encrypt or decrypt a buffer using a previously initialized context.
@@ -67,8 +69,7 @@ procedure av_tea_init(struct AVTEA *ctx, const uint8_t key[16], int rounds);
  * @param iv initialization vector for CBC mode, if NULL then ECB will be used
  * @param decrypt 0 for encryption, 1 for decryption
  *)
-procedure av_tea_crypt(struct AVTEA *ctx, uint8_t *dst, const uint8_t *src,
-                  int count, uint8_t *iv, int decrypt);
+procedure av_tea_crypt(ctx: PAVTEA; dst: pcuint8_t; const src: pcuint8_t; count: cint; iv: pcuint8_t; decrypt: cint); cdecl; external LIB_AVUTIL;
 
 (**
  * @}

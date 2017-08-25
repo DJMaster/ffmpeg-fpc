@@ -54,7 +54,8 @@
 (**
  * Projection of the video surface(s) on a sphere.
  *)
-enum AVSphericalProjection {
+type
+  AVSphericalProjection = (
     (**
      * Video represents a sphere mapped on a flat surface using
      * equirectangular projection.
@@ -75,8 +76,8 @@ enum AVSphericalProjection {
      * using equirectangular projection. The @ref bounding fields indicate
      * the position of the current video in a larger surface.
      *)
-    AV_SPHERICAL_EQUIRECTANGULAR_TILE,
-};
+    AV_SPHERICAL_EQUIRECTANGULAR_TILE
+  );
 
 (**
  * This structure describes how to handle spherical videos, outlining
@@ -85,11 +86,12 @@ enum AVSphericalProjection {
  * @note The struct must be allocated with av_spherical_alloc() and
  *       its size is not a part of the public ABI.
  *)
-typedef struct AVSphericalMapping {
+  PAVSphericalMapping = ^AVSphericalMapping;
+  AVSphericalMapping = record
     (**
      * Projection type.
      *)
-    enum AVSphericalProjection projection;
+    projection: AVSphericalProjection;
 
     (**
      * @name Initial orientation
@@ -129,9 +131,9 @@ typedef struct AVSphericalMapping {
      * ^ - the default up vector
      * @endcode
      *)
-    int32_t yaw; ///< Rotation around the up vector [-180, 180].
-    int32_t pitch; ///< Rotation around the right vector [-90, 90].
-    int32_t roll; ///< Rotation around the forward vector [-180, 180].
+    yaw: cint32_t; ///< Rotation around the up vector [-180, 180].
+    pitch_ cint32_t; ///< Rotation around the right vector [-90, 90].
+    roll: cint32_t; ///< Rotation around the forward vector [-180, 180].
     (**
      * @}
      *)
@@ -170,10 +172,10 @@ typedef struct AVSphericalMapping {
      *       projection type (@ref AV_SPHERICAL_EQUIRECTANGULAR_TILE),
      *       and should be ignored in all other cases.
      *)
-    uint32_t bound_left; ///< Distance from the left edge
-    uint32_t bound_top; ///< Distance from the top edge
-    uint32_t bound_right; ///< Distance from the right edge
-    uint32_t bound_bottom; ///< Distance from the bottom edge
+    bound_left: cuint32_t; ///< Distance from the left edge
+    bound_top: cuint32_t; ///< Distance from the top edge
+    bound_right: cuint32_t; ///< Distance from the right edge
+    bound_bottom: cuint32_t; ///< Distance from the bottom edge
     (**
      * @}
      *)
@@ -185,8 +187,8 @@ typedef struct AVSphericalMapping {
      *       (@ref AV_SPHERICAL_CUBEMAP), and should be ignored in all other
      *       cases.
      *)
-    uint32_t padding;
-} AVSphericalMapping;
+    padding: cuint32_t;
+  );
 
 (**
  * Allocate a AVSphericalVideo structure and initialize its fields to default
@@ -194,7 +196,7 @@ typedef struct AVSphericalMapping {
  *
  * @return the newly allocated struct or NULL on failure
  *)
-AVSphericalMapping *av_spherical_alloc(size_t *size);
+function av_spherical_alloc(size: pcsize_t): PAVSphericalMapping; cdecl; external LIB_AVUTIL;
 
 (**
  * Convert the @ref bounding fields from an AVSphericalVideo
@@ -208,10 +210,7 @@ AVSphericalMapping *av_spherical_alloc(size_t *size);
  * @param right  Pixels from the right edge.
  * @param bottom Pixels from the bottom edge.
  *)
-procedure av_spherical_tile_bounds(const AVSphericalMapping *map,
-                              size_t width, size_t height,
-                              size_t *left, size_t *top,
-                              size_t *right, size_t *bottom);
+procedure av_spherical_tile_bounds(const map: PAVSphericalMapping; width: csize_t; height: csize_t; left: pcsize_t; top: pcsize_t; right: pcsize_t; bottom: pcsize_t); cdecl; external LIB_AVUTIL;
 
 (**
  * Provide a human-readable name of a given AVSphericalProjection.
@@ -220,7 +219,7 @@ procedure av_spherical_tile_bounds(const AVSphericalMapping *map,
  *
  * @return The name of the AVSphericalProjection, or "unknown".
  *)
-const pchar av_spherical_projection_name(enum AVSphericalProjection projection);
+function av_spherical_projection_name(projection: AVSphericalProjection): pchar; cdecl; external LIB_AVUTIL;
 
 (**
  * Get the AVSphericalProjection form a human-readable name.
@@ -229,7 +228,7 @@ const pchar av_spherical_projection_name(enum AVSphericalProjection projection);
  *
  * @return The AVSphericalProjection value, or -1 if not found.
  *)
-function cint av_spherical_from_name(const name: pchar);
+function av_spherical_from_name(const name: pchar): cint; cdecl; external LIB_AVUTIL;
 (**
  * @}
  * @}

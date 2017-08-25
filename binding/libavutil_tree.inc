@@ -47,14 +47,17 @@
  * @{
  *)
 
+type
+  PAVTreeNode = ^AVTreeNode;
+  AVTreeNode = record
+  end;
 
-struct AVTreeNode;
-extern const int av_tree_node_size;
+extern const cint av_tree_node_size;
 
 (**
  * Allocate an AVTreeNode.
  *)
-struct AVTreeNode *av_tree_node_alloc();
+function av_tree_node_alloc(): PAVTreeNode;
 
 (**
  * Find an element.
@@ -70,8 +73,10 @@ struct AVTreeNode *av_tree_node_alloc();
  * @return An element with cmp(key, elem) == 0 or NULL if no such element
  *         exists in the tree.
  *)
-void *av_tree_find(const struct AVTreeNode *root, void *key,
-                   int (*cmp)(const void *key, const void *b), void *next[2]);
+type
+  cmp_func = function (const key: pointer; const b: pointer): cint; cdecl;
+
+function av_tree_find(const root: PAVTreeNode; key: pointer; cmp: cmp_func; next: array[0..1] of pointer): pointer;
 
 (**
  * Insert or remove an element.
@@ -117,11 +122,12 @@ void *av_tree_find(const struct AVTreeNode *root, void *key,
  *         Which one it is depends on the tree state and the implementation. You
  *         should make no assumptions that it's one or the other in the code.
  *)
-void *av_tree_insert(struct AVTreeNode **rootp, void *key,
-                     int (*cmp)(const void *key, const void *b),
-                     struct AVTreeNode **next);
+type
+  cmp_func = function (const key: pointer; const b: pointer): cint; cdecl;
 
-procedure av_tree_destroy(struct AVTreeNode *t);
+function av_tree_insert(rootp: PPAVTreeNode; key: pointer; cmp: cmp_func; next: PPAVTreeNode ): pointer;
+
+procedure av_tree_destroy(t: PAVTreeNode);
 
 (**
  * Apply enu(opaque, &elem) to all the elements in the tree in a given range.
@@ -133,9 +139,11 @@ procedure av_tree_destroy(struct AVTreeNode *t);
  * @note The cmp function should use the same ordering used to construct the
  *       tree.
  *)
-procedure av_tree_enumerate(struct AVTreeNode *t, void *opaque,
-                       int (*cmp)(void *opaque, void *elem),
-                       int (*enu)(void *opaque, void *elem));
+type
+  cmp_func = function (opaque: pointer; elem: pointer): cint; cdecl;
+  enu_func = function (opaque: pointer; elem: pointer): cint; cdecl;
+
+procedure av_tree_enumerate(t: PAVTreeNode; opaque: pointer; cmp: cmp_func; enu: enu_func );
 
 (**
  * @}

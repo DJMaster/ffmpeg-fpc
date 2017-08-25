@@ -35,15 +35,17 @@
  * @{
  *)
 
-typedef struct AVRC4 {
-    uint8_t state[256];
-    int x, y;
-} AVRC4;
+type
+  PAVRC4 = ^AVRC4;
+  AVRC4 = record
+    state: array[0..255] of cuint8_t;
+    x, y: cint;
+  end;
 
 (**
  * Allocate an AVRC4 context.
  *)
-AVRC4 *av_rc4_alloc();
+function av_rc4_alloc(): PAVRC4; cdecl; external LIB_AVUTIL;
 
 (**
  * @brief Initializes an AVRC4 context.
@@ -52,7 +54,7 @@ AVRC4 *av_rc4_alloc();
  * @param decrypt 0 for encryption, 1 for decryption, currently has no effect
  * @return zero on success, negative value otherwise
  *)
-function cint av_rc4_init(struct AVRC4 *d, const uint8_t *key, int key_bits, int decrypt);
+function av_rc4_init(d: PAVRC4; const key: pcuint8_t; key_bits: cint; decrypt: cint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * @brief Encrypts / decrypts using the RC4 algorithm.
@@ -63,7 +65,7 @@ function cint av_rc4_init(struct AVRC4 *d, const uint8_t *key, int key_bits, int
  * @param iv not (yet) used for RC4, should be NULL
  * @param decrypt 0 for encryption, 1 for decryption, not (yet) used
  *)
-procedure av_rc4_crypt(struct AVRC4 *d, uint8_t *dst, const uint8_t *src, int count, uint8_t *iv, int decrypt);
+procedure av_rc4_crypt(d: PAVRC4; dst: pcuint8_t; const src: pcuint8_t; count: cint; iv: pcuint8_t; decrypt: cint); cdecl; external LIB_AVUTIL;
 
 (**
  * @}

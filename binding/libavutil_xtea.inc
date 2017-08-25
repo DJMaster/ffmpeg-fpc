@@ -38,14 +38,16 @@
  * @{
  *)
 
-typedef struct AVXTEA {
-    uint32_t key[16];
-} AVXTEA;
+type
+  PAVXTEA = ^AVXTEA;
+  AVXTEA = record
+    key: array[0..15] of cuint32_t;
+  end;
 
 (**
  * Allocate an AVXTEA context.
  *)
-AVXTEA *av_xtea_alloc();
+function av_xtea_alloc(): PAVXTEA;
 
 (**
  * Initialize an AVXTEA context.
@@ -54,7 +56,7 @@ AVXTEA *av_xtea_alloc();
  * @param key a key of 16 bytes used for encryption/decryption,
  *            interpreted as big endian 32 bit numbers
  *)
-procedure av_xtea_init(struct AVXTEA *ctx, const uint8_t key[16]);
+procedure av_xtea_init(ctx: PAVXTEA; const key: array[0..15] of cuint8_t);
 
 (**
  * Initialize an AVXTEA context.
@@ -63,7 +65,7 @@ procedure av_xtea_init(struct AVXTEA *ctx, const uint8_t key[16]);
  * @param key a key of 16 bytes used for encryption/decryption,
  *            interpreted as little endian 32 bit numbers
  *)
-procedure av_xtea_le_init(struct AVXTEA *ctx, const uint8_t key[16]);
+procedure av_xtea_le_init(ctx: PAVXTEA; const key: array[0..15] of cuint8_t);
 
 (**
  * Encrypt or decrypt a buffer using a previously initialized context,
@@ -76,8 +78,7 @@ procedure av_xtea_le_init(struct AVXTEA *ctx, const uint8_t key[16]);
  * @param iv initialization vector for CBC mode, if NULL then ECB will be used
  * @param decrypt 0 for encryption, 1 for decryption
  *)
-procedure av_xtea_crypt(struct AVXTEA *ctx, uint8_t *dst, const uint8_t *src,
-                   int count, uint8_t *iv, int decrypt);
+procedure av_xtea_crypt(ctx: PAVXTEA; dst: pcuint8_t; const src: pcuint8_t; count: cint; iv: pcuint8_t; decrypt: cint);
 
 (**
  * Encrypt or decrypt a buffer using a previously initialized context,
@@ -90,8 +91,7 @@ procedure av_xtea_crypt(struct AVXTEA *ctx, uint8_t *dst, const uint8_t *src,
  * @param iv initialization vector for CBC mode, if NULL then ECB will be used
  * @param decrypt 0 for encryption, 1 for decryption
  *)
-procedure av_xtea_le_crypt(struct AVXTEA *ctx, uint8_t *dst, const uint8_t *src,
-                      int count, uint8_t *iv, int decrypt);
+procedure av_xtea_le_crypt(ctx: PAVXTEA; dst: pcuint8_t; const src: pcuint8_t; count: cint; iv: pcuint8_t; decrypt: cint);
 
 (**
  * @}

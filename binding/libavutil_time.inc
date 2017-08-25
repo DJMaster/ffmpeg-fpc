@@ -32,7 +32,7 @@
 (**
  * Get the current time in microseconds.
  *)
-int64_t av_gettime();
+function av_gettime(): cint64_t; cdecl; external LIB_AVUTIL;
 
 (**
  * Get the current time in microseconds since some unspecified starting point.
@@ -41,13 +41,13 @@ int64_t av_gettime();
  * The returned values may not be monotonic on platforms where a monotonic
  * clock is not available.
  *)
-int64_t av_gettime_relative();
+function av_gettime_relative(): cint64_t; cdecl; external LIB_AVUTIL;
 
 (**
  * Indicates with a boolean result if the av_gettime_relative() time source
  * is monotonic.
  *)
-function av_gettime_relative_is_monotonic(): cint;
+function av_gettime_relative_is_monotonic(): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Sleep for a period of time.  Although the duration is expressed in
@@ -57,6 +57,6 @@ function av_gettime_relative_is_monotonic(): cint;
  * @param  usec Number of microseconds to sleep.
  * @return zero on success or (negative) error code.
  *)
-function av_usleep(unsigned usec): cint;
+function av_usleep(unsigned usec): cint; cdecl; external LIB_AVUTIL;
 
 // #endif (* AVUTIL_TIME_H *)

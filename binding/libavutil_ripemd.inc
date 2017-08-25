@@ -49,12 +49,15 @@
 
 extern const int av_ripemd_size;
 
-struct AVRIPEMD;
+type
+  PAVRIPEMD = ^AVRIPEMD;
+  AVRIPEMD = record
+  end;
 
 (**
  * Allocate an AVRIPEMD context.
  *)
-struct AVRIPEMD *av_ripemd_alloc();
+function av_ripemd_alloc(): PAVRIPEMD; cdecl; external LIB_AVUTIL;
 
 (**
  * Initialize RIPEMD hashing.
@@ -63,7 +66,7 @@ struct AVRIPEMD *av_ripemd_alloc();
  * @param bits    number of bits in digest (128, 160, 256 or 320 bits)
  * @return        zero if initialization succeeded, -1 otherwise
  *)
-function cint av_ripemd_init(struct AVRIPEMD* context, int bits);
+function av_ripemd_init(context: PAVRIPEMD; bits: cint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Update hash value.
@@ -72,7 +75,7 @@ function cint av_ripemd_init(struct AVRIPEMD* context, int bits);
  * @param data    input data to update hash with
  * @param len     input data length
  *)
-procedure av_ripemd_update(struct AVRIPEMD* context, const uint8_t* data, unsigned int len);
+procedure av_ripemd_update(context: PAVRIPEMD; const data: pcuint8_t; len: cuint); cdecl; external LIB_AVUTIL;
 
 (**
  * Finish hashing and output digest value.
@@ -80,7 +83,7 @@ procedure av_ripemd_update(struct AVRIPEMD* context, const uint8_t* data, unsign
  * @param context hash function context
  * @param digest  buffer where output digest value is stored
  *)
-procedure av_ripemd_final(struct AVRIPEMD* context, uint8_t *digest);
+procedure av_ripemd_final(context: PAVRIPEMD; digest: pcuint8_t); cdecl; external LIB_AVUTIL;
 
 (**
  * @}

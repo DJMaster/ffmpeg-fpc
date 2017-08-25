@@ -205,7 +205,7 @@ function av_samples_get_buffer_size(linesize: pcint; nb_channels: cint; nb_sampl
  * @todo return minimum size in bytes required for the buffer in case
  * of success at the next bump
  *)
-function cint av_samples_fill_arrays(audio_data: ppcuint8_t; linesize: pcint; const buf: pcuint8_t; nb_channels: cint; nb_samples: cint; sample_fmt: AVSampleFormat; align: cint); cdecl; external LIB_AVUTIL;
+function av_samples_fill_arrays(audio_data: ppcuint8_t; linesize: pcint; const buf: pcuint8_t; nb_channels: cint; nb_samples: cint; sample_fmt: AVSampleFormat; align: cint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Allocate a samples buffer for nb_samples samples, and fill data pointers and

@@ -53,8 +53,7 @@
  * @param max_pixstep_comps an array which is filled with the component
  * for each plane which has the max pixel step. May be NULL.
  *)
-procedure av_image_fill_max_pixsteps(int max_pixsteps[4], int max_pixstep_comps[4],
-                                const AVPixFmtDescriptor *pixdesc);
+procedure av_image_fill_max_pixsteps(max_pixsteps: array[0..3] of cint; max_pixstep_comps: array[0..3] of cint; const pixdesc: PAVPixFmtDescriptor); cdecl; external LIB_AVUTIL;
 
 (**
  * Compute the size of an image line with format pix_fmt and width
@@ -62,7 +61,7 @@ procedure av_image_fill_max_pixsteps(int max_pixsteps[4], int max_pixstep_comps[
  *
  * @return the computed size in bytes
  *)
-function cint av_image_get_linesize(enum AVPixelFormat pix_fmt, int width, int plane);
+function av_image_get_linesize(pix_fmt: AVPixelFormat; width: cint; plane: cint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Fill plane linesizes for an image with pixel format pix_fmt and
@@ -71,7 +70,7 @@ function cint av_image_get_linesize(enum AVPixelFormat pix_fmt, int width, int p
  * @param linesizes array to be filled with the linesize for each plane
  * @return >= 0 in case of success, a negative error code otherwise
  *)
-function cint av_image_fill_linesizes(int linesizes[4], enum AVPixelFormat pix_fmt, int width);
+function av_image_fill_linesizes(linesizes: array[0..3] of cint; pix_fmt: AVPixelFormat; width: cint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Fill plane data pointers for an image with pixel format pix_fmt and
@@ -84,8 +83,7 @@ function cint av_image_fill_linesizes(int linesizes[4], enum AVPixelFormat pix_f
  * @return the size in bytes required for the image buffer, a negative
  * error code in case of failure
  *)
-function cint av_image_fill_pointers(uint8_t *data[4], enum AVPixelFormat pix_fmt, int height,
-                           uint8_t *ptr, const int linesizes[4]);
+function av_image_fill_pointers(data: array[0..3] of pcuint8_t; pix_fmt: AVPixelFormat; height: cint; ptr: pcuint8_t; const linesizes: array[0..3] of cint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Allocate an image with size w and h and pixel format pix_fmt, and
@@ -97,8 +95,7 @@ function cint av_image_fill_pointers(uint8_t *data[4], enum AVPixelFormat pix_fm
  * @return the size in bytes required for the image buffer, a negative
  * error code in case of failure
  *)
-function cint av_image_alloc(uint8_t *pointers[4], int linesizes[4],
-                   int w, int h, enum AVPixelFormat pix_fmt, int align);
+function av_image_alloc(pointers: array[0..3] of pcuint8_t; linesizes: array[0..3] of cint; w: cint; h: cint; pix_fmt: AVPixelFormat; align: cint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Copy image plane from src to dst.
@@ -112,9 +109,7 @@ function cint av_image_alloc(uint8_t *pointers[4], int linesizes[4],
  * @param dst_linesize linesize for the image plane in dst
  * @param src_linesize linesize for the image plane in src
  *)
-procedure av_image_copy_plane(uint8_t       *dst, int dst_linesize,
-                         const uint8_t *src, int src_linesize,
-                         int bytewidth, int height);
+procedure av_image_copy_plane(dst: pcuint8_t; dst_linesize: cint; const src: pcuint8_t; src_linesize: cint; bytewidth: cint; height: cint); cdecl; external LIB_AVUTIL;
 
 (**
  * Copy image in src_data to dst_data.
@@ -122,9 +117,7 @@ procedure av_image_copy_plane(uint8_t       *dst, int dst_linesize,
  * @param dst_linesizes linesizes for the image in dst_data
  * @param src_linesizes linesizes for the image in src_data
  *)
-procedure av_image_copy(uint8_t *dst_data[4], int dst_linesizes[4],
-                   const uint8_t *src_data[4], const int src_linesizes[4],
-                   enum AVPixelFormat pix_fmt, int width, int height);
+procedure av_image_copy(dst_data: array[0..3] of pcuint8_t; dst_linesizes: array[0..3] of cint; const src_data: array[0..3] of pcuint8_t; const src_linesizes: array[0..3] of cint; pix_fmt: AVPixelFormat; width: cint; height: cint); cdecl; external LIB_AVUTIL;
 
 (**
  * Copy image data located in uncacheable (e.g. GPU mapped) memory. Where
@@ -140,9 +133,7 @@ procedure av_image_copy(uint8_t *dst_data[4], int dst_linesizes[4],
  * @note On x86, the linesizes currently need to be aligned to the cacheline
  *       size (i.e. 64) to get improved performance.
  *)
-procedure av_image_copy_uc_from(uint8_t *dst_data[4],       const ptrdiff_t dst_linesizes[4],
-                           const uint8_t *src_data[4], const ptrdiff_t src_linesizes[4],
-                           enum AVPixelFormat pix_fmt, int width, int height);
+procedure av_image_copy_uc_from(dst_data: array[0..3] of puint8_t; const dst_linesizes: array[0..3] of ptrdiff_t; const src_data: array[0..3] of puint8_t; const src_linesizes: array[0..3] of ptrdiff_t; pix_fmt: AVPixelFormat; width: cint; height: cint); cdecl; external LIB_AVUTIL;
 
 (**
  * Setup the data pointers and linesizes based on the specified image
@@ -170,9 +161,7 @@ procedure av_image_copy_uc_from(uint8_t *dst_data[4],       const ptrdiff_t dst_
  * @return the size in bytes required for src, a negative error code
  * in case of failure
  *)
-function cint av_image_fill_arrays(uint8_t *dst_data[4], int dst_linesize[4],
-                         const uint8_t *src,
-                         enum AVPixelFormat pix_fmt, int width, int height, int align);
+function av_image_fill_arrays(dst_data: array[0..3] of puint8_t; dst_linesize: array[0..3] of cint; const src: puint8_t; pix_fmt: AVPixelFormat; width: cint; height: cint; align: cint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Return the size in bytes of the amount of data required to store an
@@ -180,7 +169,7 @@ function cint av_image_fill_arrays(uint8_t *dst_data[4], int dst_linesize[4],
  *
  * @param[in] align the assumed linesize alignment
  *)
-function cint av_image_get_buffer_size(enum AVPixelFormat pix_fmt, int width, int height, int align);
+function av_image_get_buffer_size(pix_fmt: AVPixelFormat; width: cint; height: cint; align: cint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Copy image data from an image into a buffer.
@@ -199,9 +188,7 @@ function cint av_image_get_buffer_size(enum AVPixelFormat pix_fmt, int width, in
  * @return the number of bytes written to dst, or a negative value
  * (error code) on error
  *)
-function cint av_image_copy_to_buffer(uint8_t *dst, int dst_size,
-                            const uint8_t * const src_data[4], const int src_linesize[4],
-                            enum AVPixelFormat pix_fmt, int width, int height, int align);
+function av_image_copy_to_buffer(dst: puint8_t; dst_size: cint; const src_data: array[0..3] of puint8_t; const src_linesize: array[0..3] of cint; pix_fmt: AVPixelFormat; width: cint; height: cint; align: cint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Check if the given dimension of an image is valid, meaning that all
@@ -213,7 +200,7 @@ function cint av_image_copy_to_buffer(uint8_t *dst, int dst_size,
  * @param log_ctx the parent logging context, it may be NULL
  * @return >= 0 if valid, a negative error code otherwise
  *)
-function cint av_image_check_size(unsigned int w, unsigned int h, int log_offset, void *log_ctx);
+function av_image_check_size(w: cuint; h: cuint; log_offset: cint; log_ctx: pointer): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Check if the given dimension of an image is valid, meaning that all
@@ -228,7 +215,7 @@ function cint av_image_check_size(unsigned int w, unsigned int h, int log_offset
  * @param log_ctx the parent logging context, it may be NULL
  * @return >= 0 if valid, a negative error code otherwise
  *)
-function cint av_image_check_size2(unsigned int w, unsigned int h, int64_t max_pixels, enum AVPixelFormat pix_fmt, int log_offset, void *log_ctx);
+function av_image_check_size2(w: cuint; h: cuint; max_pixels: cint64_t; pix_fmt: AVPixelFormat; log_offset: cint; log_ctx: pointer): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Check if the given sample aspect ratio of an image is valid.
@@ -242,7 +229,7 @@ function cint av_image_check_size2(unsigned int w, unsigned int h, int64_t max_p
  * @param sar sample aspect ratio of the image
  * @return 0 if valid, a negative AVERROR code otherwise
  *)
-function cint av_image_check_sar(unsigned int w, unsigned int h, AVRational sar);
+function cint av_image_check_sar(w: cuint; h: cuint; sar: AVRational); cdecl; external LIB_AVUTIL;
 
 (**
  * @}

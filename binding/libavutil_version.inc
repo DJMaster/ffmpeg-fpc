@@ -97,7 +97,7 @@ const
                                            LIBAVUTIL_VERSION_MICRO);
   LIBAVUTIL_BUILD = LIBAVUTIL_VERSION_INT;
 
-  LIBAVUTIL_IDENT = "Lavu" AV_STRINGIFY(LIBAVUTIL_VERSION);
+  LIBAVUTIL_IDENT = 'Lavu' + AV_STRINGIFY(LIBAVUTIL_VERSION);
 
 (**
  * @defgroup lavu_depr_guards Deprecation Guards
@@ -111,7 +111,7 @@ const
  *
  * @{
  *)
-
+const
 {$ifndef FF_API_VDPAU}
   FF_API_VDPAU = (LIBAVUTIL_VERSION_MAJOR < 56);
 {$endif}

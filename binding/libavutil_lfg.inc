@@ -28,21 +28,23 @@
 // #ifndef AVUTIL_LFG_H
 // #define AVUTIL_LFG_H
 
-#include <stdint.h>
+// #include <stdint.h>
 
-typedef struct AVLFG {
-    unsigned int state[64];
-    int index;
-} AVLFG;
+type
+  PAVLFG = ^AVLFG;
+  AVLFG = record
+    state: array[0..63] of cuint;
+    index: cint;
+  end;
 
-procedure av_lfg_init(AVLFG *c, unsigned int seed);
+procedure av_lfg_init(c: PAVLFG; seed: cuint); cdecl; external LIB_AVUTIL;
 
 (**
  * Seed the state of the ALFG using binary data.
  *
  * Return value: 0 on success, negative value (AVERROR) on failure.
  *)
-function cint av_lfg_init_from_data(AVLFG *c, const uint8_t *data, unsigned int length);
+function av_lfg_init_from_data(c: PAVLFG; const data: pcuint8_t; length: cuint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Get the next random unsigned 32-bit number using an ALFG.
@@ -50,7 +52,8 @@ function cint av_lfg_init_from_data(AVLFG *c, const uint8_t *data, unsigned int 
  * Please also consider a simple LCG like state= state*1664525+1013904223,
  * it may be good enough and faster for your specific use case.
  *)
-static inline unsigned int av_lfg_get(AVLFG *c){
+function av_lfg_get(c: PAVLFG): cuint; inline;
+{
     c->state[c->index & 63] = c->state[(c->index-24) & 63] + c->state[(c->index-55) & 63];
     return c->state[c->index++ & 63];
 }
@@ -60,7 +63,8 @@ static inline unsigned int av_lfg_get(AVLFG *c){
  *
  * Please also consider av_lfg_get() above, it is faster.
  *)
-static inline unsigned int av_mlfg_get(AVLFG *c){
+function av_mlfg_get(c: PAVLFG): cuint; inline;
+{
     unsigned int a= c->state[(c->index-55) & 63];
     unsigned int b= c->state[(c->index-24) & 63];
     return c->state[c->index++ & 63] = 2*a*b+a+b;
@@ -72,6 +76,6 @@ static inline unsigned int av_mlfg_get(AVLFG *c){
  *
  * @param out array where the two generated numbers are placed
  *)
-procedure av_bmg_get(AVLFG *lfg, double out[2]);
+procedure av_bmg_get(lfg: PAVLFG; out_: array[0..1] of cdouble); cdecl; external LIB_AVUTIL;
 
 // #endif (* AVUTIL_LFG_H *)
