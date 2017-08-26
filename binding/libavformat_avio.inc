@@ -32,14 +32,15 @@
  * Buffered I/O operations
  *)
 
-#include <stdint.h>
+// #include <stdint.h>
 
-#include "libavutil/common.h"
-#include "libavutil/dict.h"
-#include "libavutil/log.h"
+// #include "libavutil/common.h"
+// #include "libavutil/dict.h"
+// #include "libavutil/log.h"
 
-#include "libavformat/version.h"
+// #include "libavformat/version.h"
 
+const
 (**
  * Seeking works like for a local file.
  *)
@@ -61,15 +62,19 @@
  * new elements have been added after this struct in AVFormatContext
  * or AVIOContext.
  *)
-typedef struct AVIOInterruptCB {
-    int (*callback)(void*);
-    void *opaque;
-} AVIOInterruptCB;
+type
+  callback_func: function (arg: pointer): cint;
+
+  PAVIOInterruptCB = ^AVIOInterruptCB;
+  AVIOInterruptCB = record
+    callback: callback_func;
+    opaque: pointer;
+  end;
 
 (**
  * Directory entry types.
  *)
-enum AVIODirEntryType {
+  AVIODirEntryType = (
     AVIO_ENTRY_UNKNOWN,
     AVIO_ENTRY_BLOCK_DEVICE,
     AVIO_ENTRY_CHARACTER_DEVICE,
@@ -80,8 +85,8 @@ enum AVIODirEntryType {
     AVIO_ENTRY_FILE,
     AVIO_ENTRY_SERVER,
     AVIO_ENTRY_SHARE,
-    AVIO_ENTRY_WORKGROUP,
-};
+    AVIO_ENTRY_WORKGROUP
+  );
 
 (**
  * Describes single entry of the directory.
@@ -89,32 +94,34 @@ enum AVIODirEntryType {
  * Only name and type fields are guaranteed be set.
  * Rest of fields are protocol or/and platform dependent and might be unknown.
  *)
-typedef struct AVIODirEntry {
-    char *name; (**< Filename *)
-    int type; (**< Type of the entry *)
-    int utf8; (**< Set to 1 when name is encoded with UTF-8, 0 otherwise.
+  PAVIODirEntry = ^AVIODirEntry;
+  AVIODirEntry = record
+    name: pchar; (**< Filename *)
+    type_: cint; (**< Type of the entry *)
+    utf8: cint; (**< Set to 1 when name is encoded with UTF-8, 0 otherwise.
                      Name can be encoded with UTF-8 even though 0 is set. *)
-    int64_t size; (**< File size in bytes, -1 if unknown. *)
-    int64_t modification_timestamp; (**< Time of last modification in microseconds since unix
+    size: cint64_t; (**< File size in bytes, -1 if unknown. *)
+    modification_timestamp: cint64_t; (**< Time of last modification in microseconds since unix
                                            epoch, -1 if unknown. *)
-    int64_t access_timestamp; (**< Time of last access in microseconds since unix epoch,
+    access_timestamp: cint64_t; (**< Time of last access in microseconds since unix epoch,
                                      -1 if unknown. *)
-    int64_t status_change_timestamp; (**< Time of last status change in microseconds since unix
+    status_change_timestamp: cint64_t; (**< Time of last status change in microseconds since unix
                                             epoch, -1 if unknown. *)
-    int64_t user_id; (**< User ID of owner, -1 if unknown. *)
-    int64_t group_id; (**< Group ID of owner, -1 if unknown. *)
-    int64_t filemode; (**< Unix file mode, -1 if unknown. *)
-} AVIODirEntry;
+    user_id: cint64_t; (**< User ID of owner, -1 if unknown. *)
+    group_id: cint64_t; (**< Group ID of owner, -1 if unknown. *)
+    filemode: cint64_t; (**< Unix file mode, -1 if unknown. *)
+  end;
 
-typedef struct AVIODirContext {
-    struct URLContext *url_context;
-} AVIODirContext;
+  PAVIODirContext = ^AVIODirContext;
+  AVIODirContext = record
+    url_context: PURLContext;
+  end;
 
 (**
  * Different data types that can be returned via the AVIO
  * write_data_type callback.
  *)
-enum AVIODataMarkerType {
+  AVIODataMarkerType = (
     (**
      * Header data; this needs to be present for the stream to be decodeable.
      *)
@@ -144,7 +151,7 @@ enum AVIODataMarkerType {
      * finalizing the output file.
      *)
     AVIO_DATA_MARKER_TRAILER
-};
+  );
 
 (**
  * Bytestream IO Context.
@@ -158,7 +165,8 @@ enum AVIODataMarkerType {
  *       when implementing custom I/O. Normally these are set to the
  *       function pointers specified in avio_alloc_context()
  *)
-typedef struct AVIOContext {
+  PAVIOContext = ^AVIOContext;
+  AVIOContext = record
     (**
      * A class for private options.
      *
@@ -171,7 +179,7 @@ typedef struct AVIOContext {
      * warning -- this field can be NULL, be sure to not pass this AVIOContext
      * to any av_opt_* functions in that case.
      *)
-    const AVClass *av_class;
+    av_class: PAVClass;
 
     (*
      * The following shows the relationship between buffer, buf_ptr, buf_end, buf_size,
@@ -219,27 +227,27 @@ typedef struct AVIOContext {
      *               +--------------------------+-----------------------------------+
      *
      *)
-    unsigned char *buffer; (**< Start of the buffer. *)
-    int buffer_size; (**< Maximum buffer size *)
-    unsigned char *buf_ptr; (**< Current position in the buffer *)
-    unsigned char *buf_end; (**< End of the data, may be less than
-                                 buffer+buffer_size if the read function returned
-                                 less data than requested, e.g. for streams where
-                                 no more data has been received yet. *)
-    void *opaque; (**< A private pointer, passed to the read/write/seek/...
+    buffer: pcuchar; (**< Start of the buffer. *)
+    buffer_size: cint; (**< Maximum buffer size *)
+    buf_ptr: pcuchar; (**< Current position in the buffer *)
+    buf_end: pcuchar; (**< End of the data, may be less than
+                           buffer+buffer_size if the read function returned
+                           less data than requested, e.g. for streams where
+                           no more data has been received yet. *)
+    opaque: pointer; (**< A private pointer, passed to the read/write/seek/...
                                  functions. *)
     int (*read_packet)(void *opaque, uint8_t *buf, int buf_size);
     int (*write_packet)(void *opaque, uint8_t *buf, int buf_size);
     int64_t (*seek)(void *opaque, int64_t offset, int whence);
-    int64_t pos; (**< position in the file of the current buffer *)
-    int must_flush; (**< true if the next seek should flush *)
-    int eof_reached; (**< true if eof reached *)
-    int write_flag; (**< true if open for writing *)
-    int max_packet_size;
-    unsigned long checksum;
-    unsigned char *checksum_ptr;
-    unsigned long (*update_checksum)(unsigned long checksum, const uint8_t *buf, unsigned int size);
-    int error; (**< contains the error code or 0 if no error happened *)
+    pos: cint64_t; (**< position in the file of the current buffer *)
+    must_flush: cint; (**< true if the next seek should flush *)
+    eof_reached: cint; (**< true if eof reached *)
+    write_flag: cint; (**< true if open for writing *)
+    max_packet_size: cint;
+    checksum: culong ;
+    checksum_ptr: pcuchar;
+    culong (*update_checksum)(unsigned long checksum, const uint8_t *buf, unsigned int size);
+    error: cint; (**< contains the error code or 0 if no error happened *)
     (**
      * Pause or resume playback for network streaming protocols - e.g. MMS.
      *)
@@ -254,61 +262,61 @@ typedef struct AVIOContext {
     (**
      * A combination of AVIO_SEEKABLE_ flags or 0 when the stream is not seekable.
      *)
-    int seekable;
+    seekable: cint;
 
     (**
      * max filesize, used to limit allocations
      * This field is internal to libavformat and access from outside is not allowed.
      *)
-    int64_t maxsize;
+    maxsize: cint64_t;
 
     (**
      * avio_read and avio_write should if possible be satisfied directly
      * instead of going through a buffer, and avio_seek will always
      * call the underlying seek function directly.
      *)
-    int direct;
+    direct: cint;
 
     (**
      * Bytes read statistic
      * This field is internal to libavformat and access from outside is not allowed.
      *)
-    int64_t bytes_read;
+    bytes_read: cint64_t;
 
     (**
      * seek statistic
      * This field is internal to libavformat and access from outside is not allowed.
      *)
-    int seek_count;
+    seek_count: cint;
 
     (**
      * writeout statistic
      * This field is internal to libavformat and access from outside is not allowed.
      *)
-    int writeout_count;
+    writeout_count: cint;
 
     (**
      * Original buffer size
      * used internally after probing and ensure seekback to reset the buffer size
      * This field is internal to libavformat and access from outside is not allowed.
      *)
-    int orig_buffer_size;
+    orig_buffer_size: cint;
 
     (**
      * Threshold to favor readahead over seek.
      * This is current internal only, do not use from outside.
      *)
-    int short_seek_threshold;
+    short_seek_threshold: cint;
 
     (**
      * ',' separated list of allowed protocols.
      *)
-    const pchar protocol_whitelist;
+    protocol_whitelist: pchar;
 
     (**
      * ',' separated list of disallowed protocols.
      *)
-    const pchar protocol_blacklist;
+    protocol_blacklist: pchar;
 
     (**
      * A callback that is used instead of write_packet.
@@ -320,20 +328,20 @@ typedef struct AVIOContext {
      * but ignore them and treat them as AVIO_DATA_MARKER_UNKNOWN (to avoid needlessly
      * small chunks of data returned from the callback).
      *)
-    int ignore_boundary_point;
+    ignore_boundary_point: cint;
 
     (**
      * Internal, not meant to be used from outside of AVIOContext.
      *)
-    enum AVIODataMarkerType current_type;
-    int64_t last_time;
+    current_type: AVIODataMarkerType;
+    last_time: cint64_t;
 
     (**
      * A callback that is used instead of short_seek_threshold.
      * This is current internal only, do not use from outside.
      *)
-    int (*short_seek_get)(void *opaque);
-} AVIOContext;
+    cint (*short_seek_get)(void *opaque);
+  end;
 
 (**
  * Return the name of the protocol that will handle the passed URL.
@@ -342,7 +350,7 @@ typedef struct AVIOContext {
  *
  * @return Name of the protocol or NULL.
  *)
-function avio_find_protocol_name(const url: pchar): pchar;
+function avio_find_protocol_name(const url: pchar): pchar; cdecl; external LIB_AVFORMAT;
 
 (**
  * Return AVIO_FLAG_* access flags corresponding to the access permissions
@@ -356,7 +364,7 @@ function avio_find_protocol_name(const url: pchar): pchar;
  * unless you are sure that no other processes are accessing the
  * checked resource.
  *)
-function avio_check(const url: pchar; flags: cint): cint;
+function avio_check(const url: pchar; flags: cint): cint; cdecl; external LIB_AVFORMAT;
 
 (**
  * Move or rename a resource.
@@ -367,7 +375,7 @@ function avio_check(const url: pchar; flags: cint): cint;
  * @param url_dst new url to resource if the operation succeeded
  * @return >=0 on success or negative on error.
  *)
-function avpriv_io_move(const url_src: pchar; const url_dst: pchar): cint;
+function avpriv_io_move(const url_src: pchar; const url_dst: pchar): cint; cdecl; external LIB_AVFORMAT;
 
 (**
  * Delete a resource.
@@ -375,7 +383,7 @@ function avpriv_io_move(const url_src: pchar; const url_dst: pchar): cint;
  * @param url resource to be deleted.
  * @return >=0 on success or negative on error.
  *)
-function avpriv_io_delete(const url: pchar): cint;
+function avpriv_io_delete(const url: pchar): cint; cdecl; external LIB_AVFORMAT;
 
 (**
  * Open directory for reading.
@@ -387,7 +395,7 @@ function avpriv_io_delete(const url: pchar): cint;
  *                containing options that were not found. May be NULL.
  * @return >=0 on success or negative on error.
  *)
-function avio_open_dir(s: PPAVIODirContext; const url: pchar; options: PPAVDictionary): cint;
+function avio_open_dir(s: PPAVIODirContext; const url: pchar; options: PPAVDictionary): cint; cdecl; external LIB_AVFORMAT;
 
 (**
  * Get next directory entry.
@@ -400,7 +408,7 @@ function avio_open_dir(s: PPAVIODirContext; const url: pchar; options: PPAVDicti
  * @return >=0 on success or negative on error. End of list is not considered an
  *             error.
  *)
-function avio_read_dir(s: PAVIODirContext; next: PPAVIODirEntry): cint;
+function avio_read_dir(s: PAVIODirContext; next: PPAVIODirEntry): cint; cdecl; external LIB_AVFORMAT;
 
 (**
  * Close directory.
@@ -411,14 +419,14 @@ function avio_read_dir(s: PAVIODirContext; next: PPAVIODirEntry): cint;
  * @param s         directory read context.
  * @return >=0 on success or negative on error.
  *)
-function avio_close_dir(s: PPAVIODirContext): cint;
+function avio_close_dir(s: PPAVIODirContext): cint; cdecl; external LIB_AVFORMAT;
 
 (**
  * Free entry allocated by avio_read_dir().
  *
  * @param entry entry to be freed.
  *)
-procedure avio_free_directory_entry(entry: PPAVIODirEntry);
+procedure avio_free_directory_entry(entry: PPAVIODirEntry); cdecl; external LIB_AVFORMAT;
 
 (**
  * Allocate and initialize an AVIOContext for buffered I/O. It must be later
@@ -441,31 +449,28 @@ procedure avio_free_directory_entry(entry: PPAVIODirEntry);
  *
  * @return Allocated AVIOContext or NULL on failure.
  *)
-AVIOContext *avio_alloc_context(
-                  unsigned char *buffer,
-                  int buffer_size,
-                  int write_flag,
-                  void *opaque,
-                  int (*read_packet)(void *opaque, uint8_t *buf, int buf_size),
-                  int (*write_packet)(void *opaque, uint8_t *buf, int buf_size),
-                  int64_t (*seek)(void *opaque, int64_t offset, int whence));
+function  avio_alloc_context(buffer: pcuchar; buffer_size: cint; write_flag: cint; opaque: pointer;
+                  cint ( *read_packet)(void *opaque, uint8_t *buf, int buf_size),
+                  cint ( *write_packet)(void *opaque, uint8_t *buf, int buf_size),
+                  cint64_t ( *seek)(void *opaque, int64_t offset, int whence)
+                  ): PAVIOContext; cdecl; external LIB_AVFORMAT;
 
-procedure avio_w8(s: PAVIOContext; int b);
-procedure avio_write(s: PAVIOContext; const unsigned char *buf, int size);
-procedure avio_wl64(s: PAVIOContext; uint64_t val);
-procedure avio_wb64(s: PAVIOContext; uint64_t val);
-procedure avio_wl32(s: PAVIOContext; unsigned int val);
-procedure avio_wb32(s: PAVIOContext; unsigned int val);
-procedure avio_wl24(s: PAVIOContext; unsigned int val);
-procedure avio_wb24(s: PAVIOContext; unsigned int val);
-procedure avio_wl16(s: PAVIOContext; unsigned int val);
-procedure avio_wb16(s: PAVIOContext; unsigned int val);
+procedure avio_w8(s: PAVIOContext; b: cint); cdecl; external LIB_AVFORMAT;
+procedure avio_write(s: PAVIOContext; const buf: pcuchar; size: cint); cdecl; external LIB_AVFORMAT;
+procedure avio_wl64(s: PAVIOContext; val: cuint64_t); cdecl; external LIB_AVFORMAT;
+procedure avio_wb64(s: PAVIOContext; val: cuint64_t); cdecl; external LIB_AVFORMAT;
+procedure avio_wl32(s: PAVIOContext; val: cuint); cdecl; external LIB_AVFORMAT;
+procedure avio_wb32(s: PAVIOContext; val: cuint); cdecl; external LIB_AVFORMAT;
+procedure avio_wl24(s: PAVIOContext; val: cuint); cdecl; external LIB_AVFORMAT;
+procedure avio_wb24(s: PAVIOContext; val: cuint); cdecl; external LIB_AVFORMAT;
+procedure avio_wl16(s: PAVIOContext; val: cuint); cdecl; external LIB_AVFORMAT;
+procedure avio_wb16(s: PAVIOContext; val: cuint); cdecl; external LIB_AVFORMAT;
 
 (**
  * Write a NULL-terminated string.
  * @return number of bytes written.
  *)
-function cint avio_put_str(s: PAVIOContext; const pchar str);
+function avio_put_str(s: PAVIOContext; const str: pchar): cint; cdecl; external LIB_AVFORMAT;
 
 (**
  * Convert an UTF-8 string to UTF-16LE and write it.
@@ -474,7 +479,7 @@ function cint avio_put_str(s: PAVIOContext; const pchar str);
  *
  * @return number of bytes written.
  *)
-function cint avio_put_str16le(s: PAVIOContext; const pchar str);
+function avio_put_str16le(s: PAVIOContext; const str: pchar): cint; cdecl; external LIB_AVFORMAT;
 
 (**
  * Convert an UTF-8 string to UTF-16BE and write it.
@@ -483,7 +488,7 @@ function cint avio_put_str16le(s: PAVIOContext; const pchar str);
  *
  * @return number of bytes written.
  *)
-function cint avio_put_str16be(s: PAVIOContext; const pchar str);
+function avio_put_str16be(s: PAVIOContext; const str: pchar): cint; cdecl; external LIB_AVFORMAT;
 
 (**
  * Mark the written bytestream as a specific type.
@@ -495,8 +500,9 @@ function cint avio_put_str16be(s: PAVIOContext; const pchar str);
  *             applicable
  * @param type the kind of data written starting at the current pos
  *)
-procedure avio_write_marker(s: PAVIOContext; int64_t time, enum AVIODataMarkerType type);
+procedure avio_write_marker(s: PAVIOContext; time: cint64_t; type_: AVIODataMarkerType); cdecl; external LIB_AVFORMAT;
 
+const
 (**
  * ORing this as the "whence" parameter to a seek function causes it to
  * return the filesize without seeking anywhere. Supporting this is optional.
@@ -516,19 +522,19 @@ procedure avio_write_marker(s: PAVIOContext; int64_t time, enum AVIODataMarkerTy
  * fseek() equivalent for AVIOContext.
  * @return new position or AVERROR.
  *)
-int64_t avio_seek(s: PAVIOContext; int64_t offset, int whence);
+function avio_seek(s: PAVIOContext; offset: cint64_t; whence: cint): cint64_t; cdecl; external LIB_AVFORMAT;
 
 (**
  * Skip given number of bytes forward
  * @return new position or AVERROR.
  *)
-int64_t avio_skip(s: PAVIOContext; int64_t offset);
+function avio_skip(s: PAVIOContext; offset: cint64_t): cint64_t; cdecl; external LIB_AVFORMAT;
 
 (**
  * ftell() equivalent for AVIOContext.
  * @return position or AVERROR.
  *)
-static av_always_inline int64_t avio_tell(s: PAVIOContext)
+function avio_tell(s: PAVIOContext): cint64_t; inline;
 {
     return avio_seek(s, 0, SEEK_CUR);
 }
@@ -537,23 +543,24 @@ static av_always_inline int64_t avio_tell(s: PAVIOContext)
  * Get the filesize.
  * @return filesize or AVERROR
  *)
-int64_t avio_size(s: PAVIOContext);
+function avio_size(s: PAVIOContext): cint64_t; cdecl; external LIB_AVFORMAT;
 
 (**
  * feof() equivalent for AVIOContext.
  * @return non zero if and only if end of file
  *)
-function cint avio_feof(s: PAVIOContext);
+function avio_feof(s: PAVIOContext): cint; cdecl; external LIB_AVFORMAT;
 {$if FF_API_URL_FEOF}
 (**
  * @deprecated use avio_feof()
  *)
 //TODO attribute_deprecated
-function cint url_feof(s: PAVIOContext);
+function url_feof(s: PAVIOContext): cint; cdecl; external LIB_AVFORMAT;
 {$endif}
 
 (** @warning Writes up to 4 KiB per call *)
-function cint avio_printf(s: PAVIOContext; const pchar fmt, ...) av_printf_format(2, 3);
+//TODO av_printf_format(2, 3)
+function avio_printf(s: PAVIOContext; const fmt: pchar; ...): cint; cdecl; external LIB_AVFORMAT;
 
 (**
  * Force flushing of buffered data.
@@ -565,13 +572,13 @@ function cint avio_printf(s: PAVIOContext; const pchar fmt, ...) av_printf_forma
  * reported file position to that of the underlying stream. This does not
  * read new data, and does not perform any seeks.
  *)
-procedure avio_flush(s: PAVIOContext);
+procedure avio_flush(s: PAVIOContext); cdecl; external LIB_AVFORMAT;
 
 (**
  * Read size bytes from AVIOContext into buf.
  * @return number of bytes read or AVERROR
  *)
-function cint avio_read(s: PAVIOContext; unsigned char *buf, int size);
+function avio_read(s: PAVIOContext; buf: pcuchar; size: cint): cint; cdecl; external LIB_AVFORMAT;
 
 (**
  * @name Functions for reading from AVIOContext
@@ -580,15 +587,15 @@ function cint avio_read(s: PAVIOContext; unsigned char *buf, int size);
  * @note return 0 if EOF, so you cannot use it if EOF handling is
  *       necessary
  *)
-function cint          avio_r8  (s: PAVIOContext);
-unsigned int avio_rl16(s: PAVIOContext);
-unsigned int avio_rl24(s: PAVIOContext);
-unsigned int avio_rl32(s: PAVIOContext);
-uint64_t     avio_rl64(s: PAVIOContext);
-unsigned int avio_rb16(s: PAVIOContext);
-unsigned int avio_rb24(s: PAVIOContext);
-unsigned int avio_rb32(s: PAVIOContext);
-uint64_t     avio_rb64(s: PAVIOContext);
+function avio_r8(s: PAVIOContext): cint; cdecl; external LIB_AVFORMAT;
+function avio_rl16(s: PAVIOContext): cuint; cdecl; external LIB_AVFORMAT;
+function avio_rl24(s: PAVIOContext): cuint; cdecl; external LIB_AVFORMAT;
+function avio_rl32(s: PAVIOContext): cuint; cdecl; external LIB_AVFORMAT;
+function avio_rl64(s: PAVIOContext): cuint64_t; cdecl; external LIB_AVFORMAT;
+function avio_rb16(s: PAVIOContext): cuint; cdecl; external LIB_AVFORMAT;
+function avio_rb24(s: PAVIOContext): cuint; cdecl; external LIB_AVFORMAT;
+function avio_rb32(s: PAVIOContext): cuint; cdecl; external LIB_AVFORMAT;
+function avio_rb64(s: PAVIOContext): cuint64_t; cdecl; external LIB_AVFORMAT;
 (**
  * @}
  *)
@@ -605,7 +612,7 @@ uint64_t     avio_rb64(s: PAVIOContext);
  * If reading ends on EOF or error, the return value will be one more than
  * bytes actually read.
  *)
-function cint avio_get_str(AVIOContext *pb, int maxlen, char *buf, int buflen);
+function avio_get_str(pb: PAVIOContext; maxlen: cint; buf: pchar; buflen: cint): cint; cdecl; external LIB_AVFORMAT;
 
 (**
  * Read a UTF-16 string from pb and convert it to UTF-8.
@@ -613,10 +620,10 @@ function cint avio_get_str(AVIOContext *pb, int maxlen, char *buf, int buflen);
  * encountered or maxlen bytes have been read.
  * @return number of bytes read (is always <= maxlen)
  *)
-function cint avio_get_str16le(AVIOContext *pb, int maxlen, char *buf, int buflen);
-function cint avio_get_str16be(AVIOContext *pb, int maxlen, char *buf, int buflen);
+function avio_get_str16le(pb: PAVIOContext; maxlen: cint; buf: pchar; buflen: cint): cint; cdecl; external LIB_AVFORMAT;
+function avio_get_str16be(pb: PAVIOContext; maxlen: cint; buf: pchar; buflen: cint): cint; cdecl; external LIB_AVFORMAT;
 
-
+const
 (**
  * @name URL open modes
  * The flags argument to avio_open must be one of the following
@@ -625,7 +632,7 @@ function cint avio_get_str16be(AVIOContext *pb, int maxlen, char *buf, int bufle
  *)
   AVIO_FLAG_READ = 1; (**< read-only *)
   AVIO_FLAG_WRITE = 2; (**< write-only *)
-  AVIO_FLAG_READ_WRITE = (AVIO_FLAG_READ|AVIO_FLAG_WRITE); (**< read-write pseudo flag *)
+  AVIO_FLAG_READ_WRITE = (AVIO_FLAG_READ or AVIO_FLAG_WRITE); (**< read-write pseudo flag *)
 (**
  * @}
  *)
@@ -666,7 +673,7 @@ function cint avio_get_str16be(AVIOContext *pb, int maxlen, char *buf, int bufle
  * @return >= 0 in case of success, a negative value corresponding to an
  * AVERROR code in case of failure
  *)
-function avio_open(s: PPAVIOContext; const pchar url, int flags): cint;
+function avio_open(s: PPAVIOContext; const url: pchar; flags: cint): cint; cdecl; external LIB_AVFORMAT;
 
 (**
  * Create and initialize a AVIOContext for accessing the
@@ -686,8 +693,7 @@ function avio_open(s: PPAVIOContext; const pchar url, int flags): cint;
  * @return >= 0 in case of success, a negative value corresponding to an
  * AVERROR code in case of failure
  *)
-function avio_open2(s: PPAVIOContext; const pchar url, int flags,
-               const AVIOInterruptCB *int_cb, AVDictionary **options): cint;
+function avio_open2(s: PPAVIOContext; const url: pchar; flags: cint; const int_cb: PAVIOInterruptCB; options: PPAVDictionary): cint; cdecl; external LIB_AVFORMAT;
 
 (**
  * Close the resource accessed by the AVIOContext s and free it.
@@ -699,7 +705,7 @@ function avio_open2(s: PPAVIOContext; const pchar url, int flags,
  * @return 0 on success, an AVERROR < 0 on error.
  * @see avio_closep
  *)
-function avio_close(s: PAVIOContext): cint;
+function avio_close(s: PAVIOContext): cint; cdecl; external LIB_AVFORMAT;
 
 (**
  * Close the resource accessed by the AVIOContext *s, free it
@@ -712,8 +718,7 @@ function avio_close(s: PAVIOContext): cint;
  * @return 0 on success, an AVERROR < 0 on error.
  * @see avio_close
  *)
-function avio_closep(s: PPAVIOContext): cint;
-
+function avio_closep(s: PPAVIOContext): cint; cdecl; external LIB_AVFORMAT;
 
 (**
  * Open a write only memory stream.
@@ -721,7 +726,7 @@ function avio_closep(s: PPAVIOContext): cint;
  * @param s new IO context
  * @return zero if no error.
  *)
-function avio_open_dyn_buf(s: PPAVIOContext): cint;
+function avio_open_dyn_buf(s: PPAVIOContext): cint; cdecl; external LIB_AVFORMAT;
 
 (**
  * Return the written size and a pointer to the buffer.
@@ -733,7 +738,7 @@ function avio_open_dyn_buf(s: PPAVIOContext): cint;
  * @param pbuffer pointer to a byte buffer
  * @return the length of the byte buffer
  *)
-function avio_get_dyn_buf(s: PAVIOContext; pbuffer: ppcuint8_t): cint;
+function avio_get_dyn_buf(s: PAVIOContext; pbuffer: ppcuint8_t): cint; cdecl; external LIB_AVFORMAT;
 
 (**
  * Return the written size and a pointer to the buffer. The buffer
@@ -744,7 +749,7 @@ function avio_get_dyn_buf(s: PAVIOContext; pbuffer: ppcuint8_t): cint;
  * @param pbuffer pointer to a byte buffer
  * @return the length of the byte buffer
  *)
-function avio_close_dyn_buf(s: PAVIOContext; pbuffer: ppcuint8_t): cint;
+function avio_close_dyn_buf(s: PAVIOContext; pbuffer: ppcuint8_t): cint; cdecl; external LIB_AVFORMAT;
 
 (**
  * Iterate through names of available protocols.
@@ -757,7 +762,7 @@ function avio_close_dyn_buf(s: PAVIOContext; pbuffer: ppcuint8_t): cint;
  *
  * @return A static string containing the name of current protocol or NULL
  *)
-function avio_enum_protocols(opaque: ppointer; output: cint): pchar;
+function avio_enum_protocols(opaque: ppointer; output: cint): pchar; cdecl; external LIB_AVFORMAT;
 
 (**
  * Pause and resume playing - only meaningful if using a network streaming
@@ -766,7 +771,7 @@ function avio_enum_protocols(opaque: ppointer; output: cint): pchar;
  * @param h     IO context from which to call the read_pause function pointer
  * @param pause 1 for pause, 0 for resume
  *)
-function avio_pause(h: PAVIOContext; int pause): cint;
+function avio_pause(h: PAVIOContext; pause: cint): cint; cdecl; external LIB_AVFORMAT;
 
 (**
  * Seek to a given timestamp relative to some component stream.
@@ -787,8 +792,7 @@ function avio_pause(h: PAVIOContext; int pause): cint;
  * @return >= 0 on success
  * @see AVInputFormat::read_seek
  *)
-function avio_seek_time(h: PAVIOContext; int stream_index,
-                       int64_t timestamp, int flags): cint64_t;
+function avio_seek_time(h: PAVIOContext; stream_index: cint; timestamp: cint64_t; flags: cint): cint64_t; cdecl; external LIB_AVFORMAT;
 
 (* Avoid a warning. The header can not be included because it breaks c++. *)
 type
@@ -802,7 +806,7 @@ type
  * @return 0 for success (max_size bytes read or EOF reached), negative error
  * code otherwise
  *)
-function avio_read_to_bprint(h: PAVIOContext; struct AVBPrint *pb, size_t max_size): cint;
+function avio_read_to_bprint(h: PAVIOContext; pb: PAVBPrint; max_size: csize_t): cint; cdecl; external LIB_AVFORMAT;
 
 (**
  * Accept and allocate a client context on a server context.
@@ -811,7 +815,7 @@ function avio_read_to_bprint(h: PAVIOContext; struct AVBPrint *pb, size_t max_si
  * @return   >= 0 on success or a negative value corresponding
  *           to an AVERROR on failure
  *)
-function avio_accept(s: PAVIOContext; AVIOContext **c): cint;
+function avio_accept(s: PAVIOContext; c: PPAVIOContext): cint; cdecl; external LIB_AVFORMAT;
 
 (**
  * Perform one step of the protocol handshake to accept a new client.
@@ -832,6 +836,6 @@ function avio_accept(s: PAVIOContext; AVIOContext **c): cint;
  *           > 0 if the handshake progressed, but is not complete
  *           < 0 for an AVERROR code
  *)
-function avio_handshake(c: PAVIOContext): cint;
+function avio_handshake(c: PAVIOContext): cint; cdecl; external LIB_AVFORMAT;
 
 // #endif (* AVFORMAT_AVIO_H *)
