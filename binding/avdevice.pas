@@ -124,17 +124,19 @@ function av_output_audio_device_next(d: PAVOutputFormat): PAVOutputFormat; cdecl
  *)
 function av_output_video_device_next(d: PAVOutputFormat): PAVOutputFormat; cdecl; external LIB_AVDEVICE;
 
-typedef struct AVDeviceRect {
-    int x; (**< x coordinate of top left corner *)
-    int y; (**< y coordinate of top left corner *)
-    int width; (**< width *)
-    int height; (**< height *)
-} AVDeviceRect;
+type
+  PAVDeviceRect = ^AVDeviceRect;
+  AVDeviceRect = record
+    x: cint; (**< x coordinate of top left corner *)
+    y: cint; (**< y coordinate of top left corner *)
+    width: cint; (**< width *)
+    height: cint; (**< height *)
+  end;
 
 (**
  * Message types used by avdevice_app_to_dev_control_message().
  *)
-enum AVAppToDevMessageType {
+  AVAppToDevMessageType = (
     (**
      * Dummy message.
      *)
@@ -207,13 +209,13 @@ enum AVAppToDevMessageType {
      * data: NULL.
      *)
     AV_APP_TO_DEV_GET_VOLUME = MKBETAG('G', 'V', 'O', 'L'),
-    AV_APP_TO_DEV_GET_MUTE = MKBETAG('G', 'M', 'U', 'T'),
-};
+    AV_APP_TO_DEV_GET_MUTE = MKBETAG('G', 'M', 'U', 'T')
+  );
 
 (**
  * Message types used by avdevice_dev_to_app_control_message().
  *)
-enum AVDevToAppMessageType {
+  AVDevToAppMessageType = (
     (**
      * Dummy message.
      *)
@@ -308,8 +310,8 @@ enum AVDevToAppMessageType {
      *
      * data: double: new volume with range of 0.0 - 1.0.
      *)
-    AV_DEV_TO_APP_VOLUME_LEVEL_CHANGED = MKBETAG('C','V','O','L'),
-};
+    AV_DEV_TO_APP_VOLUME_LEVEL_CHANGED = MKBETAG('C','V','O','L')
+  );
 
 (**
  * Send control message from application to device.
@@ -411,21 +413,23 @@ function avdevice_dev_to_app_control_message(s: PAVFormatContext; type_: AVDevTo
  * It is used by devices in conjunction with av_device_capabilities AVOption table
  * to implement capabilities probing API based on AVOption API. Should not be used directly.
  *)
-typedef struct AVDeviceCapabilitiesQuery {
-    const AVClass *av_class;
-    AVFormatContext *device_context;
-    enum AVCodecID codec;
-    enum AVSampleFormat sample_format;
-    enum AVPixelFormat pixel_format;
-    int sample_rate;
-    int channels;
-    int64_t channel_layout;
-    int window_width;
-    int window_height;
-    int frame_width;
-    int frame_height;
-    AVRational fps;
-} AVDeviceCapabilitiesQuery;
+type
+  PAVDeviceCapabilitiesQuery = ^AVDeviceCapabilitiesQuery;
+  AVDeviceCapabilitiesQuery = record
+    av_class: PAVClass;
+    device_context: PAVFormatContext;
+    codec: AVCodecID;
+    sample_format: AVSampleFormat;
+    pixel_format: AVPixelFormat;
+    sample_rate: cint;
+    channels: cint;
+    channel_layout: cint64_t;
+    window_width: cint;
+    window_height: cint;
+    frame_width: cint;
+    frame_height: cint;
+    fps: AVRational;
+  end;
 
 (**
  * AVOption table used by devices to implement device capabilities API. Should not be used by a user.
@@ -462,19 +466,22 @@ procedure avdevice_capabilities_free(caps: PPAVDeviceCapabilitiesQuery; s: PAVFo
 (**
  * Structure describes basic parameters of the device.
  *)
-typedef struct AVDeviceInfo {
-    char *device_name; (**< device name, format depends on device *)
-    char *device_description; (**< human friendly name *)
-} AVDeviceInfo;
+type
+  PAVDeviceInfo = ^AVDeviceInfo;
+  AVDeviceInfo = record
+    device_name: pchar; (**< device name, format depends on device *)
+    device_description: pchar; (**< human friendly name *)
+  end;
 
 (**
  * List of devices.
  *)
-typedef struct AVDeviceInfoList {
-    AVDeviceInfo **devices; (**< list of autodetected devices *)
-    int nb_devices; (**< number of autodetected devices *)
-    int default_device; (**< index of default device or -1 if no default *)
-} AVDeviceInfoList;
+  PAVDeviceInfoList = ^AVDeviceInfoList;
+  AVDeviceInfoList = record
+    devices: PPAVDeviceInfo; (**< list of autodetected devices *)
+    nb_devices: cint; (**< number of autodetected devices *)
+    default_device: cint; (**< index of default device or -1 if no default *)
+  end;
 
 (**
  * List devices.
