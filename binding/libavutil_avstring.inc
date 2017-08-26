@@ -45,7 +45,7 @@
  * @param ptr updated if the prefix is matched inside str
  * @return non-zero if the prefix matches, zero otherwise
  *)
-function cint av_strstart(const pchar str, const pchar pfx, const ppchar ptr);
+function av_strstart(const str: pchar; const pfx: pchar; const ptr: ppchar): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Return non-zero if pfx is a prefix of str independent of case. If
@@ -57,7 +57,7 @@ function cint av_strstart(const pchar str, const pchar pfx, const ppchar ptr);
  * @param ptr updated if the prefix is matched inside str
  * @return non-zero if the prefix matches, zero otherwise
  *)
-function cint av_stristart(const pchar str, const pchar pfx, const ppchar ptr);
+function av_stristart(const str: pchar; const pfx: pchar; const ptr: ppchar): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Locate the first case-independent occurrence in the string haystack
@@ -71,7 +71,7 @@ function cint av_stristart(const pchar str, const pchar pfx, const ppchar ptr);
  * @return         pointer to the located match within haystack
  *                 or a null pointer if no match
  *)
-char *av_stristr(const pchar haystack, const pchar needle);
+function av_stristr(const haystack: pchar; const needle: pchar): pchar; cdecl; external LIB_AVUTIL;
 
 (**
  * Locate the first occurrence of the string needle in the string haystack
@@ -86,7 +86,7 @@ char *av_stristr(const pchar haystack, const pchar needle);
  * @return           pointer to the located match within haystack
  *                   or a null pointer if no match
  *)
-char *av_strnstr(const pchar haystack, const pchar needle, size_t hay_length);
+function av_strnstr(const haystack: pchar; const needle: pchar; hay_length: csize_t): pchar; cdecl; external LIB_AVUTIL;
 
 (**
  * Copy the string src to dst, but no more than size - 1 bytes, and
@@ -103,7 +103,7 @@ char *av_strnstr(const pchar haystack, const pchar needle, size_t hay_length);
  * _must_ be a properly 0-terminated string, otherwise this will read beyond
  * the end of the buffer and possibly crash.
  *)
-size_t av_strlcpy(char *dst, const pchar src, size_t size);
+function av_strlcpy(dst: pchar; const src: pchar; size: csize_t): csize_t; cdecl; external LIB_AVUTIL;
 
 (**
  * Append the string src to the string dst, but to a total length of
@@ -121,7 +121,7 @@ size_t av_strlcpy(char *dst, const pchar src, size_t size);
  * absolutely _must_ be a properly 0-terminated strings, otherwise this
  * will read beyond the end of the buffer and possibly crash.
  *)
-size_t av_strlcat(char *dst, const pchar src, size_t size);
+function av_strlcat(dst: pchar; const src: pchar; size: csize_t): csize_t; cdecl; external LIB_AVUTIL;
 
 (**
  * Append output to a string, according to a format. Never write out of
@@ -135,7 +135,8 @@ size_t av_strlcat(char *dst, const pchar src, size_t size);
  * @return the length of the string that would have been generated
  *  if enough space had been available
  *)
-size_t av_strlcatf(char *dst, size_t size, const pchar fmt, ...) av_printf_format(3, 4);
+//TODO av_printf_format(3, 4)
+function av_strlcatf(dst: pchar; size: csize_t; const fmt: pchar; ...): csize_t; cdecl; external LIB_AVUTIL;
 
 (**
  * Get the count of continuous non zero chars starting from the beginning.
@@ -143,7 +144,7 @@ size_t av_strlcatf(char *dst, size_t size, const pchar fmt, ...) av_printf_forma
  * @param len maximum number of characters to check in the string, that
  *            is the maximum value which is returned by the function
  *)
-static inline size_t av_strnlen(const pchar s, size_t len)
+function av_strnlen(const s: pchar; len: csize_t): csize_t; inline;
 {
     size_t i;
     for (i = 0; i < len && s[i]; i++)
@@ -159,12 +160,13 @@ static inline size_t av_strnlen(const pchar s, size_t len)
  * @return the allocated string
  * @note You have to free the string yourself with av_free().
  *)
-char *av_asprintf(const pchar fmt, ...) av_printf_format(1, 2);
+//TODO av_printf_format(1, 2)
+function av_asprintf(const fmt: pchar; ...): pchar; cdecl; external LIB_AVUTIL;
 
 (**
  * Convert a number to an av_malloced string.
  *)
-char *av_d2str(double d);
+function av_d2str(d: cdouble): pchar; cdecl; external LIB_AVUTIL;
 
 (**
  * Unescape the given string until a non escaped terminating char,
@@ -180,7 +182,7 @@ char *av_d2str(double d);
  * @return the malloced unescaped string, which must be av_freed by
  * the user, NULL in case of allocation failure
  *)
-char *av_get_token(const ppchar buf, const pchar term);
+function av_get_token(const buf: ppchar; const term: pchar): pchar; cdecl; external LIB_AVUTIL;
 
 (**
  * Split the string into several tokens which can be accessed by
@@ -204,12 +206,12 @@ char *av_get_token(const ppchar buf, const pchar term);
  * first delimiter found, or to NULL if the string was terminated
  * @return the found token, or NULL when no token is found
  *)
-char *av_strtok(char *s, const pchar delim, char **saveptr);
+function av_strtok(s: pchar; const delim: pchar; saveptr: ppchar): pchar; cdecl; external LIB_AVUTIL;
 
 (**
  * Locale-independent conversion of ASCII isdigit.
  *)
-static inline av_const int av_isdigit(int c)
+function av_isdigit(c: cint): cint; inline;
 {
     return c >= '0' && c <= '9';
 }
@@ -217,7 +219,7 @@ static inline av_const int av_isdigit(int c)
 (**
  * Locale-independent conversion of ASCII isgraph.
  *)
-static inline av_const int av_isgraph(int c)
+function av_isgraph(c: cint): cint; inline;
 {
     return c > 32 && c < 127;
 }
@@ -225,7 +227,7 @@ static inline av_const int av_isgraph(int c)
 (**
  * Locale-independent conversion of ASCII isspace.
  *)
-static inline av_const int av_isspace(int c)
+function av_isspace(c: cint): cint; inline;
 {
     return c == ' ' || c == '\f' || c == '\n' || c == '\r' || c == '\t' ||
            c == '\v';
@@ -234,7 +236,7 @@ static inline av_const int av_isspace(int c)
 (**
  * Locale-independent conversion of ASCII characters to uppercase.
  *)
-static inline av_const int av_toupper(int c)
+function av_toupper(c: cint): cint; inline;
 {
     if (c >= 'a' && c <= 'z')
         c ^= $20;
@@ -244,7 +246,7 @@ static inline av_const int av_toupper(int c)
 (**
  * Locale-independent conversion of ASCII characters to lowercase.
  *)
-static inline av_const int av_tolower(int c)
+function av_tolower(c: cint): cint; inline;
 {
     if (c >= 'A' && c <= 'Z')
         c ^= $20;
@@ -254,7 +256,7 @@ static inline av_const int av_tolower(int c)
 (**
  * Locale-independent conversion of ASCII isxdigit.
  *)
-static inline av_const int av_isxdigit(int c)
+function av_isxdigit(c: cint): cint; inline;
 {
     c = av_tolower(c);
     return av_isdigit(c) || (c >= 'a' && c <= 'f');
@@ -264,21 +266,20 @@ static inline av_const int av_isxdigit(int c)
  * Locale-independent case-insensitive compare.
  * @note This means only ASCII-range characters are case-insensitive
  *)
-function cint av_strcasecmp(const pchar a, const pchar b);
+function av_strcasecmp(const a: pchar; const b: pchar): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Locale-independent case-insensitive compare.
  * @note This means only ASCII-range characters are case-insensitive
  *)
-function cint av_strncasecmp(const pchar a, const pchar b, size_t n);
-
+function av_strncasecmp(const a: pchar; const b: pchar; n: csize_t): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Thread safe basename.
  * @param path the path, on DOS both \ and / are considered separators.
  * @return pointer to the basename substring.
  *)
-const pchar av_basename(const pchar path);
+function av_basename(const path: pchar): pchar; cdecl; external LIB_AVUTIL;
 
 (**
  * Thread safe dirname.
@@ -286,7 +287,7 @@ const pchar av_basename(const pchar path);
  * @return the path with the separator replaced by the string terminator or ".".
  * @note the function may change the input string.
  *)
-const pchar av_dirname(char *path);
+function av_dirname(path: pchar): pchar; cdecl; external LIB_AVUTIL;
 
 (**
  * Match instances of a name in a comma-separated list of names.
@@ -299,7 +300,7 @@ const pchar av_dirname(char *path);
  * @param names List of names.
  * @return 1 on match, 0 otherwise.
  *)
-function cint av_match_name(const pchar name, const pchar names);
+function av_match_name(const name: pchar; const names: pchar): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Append path component to the existing path.
@@ -309,13 +310,14 @@ function cint av_match_name(const pchar name, const pchar names);
  * @param component component to be appended
  * @return new path or NULL on error.
  *)
-char *av_append_path_component(const pchar path, const pchar component);
+function av_append_path_component(const path: pchar; const component: pchar): pchar; cdecl; external LIB_AVUTIL;
 
-enum AVEscapeMode {
+type
+  AVEscapeMode = (
     AV_ESCAPE_MODE_AUTO, ///< Use auto-selected escaping mode.
     AV_ESCAPE_MODE_BACKSLASH, ///< Use backslash escaping.
-    AV_ESCAPE_MODE_QUOTE, ///< Use single-quote escaping.
-};
+    AV_ESCAPE_MODE_QUOTE ///< Use single-quote escaping.
+  );
 
 (**
  * Consider spaces special and escape them even in the middle of the
@@ -325,6 +327,7 @@ enum AVEscapeMode {
  * characters lists, except it is guaranteed to use the exact same list
  * of whitespace characters as the rest of libavutil.
  *)
+const
   AV_ESCAPE_FLAG_WHITESPACE = (1 shl 0);
 
 (**
@@ -350,17 +353,16 @@ enum AVEscapeMode {
  * @return the length of the allocated string, or a negative error code in case of error
  * @see av_bprint_escape()
  *)
-av_warn_unused_result
-function cint av_escape(char **dst, const pchar src, const pchar special_chars,
-              enum AVEscapeMode mode, int flags);
+//TODO av_warn_unused_result
+function av_escape(dst: ppchar; const src: pchar; const special_chars: pchar; mode: AVEscapeMode; flags: cint): cint; cdecl; external LIB_AVUTIL;
 
+const
   AV_UTF8_FLAG_ACCEPT_INVALID_BIG_CODES = 1; ///< accept codepoints over 0x10FFFF
   AV_UTF8_FLAG_ACCEPT_NON_CHARACTERS = 2; ///< accept non-characters - 0xFFFE and 0xFFFF
   AV_UTF8_FLAG_ACCEPT_SURROGATES = 4; ///< accept UTF-16 surrogates codes
   AV_UTF8_FLAG_EXCLUDE_XML_INVALID_CONTROL_CODES = 8; ///< exclude control codes not accepted by XML
 
-  AV_UTF8_FLAG_ACCEPT_ALL = \
-    AV_UTF8_FLAG_ACCEPT_INVALID_BIG_CODES|AV_UTF8_FLAG_ACCEPT_NON_CHARACTERS|AV_UTF8_FLAG_ACCEPT_SURROGATES;
+  AV_UTF8_FLAG_ACCEPT_ALL = AV_UTF8_FLAG_ACCEPT_INVALID_BIG_CODES or AV_UTF8_FLAG_ACCEPT_NON_CHARACTERS or AV_UTF8_FLAG_ACCEPT_SURROGATES;
 
 (**
  * Read and decode a single UTF-8 code point (character) from the
@@ -390,16 +392,15 @@ function cint av_escape(char **dst, const pchar src, const pchar special_chars,
  * @return >= 0 in case a sequence was successfully read, a negative
  * value in case of invalid sequence
  *)
-av_warn_unused_result
-function cint av_utf8_decode(int32_t *codep, const uint8_t **bufp, const uint8_t *buf_end,
-                   unsigned int flags);
+//TODO av_warn_unused_result
+function av_utf8_decode(codep: pcint32_t; const bufp: ppcuint8_t; const buf_end: pcuint8_t; flags: cuint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Check if a name is in a list.
  * @returns 0 if not found, or the 1 based index where it has been found in the
  *            list.
  *)
-function cint av_match_list(const pchar name, const pchar list, char separator);
+function av_match_list(const pchar name, const pchar list, char separator): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * @}
