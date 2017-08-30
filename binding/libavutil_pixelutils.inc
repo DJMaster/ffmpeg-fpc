@@ -32,8 +32,8 @@
 (**
  * Sum of abs(src1[x] - src2[x])
  *)
-typedef int (*av_pixelutils_sad_fn)(const uint8_t *src1, ptrdiff_t stride1,
-                                    const uint8_t *src2, ptrdiff_t stride2);
+type
+  av_pixelutils_sad_fn = function (const src1: pcuint8_t; stride1: ptrdiff_t; const src2: pcuint8_t; stride2: ptrdiff_t): cint; cdecl;
 
 (**
  * Get a potentially optimized pointer to a Sum-of-absolute-differences
@@ -52,7 +52,6 @@ typedef int (*av_pixelutils_sad_fn)(const uint8_t *src1, ptrdiff_t stride1,
  * @return a pointer to the SAD function or NULL in case of error (because of
  *         invalid parameters)
  *)
-av_pixelutils_sad_fn av_pixelutils_get_sad_fn(int w_bits, int h_bits,
-                                              int aligned, void *log_ctx);
+function av_pixelutils_get_sad_fn(w_bits: cint; h_bits: cint; aligned: cint; log_ctx: pointer): av_pixelutils_sad_fn; cdecl; external LIB_AVUTIL;
 
 // #endif (* AVUTIL_PIXELUTILS_H *)

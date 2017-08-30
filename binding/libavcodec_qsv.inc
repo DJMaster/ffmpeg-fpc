@@ -39,23 +39,25 @@
  *             callback
  * - encoding: hwaccel_context must be set before avcodec_open2()
  *)
-typedef struct AVQSVContext {
+typ
+  PAVQSVContext = ^AVQSVContext;
+  AVQSVContext = record
     (**
      * If non-NULL, the session to use for encoding or decoding.
      * Otherwise, libavcodec will try to create an internal session.
      *)
-    mfxSession session;
+    session: mfxSession;
 
     (**
      * The IO pattern to use.
      *)
-    int iopattern;
+    iopattern: cint;
 
     (**
      * Extra buffers to pass to encoder or decoder initialization.
      *)
-    mfxExtBuffer **ext_buffers;
-    int         nb_ext_buffers;
+    ext_buffers: PPmfxExtBuffer;
+    nb_ext_buffers: cint;
 
     (**
      * Encoding only. If this field is set to non-zero by the caller, libavcodec
@@ -68,7 +70,7 @@ typedef struct AVQSVContext {
      * The array of the opaque surfaces will be exported to the caller through
      * the opaque_surfaces field.
      *)
-    int opaque_alloc;
+    opaque_alloc: cint;
 
     (**
      * Encoding only, and only if opaque_alloc is set to non-zero. Before
@@ -79,7 +81,7 @@ typedef struct AVQSVContext {
      * On return from avcodec_open2(), this field will be set by libavcodec to
      * the total number of allocated opaque surfaces.
      *)
-    int nb_opaque_surfaces;
+    nb_opaque_surfaces: cint;
 
     (**
      * Encoding only, and only if opaque_alloc is set to non-zero. On return
@@ -93,21 +95,21 @@ typedef struct AVQSVContext {
      *
      * The buffer data is an nb_opaque_surfaces-sized array of mfxFrameSurface1.
      *)
-    AVBufferRef *opaque_surfaces;
+    opaque_surfaces: PAVBufferRef;
 
     (**
      * Encoding only, and only if opaque_alloc is set to non-zero. On return
      * from avcodec_open2(), this field will be set to the surface type used in
      * the opaque allocation request.
      *)
-    int opaque_alloc_type;
-} AVQSVContext;
+    opaque_alloc_type: cint;
+  end;
 
 (**
  * Allocate a new context.
  *
  * It must be freed by the caller with av_free().
  *)
-AVQSVContext *av_qsv_alloc_context();
+function av_qsv_alloc_context(): PAVQSVContext; cdecl; external LIB_AVCODEC;
 
 // #endif (* AVCODEC_QSV_H *)

@@ -46,7 +46,7 @@ const
                                            LIBAVDEVICE_VERSION_MICRO);
   LIBAVDEVICE_BUILD = LIBAVDEVICE_VERSION_INT;
 
-  LIBAVDEVICE_IDENT = "Lavd" AV_STRINGIFY(LIBAVDEVICE_VERSION);
+  LIBAVDEVICE_IDENT = 'Lavd' + AV_STRINGIFY(LIBAVDEVICE_VERSION);
 
 (**
  * FF_API_* defines may be placed below to indicate public API that will be

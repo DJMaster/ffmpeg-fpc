@@ -30,22 +30,24 @@
 // #ifndef AVUTIL_FIFO_H
 // #define AVUTIL_FIFO_H
 
-#include <stdint.h>
-#include "avutil.h"
-#include "attributes.h"
+// #include <stdint.h>
+// #include "avutil.h"
+// #include "attributes.h"
 
-typedef struct AVFifoBuffer {
-    uint8_t *buffer;
-    uint8_t *rptr, *wptr, *end;
-    uint32_t rndx, wndx;
-} AVFifoBuffer;
+type
+  PAVFifoBuffer = ^AVFifoBuffer;
+  AVFifoBuffer = record
+    buffer: pcuint8_t;
+    rptr, wptr, end_: pcuint8_t;
+    rndx, wndx: cuint32_t;
+  end;
 
 (**
  * Initialize an AVFifoBuffer.
  * @param size of FIFO
  * @return AVFifoBuffer or NULL in case of memory allocation failure
  *)
-AVFifoBuffer *av_fifo_alloc(unsigned int size);
+function av_fifo_alloc(size: cuint): PAVFifoBuffer; cdecl; external LIB_AVUTIL;
 
 (**
  * Initialize an AVFifoBuffer.
@@ -53,25 +55,25 @@ AVFifoBuffer *av_fifo_alloc(unsigned int size);
  * @param size  size of the single element
  * @return AVFifoBuffer or NULL in case of memory allocation failure
  *)
-AVFifoBuffer *av_fifo_alloc_array(size_t nmemb, size_t size);
+function av_fifo_alloc_array(nmemb: csize_t; size: csize_t): PAVFifoBuffer; cdecl; external LIB_AVUTIL;
 
 (**
  * Free an AVFifoBuffer.
  * @param f AVFifoBuffer to free
  *)
-procedure av_fifo_free(AVFifoBuffer *f);
+procedure av_fifo_free(f: PAVFifoBuffer); cdecl; external LIB_AVUTIL;
 
 (**
  * Free an AVFifoBuffer and reset pointer to NULL.
  * @param f AVFifoBuffer to free
  *)
-procedure av_fifo_freep(AVFifoBuffer **f);
+procedure av_fifo_freep(f: PPAVFifoBuffer); cdecl; external LIB_AVUTIL;
 
 (**
  * Reset the AVFifoBuffer to the state right after av_fifo_alloc, in particular it is emptied.
  * @param f AVFifoBuffer to reset
  *)
-procedure av_fifo_reset(AVFifoBuffer *f);
+procedure av_fifo_reset(f: PAVFifoBuffer); cdecl; external LIB_AVUTIL;
 
 (**
  * Return the amount of data in bytes in the AVFifoBuffer, that is the
@@ -79,7 +81,7 @@ procedure av_fifo_reset(AVFifoBuffer *f);
  * @param f AVFifoBuffer to read from
  * @return size
  *)
-function cint av_fifo_size(const AVFifoBuffer *f);
+function av_fifo_size(const f: PAVFifoBuffer): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Return the amount of space in bytes in the AVFifoBuffer, that is the
@@ -87,7 +89,7 @@ function cint av_fifo_size(const AVFifoBuffer *f);
  * @param f AVFifoBuffer to write into
  * @return size
  *)
-function cint av_fifo_space(const AVFifoBuffer *f);
+function av_fifo_space(const f: PAVFifoBuffer): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Feed data at specific position from an AVFifoBuffer to a user-supplied callback.
@@ -98,7 +100,10 @@ function cint av_fifo_space(const AVFifoBuffer *f);
  * @param func generic read function
  * @param dest data destination
  *)
-function cint av_fifo_generic_peek_at(AVFifoBuffer *f, void *dest, int offset, int buf_size, void (*func)(void*, void*, int));
+type
+  func_proc: procedure (arg1: pointer; arg2: pointer; arg3: cint); cdecl;
+
+function av_fifo_generic_peek_at(f: PAVFifoBuffer; dest: pointer; offset: cint; buf_size: cint; func: func_proc): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Feed data from an AVFifoBuffer to a user-supplied callback.
@@ -108,7 +113,10 @@ function cint av_fifo_generic_peek_at(AVFifoBuffer *f, void *dest, int offset, i
  * @param func generic read function
  * @param dest data destination
  *)
-function cint av_fifo_generic_peek(AVFifoBuffer *f, void *dest, int buf_size, void (*func)(void*, void*, int));
+type
+  func_proc: procedure (arg1: pointer; arg2: pointer; arg3: cint); cdecl;
+
+function av_fifo_generic_peek(f: PAVFifoBuffer; dest: pointer; buf_size: cint; func: func_proc): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Feed data from an AVFifoBuffer to a user-supplied callback.
@@ -117,7 +125,10 @@ function cint av_fifo_generic_peek(AVFifoBuffer *f, void *dest, int buf_size, vo
  * @param func generic read function
  * @param dest data destination
  *)
-function cint av_fifo_generic_read(AVFifoBuffer *f, void *dest, int buf_size, void (*func)(void*, void*, int));
+type
+  func_proc: procedure (arg1: pointer; arg2: pointer; arg3: cint); cdecl;
+
+function av_fifo_generic_read(f: PAVFifoBuffer; dest: pointer; buf_size: cint; func: func_proc): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Feed data from a user-supplied callback to an AVFifoBuffer.
@@ -132,7 +143,10 @@ function cint av_fifo_generic_read(AVFifoBuffer *f, void *dest, int buf_size, vo
  * If func is NULL, src is interpreted as a simple byte array for source data.
  * @return the number of bytes written to the FIFO
  *)
-function cint av_fifo_generic_write(AVFifoBuffer *f, void *src, int size, int (*func)(void*, void*, int));
+type
+  func_func: function (arg1: pointer; arg2: pointer; arg3: cint): cint; cdecl;
+
+function av_fifo_generic_write(f: PAVFifoBuffer; src: pointer; size: cint; func: func_func): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Resize an AVFifoBuffer.
@@ -142,7 +156,7 @@ function cint av_fifo_generic_write(AVFifoBuffer *f, void *src, int size, int (*
  * @param size new AVFifoBuffer size in bytes
  * @return <0 for failure, >=0 otherwise
  *)
-function cint av_fifo_realloc2(AVFifoBuffer *f, unsigned int size);
+function av_fifo_realloc2(f: PAVFifoBuffer; size: cuint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Enlarge an AVFifoBuffer.
@@ -153,14 +167,14 @@ function cint av_fifo_realloc2(AVFifoBuffer *f, unsigned int size);
  * @param additional_space the amount of space in bytes to allocate in addition to av_fifo_size()
  * @return <0 for failure, >=0 otherwise
  *)
-function cint av_fifo_grow(AVFifoBuffer *f, unsigned int additional_space);
+function av_fifo_grow(f: PAVFifoBuffer; additional_space: cuint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Read and discard the specified amount of data from an AVFifoBuffer.
  * @param f AVFifoBuffer to read from
  * @param size amount of data to read in bytes
  *)
-procedure av_fifo_drain(AVFifoBuffer *f, int size);
+procedure av_fifo_drain(f: PAVFifoBuffer; size: cint); cdecl; external LIB_AVUTIL;
 
 (**
  * Return a pointer to the data stored in a FIFO buffer at a certain offset.
@@ -172,7 +186,7 @@ procedure av_fifo_drain(AVFifoBuffer *f, int size);
  *             point outside to the buffer data.
  *             The used buffer size can be checked with av_fifo_size().
  *)
-static inline uint8_t *av_fifo_peek2(const AVFifoBuffer *f, int offs)
+function av_fifo_peek2(const f: PAVFifoBuffer; offs: cint): pcuint8_t; inline;
 {
     uint8_t *ptr = f->rptr + offs;
     if (ptr >= f->end)

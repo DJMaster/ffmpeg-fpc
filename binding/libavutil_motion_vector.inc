@@ -25,39 +25,41 @@
 // #ifndef AVUTIL_MOTION_VECTOR_H
 // #define AVUTIL_MOTION_VECTOR_H
 
-#include <stdint.h>
+// #include <stdint.h>
 
-typedef struct AVMotionVector {
+type
+  PAVMotionVector = ^AVMotionVector;
+  AVMotionVector = record
     (**
      * Where the current macroblock comes from; negative value when it comes
      * from the past, positive value when it comes from the future.
      * XXX: set exact relative ref frame reference instead of a +/- 1 "direction".
      *)
-    int32_t source;
+    source: cint32_t;
     (**
      * Width and height of the block.
      *)
-    uint8_t w, h;
+    w, h: cuint8_t;
     (**
      * Absolute source position. Can be outside the frame area.
      *)
-    int16_t src_x, src_y;
+    src_x, src_y: cint16_t;
     (**
      * Absolute destination position. Can be outside the frame area.
      *)
-    int16_t dst_x, dst_y;
+    dst_x, dst_y: cint16_t;
     (**
      * Extra flag information.
      * Currently unused.
      *)
-    uint64_t flags;
+    flags: cuint64_t;
     (**
      * Motion vector
      * src_x = dst_x + motion_x / motion_scale
      * src_y = dst_y + motion_y / motion_scale
      *)
-    int32_t motion_x, motion_y;
-    uint16_t motion_scale;
-} AVMotionVector;
+    motion_x, motion_y: cint32_t;
+    motion_scale: cuint16_t;
+  end;
 
 // #endif (* AVUTIL_MOTION_VECTOR_H *)

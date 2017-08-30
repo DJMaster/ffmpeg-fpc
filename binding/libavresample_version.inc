@@ -45,7 +45,7 @@
                                                   LIBAVRESAMPLE_VERSION_MICRO);
   LIBAVRESAMPLE_BUILD = LIBAVRESAMPLE_VERSION_INT;
 
-  LIBAVRESAMPLE_IDENT = "Lavr" AV_STRINGIFY(LIBAVRESAMPLE_VERSION);
+  LIBAVRESAMPLE_IDENT = 'Lavr' + AV_STRINGIFY(LIBAVRESAMPLE_VERSION);
 
 (**
  * FF_API_* defines may be placed below to indicate public API that will be

@@ -41,38 +41,39 @@
  * @note The struct should be allocated with av_mastering_display_metadata_alloc()
  *       and its size is not a part of the public ABI.
  *)
-typedef struct AVMasteringDisplayMetadata {
+type
+  PAVMasteringDisplayMetadata = ^AVMasteringDisplayMetadata;
+  AVMasteringDisplayMetadata = record
     (**
      * CIE 1931 xy chromaticity coords of color primaries (r, g, b order).
      *)
-    AVRational display_primaries[3][2];
+    display_primaries: array[0..2][0..1] of AVRational;
 
     (**
      * CIE 1931 xy chromaticity coords of white point.
      *)
-    AVRational white_point[2];
+    white_point: array[0..1] of AVRational;
 
     (**
      * Min luminance of mastering display (cd/m^2).
      *)
-    AVRational min_luminance;
+    min_luminance: AVRational;
 
     (**
      * Max luminance of mastering display (cd/m^2).
      *)
-    AVRational max_luminance;
+    max_luminance: AVRational;
 
     (**
      * Flag indicating whether the display primaries (and white point) are set.
      *)
-    int has_primaries;
+    has_primaries: cint;
 
     (**
      * Flag indicating whether the luminance (min_ and max_) have been set.
      *)
-    int has_luminance;
-
-} AVMasteringDisplayMetadata;
+    has_luminance: cint;
+  end;
 
 (**
  * Allocate an AVMasteringDisplayMetadata structure and set its fields to
@@ -81,7 +82,7 @@ typedef struct AVMasteringDisplayMetadata {
  * @return An AVMasteringDisplayMetadata filled with default values or NULL
  *         on failure.
  *)
-AVMasteringDisplayMetadata *av_mastering_display_metadata_alloc();
+function av_mastering_display_metadata_alloc(): PAVMasteringDisplayMetadata; cdecl; external LIB_AVUTIL;
 
 (**
  * Allocate a complete AVMasteringDisplayMetadata and add it to the frame.
@@ -90,6 +91,6 @@ AVMasteringDisplayMetadata *av_mastering_display_metadata_alloc();
  *
  * @return The AVMasteringDisplayMetadata structure to be filled by caller.
  *)
-AVMasteringDisplayMetadata *av_mastering_display_metadata_create_side_data(AVFrame *frame);
+function av_mastering_display_metadata_create_side_data(frame: PAVFrame): PAVMasteringDisplayMetadata; cdecl; external LIB_AVUTIL;
 
 // #endif (* AVUTIL_MASTERING_DISPLAY_METADATA_H *)

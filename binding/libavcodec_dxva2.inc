@@ -50,7 +50,7 @@
  *
  * @{
  *)
-
+const
   FF_DXVA2_WORKAROUND_SCALING_LIST_ZIGZAG = 1; ///< Work around for DXVA2 and old UVD/UVD+ ATI video cards
   FF_DXVA2_WORKAROUND_INTEL_CLEARVIDEO = 2; ///< Work around for DXVA2 and old Intel GPUs with ClearVideo interface
 
@@ -60,37 +60,39 @@
  *
  * The application must make it available as AVCodecContext.hwaccel_context.
  *)
-struct dxva_context {
+type
+  Pdxva_context = ^dxva_context;
+  dxva_context = record
     (**
      * DXVA2 decoder object
      *)
-    IDirectXVideoDecoder *decoder;
+    decoder: PIDirectXVideoDecoder;
 
     (**
      * DXVA2 configuration used to create the decoder
      *)
-    const DXVA2_ConfigPictureDecode *cfg;
+    cfg: PDXVA2_ConfigPictureDecode;
 
     (**
      * The number of surface in the surface array
      *)
-    unsigned surface_count;
+    surface_count: cunsigned;
 
     (**
      * The array of Direct3D surfaces used to create the decoder
      *)
-    LPDIRECT3DSURFACE9 *surface;
+    surface: PLPDIRECT3DSURFACE9;
 
     (**
      * A bit field configuring the workarounds needed for using the decoder
      *)
-    uint64_t workaround;
+    workaround: cuint64_t;
 
     (**
      * Private to the FFmpeg AVHWAccel implementation
      *)
-    unsigned report_id;
-};
+    report_id: cunsigned;
+  end;
 
 (**
  * @}

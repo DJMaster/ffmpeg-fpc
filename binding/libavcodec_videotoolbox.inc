@@ -49,38 +49,40 @@
  * Its size is not a part of the public ABI, it must be allocated with
  * av_videotoolbox_alloc_context() and freed with av_free().
  *)
-typedef struct AVVideotoolboxContext {
+type
+  PAVVideotoolboxContext = ^AVVideotoolboxContext;
+  AVVideotoolboxContext = record
     (**
      * Videotoolbox decompression session object.
      * Created and freed the caller.
      *)
-    VTDecompressionSessionRef session;
+    session: VTDecompressionSessionRef;
 
     (**
      * The output callback that must be passed to the session.
      * Set by av_videottoolbox_default_init()
      *)
-    VTDecompressionOutputCallback output_callback;
+    output_callback: VTDecompressionOutputCallback;
 
     (**
      * CVPixelBuffer Format Type that Videotoolbox will use for decoded frames.
      * set by the caller. If this is set to 0, then no specific format is
      * requested from the decoder, and its native format is output.
      *)
-    OSType cv_pix_fmt_type;
+    cv_pix_fmt_type: OSType;
 
     (**
      * CoreMedia Format Description that Videotoolbox will use to create the decompression session.
      * Set by the caller.
      *)
-    CMVideoFormatDescriptionRef cm_fmt_desc;
+    cm_fmt_desc: CMVideoFormatDescriptionRef;
 
     (**
      * CoreMedia codec type that Videotoolbox will use to create the decompression session.
      * Set by the caller.
      *)
-    int cm_codec_type;
-} AVVideotoolboxContext;
+    cm_codec_type: cint;
+  end;
 
 (**
  * Allocate and initialize a Videotoolbox context.
@@ -95,7 +97,7 @@ typedef struct AVVideotoolboxContext {
  *
  * @return the newly allocated context or NULL on failure
  *)
-AVVideotoolboxContext *av_videotoolbox_alloc_context();
+function av_videotoolbox_alloc_context(): PAVVideotoolboxContext; cdecl; external LIB_AVCODEC;
 
 (**
  * This is a convenience function that creates and sets up the Videotoolbox context using
@@ -105,7 +107,7 @@ AVVideotoolboxContext *av_videotoolbox_alloc_context();
  *
  * @return >= 0 on success, a negative AVERROR code on failure
  *)
-function cint av_videotoolbox_default_init(AVCodecContext *avctx);
+function av_videotoolbox_default_init(avctx: PAVCodecContext): cint; cdecl; external LIB_AVCODEC;
 
 (**
  * This is a convenience function that creates and sets up the Videotoolbox context using
@@ -116,7 +118,7 @@ function cint av_videotoolbox_default_init(AVCodecContext *avctx);
  *
  * @return >= 0 on success, a negative AVERROR code on failure
  *)
-function cint av_videotoolbox_default_init2(AVCodecContext *avctx, AVVideotoolboxContext *vtctx);
+function av_videotoolbox_default_init2(avctx: PAVCodecContext; vtctx: PAVVideotoolboxContext): cint; cdecl; external LIB_AVCODEC;
 
 (**
  * This function must be called to free the Videotoolbox context initialized with
@@ -124,7 +126,7 @@ function cint av_videotoolbox_default_init2(AVCodecContext *avctx, AVVideotoolbo
  *
  * @param avctx the corresponding codec context
  *)
-procedure av_videotoolbox_default_free(AVCodecContext *avctx);
+procedure av_videotoolbox_default_free(avctx: PAVCodecContext); cdecl; external LIB_AVCODEC;
 
 (**
  * @}

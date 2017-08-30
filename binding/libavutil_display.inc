@@ -27,8 +27,8 @@
 // #ifndef AVUTIL_DISPLAY_H
 // #define AVUTIL_DISPLAY_H
 
-#include <stdint.h>
-#include "common.h"
+// #include <stdint.h>
+// #include "common.h"
 
 (**
  * The display transformation matrix specifies an affine transformation that
@@ -69,7 +69,7 @@
  * @note floating point numbers are inherently inexact, so callers are
  *       recommended to round the return value to nearest integer before use.
  *)
-double av_display_rotation_get(const int32_t matrix[9]);
+function av_display_rotation_get(const matrix: array[0..8] of cint32_t): cdouble; cdecl; external LIB_AVUTIL;
 
 (**
  * Initialize a transformation matrix describing a pure counterclockwise
@@ -79,7 +79,7 @@ double av_display_rotation_get(const int32_t matrix[9]);
  *               by this function)
  * @param angle rotation angle in degrees.
  *)
-procedure av_display_rotation_set(int32_t matrix[9], double angle);
+procedure av_display_rotation_set(matrix: array[0..8] of cint32_t; angle: cdouble); cdecl; external LIB_AVUTIL;
 
 (**
  * Flip the input matrix horizontally and/or vertically.
@@ -88,6 +88,6 @@ procedure av_display_rotation_set(int32_t matrix[9], double angle);
  * @param hflip whether the matrix should be flipped horizontally
  * @param vflip whether the matrix should be flipped vertically
  *)
-procedure av_display_matrix_flip(int32_t matrix[9], int hflip, int vflip);
+procedure av_display_matrix_flip(matrix: array[0..8] of cint32_t; hflip: cint; vflip: cint); cdecl; external LIB_AVUTIL;
 
 // #endif (* AVUTIL_DISPLAY_H *)

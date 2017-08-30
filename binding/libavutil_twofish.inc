@@ -28,8 +28,7 @@
 // #ifndef AVUTIL_TWOFISH_H
 // #define AVUTIL_TWOFISH_H
 
-#include <stdint.h>
-
+// #include <stdint.h>
 
 (**
   * @file
@@ -41,13 +40,16 @@
 
 extern const int av_twofish_size;
 
-struct AVTWOFISH;
+type
+  PAVTWOFISH = ^AVTWOFISH;
+  AVTWOFISH = record
+  end;
 
 (**
   * Allocate an AVTWOFISH context
   * To free the struct: av_free(ptr)
   *)
-struct AVTWOFISH *av_twofish_alloc();
+function av_twofish_alloc(): PAVTWOFISH; cdecl; external LIB_AVUTIL;
 
 (**
   * Initialize an AVTWOFISH context.
@@ -56,7 +58,7 @@ struct AVTWOFISH *av_twofish_alloc();
   * @param key a key of size ranging from 1 to 32 bytes used for encryption/decryption
   * @param key_bits number of keybits: 128, 192, 256 If less than the required, padded with zeroes to nearest valid value; return value is 0 if key_bits is 128/192/256, -1 if less than 0, 1 otherwise
  *)
-function av_twofish_init(struct AVTWOFISH *ctx, const uint8_t *key, int key_bits): cint;
+function av_twofish_init(ctx: PAVTWOFISH; const key: pcuint8_t; key_bits: cint): cint; cdecl; external LIB_AVUTIL;
 
 (**
   * Encrypt or decrypt a buffer using a previously initialized context
@@ -68,7 +70,7 @@ function av_twofish_init(struct AVTWOFISH *ctx, const uint8_t *key, int key_bits
   * @paran iv initialization vector for CBC mode, NULL for ECB mode
   * @param decrypt 0 for encryption, 1 for decryption
  *)
-procedure av_twofish_crypt(struct AVTWOFISH *ctx, uint8_t *dst, const uint8_t *src, int count, uint8_t* iv, int decrypt);
+procedure av_twofish_crypt(ctx: PAVTWOFISH; dst: pcuint8_t; const src: pcuint8_t; count: cint; iv: pcuint8_t; decrypt: cint); cdecl; external LIB_AVUTIL;
 
 (**
  * @}

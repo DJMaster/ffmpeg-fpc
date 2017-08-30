@@ -29,21 +29,21 @@
 // #ifndef AVCODEC_MEDIACODEC_H
 // #define AVCODEC_MEDIACODEC_H
 
-#include "libavcodec/avcodec.h"
+// #include "libavcodec/avcodec.h"
 
 (**
  * This structure holds a reference to a android/view/Surface object that will
  * be used as output by the decoder.
  *
  *)
-typedef struct AVMediaCodecContext {
-
+type
+  PAVMediaCodecContext = ^AVMediaCodecContext;
+  AVMediaCodecContext = record
     (**
      * android/view/Surface object reference.
      *)
-    void *surface;
-
-} AVMediaCodecContext;
+    surface: pointer;
+  end;
 
 (**
  * Allocate and initialize a MediaCodec context.
@@ -53,7 +53,7 @@ typedef struct AVMediaCodecContext {
  *
  * @return a pointer to a newly allocated AVMediaCodecContext on success, NULL otherwise
  *)
-AVMediaCodecContext *av_mediacodec_alloc_context();
+function av_mediacodec_alloc_context(): PAVMediaCodecContext; cdecl; external LIB_AVCODEC;
 
 (**
  * Convenience function that sets up the MediaCodec context.
@@ -63,7 +63,7 @@ AVMediaCodecContext *av_mediacodec_alloc_context();
  * @param surface reference to an android/view/Surface
  * @return 0 on success, < 0 otherwise
  *)
-function cint av_mediacodec_default_init(AVCodecContext *avctx, AVMediaCodecContext *ctx, void *surface);
+function av_mediacodec_default_init(avctx: PAVCodecContext; ctx: PAVMediaCodecContext; surface: pointer): cint; cdecl; external LIB_AVCODEC;
 
 (**
  * This function must be called to free the MediaCodec context initialized with
@@ -71,12 +71,15 @@ function cint av_mediacodec_default_init(AVCodecContext *avctx, AVMediaCodecCont
  *
  * @param avctx codec context
  *)
-procedure av_mediacodec_default_free(AVCodecContext *avctx);
+procedure av_mediacodec_default_free(avctx: PAVCodecContext); cdecl; external LIB_AVCODEC;
 
 (**
  * Opaque structure representing a MediaCodec buffer to render.
  *)
-typedef struct MediaCodecBuffer AVMediaCodecBuffer;
+type
+  PAVMediaCodecBuffer = ^AVMediaCodecBuffer;
+  AVMediaCodecBuffer = record
+  end;
 
 (**
  * Release a MediaCodec buffer and render it to the surface that is associated
@@ -89,6 +92,6 @@ typedef struct MediaCodecBuffer AVMediaCodecBuffer;
  * discard the buffer
  * @return 0 on success, < 0 otherwise
  *)
-function cint av_mediacodec_release_buffer(AVMediaCodecBuffer *buffer, int render);
+function av_mediacodec_release_buffer(buffer: PAVMediaCodecBuffer; render: cint): cint; cdecl; external LIB_AVCODEC;
 
 // #endif (* AVCODEC_MEDIACODEC_H *)

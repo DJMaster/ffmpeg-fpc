@@ -50,10 +50,9 @@
 #include "libavcodec/version.h"
 
 // extra flags not defined in VDADecoder.h
-enum {
-    kVDADecodeInfo_Asynchronous = 1UL shl 0,
-    kVDADecodeInfo_FrameDropped = 1UL shl 1
-};
+const
+  kVDADecodeInfo_Asynchronous = 1UL shl 0;
+  kVDADecodeInfo_FrameDropped = 1UL shl 1;
 
 (**
  * @defgroup lavc_codec_hwaccel_vda VDA
@@ -68,14 +67,16 @@ enum {
  *
  * The application must make it available as AVCodecContext.hwaccel_context.
  *)
-struct vda_context {
+type
+  Pvda_context = ^vda_context;
+  vda_context = record
     (**
      * VDA decoder object.
      *
      * - encoding: unused
      * - decoding: Set/Unset by libavcodec.
      *)
-    VDADecoder          decoder;
+    decoder: VDADecoder;
 
     (**
      * The Core Video pixel buffer that contains the current image data.
@@ -83,7 +84,7 @@ struct vda_context {
      * encoding: unused
      * decoding: Set by libavcodec. Unset by user.
      *)
-    CVPixelBufferRef    cv_buffer;
+    cv_buffer: CVPixelBufferRef;
 
     (**
      * Use the hardware decoder in synchronous mode.
@@ -91,7 +92,7 @@ struct vda_context {
      * encoding: unused
      * decoding: Set by user.
      *)
-    int                 use_sync_decoding;
+    use_sync_decoding: cint;
 
     (**
      * The frame width.
@@ -99,7 +100,7 @@ struct vda_context {
      * - encoding: unused
      * - decoding: Set/Unset by user.
      *)
-    int                 width;
+    width: cint;
 
     (**
      * The frame height.
@@ -107,7 +108,7 @@ struct vda_context {
      * - encoding: unused
      * - decoding: Set/Unset by user.
      *)
-    int                 height;
+    height: cint;
 
     (**
      * The frame format.
@@ -115,7 +116,7 @@ struct vda_context {
      * - encoding: unused
      * - decoding: Set/Unset by user.
      *)
-    int                 format;
+    format: cint;
 
     (**
      * The pixel format for output image buffers.
@@ -123,22 +124,22 @@ struct vda_context {
      * - encoding: unused
      * - decoding: Set/Unset by user.
      *)
-    OSType              cv_pix_fmt_type;
+    cv_pix_fmt_type: OSType;
 
     (**
      * unused
      *)
-    uint8_t             *priv_bitstream;
+    priv_bitstream: pcuint8_t;
 
     (**
      * unused
      *)
-    int                 priv_bitstream_size;
+    priv_bitstream_size: cint;
 
     (**
      * unused
      *)
-    int                 priv_allocated_size;
+    priv_allocated_size: cint;
 
     (**
      * Use av_buffer to manage buffer.
@@ -149,16 +150,14 @@ struct vda_context {
      * encoding: unused
      * decoding: Set by user.
      *)
-    int                 use_ref_buffer;
-};
+    use_ref_buffer: cint;
+  end;
 
 (** Create the video decoder. *)
-function cint ff_vda_create_decoder(struct vda_context *vda_ctx,
-                          uint8_t *extradata,
-                          int extradata_size);
+function ff_vda_create_decoder(vda_ctx: Pvda_context; extradata: pcuint8_t; extradata_size: cint): cint; cdecl; external LIB_AVCODEC;
 
 (** Destroy the video decoder. *)
-function cint ff_vda_destroy_decoder(struct vda_context *vda_ctx);
+function ff_vda_destroy_decoder(vda_ctx: Pvda_context): cint; cdecl; external LIB_AVCODEC;
 
 (**
  * This struct holds all the information that needs to be passed
@@ -166,24 +165,26 @@ function cint ff_vda_destroy_decoder(struct vda_context *vda_ctx);
  * Its size is not a part of the public ABI, it must be allocated with
  * av_vda_alloc_context() and freed with av_free().
  *)
-typedef struct AVVDAContext {
+type
+  PAVVDAContext = ^AVVDAContext;
+  AVVDAContext = record
     (**
      * VDA decoder object. Created and freed by the caller.
      *)
-    VDADecoder decoder;
+    decoder: VDADecoder;
 
     (**
      * The output callback that must be passed to VDADecoderCreate.
      * Set by av_vda_alloc_context().
      *)
-    VDADecoderOutputCallback output_callback;
+    output_callback: VDADecoderOutputCallback;
 
     (**
      * CVPixelBuffer Format Type that VDA will use for decoded frames; set by
      * the caller.
      *)
-    OSType cv_pix_fmt_type;
-} AVVDAContext;
+    cv_pix_fmt_type: OSType;
+  end;
 
 (**
  * Allocate and initialize a VDA context.
@@ -198,7 +199,7 @@ typedef struct AVVDAContext {
  *
  * @return the newly allocated context or NULL on failure
  *)
-AVVDAContext *av_vda_alloc_context();
+function av_vda_alloc_context(): PAVVDAContext; cdecl; external LIB_AVCODEC;
 
 (**
  * This is a convenience function that creates and sets up the VDA context using
@@ -208,7 +209,7 @@ AVVDAContext *av_vda_alloc_context();
  *
  * @return >= 0 on success, a negative AVERROR code on failure
  *)
-function cint av_vda_default_init(AVCodecContext *avctx);
+function av_vda_default_init(avctx: PAVCodecContext): cint; cdecl; external LIB_AVCODEC;
 
 (**
  * This is a convenience function that creates and sets up the VDA context using
@@ -219,7 +220,7 @@ function cint av_vda_default_init(AVCodecContext *avctx);
  *
  * @return >= 0 on success, a negative AVERROR code on failure
  *)
-function cint av_vda_default_init2(AVCodecContext *avctx, AVVDAContext *vdactx);
+function av_vda_default_init2(avctx: PAVCodecContext; vdactx: PAVVDAContext): cint; cdecl; external LIB_AVCODEC;
 
 (**
  * This function must be called to free the VDA context initialized with
@@ -227,7 +228,7 @@ function cint av_vda_default_init2(AVCodecContext *avctx, AVVDAContext *vdactx);
  *
  * @param avctx the corresponding codec context
  *)
-procedure av_vda_default_free(AVCodecContext *avctx);
+procedure av_vda_default_free(avctx: PAVCodecContext); cdecl; external LIB_AVCODEC;
 
 (**
  * @}

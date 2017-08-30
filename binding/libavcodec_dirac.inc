@@ -37,7 +37,7 @@
  * @author Jordi Ortiz
  *)
 
-#include "avcodec.h"
+// #include "avcodec.h"
 
 (**
  * The spec limits the number of wavelet decompositions to 4 for both
@@ -77,7 +77,7 @@ type
     DIRAC_PCODE_INTRA_REF_CO = $0C,
     DIRAC_PCODE_INTRA_REF_RAW = $4C,
     DIRAC_PCODE_INTRA_REF_PICT = $CC,
-    DIRAC_PCODE_MAGIC = $42424344,
+    DIRAC_PCODE_MAGIC = $42424344
   );
 
   DiracVersionInfo = record

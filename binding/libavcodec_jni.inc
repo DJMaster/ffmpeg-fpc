@@ -39,7 +39,7 @@
  * @param log_ctx context used for logging, can be NULL
  * @return 0 on success, < 0 otherwise
  *)
-function cint av_jni_set_java_vm(void *vm, void *log_ctx);
+function av_jni_set_java_vm(vm: pointer; log_ctx: pointer): cint; cdecl; external LIB_AVCODEC;
 
 (*
  * Get the Java virtual machine which has been set with av_jni_set_java_vm.
@@ -47,6 +47,6 @@ function cint av_jni_set_java_vm(void *vm, void *log_ctx);
  * @param vm Java virtual machine
  * @return a pointer to the Java virtual machine
  *)
-void *av_jni_get_java_vm(void *log_ctx);
+function av_jni_get_java_vm(log_ctx: pointer): pointer; cdecl; external LIB_AVCODEC;
 
 // #endif (* AVCODEC_JNI_H *)

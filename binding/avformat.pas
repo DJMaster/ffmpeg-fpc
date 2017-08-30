@@ -34,7 +34,7 @@ uses
   ctypes;
 
 const
-   LIB_AVFORMAT = 'avformat-57.dll';
+  LIB_AVFORMAT = 'avformat-57.dll';
 
 // #ifndef AVFORMAT_AVFORMAT_H
 // #define AVFORMAT_AVFORMAT_H

@@ -48,19 +48,22 @@
 
 extern const int av_md5_size;
 
-struct AVMD5;
+type
+  PAVMD5 = ^AVMD5;
+  AVMD5 = record
+  end;
 
 (**
  * Allocate an AVMD5 context.
  *)
-struct AVMD5 *av_md5_alloc();
+function av_md5_alloc(): PAVMD5; cdecl; external LIB_AVUTIL;
 
 (**
  * Initialize MD5 hashing.
  *
  * @param ctx pointer to the function context (of size av_md5_size)
  *)
-procedure av_md5_init(struct AVMD5 *ctx);
+procedure av_md5_init(ctx: PAVMD5); cdecl; external LIB_AVUTIL;
 
 (**
  * Update hash value.
@@ -69,7 +72,7 @@ procedure av_md5_init(struct AVMD5 *ctx);
  * @param src input data to update hash with
  * @param len input data length
  *)
-procedure av_md5_update(struct AVMD5 *ctx, const uint8_t *src, int len);
+procedure av_md5_update(ctx: PAVMD5; const src: pcuint8_t; len: cint); cdecl; external LIB_AVUTIL;
 
 (**
  * Finish hashing and output digest value.
@@ -77,7 +80,7 @@ procedure av_md5_update(struct AVMD5 *ctx, const uint8_t *src, int len);
  * @param ctx hash function context
  * @param dst buffer where output digest value is stored
  *)
-procedure av_md5_final(struct AVMD5 *ctx, uint8_t *dst);
+procedure av_md5_final(ctx: PAVMD5; dst: pcuint8_t); cdecl; external LIB_AVUTIL;
 
 (**
  * Hash an array of data.
@@ -86,7 +89,7 @@ procedure av_md5_final(struct AVMD5 *ctx, uint8_t *dst);
  * @param src The data to hash
  * @param len The length of the data, in bytes
  *)
-procedure av_md5_sum(uint8_t *dst, const uint8_t *src, const int len);
+procedure av_md5_sum(dst: pcuint8_t; const src: pcuint8_t; const len: cint); cdecl; external LIB_AVUTIL;
 
 (**
  * @}
