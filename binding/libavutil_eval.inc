@@ -32,9 +32,12 @@
 // #ifndef AVUTIL_EVAL_H
 // #define AVUTIL_EVAL_H
 
-#include "avutil.h"
+// #include "avutil.h"
 
-typedef struct AVExpr AVExpr;
+type
+  PAVExpr = ^AVExpr;
+  AVExpr = record
+  end;
 
 (**
  * Parse and evaluate an expression.
@@ -54,11 +57,11 @@ typedef struct AVExpr AVExpr;
  * @return >= 0 in case of success, a negative value corresponding to an
  * AVERROR code otherwise
  *)
-function cint av_expr_parse_and_eval(double *res, const pchar s,
-                           const char * const *const_names, const double *const_values,
-                           const char * const *func1_names, double (* const *funcs1)(void *, double),
-                           const char * const *func2_names, double (* const *funcs2)(void *, double, double),
-                           void *opaque, int log_offset, void *log_ctx);
+type
+  funcs1_func = function (arg1: pointer; arg2: cdouble): cdouble; cdecl;
+  funcs2_func = function (arg1: pointer; arg2: cdouble; arg2: cdouble): cdouble; cdecl;
+
+function av_expr_parse_and_eval(res: pcdouble; const s: pchar; const const_names: array of pchar; const const_values: array of cdouble; const func1_names: array of pchar; funcs1: array of funcs1_func; const func2_names: array of pchar; funcs2: array of funcs2_func; opaque: pointer;log_offset: cint; log_ctx: pointer): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Parse an expression.
@@ -77,11 +80,11 @@ function cint av_expr_parse_and_eval(double *res, const pchar s,
  * @return >= 0 in case of success, a negative value corresponding to an
  * AVERROR code otherwise
  *)
-function av_expr_parse(AVExpr **expr, const pchar s,
-                  const char * const *const_names,
-                  const char * const *func1_names, double (* const *funcs1)(void *, double),
-                  const char * const *func2_names, double (* const *funcs2)(void *, double, double),
-                  int log_offset, log_ctx: pointer): cint;
+type
+  funcs1_func = function (arg1: pointer; arg2: cdouble): cdouble; cdecl;
+  funcs2_func = function (arg1: pointer; arg2: cdouble; arg3: cdouble): cdouble; cdecl;
+
+function av_expr_parse(expr: PPAVExpr; const s: pchar; const const_names: array of pchar; const func1_names: array of pchar; funcs1: array of funcs1_func; const func2_names: array of pchar; funcs2: array of funcs2_func; log_offset: cint; log_ctx: pointer): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Evaluate a previously parsed expression.
@@ -90,12 +93,12 @@ function av_expr_parse(AVExpr **expr, const pchar s,
  * @param opaque a pointer which will be passed to all functions from funcs1 and funcs2
  * @return the value of the expression
  *)
-function av_expr_eval(AVExpr *e, const double *const_values, opaque: pointer): cdouble;
+function av_expr_eval(e: PAVExpr; const const_values: pcdouble; opaque: pointer): cdouble; cdecl; external LIB_AVUTIL;
 
 (**
  * Free a parsed expression previously created with av_expr_parse().
  *)
-procedure av_expr_free(AVExpr *e);
+procedure av_expr_free(e: PAVExpr); cdecl; external LIB_AVUTIL;
 
 (**
  * Parse the string in numstr and return its value as a double. If
@@ -114,6 +117,6 @@ procedure av_expr_free(AVExpr *e);
  * @param tail if non-NULL puts here the pointer to the char next
  * after the last parsed character
  *)
-double av_strtod(const pchar numstr, char **tail);
+function av_strtod(const numstr: pchar; tail: ppchar): cdouble; cdecl; external LIB_AVUTIL;
 
 // #endif (* AVUTIL_EVAL_H *)

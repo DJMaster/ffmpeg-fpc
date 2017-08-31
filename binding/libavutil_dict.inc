@@ -36,9 +36,9 @@
 // #ifndef AVUTIL_DICT_H
 // #define AVUTIL_DICT_H
 
-#include <stdint.h>
+// #include <stdint.h>
 
-#include "version.h"
+// #include "version.h"
 
 (**
  * @addtogroup lavu_dict AVDictionary
@@ -71,7 +71,7 @@
    av_dict_free(&d);
  @endcode
  *)
-
+const
   AV_DICT_MATCH_CASE = 1; (**< Only get an entry with exact-case key match. Only relevant in av_dict_get(). *)
   AV_DICT_IGNORE_SUFFIX = 2; (**< Return first entry in a dictionary whose first part corresponds to the search key,
                                   ignoring the suffix of the found key string. Only relevant in av_dict_get(). *)
@@ -84,12 +84,16 @@
                             delimiter is added, the strings are simply concatenated. *)
   AV_DICT_MULTIKEY = 64; (**< Allow to store several equal keys in the dictionary *)
 
-typedef struct AVDictionaryEntry {
-    char *key;
-    char *value;
-} AVDictionaryEntry;
+type
+  PAVDictionaryEntry = ^AVDictionaryEntry;
+  AVDictionaryEntry = record
+    key: pchar;
+    value: pchar;
+  end;
 
-typedef struct AVDictionary AVDictionary;
+  PAVDictionary = ^AVDictionary;
+  AVDictionary = record
+  end;
 
 (**
  * Get a dictionary entry with matching key.
@@ -106,8 +110,7 @@ typedef struct AVDictionary AVDictionary;
  * @param flags a collection of AV_DICT_* flags controlling how the entry is retrieved
  * @return found entry or NULL in case no matching entry was found in the dictionary
  *)
-AVDictionaryEntry *av_dict_get(const AVDictionary *m, const pchar key,
-                               const AVDictionaryEntry *prev, int flags);
+function av_dict_get(const m: PAVDictionary; const key: pchar; const prev: PAVDictionaryEntry; flags: cint): PAVDictionaryEntry; cdecl; external LIB_AVUTIL;
 
 (**
  * Get number of entries in dictionary.
@@ -115,7 +118,7 @@ AVDictionaryEntry *av_dict_get(const AVDictionary *m, const pchar key,
  * @param m dictionary
  * @return  number of entries in dictionary
  *)
-function cint av_dict_count(const AVDictionary *m);
+function av_dict_count(const m: PAVDictionary): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Set the given entry in *pm, overwriting an existing entry.
@@ -133,7 +136,7 @@ function cint av_dict_count(const AVDictionary *m);
  *        Passing a NULL value will cause an existing entry to be deleted.
  * @return >= 0 on success otherwise an error code <0
  *)
-function cint av_dict_set(AVDictionary **pm, const pchar key, const pchar value, int flags);
+function av_dict_set(pm: PPAVDictionary; const key: pchar; const value: pchar; flags: cint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Convenience wrapper for av_dict_set that converts the value to a string
@@ -141,7 +144,7 @@ function cint av_dict_set(AVDictionary **pm, const pchar key, const pchar value,
  *
  * Note: If AV_DICT_DONT_STRDUP_KEY is set, key will be freed on error.
  *)
-function cint av_dict_set_int(AVDictionary **pm, const pchar key, int64_t value, int flags);
+function av_dict_set_int(pm: PPAVDictionary; const key: pchar; value: cint64; flags: cint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Parse the key/value pairs list and add the parsed entries to a dictionary.
@@ -159,9 +162,7 @@ function cint av_dict_set_int(AVDictionary **pm, const pchar key, int64_t value,
  *                     be duplicated.
  * @return             0 on success, negative AVERROR code on failure
  *)
-function cint av_dict_parse_string(AVDictionary **pm, const pchar str,
-                         const pchar key_val_sep, const pchar pairs_sep,
-                         int flags);
+function av_dict_parse_string(pm: PPAVDictionary; const str: pchar; const key_val_sep: pchar; const pairs_sep: pchar; flags: cint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Copy entries from one AVDictionary struct into another.
@@ -173,13 +174,13 @@ function cint av_dict_parse_string(AVDictionary **pm, const pchar str,
  * @return 0 on success, negative AVERROR code on failure. If dst was allocated
  *           by this function, callers should free the associated memory.
  *)
-function cint av_dict_copy(AVDictionary **dst, const AVDictionary *src, int flags);
+function av_dict_copy(dst: PPAVDictionary; const src: PAVDictionary; flags: cint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Free all the memory allocated for an AVDictionary struct
  * and all keys and values.
  *)
-procedure av_dict_free(AVDictionary **m);
+procedure av_dict_free(m: PPAVDictionary); cdecl; external LIB_AVUTIL;
 
 (**
  * Get dictionary entries as a string.
@@ -196,8 +197,7 @@ procedure av_dict_free(AVDictionary **m);
  * @return                   >= 0 on success, negative on error
  * @warning Separators cannot be neither '\\' nor '\0'. They also cannot be the same.
  *)
-function cint av_dict_get_string(const AVDictionary *m, char **buffer,
-                       const char key_val_sep, const char pairs_sep);
+function av_dict_get_string(const m: PAVDictionary; buffer: ppchar; const key_val_sep: char; const pairs_sep: char): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * @}

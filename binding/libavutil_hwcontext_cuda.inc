@@ -30,7 +30,7 @@
 #include <cuda.h>
 {$endif}
 
-#include "pixfmt.h"
+// #include "pixfmt.h"
 
 (**
  * @file

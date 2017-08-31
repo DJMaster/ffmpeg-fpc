@@ -462,9 +462,11 @@ function av_append_packet(AVIOContext *s, AVPacket *pkt, int size): cint; cdecl;
  * The exact value of the fractional number is: 'val + num / den'.
  * num is assumed to be 0 <= num < den.
  *)
-typedef struct AVFrac {
-    int64_t val, num, den;
-} AVFrac;
+type
+  PAVFrac = ^AVFrac;
+  AVFrac = record
+    val, num, den: cint64;
+  end;;
 {$endif}
 
 (*************************************************)
@@ -1273,7 +1275,7 @@ procedure av_stream_set_recommended_encoder_configuration(s: PAVStream; configur
  *
  * the retuned value is undefined when used with a demuxer.
  *)
-function av_stream_get_end_pts(const st: PAVStream): cint64_t; cdecl; external LIB_AVFORMAT;
+function av_stream_get_end_pts(const st: PAVStream): cint64; cdecl; external LIB_AVFORMAT;
 
 const
   AV_PROGRAM_RUNNING = 1;
@@ -2104,7 +2106,7 @@ function avformat_new_stream(s: PAVFormatContext, const c: PAVCodec): PAVStream;
  * @return zero on success, a negative AVERROR code on failure. On failure,
  *         the stream is unchanged and the data remains owned by the caller.
  *)
-function av_stream_add_side_data(st: PAVStream; type_: AVPacketSideDataType; data: pcuint8_t; size: csize_t): cint; cdecl; external LIB_AVFORMAT;
+function av_stream_add_side_data(st: PAVStream; type_: AVPacketSideDataType; data: pcuint8; size: csize_t): cint; cdecl; external LIB_AVFORMAT;
 
 (**
  * Allocate new information from stream.
@@ -2114,7 +2116,7 @@ function av_stream_add_side_data(st: PAVStream; type_: AVPacketSideDataType; dat
  * @param size side information size
  * @return pointer to fresh allocated data or NULL otherwise
  *)
-function av_stream_new_side_data(stream: PAVStream; type_: AVPacketSideDataType; size: cint): pcuint8_t; cdecl; external LIB_AVFORMAT;
+function av_stream_new_side_data(stream: PAVStream; type_: AVPacketSideDataType; size: cint): pcuint8; cdecl; external LIB_AVFORMAT;
 
 (**
  * Get side information from stream.
@@ -2125,9 +2127,9 @@ function av_stream_new_side_data(stream: PAVStream; type_: AVPacketSideDataType;
  * @return pointer to data if present or NULL otherwise
  *)
 {$if FF_API_NOCONST_GET_SIDE_DATA}
-function av_stream_get_side_data(stream: PAVStream; type_: AVPacketSideDataType; size: pcint): pcuint8_t; cdecl; external LIB_AVFORMAT;
+function av_stream_get_side_data(stream: PAVStream; type_: AVPacketSideDataType; size: pcint): pcuint8; cdecl; external LIB_AVFORMAT;
 #else
-function av_stream_get_side_data(const stream: PAVStream; type_: AVPacketSideDataType; size: pcint): pcuint8_t; cdecl; external LIB_AVFORMAT;
+function av_stream_get_side_data(const stream: PAVStream; type_: AVPacketSideDataType; size: pcint): pcuint8; cdecl; external LIB_AVFORMAT;
 {$endif}
 
 function av_new_program(s: PAVFormatContext; id: cint): PAVProgram; cdecl; external LIB_AVFORMAT;
@@ -2346,7 +2348,7 @@ function av_read_frame(s: PAVFormatContext; pkt: PAVPacket): cint; cdecl; extern
  * @param flags flags which select direction and seeking mode
  * @return >= 0 on success
  *)
-function av_seek_frame(s: PAVFormatContext; stream_index: cint; timestamp: cint64_t; flags: cint): cint; cdecl; external LIB_AVFORMAT;
+function av_seek_frame(s: PAVFormatContext; stream_index: cint; timestamp: cint64; flags: cint): cint; cdecl; external LIB_AVFORMAT;
 
 (**
  * Seek to timestamp ts.
@@ -2376,7 +2378,7 @@ function av_seek_frame(s: PAVFormatContext; stream_index: cint; timestamp: cint6
  *       Thus do not use this yet. It may change at any time, do not expect
  *       ABI compatibility yet!
  *)
-function avformat_seek_file(s: PAVFormatContext; stream_index: cint; min_ts: cint64_t; ts: cint64_t; max_ts: cint64_t; flags: cint): cint; cdecl; external LIB_AVFORMAT;
+function avformat_seek_file(s: PAVFormatContext; stream_index: cint; min_ts: cint64; ts: cint64; max_ts: cint64; flags: cint): cint; cdecl; external LIB_AVFORMAT;
 
 (**
  * Discard all internally buffered data. This can be useful when dealing with
@@ -2639,7 +2641,7 @@ function av_guess_codec(fmt: PAVOutputFormat; const short_name: pchar; const fil
  * Note: some formats or devices may not allow to measure dts and wall
  * atomically.
  *)
-function av_get_output_timestamp(s: PAVFormatContext; stream: cint; dts: pcint64_t; wall: pcint64_t): cint; cdecl; external LIB_AVFORMAT;
+function av_get_output_timestamp(s: PAVFormatContext; stream: cint; dts: pcint64; wall: pcint64): cint; cdecl; external LIB_AVFORMAT;
 
 
 (**
@@ -2665,7 +2667,7 @@ function av_get_output_timestamp(s: PAVFormatContext; stream: cint; dts: pcint64
  *
  * @see av_hex_dump_log, av_pkt_dump2, av_pkt_dump_log2
  *)
-procedure av_hex_dump(f: file; const buf: pcuint8_t; size: cint); cdecl; external LIB_AVFORMAT;
+procedure av_hex_dump(f: file; const buf: pcuint8; size: cint); cdecl; external LIB_AVFORMAT;
 
 (**
  * Send a nice hexadecimal dump of a buffer to the log.
@@ -2679,7 +2681,7 @@ procedure av_hex_dump(f: file; const buf: pcuint8_t; size: cint); cdecl; externa
  *
  * @see av_hex_dump, av_pkt_dump2, av_pkt_dump_log2
  *)
-procedure av_hex_dump_log(avcl: pointer; level: cint; const buf: pcuint8_t; size; cint); cdecl; external LIB_AVFORMAT;
+procedure av_hex_dump_log(avcl: pointer; level: cint; const buf: pcuint8; size; cint); cdecl; external LIB_AVFORMAT;
 
 (**
  * Send a nice dump of a packet to the specified file stream.
@@ -2748,7 +2750,7 @@ function av_find_default_stream_index(s: PAVFormatContext): cint; cdecl; externa
  *              if AVSEEK_FLAG_ANY seek to any frame, only keyframes otherwise
  * @return < 0 if no such timestamp could be found
  *)
-function av_index_search_timestamp(st: PAVStream; timestamp: cint64_t; flags: cint): cint; cdecl; external LIB_AVFORMAT;
+function av_index_search_timestamp(st: PAVStream; timestamp: cint64; flags: cint): cint; cdecl; external LIB_AVFORMAT;
 
 (**
  * Add an index entry into a sorted list. Update the entry if the list
@@ -2756,7 +2758,7 @@ function av_index_search_timestamp(st: PAVStream; timestamp: cint64_t; flags: ci
  *
  * @param timestamp timestamp in the time base of the given stream
  *)
-function av_add_index_entry(st: PAVStream; pos: cint64_t; timestamp: cint64_t; size: cint; distance: cint; flags: cint): cint; cdecl; external LIB_AVFORMAT;
+function av_add_index_entry(st: PAVStream; pos: cint64; timestamp: cint64; size: cint; distance: cint; flags: cint): cint; cdecl; external LIB_AVFORMAT;
 
 
 (**
@@ -2964,14 +2966,14 @@ function avformat_queue_attached_pictures(s: PAVFormatContext): cint; cdecl; ext
 function av_apply_bitstream_filters(codec: PAVCodecContext; pkt: PAVPacket; bsfc: PAVBitStreamFilterContext): cint; cdecl; external LIB_AVFORMAT;
 {$endif}
 
-enum AVTimebaseSource {
+type
+  AVTimebaseSource = (
     AVFMT_TBCF_AUTO = -1,
     AVFMT_TBCF_DECODER,
-    AVFMT_TBCF_DEMUXER,
-{$if FF_API_R_FRAME_RATE}
-    AVFMT_TBCF_R_FRAMERATE,
+    AVFMT_TBCF_DEMUXER{$if FF_API_R_FRAME_RATE},
+    AVFMT_TBCF_R_FRAMERATE
 {$endif}
-};
+  );
 
 (**
  * Transfer internal timing information from one stream to another.

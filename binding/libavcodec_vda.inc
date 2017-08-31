@@ -129,7 +129,7 @@ type
     (**
      * unused
      *)
-    priv_bitstream: pcuint8_t;
+    priv_bitstream: pcuint8;
 
     (**
      * unused
@@ -154,7 +154,7 @@ type
   end;
 
 (** Create the video decoder. *)
-function ff_vda_create_decoder(vda_ctx: Pvda_context; extradata: pcuint8_t; extradata_size: cint): cint; cdecl; external LIB_AVCODEC;
+function ff_vda_create_decoder(vda_ctx: Pvda_context; extradata: pcuint8; extradata_size: cint): cint; cdecl; external LIB_AVCODEC;
 
 (** Destroy the video decoder. *)
 function ff_vda_destroy_decoder(vda_ctx: Pvda_context): cint; cdecl; external LIB_AVCODEC;

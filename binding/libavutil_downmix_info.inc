@@ -27,7 +27,7 @@
 // #ifndef AVUTIL_DOWNMIX_INFO_H
 // #define AVUTIL_DOWNMIX_INFO_H
 
-#include "frame.h"
+// #include "frame.h"
 
 (**
  * @file
@@ -47,13 +47,14 @@
 (**
  * Possible downmix types.
  *)
-enum AVDownmixType {
+type
+  AVDownmixType = (
     AV_DOWNMIX_TYPE_UNKNOWN, (**< Not indicated. *)
     AV_DOWNMIX_TYPE_LORO, (**< Lo/Ro 2-channel downmix (Stereo). *)
     AV_DOWNMIX_TYPE_LTRT, (**< Lt/Rt 2-channel downmix, Dolby Surround compatible. *)
     AV_DOWNMIX_TYPE_DPLII, (**< Lt/Rt 2-channel downmix, Dolby Pro Logic II compatible. *)
     AV_DOWNMIX_TYPE_NB (**< Number of downmix types. Not part of ABI. *)
-};
+  );
 
 (**
  * This structure describes optional metadata relevant to a downmix procedure.
@@ -61,42 +62,43 @@ enum AVDownmixType {
  * All fields are set by the decoder to the value indicated in the audio
  * bitstream (if present), or to a "sane" default otherwise.
  *)
-typedef struct AVDownmixInfo {
+  PAVDownmixInfo = ^AVDownmixInfo;
+  AVDownmixInfo = record
     (**
      * Type of downmix preferred by the mastering engineer.
      *)
-    enum AVDownmixType preferred_downmix_type;
+    preferred_downmix_type: AVDownmixType;
 
     (**
      * Absolute scale factor representing the nominal level of the center
      * channel during a regular downmix.
      *)
-    double center_mix_level;
+    center_mix_level: cdouble;
 
     (**
      * Absolute scale factor representing the nominal level of the center
      * channel during an Lt/Rt compatible downmix.
      *)
-    double center_mix_level_ltrt;
+    center_mix_level_ltrt: cdouble;
 
     (**
      * Absolute scale factor representing the nominal level of the surround
      * channels during a regular downmix.
      *)
-    double surround_mix_level;
+    surround_mix_level: cdouble;
 
     (**
      * Absolute scale factor representing the nominal level of the surround
      * channels during an Lt/Rt compatible downmix.
      *)
-    double surround_mix_level_ltrt;
+    surround_mix_level_ltrt: cdouble;
 
     (**
      * Absolute scale factor representing the level at which the LFE data is
      * mixed into L/R channels during downmixing.
      *)
-    double lfe_mix_level;
-} AVDownmixInfo;
+    lfe_mix_level: cdouble;
+  end;
 
 (**
  * Get a frame's AV_FRAME_DATA_DOWNMIX_INFO side data for editing.
@@ -108,7 +110,7 @@ typedef struct AVDownmixInfo {
  * @return the AVDownmixInfo structure to be edited by the caller, or NULL if
  *         the structure cannot be allocated.
  *)
-AVDownmixInfo *av_downmix_info_update_side_data(AVFrame *frame);
+function av_downmix_info_update_side_data(frame: PAVFrame): PAVDownmixInfo; cdecl; external LIB_AVUTIL;
 
 (**
  * @}

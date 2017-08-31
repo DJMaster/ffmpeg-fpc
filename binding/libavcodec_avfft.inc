@@ -70,7 +70,7 @@ procedure av_fft_calc(s: PFFTContext; z: PFFTComplex); cdecl; external LIB_AVCOD
 
 procedure av_fft_end(s: PFFTContext); cdecl; external LIB_AVCODEC;
 
-function av_mdct_init(nbits: cint; inverse: cint ; scale: cdouble): PFFTContext; cdecl; external LIB_AVCODEC;
+function av_mdct_init(nbits: cint; inverse: cint; scale: cdouble): PFFTContext; cdecl; external LIB_AVCODEC;
 procedure av_imdct_calc(s: PFFTContext; output: PFFTSample; const input: PFFTSample); cdecl; external LIB_AVCODEC;
 procedure av_imdct_half(s: PFFTContext; output: PFFTSample; const input: PFFTSample); cdecl; external LIB_AVCODEC;
 procedure av_mdct_calc(s: PFFTContext; output: PFFTSample; const input: PFFTSample); cdecl; external LIB_AVCODEC;
@@ -111,7 +111,7 @@ type
     DCT_III,
     DCT_I,
     DST_I
-  };
+  );
 
 (**
  * Set up DCT.

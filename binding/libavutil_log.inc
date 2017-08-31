@@ -27,10 +27,10 @@
 // #ifndef AVUTIL_LOG_H
 // #define AVUTIL_LOG_H
 
-#include <stdarg.h>
-#include "avutil.h"
-#include "attributes.h"
-#include "version.h"
+// #include <stdarg.h>
+// #include "avutil.h"
+// #include "attributes.h"
+// #include "version.h"
 
 type
   AVClassCategory = (
@@ -64,46 +64,56 @@ type
      ((category) == AV_CLASS_CATEGORY_DEVICE_AUDIO_OUTPUT) || \
      ((category) == AV_CLASS_CATEGORY_DEVICE_OUTPUT))
 
-struct AVOptionRanges;
+type
+  PAVOptionRanges = ^AVOptionRanges;
+  AVOptionRanges = record
+  end;
 
 (**
  * Describe the class of an AVClass context structure. That is an
  * arbitrary struct of which the first field is a pointer to an
  * AVClass struct (e.g. AVCodecContext, AVFormatContext etc.).
  *)
-typedef struct AVClass {
+type
+  item_name_func = function (ctx: pointer): pchar; cdecl;
+  child_next_func = function (obj: pointer; prev: pointer): pointer; cdecl;
+  child_class_next_func = function (const prev: PAVClass): PAVClass; cdecl;
+  get_category_func = function (ctx: pointer): AVClassCategory; cdecl;
+  query_ranges_func = function (arg1: PPAVOptionRanges; obj: pointer; const key: pchar; flags: cint): cint;
+
+  PAVClass = ^AVClass;
+  AVClass = record
     (**
      * The name of the class; usually it is the same name as the
      * context structure type to which the AVClass is associated.
      *)
-    const char* class_name;
+    class_name: pchar;
 
     (**
      * A pointer to a function which returns the name of a context
      * instance ctx associated with the class.
      *)
-    const char* (*item_name)(void* ctx);
+    item_name: item_name_func;
 
     (**
      * a pointer to the first option specified in the class if any or NULL
      *
      * @see av_set_default_options()
      *)
-    const struct AVOption *option;
+    option: PAVOption;
 
     (**
      * LIBAVUTIL_VERSION with which this structure was created.
      * This is used to allow fields to be added without requiring major
      * version bumps everywhere.
      *)
-
-    int version;
+    version: cint;
 
     (**
      * Offset in the structure where log_level_offset is stored.
      * 0 means there is no such variable
      *)
-    int log_level_offset_offset;
+    log_level_offset_offset: cint;
 
     (**
      * Offset in the structure where a pointer to the parent context for
@@ -112,12 +122,12 @@ typedef struct AVClass {
      * could then leverage to display the parent context.
      * The offset can be NULL.
      *)
-    int parent_log_context_offset;
+    parent_log_context_offset: cint;
 
     (**
      * Return next AVOptions-enabled child or NULL
      *)
-    void* (*child_next)(void *obj, void *prev);
+    child_next: child_next_func;
 
     (**
      * Return an AVClass corresponding to the next potential
@@ -127,27 +137,27 @@ typedef struct AVClass {
      * child_next iterates over _already existing_ objects, while
      * child_class_next iterates over _all possible_ children.
      *)
-    const struct AVClass* (*child_class_next)(const struct AVClass *prev);
+    child_class_next: child_class_next_func;
 
     (**
      * Category used for visualization (like color)
      * This is only set if the category is equal for all objects using this class.
      * available since version (51 << 16 | 56 << 8 | 100)
      *)
-    AVClassCategory category;
+    category: AVClassCategory;
 
     (**
      * Callback to return the category.
      * available since version (51 << 16 | 59 << 8 | 100)
      *)
-    AVClassCategory (*get_category)(void* ctx);
+    get_category: get_category_func;
 
     (**
      * Callback to return the supported/allowed ranges.
      * available since version (52.12)
      *)
-    int (*query_ranges)(struct AVOptionRanges **, void *obj, const pchar key, int flags);
-} AVClass;
+    query_ranges: query_ranges_func;
+  end;
 
 (**
  * @addtogroup lavu_log
@@ -353,8 +363,8 @@ function av_log_format_line2(ptr: pointer; level: cint; const fmt: pchar; vl: va
 #    define av_dlog(pctx, ...) av_log(pctx, AV_LOG_DEBUG, __VA_ARGS__)
 #else
 #    define av_dlog(pctx, ...) do { if (0) av_log(pctx, AV_LOG_DEBUG, __VA_ARGS__); } while (0)
-{$endif}
-{$endif} (* FF_API_DLOG *)
+#endif
+#endif (* FF_API_DLOG *)
 
 (**
  * Skip repeated messages, this requires the user app to use av_log() instead of

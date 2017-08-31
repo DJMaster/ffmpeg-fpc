@@ -31,7 +31,7 @@
  * Libavresample version macros.
  *)
 
-#include "libavutil/version.h"
+// #include "libavutil/version.h"
 
   LIBAVRESAMPLE_VERSION_MAJOR = 3;
   LIBAVRESAMPLE_VERSION_MINOR = 5;

@@ -33,10 +33,10 @@
 // #ifndef AVUTIL_CRC_H
 // #define AVUTIL_CRC_H
 
-#include <stdint.h>
-#include <stddef.h>
-#include "attributes.h"
-#include "version.h"
+// #include <stdint.h>
+// #include <stddef.h>
+// #include "attributes.h"
+// #include "version.h"
 
 (**
  * @defgroup lavu_crc32 CRC
@@ -50,22 +50,24 @@
  * @{
  *)
 
-typedef uint32_t AVCRC;
+type
+  PAVCRC = ^AVCRC;
+  AVCRC = cuint32;
 
-typedef enum {
+  AVCRCId = (
     AV_CRC_8_ATM,
     AV_CRC_16_ANSI,
     AV_CRC_16_CCITT,
     AV_CRC_32_IEEE,
-    AV_CRC_32_IEEE_LE,  (*< reversed bitorder version of AV_CRC_32_IEEE *)
-    AV_CRC_16_ANSI_LE,  (*< reversed bitorder version of AV_CRC_16_ANSI *)
+    AV_CRC_32_IEEE_LE, (*< reversed bitorder version of AV_CRC_32_IEEE *)
+    AV_CRC_16_ANSI_LE, (*< reversed bitorder version of AV_CRC_16_ANSI *)
 {$if FF_API_CRC_BIG_TABLE}
     AV_CRC_24_IEEE = 12,
-#else
+{$else}
     AV_CRC_24_IEEE,
 {$endif} (* FF_API_CRC_BIG_TABLE *)
-    AV_CRC_MAX,         (*< Not part of public API! Do not use outside libavutil. *)
-}AVCRCId;
+    AV_CRC_MAX (*< Not part of public API! Do not use outside libavutil. *)
+  );
 
 (**
  * Initialize a CRC table.
@@ -83,14 +85,14 @@ typedef enum {
  * @param ctx_size size of ctx in bytes
  * @return <0 on failure
  *)
-function cint av_crc_init(AVCRC *ctx, int le, int bits, uint32_t poly, int ctx_size);
+function av_crc_init(ctx: PAVCRC; le: cint; bits: cint; poly: cuint32; ctx_size: cint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Get an initialized standard CRC table.
  * @param crc_id ID of a standard CRC
  * @return a pointer to the CRC table or NULL on failure
  *)
-const AVCRC *av_crc_get_table(AVCRCId crc_id);
+function av_crc_get_table(crc_id: AVCRCId): PAVCRC; cdecl; external LIB_AVUTIL;
 
 (**
  * Calculate the CRC of a block.
@@ -99,8 +101,8 @@ const AVCRC *av_crc_get_table(AVCRCId crc_id);
  *
  * @see av_crc_init() "le" parameter
  *)
-uint32_t av_crc(const AVCRC *ctx, uint32_t crc,
-                const uint8_t *buffer, size_t length) av_pure;
+//TODO av_pure
+function av_crc(const ctx: PAVCRC; crc: cuint32; const buffer: pcuint8; length: csize_t): cuint32; cdecl; external LIB_AVUTIL;
 
 (**
  * @}

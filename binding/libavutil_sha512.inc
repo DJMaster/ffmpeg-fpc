@@ -84,7 +84,7 @@ function av_sha512_init(context: PAVSHA512; bits: cint): cint; cdecl; external L
  * @param data    input data to update hash with
  * @param len     input data length
  *)
-procedure av_sha512_update(context: PAVSHA512; const data: pcuint8_t; len: cuint); cdecl; external LIB_AVUTIL;
+procedure av_sha512_update(context: PAVSHA512; const data: pcuint8; len: cuint); cdecl; external LIB_AVUTIL;
 
 (**
  * Finish hashing and output digest value.
@@ -92,7 +92,7 @@ procedure av_sha512_update(context: PAVSHA512; const data: pcuint8_t; len: cuint
  * @param context hash function context
  * @param digest  buffer where output digest value is stored
  *)
-procedure av_sha512_final(context: PAVSHA512; digest: pcuint8_t); cdecl; external LIB_AVUTIL;
+procedure av_sha512_final(context: PAVSHA512; digest: pcuint8); cdecl; external LIB_AVUTIL;
 
 (**
  * @}

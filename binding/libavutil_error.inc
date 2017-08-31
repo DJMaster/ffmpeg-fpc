@@ -30,8 +30,8 @@
 // #ifndef AVUTIL_ERROR_H
 // #define AVUTIL_ERROR_H
 
-#include <errno.h>
-#include <stddef.h>
+// #include <errno.h>
+// #include <stddef.h>
 
 (**
  * @addtogroup lavu_error
@@ -41,14 +41,14 @@
 
 
 (* error handling *)
-#if EDOM > 0
+{$if EDOM > 0}
 #define AVERROR(e) (-(e)) ///< Returns a negative error code from a POSIX error code, to return from library functions.
 #define AVUNERROR(e) (-(e)) ///< Returns a POSIX error code from a library function error return value.
 #else
 (* Some platforms have E* and errno already negated. *)
 #define AVERROR(e) (e)
 #define AVUNERROR(e) (e)
-{$endif}
+#endif
 
 #define FFERRTAG(a, b, c, d) (-(int)MKTAG(a, b, c, d))
 
@@ -100,7 +100,7 @@
  * @return 0 on success, a negative value if a description for errnum
  * cannot be found
  *)
-function cint av_strerror(int errnum, char *errbuf, size_t errbuf_size);
+function av_strerror(errnum: cint; errbuf: pchar; errbuf_size: csize_t): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Fill the provided buffer with a string containing an error string
@@ -112,7 +112,7 @@ function cint av_strerror(int errnum, char *errbuf, size_t errbuf_size);
  * @return the buffer in input, filled with the error description
  * @see av_strerror()
  *)
-static inline char *av_make_error_string(char *errbuf, size_t errbuf_size, int errnum)
+function av_make_error_string(errbuf: pchar; errbuf_size: csize_t; errnum: cint): pchar; inline;
 {
     av_strerror(errnum, errbuf, errbuf_size);
     return errbuf;

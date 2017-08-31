@@ -33,7 +33,7 @@
 // #ifndef AVUTIL_HASH_H
 // #define AVUTIL_HASH_H
 
-#include <stdint.h>
+// #include <stdint.h>
 
 (**
  * @defgroup lavu_hash Hash Functions
@@ -116,8 +116,10 @@
  * arguments. It demonstrates a typical use of the hashing API with allocation,
  * initialization, updating, and finalizing.
  *)
-
-struct AVHashContext;
+type
+  PAVHashContext = ^AVHashContext;
+  AVHashContext = record
+  end;
 
 (**
  * Allocate a hash context for the algorithm specified by name.
@@ -127,7 +129,7 @@ struct AVHashContext;
  * @note The context is not initialized after a call to this function; you must
  * call av_hash_init() to do so.
  *)
-function cint av_hash_alloc(struct AVHashContext **ctx, const pchar name);
+function av_hash_alloc(ctx: PPAVHashContext; const name: pchar): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Get the names of available hash algorithms.
@@ -137,12 +139,12 @@ function cint av_hash_alloc(struct AVHashContext **ctx, const pchar name);
  * @param[in] i  Index of the hash algorithm, starting from 0
  * @return       Pointer to a static string or `NULL` if `i` is out of range
  *)
-const pchar av_hash_names(int i);
+function av_hash_names(i: cint): pchar; cdecl; external LIB_AVUTIL;
 
 (**
  * Get the name of the algorithm corresponding to the given hash context.
  *)
-const pchar av_hash_get_name(const struct AVHashContext *ctx);
+function av_hash_get_name(const ctx: PAVHashContext): pchar; cdecl; external LIB_AVUTIL;
 
 (**
  * Maximum value that av_hash_get_size() will currently return.
@@ -158,6 +160,7 @@ const pchar av_hash_get_name(const struct AVHashContext *ctx);
  * av_hash_get_size(), or limit your use of the Hashing API to hashes that are
  * already in FFmpeg during the time of compilation.
  *)
+const
   AV_HASH_MAX_SIZE = 64;
 
 (**
@@ -169,14 +172,14 @@ const pchar av_hash_get_name(const struct AVHashContext *ctx);
  * @param[in]     ctx Hash context
  * @return            Size of the hash value in bytes
  *)
-function cint av_hash_get_size(const struct AVHashContext *ctx);
+function av_hash_get_size(const ctx: PAVHashContext): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Initialize or reset a hash context.
  *
  * @param[in,out] ctx Hash context
  *)
-procedure av_hash_init(struct AVHashContext *ctx);
+procedure av_hash_init(ctx: PAVHashContext); cdecl; external LIB_AVUTIL;
 
 (**
  * Update a hash context with additional data.
@@ -185,7 +188,7 @@ procedure av_hash_init(struct AVHashContext *ctx);
  * @param[in]     src Data to be added to the hash context
  * @param[in]     len Size of the additional data
  *)
-procedure av_hash_update(struct AVHashContext *ctx, const uint8_t *src, int len);
+procedure av_hash_update(ctx: PAVHashContext; const src: pcuint8; len: cint); cdecl; external LIB_AVUTIL;
 
 (**
  * Finalize a hash context and compute the actual hash value.
@@ -201,7 +204,7 @@ procedure av_hash_update(struct AVHashContext *ctx, const uint8_t *src, int len)
  *
  * @see av_hash_final_bin() provides an alternative API
  *)
-procedure av_hash_final(struct AVHashContext *ctx, uint8_t *dst);
+procedure av_hash_final(ctx: PAVHashContext; dst: pcuint8); cdecl; external LIB_AVUTIL;
 
 (**
  * Finalize a hash context and store the actual hash value in a buffer.
@@ -216,7 +219,7 @@ procedure av_hash_final(struct AVHashContext *ctx, uint8_t *dst);
  * @param[out]    dst  Where the final hash value will be stored
  * @param[in]     size Number of bytes to write to `dst`
  *)
-procedure av_hash_final_bin(struct AVHashContext *ctx, uint8_t *dst, int size);
+procedure av_hash_final_bin(ctx: PAVHashContext; dst: pcuint8; size: cint); cdecl; external LIB_AVUTIL;
 
 (**
  * Finalize a hash context and store the hexadecimal representation of the
@@ -234,7 +237,7 @@ procedure av_hash_final_bin(struct AVHashContext *ctx, uint8_t *dst, int size);
  * @param[out]    dst  Where the string will be stored
  * @param[in]     size Maximum number of bytes to write to `dst`
  *)
-procedure av_hash_final_hex(struct AVHashContext *ctx, uint8_t *dst, int size);
+procedure av_hash_final_hex(ctx: PAVHashContext; dst: pcuint8; size: cint); cdecl; external LIB_AVUTIL;
 
 (**
  * Finalize a hash context and store the Base64 representation of the
@@ -252,14 +255,14 @@ procedure av_hash_final_hex(struct AVHashContext *ctx, uint8_t *dst, int size);
  * @param[out]    dst  Where the final hash value will be stored
  * @param[in]     size Maximum number of bytes to write to `dst`
  *)
-procedure av_hash_final_b64(struct AVHashContext *ctx, uint8_t *dst, int size);
+procedure av_hash_final_b64(ctx: PAVHashContext; dst: pcuint8; size: cint); cdecl; external LIB_AVUTIL;
 
 (**
  * Free hash context and set hash context pointer to `NULL`.
  *
  * @param[in,out] ctx  Pointer to hash context
  *)
-procedure av_hash_freep(struct AVHashContext **ctx);
+procedure av_hash_freep(ctx: PPAVHashContext); cdecl; external LIB_AVUTIL;
 
 (**
  * @}

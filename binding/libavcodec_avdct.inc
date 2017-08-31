@@ -52,7 +52,7 @@
      * - (-> decode coeffs -> zigzag reorder -> simple_mmx_perm -> dequant
      *    -> simple_idct_mmx -> ...)
      *)
-    idct_permutation: array[0..63] of cuint8_t;
+    idct_permutation: array[0..63] of cuint8;
 
     fdct: procedure (block: pcint16_t (* align 16 *)); cdecl;
 
@@ -69,7 +69,7 @@
      *)
     idct_algo: cint;
 
-    get_pixels: procedure (block: pcint16_t (* align 16 *); const pixels_ pcuint8_t (* align 8 *); line_size: ptrdiff_t); cdecl;
+    get_pixels: procedure (block: pcint16_t (* align 16 *); const pixels_ pcuint8 (* align 8 *); line_size: ptrdiff_t); cdecl;
 
     bits_per_sample: cint;
   end;

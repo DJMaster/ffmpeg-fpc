@@ -58,7 +58,7 @@ function av_twofish_alloc(): PAVTWOFISH; cdecl; external LIB_AVUTIL;
   * @param key a key of size ranging from 1 to 32 bytes used for encryption/decryption
   * @param key_bits number of keybits: 128, 192, 256 If less than the required, padded with zeroes to nearest valid value; return value is 0 if key_bits is 128/192/256, -1 if less than 0, 1 otherwise
  *)
-function av_twofish_init(ctx: PAVTWOFISH; const key: pcuint8_t; key_bits: cint): cint; cdecl; external LIB_AVUTIL;
+function av_twofish_init(ctx: PAVTWOFISH; const key: pcuint8; key_bits: cint): cint; cdecl; external LIB_AVUTIL;
 
 (**
   * Encrypt or decrypt a buffer using a previously initialized context
@@ -70,7 +70,7 @@ function av_twofish_init(ctx: PAVTWOFISH; const key: pcuint8_t; key_bits: cint):
   * @paran iv initialization vector for CBC mode, NULL for ECB mode
   * @param decrypt 0 for encryption, 1 for decryption
  *)
-procedure av_twofish_crypt(ctx: PAVTWOFISH; dst: pcuint8_t; const src: pcuint8_t; count: cint; iv: pcuint8_t; decrypt: cint); cdecl; external LIB_AVUTIL;
+procedure av_twofish_crypt(ctx: PAVTWOFISH; dst: pcuint8; const src: pcuint8; count: cint; iv: pcuint8; decrypt: cint); cdecl; external LIB_AVUTIL;
 
 (**
  * @}

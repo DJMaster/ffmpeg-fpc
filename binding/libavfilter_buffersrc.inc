@@ -31,7 +31,7 @@
  * Memory buffer source API.
  *)
 
-#include "avfilter.h"
+// #include "avfilter.h"
 
 (**
  * @defgroup lavfi_buffersrc Buffer source API
@@ -39,26 +39,23 @@
  * @{
  *)
 
-enum {
-
+const
     (**
      * Do not check for format changes.
      *)
-    AV_BUFFERSRC_FLAG_NO_CHECK_FORMAT = 1,
+    AV_BUFFERSRC_FLAG_NO_CHECK_FORMAT = 1;
 
     (**
      * Immediately push the frame to the output.
      *)
-    AV_BUFFERSRC_FLAG_PUSH = 4,
+    AV_BUFFERSRC_FLAG_PUSH = 4;
 
     (**
      * Keep a reference to the frame.
      * If the frame if reference-counted, create a new reference; otherwise
      * copy the frame data.
      *)
-    AV_BUFFERSRC_FLAG_KEEP_REF = 8,
-
-};
+    AV_BUFFERSRC_FLAG_KEEP_REF = 8;
 
 (**
  * Get the number of failed requests.
@@ -67,7 +64,7 @@ enum {
  * frame is present in the buffer.
  * The number is reset when a frame is added.
  *)
-unsigned av_buffersrc_get_nb_failed_requests(AVFilterContext *buffer_src);
+function av_buffersrc_get_nb_failed_requests(buffer_src: PAVFilterContext): cunsigned; cdecl; external LIB_AVFILTER;
 
 (**
  * This structure contains the parameters describing the frames that will be
@@ -76,26 +73,28 @@ unsigned av_buffersrc_get_nb_failed_requests(AVFilterContext *buffer_src);
  * It should be allocated with av_buffersrc_parameters_alloc() and freed with
  * av_free(). All the allocated fields in it remain owned by the caller.
  *)
-typedef struct AVBufferSrcParameters {
+type
+  PAVBufferSrcParameters = ^AVBufferSrcParameters;
+  AVBufferSrcParameters = record
     (**
      * video: the pixel format, value corresponds to enum AVPixelFormat
      * audio: the sample format, value corresponds to enum AVSampleFormat
      *)
-    int format;
+    format: cint;
     (**
      * The timebase to be used for the timestamps on the input frames.
      *)
-    AVRational time_base;
+    time_base: AVRational;
 
     (**
      * Video only, the display dimensions of the input frames.
      *)
-    int width, height;
+    width, height: cint;
 
     (**
      * Video only, the sample (pixel) aspect ratio.
      *)
-    AVRational sample_aspect_ratio;
+    sample_aspect_ratio: AVRational;
 
     (**
      * Video only, the frame rate of the input video. This field must only be
@@ -103,30 +102,30 @@ typedef struct AVBufferSrcParameters {
      * and should be left at its initial value if the framerate is variable or
      * unknown.
      *)
-    AVRational frame_rate;
+    frame_rate: AVRational;
 
     (**
      * Video with a hwaccel pixel format only. This should be a reference to an
      * AVHWFramesContext instance describing the input frames.
      *)
-    AVBufferRef *hw_frames_ctx;
+    hw_frames_ctx: PAVBufferRef;
 
     (**
      * Audio only, the audio sampling rate in samples per secon.
      *)
-    int sample_rate;
+    sample_rate: cint;
 
     (**
      * Audio only, the audio channel layout
      *)
-    uint64_t channel_layout;
-} AVBufferSrcParameters;
+    channel_layout: cuint64;
+  end;
 
 (**
  * Allocate a new AVBufferSrcParameters instance. It should be freed by the
  * caller with av_free().
  *)
-AVBufferSrcParameters *av_buffersrc_parameters_alloc();
+function av_buffersrc_parameters_alloc(): PAVBufferSrcParameters; cdecl; external LIB_AVFILTER;
 
 (**
  * Initialize the buffersrc or abuffersrc filter with the provided parameters.
@@ -141,7 +140,7 @@ AVBufferSrcParameters *av_buffersrc_parameters_alloc();
  *              copies or references when necessary.
  * @return 0 on success, a negative AVERROR code on failure.
  *)
-function cint av_buffersrc_parameters_set(AVFilterContext *ctx, AVBufferSrcParameters *param);
+function av_buffersrc_parameters_set(ctx: PAVFilterContext; param: PAVBufferSrcParameters): cint; cdecl; external LIB_AVFILTER;
 
 (**
  * Add a frame to the buffer source.
@@ -156,8 +155,8 @@ function cint av_buffersrc_parameters_set(AVFilterContext *ctx, AVBufferSrcParam
  * This function is equivalent to av_buffersrc_add_frame_flags() with the
  * AV_BUFFERSRC_FLAG_KEEP_REF flag.
  *)
-av_warn_unused_result
-function cint av_buffersrc_write_frame(AVFilterContext *ctx, const AVFrame *frame);
+//TODO av_warn_unused_result
+function av_buffersrc_write_frame(ctx: PAVFilterContext; const frame: PAVFrame): cint; cdecl; external LIB_AVFILTER;
 
 (**
  * Add a frame to the buffer source.
@@ -177,8 +176,8 @@ function cint av_buffersrc_write_frame(AVFilterContext *ctx, const AVFrame *fram
  * This function is equivalent to av_buffersrc_add_frame_flags() without the
  * AV_BUFFERSRC_FLAG_KEEP_REF flag.
  *)
-av_warn_unused_result
-function cint av_buffersrc_add_frame(AVFilterContext *ctx, AVFrame *frame);
+//TODO av_warn_unused_result
+function av_buffersrc_add_frame(ctx: PAVFilterContext; frame: PAVFrame): cint; cdecl; external LIB_AVFILTER;
 
 (**
  * Add a frame to the buffer source.
@@ -195,9 +194,8 @@ function cint av_buffersrc_add_frame(AVFilterContext *ctx, AVFrame *frame);
  * @return            >= 0 in case of success, a negative AVERROR code
  *                    in case of failure
  *)
-av_warn_unused_result
-function cint av_buffersrc_add_frame_flags(AVFilterContext *buffer_src,
-                                 AVFrame *frame, int flags);
+//TODO av_warn_unused_result
+function av_buffersrc_add_frame_flags(buffer_src: PAVFilterContext; frame: PAVFrame; flags: cint): cint; cdecl; external LIB_AVFILTER;
 
 
 (**

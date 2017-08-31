@@ -521,7 +521,7 @@ function av_memdup(const p: pointer; size: csize_t): pointer; cdecl; external LI
  * @note `cnt > back` is valid, this will copy the bytes we just copied,
  *       thus creating a repeating pattern with a period length of `back`.
  *)
-procedure av_memcpy_backptr(dst: pcuint8_t; back: cint; cnt: cint); cdecl; external LIB_AVUTIL;
+procedure av_memcpy_backptr(dst: pcuint8; back: cint; cnt: cint); cdecl; external LIB_AVUTIL;
 
 (**
  * @}
@@ -661,7 +661,7 @@ function av_dynarray_add_nofree(tab_ptr: pointer; nb_ptr: pcint; elem: pointer):
  *         space
  * @see av_dynarray_add(), av_dynarray_add_nofree()
  *)
-function av_dynarray2_add(tab_ptr: ppointer; nb_ptr: pcint; elem_size: csize_t; const elem_data: pcuint8_t): pointer; cdecl; external LIB_AVUTIL;
+function av_dynarray2_add(tab_ptr: ppointer; nb_ptr: pcint; elem_size: csize_t; const elem_data: pcuint8): pointer; cdecl; external LIB_AVUTIL;
 
 (**
  * @}

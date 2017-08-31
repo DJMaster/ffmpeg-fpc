@@ -27,9 +27,9 @@
 // #ifndef AVCODEC_QSV_H
 // #define AVCODEC_QSV_H
 
-#include <mfx/mfxvideo.h>
+// #include <mfx/mfxvideo.h>
 
-#include "libavutil/buffer.h"
+// #include "libavutil/buffer.h"
 
 (**
  * This struct is used for communicating QSV parameters between libavcodec and
@@ -39,7 +39,7 @@
  *             callback
  * - encoding: hwaccel_context must be set before avcodec_open2()
  *)
-typ
+type
   PAVQSVContext = ^AVQSVContext;
   AVQSVContext = record
     (**

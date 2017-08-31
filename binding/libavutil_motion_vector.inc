@@ -35,11 +35,11 @@ type
      * from the past, positive value when it comes from the future.
      * XXX: set exact relative ref frame reference instead of a +/- 1 "direction".
      *)
-    source: cint32_t;
+    source: cint32;
     (**
      * Width and height of the block.
      *)
-    w, h: cuint8_t;
+    w, h: cuint8;
     (**
      * Absolute source position. Can be outside the frame area.
      *)
@@ -52,13 +52,13 @@ type
      * Extra flag information.
      * Currently unused.
      *)
-    flags: cuint64_t;
+    flags: cuint64;
     (**
      * Motion vector
      * src_x = dst_x + motion_x / motion_scale
      * src_y = dst_y + motion_y / motion_scale
      *)
-    motion_x, motion_y: cint32_t;
+    motion_x, motion_y: cint32;
     motion_scale: cuint16_t;
   end;
 

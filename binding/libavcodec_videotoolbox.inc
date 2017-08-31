@@ -35,13 +35,13 @@
  * Public libavcodec Videotoolbox header.
  *)
 
-#include <stdint.h>
+// #include <stdint.h>
 
-  Picture = QuickdrawPicture;
-#include <VideoToolbox/VideoToolbox.h>
-#undef Picture
+//TODO #define Picture QuickdrawPicture
+//TODO #include <VideoToolbox/VideoToolbox.h>
+//TODO #undef Picture 
 
-#include "libavcodec/avcodec.h"
+// #include "libavcodec/avcodec.h"
 
 (**
  * This struct holds all the information that needs to be passed

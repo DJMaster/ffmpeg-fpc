@@ -44,7 +44,7 @@ procedure av_lfg_init(c: PAVLFG; seed: cuint); cdecl; external LIB_AVUTIL;
  *
  * Return value: 0 on success, negative value (AVERROR) on failure.
  *)
-function av_lfg_init_from_data(c: PAVLFG; const data: pcuint8_t; length: cuint): cint; cdecl; external LIB_AVUTIL;
+function av_lfg_init_from_data(c: PAVLFG; const data: pcuint8; length: cuint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Get the next random unsigned 32-bit number using an ALFG.

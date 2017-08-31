@@ -31,7 +31,8 @@ unit postprocess;
 interface
 
 uses
-  ctypes;
+  ctypes,
+  avutil;
 
 const
   LIB_POSTPROCESS = 'postproc-54.dll';
@@ -52,7 +53,7 @@ const
  * @{
  *)
 
-#include "libpostproc/version.h"
+{$include libpostproc_version.inc}
 
 (**
  * Return the LIBPOSTPROC_VERSION_INT constant.
@@ -73,23 +74,31 @@ const
   PP_QUALITY_MAX = 6;
 
 {$if FF_API_QP_TYPE}
-  QP_STORE_T = cint8_t; //deprecated
+type
+  QP_STORE_T = cint8 deprecated;
 {$endif}
 
-#include <inttypes.h>
+// #include <inttypes.h>
 
-typedef void pp_context;
-typedef void pp_mode;
+type
+  pp_context = record
+  end;
+  pp_mode = record
+  end;
 
 {$if LIBPOSTPROC_VERSION_INT < (52 shl 16)}
-typedef pp_context pp_context_t;
-typedef pp_mode pp_mode_t;
-extern const pchar const pp_help; ///< a simple help text
-#else
-extern const char pp_help[]; ///< a simple help text
+type
+  pp_context_t = ^pp_context;
+  pp_mode_t = ^pp_mode;
+
+var
+  pp_help: pchar; external LIB_POSTPROCESS; ///< a simple help text
+{$else}
+var
+  pp_help: array of char; external LIB_POSTPROCESS; ///< a simple help text
 {$endif}
 
-procedure pp_postprocess(const src: array[0..2] of pcuint8_t; const srcStride: array[0..2] of cint; dst: array[0..2] of pcuint8_t; const dstStride: array[0..2] of cint; horizontalSize: cint; verticalSize: cint; const QP_store: pcint8_t; QP_stride: cint; mode: Ppp_mode; ppContext: Ppp_context; pict_type: cint); cdecl; external LIB_POSTPROCESS;
+procedure pp_postprocess(const src: array[0..2] of pcuint8; const srcStride: array[0..2] of cint; dst: array[0..2] of pcuint8; const dstStride: array[0..2] of cint; horizontalSize: cint; verticalSize: cint; const QP_store: pcint8; QP_stride: cint; mode: Ppp_mode; ppContext: Ppp_context; pict_type: cint); cdecl; external LIB_POSTPROCESS;
 
 
 (**

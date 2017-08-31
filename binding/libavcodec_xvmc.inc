@@ -33,11 +33,11 @@
  * Public libavcodec XvMC header.
  *)
 
-#include <X11/extensions/XvMC.h>
+// #include <X11/extensions/XvMC.h>
 
-#include "libavutil/attributes.h"
-#include "version.h"
-#include "avcodec.h"
+// #include "libavutil/attributes.h"
+// #include "version.h"
+// #include "avcodec.h"
 
 (**
  * @defgroup lavc_codec_hwaccel_xvmc XvMC

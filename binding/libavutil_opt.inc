@@ -272,7 +272,7 @@ type
      *)
     default_val: record
       case cint of
-        0: i64: cint64_t;
+        0: i64: cint64;
         1: dbl: cdouble;
         2: str: pchar;
         (* TODO those are unused now *)
@@ -550,7 +550,7 @@ const
  *)
 function av_opt_eval_flags(obj: pointer; const o: PAVOption; const val: pchar; flags_out: pcint): cint; cdecl; external LIB_AVUTIL;
 function av_opt_eval_int(obj: pointer; const o: PAVOption; const val: pchar; int_out: pcint): cint; cdecl; external LIB_AVUTIL;
-function av_opt_eval_int64(obj: pointer; const o: PAVOption; const val: pchar; int64_out: pcint64_t): cint; cdecl; external LIB_AVUTIL;
+function av_opt_eval_int64(obj: pointer; const o: PAVOption; const val: pchar; int64_out: pcint64): cint; cdecl; external LIB_AVUTIL;
 function av_opt_eval_float(obj: pointer; const o: PAVOption; const val: pchar; float_out: pcfloat): cint; cdecl; external LIB_AVUTIL;
 function av_opt_eval_double(obj: pointer; const o: PAVOption; const val: pchar; double_out: pcdouble): cint; cdecl; external LIB_AVUTIL;
 function av_opt_eval_q(obj: pointer; const o: PAVOption; const val: pchar; q_out: PAVRational): cint; cdecl; external LIB_AVUTIL;
@@ -682,15 +682,15 @@ function av_opt_child_class_next(const parent: PAVClass; const prev: PAVClass): 
  * AVERROR(EINVAL) if the value is not valid
  *)
 function av_opt_set(obj: pointer; const name: pchar; const val: pchar; search_flags: cint): cint; cdecl; external LIB_AVUTIL;
-function av_opt_set_int(obj: pointer; const name: pchar; val: cint64_t; search_flags: cint): cint; cdecl; external LIB_AVUTIL;
+function av_opt_set_int(obj: pointer; const name: pchar; val: cint64; search_flags: cint): cint; cdecl; external LIB_AVUTIL;
 function av_opt_set_double(obj: pointer; const name: pchar; val: cdouble; search_flags: cint): cint; cdecl; external LIB_AVUTIL;
 function av_opt_set_q(obj: pointer; const name: pchar; val: AVRational; search_flags: cint): cint; cdecl; external LIB_AVUTIL;
-function av_opt_set_bin(obj: pointer; const name: pchar; const val: pcuint8_t; size: cint; search_flags: cint): cint; cdecl; external LIB_AVUTIL;
+function av_opt_set_bin(obj: pointer; const name: pchar; const val: pcuint8; size: cint; search_flags: cint): cint; cdecl; external LIB_AVUTIL;
 function av_opt_set_image_size(obj: pointer; const name: pchar; w: cint; h: cint; search_flags: cint): cint; cdecl; external LIB_AVUTIL;
 function av_opt_set_pixel_fmt(obj: pointer; const name: pchar; fmt: AVPixelFormat; search_flags: cint): cint; cdecl; external LIB_AVUTIL;
 function av_opt_set_sample_fmt(obj: pointer; const name: pchar; fmt: AVSampleFormat; search_flags: cint): cint; cdecl; external LIB_AVUTIL;
 function av_opt_set_video_rate(obj: pointer; const name: pchar; val: AVRational; search_flags: cint): cint; cdecl; external LIB_AVUTIL;
-function av_opt_set_channel_layout(obj: pointer; const name: pchar; ch_layout: cint64_t; search_flags: cint): cint; cdecl; external LIB_AVUTIL;
+function av_opt_set_channel_layout(obj: pointer; const name: pchar; ch_layout: cint64; search_flags: cint): cint; cdecl; external LIB_AVUTIL;
 (**
  * @note Any old dictionary present is discarded and replaced with a copy of the new one. The
  * caller still owns val is and responsible for freeing it.
@@ -736,15 +736,15 @@ function av_opt_set_dict_val(obj: pointer; const name: pchar; const val: PAVDict
  * AV_OPT_TYPE_STRING or AV_OPT_TYPE_BINARY and is set to NULL, *out_val will be set
  * to NULL instead of an allocated empty string.
  *)
-function av_opt_get(obj: pointer; const name: pchar; search_flags: cint; out_val: ppcuint8_t): cint; cdecl; external LIB_AVUTIL;
-function av_opt_get_int(obj: pointer; const name: pchar; search_flags: cint; out_val: pcint64_t): cint; cdecl; external LIB_AVUTIL;
+function av_opt_get(obj: pointer; const name: pchar; search_flags: cint; out_val: ppcuint8): cint; cdecl; external LIB_AVUTIL;
+function av_opt_get_int(obj: pointer; const name: pchar; search_flags: cint; out_val: pcint64): cint; cdecl; external LIB_AVUTIL;
 function av_opt_get_double(obj: pointer; const name: pchar; search_flags: cint; out_val: pcdouble): cint; cdecl; external LIB_AVUTIL;
 function av_opt_get_q(obj: pointer; const name: pchar; search_flags: cint; out_val: PAVRational): cint; cdecl; external LIB_AVUTIL;
 function av_opt_get_image_size(obj: pointer; const name: pchar; search_flags: cint; w_out: pcint; h_out: pcint): cint; cdecl; external LIB_AVUTIL;
 function av_opt_get_pixel_fmt(obj: pointer; const name: pchar; search_flags: cint; out_fmt: PAVPixelFormat): cint; cdecl; external LIB_AVUTIL;
 function av_opt_get_sample_fmt(obj: pointer; const name: pchar; search_flags: cint; out_fmt: PAVSampleFormat): cint; cdecl; external LIB_AVUTIL;
 function av_opt_get_video_rate(obj: pointer; const name: pchar; search_flags: cint; out_val: PAVRational): cint; cdecl; external LIB_AVUTIL;
-function av_opt_get_channel_layout(obj: pointer; const name: pchar; search_flags: cint; ch_layout: pcint64_t): cint; cdecl; external LIB_AVUTIL;
+function av_opt_get_channel_layout(obj: pointer; const name: pchar; search_flags: cint; ch_layout: pcint64): cint; cdecl; external LIB_AVUTIL;
 (**
  * @param[out] out_val The returned dictionary is a copy of the actual value and must
  * be freed with av_dict_free() by the caller

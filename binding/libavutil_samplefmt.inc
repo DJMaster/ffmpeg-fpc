@@ -205,7 +205,7 @@ function av_samples_get_buffer_size(linesize: pcint; nb_channels: cint; nb_sampl
  * @todo return minimum size in bytes required for the buffer in case
  * of success at the next bump
  *)
-function av_samples_fill_arrays(audio_data: ppcuint8_t; linesize: pcint; const buf: pcuint8_t; nb_channels: cint; nb_samples: cint; sample_fmt: AVSampleFormat; align: cint): cint; cdecl; external LIB_AVUTIL;
+function av_samples_fill_arrays(audio_data: ppcuint8; linesize: pcint; const buf: pcuint8; nb_channels: cint; nb_samples: cint; sample_fmt: AVSampleFormat; align: cint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Allocate a samples buffer for nb_samples samples, and fill data pointers and
@@ -226,7 +226,7 @@ function av_samples_fill_arrays(audio_data: ppcuint8_t; linesize: pcint; const b
  * @see av_samples_fill_arrays()
  * @see av_samples_alloc_array_and_samples()
  *)
-function av_samples_alloc(audio_data: ppcuint8_t; linesize: pcint; nb_channels: cint; nb_samples: cint; sample_fmt: AVSampleFormat; align: cint): cint; cdecl; external LIB_AVUTIL;
+function av_samples_alloc(audio_data: ppcuint8; linesize: pcint; nb_channels: cint; nb_samples: cint; sample_fmt: AVSampleFormat; align: cint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Allocate a data pointers array, samples buffer for nb_samples
@@ -237,7 +237,7 @@ function av_samples_alloc(audio_data: ppcuint8_t; linesize: pcint; nb_channels: 
  *
  * @see av_samples_alloc()
  *)
-function av_samples_alloc_array_and_samples(audio_data: pppcuint8_t; linesize: pcint; nb_channels: cint; nb_samples: cint; sample_fmt: AVSampleFormat; align: cint): cint; cdecl; external LIB_AVUTIL;
+function av_samples_alloc_array_and_samples(audio_data: pppcuint8; linesize: pcint; nb_channels: cint; nb_samples: cint; sample_fmt: AVSampleFormat; align: cint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Copy samples from src to dst.
@@ -250,7 +250,7 @@ function av_samples_alloc_array_and_samples(audio_data: pppcuint8_t; linesize: p
  * @param nb_channels number of audio channels
  * @param sample_fmt audio sample format
  *)
-function av_samples_copy(dst: ppcuint8_t; src: ppcuint8_t; dst_offset: cint; src_offset: cint; nb_samples: cint; nb_channels: cint; sample_fmt: AVSampleFormat): cint; cdecl; external LIB_AVUTIL;
+function av_samples_copy(dst: ppcuint8; src: ppcuint8; dst_offset: cint; src_offset: cint; nb_samples: cint; nb_channels: cint; sample_fmt: AVSampleFormat): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Fill an audio buffer with silence.
@@ -261,7 +261,7 @@ function av_samples_copy(dst: ppcuint8_t; src: ppcuint8_t; dst_offset: cint; src
  * @param nb_channels number of audio channels
  * @param sample_fmt  audio sample format
  *)
-function av_samples_set_silence(audio_data: ppcuint8_t; offset: cint; nb_samples: cint; nb_channels: cint; sample_fmt: AVSampleFormat): cint; cdecl; external LIB_AVUTIL;
+function av_samples_set_silence(audio_data: ppcuint8; offset: cint; nb_samples: cint; nb_channels: cint; sample_fmt: AVSampleFormat): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * @}

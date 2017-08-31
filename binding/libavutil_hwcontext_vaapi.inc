@@ -25,7 +25,7 @@
 // #ifndef AVUTIL_HWCONTEXT_VAAPI_H
 // #define AVUTIL_HWCONTEXT_VAAPI_H
 
-#include <va/va.h>
+// #include <va/va.h>
 
 (**
  * @file
@@ -38,26 +38,24 @@
  * For user-allocated pools, AVHWFramesContext.pool must return AVBufferRefs
  * with the data pointer set to a VASurfaceID.
  *)
-
-enum {
+const
     (**
      * The quirks field has been set by the user and should not be detected
      * automatically by av_hwdevice_ctx_init().
      *)
-    AV_VAAPI_DRIVER_QUIRK_USER_SET = (1 shl 0),
+    AV_VAAPI_DRIVER_QUIRK_USER_SET = (1 shl 0);
     (**
      * The driver does not destroy parameter buffers when they are used by
      * vaRenderPicture().  Additional code will be required to destroy them
      * separately afterwards.
      *)
-    AV_VAAPI_DRIVER_QUIRK_RENDER_PARAM_BUFFERS = (1 shl 1),
+    AV_VAAPI_DRIVER_QUIRK_RENDER_PARAM_BUFFERS = (1 shl 1);
 
     (**
      * The driver does not support the VASurfaceAttribMemoryType attribute,
      * so the surface allocation code will not try to use it.
      *)
-    AV_VAAPI_DRIVER_QUIRK_ATTRIB_MEMTYPE = (1 shl 2),
-};
+    AV_VAAPI_DRIVER_QUIRK_ATTRIB_MEMTYPE = (1 shl 2);
 
 (**
  * VAAPI connection details.

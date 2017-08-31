@@ -97,7 +97,7 @@ type
      * this is the only reference to the buffer, in which case
      * av_buffer_is_writable() returns 1.
      *)
-    data: pcuint8_t;
+    data: pcuint8;
     (**
      * Size of data in bytes.
      *)
@@ -140,16 +140,16 @@ const
  * @return an AVBufferRef referring to data on success, NULL on failure.
  *)
 type
-  free_proc = procedure (opaque: pointer; data: pcuint8_t); cdecl;
+  free_proc = procedure (opaque: pointer; data: pcuint8); cdecl;
   
-function av_buffer_create(data: pcuint8_t; size: cint; free: free_proc; opaque: pointer; flags: cint): PAVBufferRef; cdecl; external LIB_AVUTIL;
+function av_buffer_create(data: pcuint8; size: cint; free: free_proc; opaque: pointer; flags: cint): PAVBufferRef; cdecl; external LIB_AVUTIL;
 
 (**
  * Default free callback, which calls av_free() on the buffer data.
  * This function is meant to be passed to av_buffer_create(), not called
  * directly.
  *)
-procedure av_buffer_default_free(opaque: pointer; data: pcuint8_t); cdecl; external LIB_AVUTIL;
+procedure av_buffer_default_free(opaque: pointer; data: pcuint8); cdecl; external LIB_AVUTIL;
 
 (**
  * Create a new reference to an AVBuffer.

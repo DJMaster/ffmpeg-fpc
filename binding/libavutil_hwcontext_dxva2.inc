@@ -36,8 +36,8 @@
  * with the data pointer set to a pointer to IDirect3DSurface9.
  *)
 
-#include <d3d9.h>
-#include <dxva2api.h>
+// #include <d3d9.h>
+// #include <dxva2api.h>
 
 (**
  * This struct is allocated as AVHWDeviceContext.hwctx
@@ -57,7 +57,7 @@ type
      * The surface type (e.g. DXVA2_VideoProcessorRenderTarget or
      * DXVA2_VideoDecoderRenderTarget). Must be set by the caller.
      *)
-    surface_type: cDWORD;
+    DWORD surface_type;
 
     (**
      * The surface pool. When an external pool is not provided by the caller,

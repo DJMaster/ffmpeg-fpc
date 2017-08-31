@@ -39,6 +39,8 @@ const
 // #ifndef AVUTIL_AVUTIL_H
 // #define AVUTIL_AVUTIL_H
 
+{$include libavutil_rational.inc}
+
 (**
  * @file
  * @ingroup lavu
@@ -263,7 +265,7 @@ const
  * either pts or dts.
  *)
 
-  AV_NOPTS_VALUE = ((int64_t)UINT64_C(0x8000000000000000));
+  AV_NOPTS_VALUE: cint64 = $8000000000000000;
 
 (**
  * Internal time base represented as integer
@@ -275,7 +277,7 @@ const
  * Internal time base represented as fractional value
  *)
 
-  AV_TIME_BASE_Q = (AVRational){1, AV_TIME_BASE}
+  AV_TIME_BASE_Q: AVRational = (num: 1; den: AV_TIME_BASE);
 
 (**
  * @}
@@ -311,14 +313,14 @@ function av_get_picture_type_char(pict_type: AVPictureType): cchar; cdecl; exter
  * @}
  *)
 
-#include "common.h"
-#include "error.h"
-#include "rational.h"
-#include "version.h"
-#include "macros.h"
-#include "mathematics.h"
-#include "log.h"
-#include "pixfmt.h"
+{$include libavutil_common.inc}
+{$include libavutil_error.inc}
+{$include libavutil_rational.inc}
+{$include libavutil_version.inc}
+{$include libavutil_macros.inc}
+{$include libavutil_mathematics.inc}
+{$include libavutil_log.inc}
+{$include libavutil_pixfmt.inc}
 
 (**
  * Return x default pointer in case p is NULL.
@@ -337,7 +339,7 @@ function av_x_if_null(const p: pointer: const x: pointer): pointer; inline;
  * @return  length of the list, in elements, not counting the terminator
  *)
 //TODO av_pure
-function av_int_list_length_for_size(elsize: cunsigned; const list: pointer; term: cuint64_t): cunsigned; cdecl; external LIB_AVUTIL;
+function av_int_list_length_for_size(elsize: cunsigned; const list: pointer; term: cuint64): cunsigned; cdecl; external LIB_AVUTIL;
 
 (**
  * Compute the length of an integer list.
@@ -374,7 +376,7 @@ const
  * @param fourcc the fourcc to represent
  * @return the buffer in input
  *)
-function av_fourcc_make_string(buf: pchar; fourcc: cuint32_t): pchar; cdecl; external LIB_AVUTIL;
+function av_fourcc_make_string(buf: pchar; fourcc: cuint32): pchar; cdecl; external LIB_AVUTIL;
 
 (**
  * @}

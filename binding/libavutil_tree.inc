@@ -52,12 +52,13 @@ type
   AVTreeNode = record
   end;
 
-extern const cint av_tree_node_size;
+var
+  av_tree_node_size: cint; external LIB_AVUTIL;
 
 (**
  * Allocate an AVTreeNode.
  *)
-function av_tree_node_alloc(): PAVTreeNode;
+function av_tree_node_alloc(): PAVTreeNode; cdecl; external LIB_AVUTIL;
 
 (**
  * Find an element.
@@ -76,7 +77,7 @@ function av_tree_node_alloc(): PAVTreeNode;
 type
   cmp_func = function (const key: pointer; const b: pointer): cint; cdecl;
 
-function av_tree_find(const root: PAVTreeNode; key: pointer; cmp: cmp_func; next: array[0..1] of pointer): pointer;
+function av_tree_find(const root: PAVTreeNode; key: pointer; cmp: cmp_func; next: array[0..1] of pointer): pointer; cdecl; external LIB_AVUTIL;
 
 (**
  * Insert or remove an element.
@@ -125,9 +126,9 @@ function av_tree_find(const root: PAVTreeNode; key: pointer; cmp: cmp_func; next
 type
   cmp_func = function (const key: pointer; const b: pointer): cint; cdecl;
 
-function av_tree_insert(rootp: PPAVTreeNode; key: pointer; cmp: cmp_func; next: PPAVTreeNode ): pointer;
+function av_tree_insert(rootp: PPAVTreeNode; key: pointer; cmp: cmp_func; next: PPAVTreeNode): pointer; cdecl; external LIB_AVUTIL;
 
-procedure av_tree_destroy(t: PAVTreeNode);
+procedure av_tree_destroy(t: PAVTreeNode); cdecl; external LIB_AVUTIL;
 
 (**
  * Apply enu(opaque, &elem) to all the elements in the tree in a given range.
@@ -143,7 +144,7 @@ type
   cmp_func = function (opaque: pointer; elem: pointer): cint; cdecl;
   enu_func = function (opaque: pointer; elem: pointer): cint; cdecl;
 
-procedure av_tree_enumerate(t: PAVTreeNode; opaque: pointer; cmp: cmp_func; enu: enu_func );
+procedure av_tree_enumerate(t: PAVTreeNode; opaque: pointer; cmp: cmp_func; enu: enu_func); cdecl; external LIB_AVUTIL;
 
 (**
  * @}

@@ -33,10 +33,10 @@
 // #ifndef AVUTIL_SHA_H
 // #define AVUTIL_SHA_H
 
-#include <stdint.h>
+// #include <stdint.h>
 
-#include "attributes.h"
-#include "version.h"
+// #include "attributes.h"
+// #include "version.h"
 
 (**
  * @defgroup lavu_sha SHA
@@ -54,7 +54,8 @@
  * @{
  *)
 
-extern const int av_sha_size;
+var
+  av_sha_size: cint; external LIB_AVUTIL;
 
 type
   PAVSHA = ^AVSHA;
@@ -82,7 +83,7 @@ function av_sha_init(context: PAVSHA; bits: cint): cint; cdecl; external LIB_AVU
  * @param data    input data to update hash with
  * @param len     input data length
  *)
-procedure av_sha_update(context: PAVSHA; const data: pcuint8_t; len: cuint); cdecl; external LIB_AVUTIL;
+procedure av_sha_update(context: PAVSHA; const data: pcuint8; len: cuint); cdecl; external LIB_AVUTIL;
 
 (**
  * Finish hashing and output digest value.
@@ -90,7 +91,7 @@ procedure av_sha_update(context: PAVSHA; const data: pcuint8_t; len: cuint); cde
  * @param context hash function context
  * @param digest  buffer where output digest value is stored
  *)
-procedure av_sha_final(context: PAVSHA; digest: pcuint8_t); cdecl; external LIB_AVUTIL;
+procedure av_sha_final(context: PAVSHA; digest: pcuint8); cdecl; external LIB_AVUTIL;
 
 (**
  * @}

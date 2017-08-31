@@ -34,7 +34,7 @@ uses
   ctypes;
 
 const
-   LIB_AVCODEC = 'avcodec-57.dll';
+  LIB_AVCODEC = 'avcodec-57.dll';
 
 // #ifndef AVCODEC_AVCODEC_H
 // #define AVCODEC_AVCODEC_H
@@ -825,7 +825,7 @@ type
     ME_HEX, ///< hexagon based search
     ME_UMH, ///< uneven multi-hexagon search
     ME_TESA, ///< transformed exhaustive search algorithm
-    ME_ITER = 50, ///< iterative search
+    ME_ITER = 50 ///< iterative search
   );
 {$endif}
 
@@ -1401,7 +1401,7 @@ type
      *
      * UINT64_MAX when unknown or unspecified.
      *)
-    vbv_delay: cuint64_t;
+    vbv_delay: cuint64;
   end;
 
 {$if FF_API_QSCALE_TYPE}
@@ -1632,7 +1632,7 @@ const
 type
   PAVPacketSideData = ^AVPacketSideData;
   AVPacketSideData = record
-    data: pcuint8_t;
+    data: pcuint8;
     size: cint;
     type_: AVPacketSideDataType;
   end;
@@ -1683,14 +1683,14 @@ type
      * the terms dts and pts/cts to mean something different. Such timestamps
      * must be converted to true pts/dts before they are stored in AVPacket.
      *)
-    pts: cint64_t;
+    pts: cint64;
     (**
      * Decompression timestamp in AVStream->time_base units; the time at which
      * the packet is decompressed.
      * Can be AV_NOPTS_VALUE if it is not stored in the file.
      *)
-    dts: cint64_t;
-    data: pcuint8_t;
+    dts: cint64;
+    data: pcuint8;
     size: cint;
     stream_index: cint;
     (**
@@ -1708,9 +1708,9 @@ type
      * Duration of this packet in AVStream->time_base units, 0 if unknown.
      * Equals next_pts - this_pts in presentation order.
      *)
-    duration: cint64_t;
+    duration: cint64;
 
-    pos: cint64_t; ///< byte position in stream, -1 if unknown
+    pos: cint64; ///< byte position in stream, -1 if unknown
 
 {$if FF_API_CONVERGENCE_DURATION}
     (**
@@ -1719,7 +1719,7 @@ type
      * duration field was still an int.
      *)
     //TODO attribute_deprecated
-    convergence_duration: cint64_t;
+    convergence_duration: cint64;
 {$endif}
   end;
 
@@ -1837,7 +1837,7 @@ type
      * - decoding: Set by user, may be overwritten by libavcodec
      *             if this info is available in the stream
      *)
-    bit_rate: cint64_t;
+    bit_rate: cint64;
 
     (**
      * number of bits the bitstream is allowed to diverge from the reference.
@@ -1887,7 +1887,7 @@ type
      * - encoding: Set/allocated/freed by libavcodec.
      * - decoding: Set/allocated/freed by user.
      *)
-    extradata: pcuint8_t;
+    extradata: pcuint8;
     extradata_size: cint;
 
     (**
@@ -2590,14 +2590,14 @@ type
      * - encoding: set by user.
      * - decoding: set by user, may be overwritten by libavcodec.
      *)
-    channel_layout: cuint64_t;
+    channel_layout: cuint64;
 
     (**
      * Request decoder to use this channel layout if it can (0 for default)
      * - encoding: unused
      * - decoding: Set by user.
      *)
-    request_channel_layout: cuint64_t;
+    request_channel_layout: cuint64;
 
     (**
      * Type of service that the audio stream conveys.
@@ -2777,14 +2777,14 @@ type
      * - encoding: Set by user.
      * - decoding: Set by user, may be overwritten by libavcodec.
      *)
-    rc_max_rate: cint64_t;
+    rc_max_rate: cint64;
 
     (**
      * minimum bitrate
      * - encoding: Set by user.
      * - decoding: unused
      *)
-    rc_min_rate: cint64_t;
+    rc_min_rate: cint64;
 
 {$if FF_API_MPV_OPT}
     (**
@@ -2889,7 +2889,7 @@ type
 
     (** @deprecated use encoder private options instead *)
     //TODO attribute_deprecated
-    timecode_frame_start: cint64_t;
+    timecode_frame_start: cint64;
 {$endif}
 
 {$if FF_API_RTP_CALLBACK}
@@ -3090,7 +3090,7 @@ type
      * - encoding: unused
      * - decoding: Set by user.
      *)
-    reordered_opaque: cint64_t;
+    reordered_opaque: cint64;
 
     (**
      * Hardware accelerator in use
@@ -3116,7 +3116,7 @@ type
      * - encoding: Set by libavcodec if flags & AV_CODEC_FLAG_PSNR.
      * - decoding: unused
      *)
-    error: array[0..AV_NUM_DATA_POINTERS-1] of cuint64_t;
+    error: array[0..AV_NUM_DATA_POINTERS-1] of cuint64;
 
     (**
      * DCT algorithm, see FF_DCT_* below
@@ -3411,7 +3411,7 @@ type
      * - encoding: Set/allocated/freed by user (before avcodec_open2())
      * - decoding: Set/allocated/freed by libavcodec (by avcodec_open2())
      *)
-    subtitle_header: pcuint8_t;
+    subtitle_header: pcuint8;
     subtitle_header_size: cint;
 
 {$if FF_API_ERROR_RATE}
@@ -3433,7 +3433,7 @@ type
      * AV_PKT_DATA_CPB_PROPERTIES packet side data
      *)
     //TODO attribute_deprecated
-    vbv_delay: cuint64_t;
+    vbv_delay: cuint64;
 {$endif}
 
 {$if FF_API_SIDEDATA_ONLY_PKT}
@@ -3512,10 +3512,10 @@ type
      * - decoding: maintained and used by libavcodec, not intended to be used by user apps
      * - encoding: unused
      *)
-    pts_correction_num_faulty_pts: cint64_t; /// Number of incorrect PTS values so far
-    pts_correction_num_faulty_dts: cint64_t; /// Number of incorrect DTS values so far
-    pts_correction_last_pts: cint64_t; /// PTS of the last frame
-    pts_correction_last_dts: cint64_t; /// DTS of the last frame
+    pts_correction_num_faulty_pts: cint64; /// Number of incorrect PTS values so far
+    pts_correction_num_faulty_dts: cint64; /// Number of incorrect DTS values so far
+    pts_correction_last_pts: cint64; /// PTS of the last frame
+    pts_correction_last_dts: cint64; /// DTS of the last frame
 
     (**
      * Character encoding of the input subtitles file.
@@ -3581,7 +3581,7 @@ type
      * - encoding: Set by user.
      * - decoding: Set by user.
      *)
-    dump_separator: pcuint8_t;
+    dump_separator: pcuint8;
 
     (**
      * ',' separated list of allowed decoders.
@@ -3661,7 +3661,7 @@ type
      * - decoding: set by user
      * - encoding: set by user
      *)
-    max_pixels: cint64_t;
+    max_pixels: cint64;
 
     (**
      * A reference to the AVHWDeviceContext describing the device which will
@@ -3759,7 +3759,7 @@ type
     pix_fmts: PAVPixelFormat; ///< array of supported pixel formats, or NULL if unknown, array is terminated by -1
     supported_samplerates: pcint ; ///< array of supported audio samplerates, or NULL if unknown, array is terminated by 0
     sample_fmts: PAVSampleFormat; ///< array of supported sample formats, or NULL if unknown, array is terminated by -1
-    channel_layouts: pcuint64_t; ///< array of support channel layouts, or NULL if unknown. array is terminated by 0
+    channel_layouts: pcuint64; ///< array of support channel layouts, or NULL if unknown. array is terminated by 0
     max_lowres: uint8_t; ///< maximum value for lowres supported by the decoder
     priv_class: PAVClass; ///< AVClass for the private context
     profiles: PAVProfile; ///< array of recognized profiles, or NULL if unknown, array is terminated by {FF_PROFILE_UNKNOWN}
@@ -3804,7 +3804,7 @@ type
     init_static_data: procedure (struct codec: PAVCodec); cdecl;
 
     init: function (c: PAVCodecContext): cint; cdecl;
-    encode_sub: function (c: PAVCodecContext; buf: pcuint8_t; buf_size: cint; const sub: PAVSubtitle): cint; cdecl;
+    encode_sub: function (c: PAVCodecContext; buf: pcuint8; buf_size: cint; const sub: PAVSubtitle): cint; cdecl;
     (**
      * Encode data to an AVPacket.
      *
@@ -4575,7 +4575,7 @@ function av_grow_packet(pkt: PAVPacket; grow_by: cint): cint; cdecl; external LI
  *
  * @return 0 on success, a negative AVERROR on error
  *)
-function av_packet_from_data(pkt: PAVPacket; data: pcuint8_t; size: cint): cint; cdecl; external LIB_AVCODEC;
+function av_packet_from_data(pkt: PAVPacket; data: pcuint8; size: cint): cint; cdecl; external LIB_AVCODEC;
 
 {$if FF_API_AVPACKET_OLD_API}
 (**
@@ -4618,7 +4618,7 @@ procedure av_free_packet(pkt: PAVPacket); cdecl; external LIB_AVCODEC;
  * @param size side information size
  * @return pointer to fresh allocated data or NULL otherwise
  *)
-function av_packet_new_side_data(pkt: PAVPacket; type_: AVPacketSideDataType; size: cint): pcuint8_t; cdecl; external LIB_AVCODEC;
+function av_packet_new_side_data(pkt: PAVPacket; type_: AVPacketSideDataType; size: cint): pcuint8; cdecl; external LIB_AVCODEC;
 
 (**
  * Wrap an existing array as a packet side data.
@@ -4633,7 +4633,7 @@ function av_packet_new_side_data(pkt: PAVPacket; type_: AVPacketSideDataType; si
  *         failure. On failure, the packet is unchanged and the data remains
  *         owned by the caller.
  *)
-function av_packet_add_side_data(pkt: PAVPacket; type_: AVPacketSideDataType; data: pcuint8_t; size: csize_t): cint; cdecl; external LIB_AVCODEC;
+function av_packet_add_side_data(pkt: PAVPacket; type_: AVPacketSideDataType; data: pcuint8; size: csize_t): cint; cdecl; external LIB_AVCODEC;
 
 (**
  * Shrink the already allocated side data buffer
@@ -4653,7 +4653,7 @@ function av_packet_shrink_side_data(pkt: PAVPacket; type_: AVPacketSideDataType;
  * @param size pointer for side information size to store (optional)
  * @return pointer to data if present or NULL otherwise
  *)
-function av_packet_get_side_data(const pkt: PAVPacket; type_: AVPacketSideDataType; size: pcint): pcuint8_t; cdecl; external LIB_AVCODEC;
+function av_packet_get_side_data(const pkt: PAVPacket; type_: AVPacketSideDataType; size: pcint): pcuint8; cdecl; external LIB_AVCODEC;
 
 {$if FF_API_MERGE_SD_API}
 //TODO attribute_deprecated
@@ -4672,7 +4672,7 @@ function av_packet_side_data_name(type_: AVPacketSideDataType): pchar; cdecl; ex
  * @param size pointer to store the size of the returned data
  * @return pointer to data if successful, NULL otherwise
  *)
-function av_packet_pack_dictionary(dict: PAVDictionary; size: pcint): pcuint8_t; cdecl; external LIB_AVCODEC;
+function av_packet_pack_dictionary(dict: PAVDictionary; size: pcint): pcuint8; cdecl; external LIB_AVCODEC;
 (**
  * Unpack a dictionary from side_data.
  *
@@ -4681,7 +4681,7 @@ function av_packet_pack_dictionary(dict: PAVDictionary; size: pcint): pcuint8_t;
  * @param dict the metadata storage dictionary
  * @return 0 on success, < 0 on failure
  *)
-function av_packet_unpack_dictionary(const data: pcuint8_t; size: cint; dict: PPAVDictionary): cint; cdecl; external LIB_AVCODEC;
+function av_packet_unpack_dictionary(const data: pcuint8; size: cint; dict: PPAVDictionary): cint; cdecl; external LIB_AVCODEC;
 
 
 (**
@@ -5333,13 +5333,13 @@ function av_parser_init(codec_id: cint): PAVCodecParserContext; cdecl; external 
  *   }
  * @endcode
  *)
-function av_parser_parse2(s: PAVCodecParserContext; avctx: PAVCodecContext; poutbuf: ppcuint8_t; poutbuf_size: pcint; const buf: pcuint8_t; buf_size: cint; pts: cint64_t; dts: cint64_t; pos: cint64_t): cint; cdecl; external LIB_AVCODEC;
+function av_parser_parse2(s: PAVCodecParserContext; avctx: PAVCodecContext; poutbuf: ppcuint8; poutbuf_size: pcint; const buf: pcuint8; buf_size: cint; pts: cint64; dts: cint64; pos: cint64): cint; cdecl; external LIB_AVCODEC;
 
 (**
  * @return 0 if the output buffer is a subset of the input, 1 if it is allocated and must be freed
  * @deprecated use AVBitStreamFilter
  *)
-function av_parser_change(s: PAVCodecParserContext; avctx: PAVCodecContext; poutbuf: ppcuint8_t; poutbuf_size: pcint; const buf: pcuint8_t; buf_size: cint; keyframe: cint): cint; cdecl; external LIB_AVCODEC;
+function av_parser_change(s: PAVCodecParserContext; avctx: PAVCodecContext; poutbuf: ppcuint8; poutbuf_size: pcint; const buf: pcuint8; buf_size: cint; keyframe: cint): cint; cdecl; external LIB_AVCODEC;
 procedure av_parser_close(s: PAVCodecParserContext); cdecl; external LIB_AVCODEC;
 
 (**
@@ -5449,7 +5449,7 @@ function avcodec_encode_audio2(avctx: PAVCodecContext; avpkt: PAVPacket; const f
 //TODO attribute_deprecated
 function avcodec_encode_video2(avctx: PAVCodecContext; avpkt: PAVPacket; const frame: PAVFrame; got_packet_ptr: pcint): cint; cdecl; external LIB_AVCODEC;
 
-function avcodec_encode_subtitle(avctx: PAVCodecContext; buf: pcuint8_t; buf_size: cint; const sub: PAVSubtitle): cint; cdecl; external LIB_AVCODEC;
+function avcodec_encode_subtitle(avctx: PAVCodecContext; buf: pcuint8; buf_size: cint; const sub: PAVSubtitle): cint; cdecl; external LIB_AVCODEC;
 
 
 (**
@@ -5570,7 +5570,7 @@ procedure avpicture_free(picture: PAVPicture); cdecl; external LIB_AVCODEC;
  * @deprecated use av_image_fill_arrays() instead.
  *)
 //TODO attribute_deprecated
-function avpicture_fill(picture: PAVPicture; const ptr: pcuint8_t; pix_fmt: AVPixelFormat; width: cint; height: cint): cint; cdecl; external LIB_AVCODEC;
+function avpicture_fill(picture: PAVPicture; const ptr: pcuint8; pix_fmt: AVPixelFormat; width: cint; height: cint): cint; cdecl; external LIB_AVCODEC;
 
 (**
  * @deprecated use av_image_copy_to_buffer() instead.
@@ -5764,7 +5764,7 @@ function avcodec_default_execute2(c: PAVCodecContext; func: func4_func; arg: poi
  * @todo return the size in bytes required to store the samples in
  * case of success, at the next libavutil bump
  *)
-function avcodec_fill_audio_frame(frame: PAVFrame; nb_channels: cint; sample_fmt: AVSampleFormat; const buf: pcuint8_t; buf_size: cint; align: cint): cint; cdecl; external LIB_AVCODEC;
+function avcodec_fill_audio_frame(frame: PAVFrame; nb_channels: cint; sample_fmt: AVSampleFormat; const buf: pcuint8; buf_size: cint; align: cint): cint; cdecl; external LIB_AVCODEC;
 
 (**
  * Reset the internal decoder state / flush internal buffers. Should be called
@@ -5985,7 +5985,7 @@ function av_bitstream_filter_init(const name: pchar): PAVBitStreamFilterContext;
  * *poutbuf_size was set to 0, which indicates the packet should be dropped.
  *)
 //TODO attribute_deprecated
-function av_bitstream_filter_filter(bsfc: PAVBitStreamFilterContext; avctx: PAVCodecContext; const args: pchar; poutbuf: ppcuint8_t; poutbuf_size: pcint; const buf: pcuint8_t; buf_size: cint; keyframe: cint): cint; cdecl; external LIB_AVCODEC;
+function av_bitstream_filter_filter(bsfc: PAVBitStreamFilterContext; avctx: PAVCodecContext; const args: pchar; poutbuf: ppcuint8; poutbuf_size: pcint; const buf: pcuint8; buf_size: cint; keyframe: cint): cint; cdecl; external LIB_AVCODEC;
 
 (**
  * Release bitstream filter context.

@@ -27,37 +27,40 @@
 // #ifndef AVUTIL_HMAC_H
 // #define AVUTIL_HMAC_H
 
-#include <stdint.h>
+// #include <stdint.h>
 
-#include "version.h"
+// #include "version.h"
 (**
  * @defgroup lavu_hmac HMAC
  * @ingroup lavu_crypto
  * @{
  *)
 
-enum AVHMACType {
+type
+  AVHMACType = (
     AV_HMAC_MD5,
     AV_HMAC_SHA1,
     AV_HMAC_SHA224,
     AV_HMAC_SHA256,
     AV_HMAC_SHA384 = 12,
-    AV_HMAC_SHA512,
-};
+    AV_HMAC_SHA512
+  );
 
-typedef struct AVHMAC AVHMAC;
+  PAVHMAC = ^AVHMAC;
+  AVHMAC = record
+  end;
 
 (**
  * Allocate an AVHMAC context.
  * @param type The hash function used for the HMAC.
  *)
-AVHMAC *av_hmac_alloc(enum AVHMACType type);
+function av_hmac_alloc(type_: AVHMACType): PAVHMAC; cdecl; external LIB_AVUTIL;
 
 (**
  * Free an AVHMAC context.
  * @param ctx The context to free, may be NULL
  *)
-procedure av_hmac_free(AVHMAC *ctx);
+procedure av_hmac_free(ctx: PAVHMAC); cdecl; external LIB_AVUTIL;
 
 (**
  * Initialize an AVHMAC context with an authentication key.
@@ -65,7 +68,7 @@ procedure av_hmac_free(AVHMAC *ctx);
  * @param key    The authentication key
  * @param keylen The length of the key, in bytes
  *)
-procedure av_hmac_init(AVHMAC *ctx, const uint8_t *key, unsigned int keylen);
+procedure av_hmac_init(ctx: PAVHMAC; const key: pcuint8; keylen: cuint); cdecl; external LIB_AVUTIL;
 
 (**
  * Hash data with the HMAC.
@@ -73,7 +76,7 @@ procedure av_hmac_init(AVHMAC *ctx, const uint8_t *key, unsigned int keylen);
  * @param data The data to hash
  * @param len  The length of the data, in bytes
  *)
-procedure av_hmac_update(AVHMAC *ctx, const uint8_t *data, unsigned int len);
+procedure av_hmac_update(ctx: PAVHMAC; const data: pcuint8; len: cuint); cdecl; external LIB_AVUTIL;
 
 (**
  * Finish hashing and output the HMAC digest.
@@ -82,7 +85,7 @@ procedure av_hmac_update(AVHMAC *ctx, const uint8_t *data, unsigned int len);
  * @param outlen The length of the out buffer, in bytes
  * @return       The number of bytes written to out, or a negative error code.
  *)
-function cint av_hmac_final(AVHMAC *ctx, uint8_t *out, unsigned int outlen);
+function av_hmac_final(ctx: PAVHMAC; out_: pcuint8; outlen: cuint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Hash an array of data with a key.
@@ -95,9 +98,7 @@ function cint av_hmac_final(AVHMAC *ctx, uint8_t *out, unsigned int outlen);
  * @param outlen The length of the out buffer, in bytes
  * @return       The number of bytes written to out, or a negative error code.
  *)
-function cint av_hmac_calc(AVHMAC *ctx, const uint8_t *data, unsigned int len,
-                 const uint8_t *key, unsigned int keylen,
-                 uint8_t *out, unsigned int outlen);
+function av_hmac_calc(ctx: PAVHMAC; const data: pcuint8; len: cuint; const key: pcuint8; keylen: cuint; out_: pcuint8; outlen: cuint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * @}

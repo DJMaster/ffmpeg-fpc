@@ -28,7 +28,7 @@
 // #ifndef AVUTIL_DES_H
 // #define AVUTIL_DES_H
 
-#include <stdint.h>
+// #include <stdint.h>
 
 (**
  * @defgroup lavu_des DES
@@ -36,15 +36,17 @@
  * @{
  *)
 
-typedef struct AVDES {
-    uint64_t round_keys[3][16];
-    int triple_des;
-} AVDES;
+type
+  PAVDES = ^AVDES;
+  AVDES = record
+    round_keys: array[0..2][0..15] of cuint64;
+    triple_des: cint;
+  end;
 
 (**
  * Allocate an AVDES context.
  *)
-AVDES *av_des_alloc();
+function av_des_alloc(): PAVDES; cdecl; external LIB_AVUTIL;
 
 (**
  * @brief Initializes an AVDES context.
@@ -53,7 +55,7 @@ AVDES *av_des_alloc();
  * @param decrypt 0 for encryption/CBC-MAC, 1 for decryption
  * @return zero on success, negative value otherwise
  *)
-function cint av_des_init(struct AVDES *d, const uint8_t *key, int key_bits, int decrypt);
+function av_des_init(d: PAVDES; const key: pcuint8; key_bits: cint; decrypt: cint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * @brief Encrypts / decrypts using the DES algorithm.
@@ -65,7 +67,7 @@ function cint av_des_init(struct AVDES *d, const uint8_t *key, int key_bits, int
  *           must be 8-byte aligned
  * @param decrypt 0 for encryption, 1 for decryption
  *)
-procedure av_des_crypt(struct AVDES *d, uint8_t *dst, const uint8_t *src, int count, uint8_t *iv, int decrypt);
+procedure av_des_crypt(d: PAVDES; dst: pcuint8; const src: pcuint8; count: cint; iv: pcuint8; decrypt: cint); cdecl; external LIB_AVUTIL;
 
 (**
  * @brief Calculates CBC-MAC using the DES algorithm.
@@ -74,7 +76,7 @@ procedure av_des_crypt(struct AVDES *d, uint8_t *dst, const uint8_t *src, int co
  * @param dst destination array, can be equal to src, must be 8-byte aligned
  * @param src source array, can be equal to dst, must be 8-byte aligned, may be NULL
  *)
-procedure av_des_mac(struct AVDES *d, uint8_t *dst, const uint8_t *src, int count);
+procedure av_des_mac(d: PAVDES; dst: pcuint8; const src: pcuint8; count: cint); cdecl; external LIB_AVUTIL;
 
 (**
  * @}

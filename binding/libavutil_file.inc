@@ -25,9 +25,9 @@
 // #ifndef AVUTIL_FILE_H
 // #define AVUTIL_FILE_H
 
-#include <stdint.h>
+// #include <stdint.h>
 
-#include "avutil.h"
+// #include "avutil.h"
 
 (**
  * @file
@@ -46,9 +46,8 @@
  * @return a non negative number in case of success, a negative value
  * corresponding to an AVERROR error code in case of failure
  *)
-av_warn_unused_result
-function cint av_file_map(const pchar filename, uint8_t **bufptr, size_t *size,
-                int log_offset, void *log_ctx);
+//TODO av_warn_unused_result
+function av_file_map(const filename: pchar; bufptr: ppcuint8; size: pcsize_t; log_offset: cint; log_ctx: pointer): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Unmap or free the buffer bufptr created by av_file_map().
@@ -56,7 +55,7 @@ function cint av_file_map(const pchar filename, uint8_t **bufptr, size_t *size,
  * @param size size in bytes of bufptr, must be the same as returned
  * by av_file_map()
  *)
-procedure av_file_unmap(uint8_t *bufptr, size_t size);
+procedure av_file_unmap(bufptr: pcuint8; size: csize_t); cdecl; external LIB_AVUTIL;
 
 (**
  * Wrapper to work around the lack of mkstemp() on mingw.
@@ -70,6 +69,6 @@ procedure av_file_unmap(uint8_t *bufptr, size_t size);
  *       libraries and could interfere with the calling application.
  * @deprecated as fd numbers cannot be passed saftely between libs on some platforms
  *)
-function cint av_tempfile(const pchar prefix, char **filename, int log_offset, void *log_ctx);
+function av_tempfile(const prefix: pchar; filename: ppchar; log_offset: cint; log_ctx_: pointer): cint; cdecl; external LIB_AVUTIL;
 
 // #endif (* AVUTIL_FILE_H *)

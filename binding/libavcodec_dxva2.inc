@@ -38,7 +38,7 @@
 #if !defined(_WIN32_WINNT) || _WIN32_WINNT < $0602
 #undef _WIN32_WINNT
   _WIN32_WINNT = $0602;
-{$endif}
+#endif
 
 #include <stdint.h>
 #include <d3d9.h>
@@ -86,7 +86,7 @@ type
     (**
      * A bit field configuring the workarounds needed for using the decoder
      *)
-    workaround: cuint64_t;
+    workaround: cuint64;
 
     (**
      * Private to the FFmpeg AVHWAccel implementation

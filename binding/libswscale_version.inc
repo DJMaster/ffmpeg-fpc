@@ -30,7 +30,7 @@
  * swscale version macros
  *)
 
-#include "libavutil/version.h"
+// #include "libavutil/version.h"
 
 const
   LIBSWSCALE_VERSION_MAJOR = 4;
@@ -54,7 +54,7 @@ const
  *)
 
 {$ifndef FF_API_SWS_VECTOR}
-  FF_API_SWS_VECTOR = (LIBSWSCALE_VERSION_MAJOR < 6);
+{$define FF_API_SWS_VECTOR := (LIBSWSCALE_VERSION_MAJOR < 6)}
 {$endif}
 
 // #endif (* SWSCALE_VERSION_H *)

@@ -25,9 +25,9 @@
 // #ifndef AVUTIL_PARSEUTILS_H
 // #define AVUTIL_PARSEUTILS_H
 
-#include <time.h>
+// #include <time.h>
 
-#include "rational.h"
+// #include "rational.h"
 
 (**
  * @file
@@ -52,8 +52,7 @@
  * @param[in] log_ctx parent logging context
  * @return >= 0 on success, a negative error code otherwise
  *)
-function cint av_parse_ratio(AVRational *q, const pchar str, int max,
-                   int log_offset, void *log_ctx);
+function av_parse_ratio(q: PAVRational; const str: pchar; max: cint; log_offset: cint; log_ctx: pointer): cint; cdecl; external LIB_AVUTIL;
 
 #define av_parse_ratio_quiet(rate, str, max) \
     av_parse_ratio(rate, str, max, AV_LOG_MAX_OFFSET, NULL)
@@ -69,7 +68,7 @@ function cint av_parse_ratio(AVRational *q, const pchar str, int max,
  * width x height or a valid video size abbreviation.
  * @return >= 0 on success, a negative error code otherwise
  *)
-function cint av_parse_video_size(int *width_ptr, int *height_ptr, const pchar str);
+function av_parse_video_size(width_ptr: pcint; height_ptr: pcint; const str: pchar): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Parse str and store the detected values in *rate.
@@ -80,7 +79,7 @@ function cint av_parse_video_size(int *width_ptr, int *height_ptr, const pchar s
  * rate_num / rate_den, a float number or a valid video rate abbreviation
  * @return >= 0 on success, a negative error code otherwise
  *)
-function cint av_parse_video_rate(AVRational *rate, const pchar str);
+function av_parse_video_rate(rate: PAVRational; const str: pchar): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Put the RGBA values that correspond to color_string in rgba_color.
@@ -101,8 +100,7 @@ function cint av_parse_video_rate(AVRational *rate, const pchar str);
  * @return >= 0 in case of success, a negative value in case of
  * failure (for example if color_string cannot be parsed).
  *)
-function cint av_parse_color(uint8_t *rgba_color, const pchar color_string, int slen,
-                   void *log_ctx);
+function av_parse_color(rgba_color: pcuint8; const color_string: pchar; slen: cint; log_ctx: pointer): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Get the name of a color from the internal table of hard-coded named
@@ -115,7 +113,7 @@ function cint av_parse_color(uint8_t *rgba_color, const pchar color_string, int 
  * @param rgbp      if not NULL, will point to a 3-elements array with the color value in RGB
  * @return the color name string or NULL if color_idx is not in the array
  *)
-const pchar av_get_known_color_name(int color_idx, const uint8_t **rgb);
+function av_get_known_color_name(color_idx: cint; const rgb: ppcuint8): pchar; cdecl; external LIB_AVUTIL;
 
 (**
  * Parse timestr and return in *time a corresponding number of
@@ -149,7 +147,7 @@ const pchar av_get_known_color_name(int color_idx, const uint8_t **rgb);
  * @return >= 0 in case of success, a negative value corresponding to an
  * AVERROR code otherwise
  *)
-function cint av_parse_time(int64_t *timeval, const pchar timestr, int duration);
+function av_parse_time(timeval: pcint64; const timestr: pchar; duration: cint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Attempt to find a specific tag in a URL.
@@ -157,7 +155,7 @@ function cint av_parse_time(int64_t *timeval, const pchar timestr, int duration)
  * syntax: '?tag1=val1&tag2=val2...'. Little URL decoding is done.
  * Return 1 if found.
  *)
-function cint av_find_info_tag(char *arg, int arg_size, const pchar tag1, const pchar info);
+function av_find_info_tag(arg: pchar; arg_size: cint; const tag1: pchar; const info: pchar): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Simplified version of strptime
@@ -189,11 +187,11 @@ function cint av_find_info_tag(char *arg, int arg_size, const pchar tag1, const 
  *         is consumed the return value points to the null byte at the end of
  *         the string. On failure NULL is returned.
  *)
-char *av_small_strptime(const pchar p, const pchar fmt, struct tm *dt);
+function av_small_strptime(const p: pchar; const fmt: pchar; dt: Ptm): pchar; cdecl; external LIB_AVUTIL;
 
 (**
  * Convert the decomposed UTC time in tm to a time_t value.
  *)
-time_t av_timegm(struct tm *tm);
+function av_timegm(tm: Ptm): ctime_t; cdecl; external LIB_AVUTIL;
 
 // #endif (* AVUTIL_PARSEUTILS_H *)

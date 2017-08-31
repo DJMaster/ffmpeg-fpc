@@ -27,8 +27,9 @@
 // #ifndef AVUTIL_CPU_H
 // #define AVUTIL_CPU_H
 
-#include "attributes.h"
+// #include "attributes.h"
 
+const
   AV_CPU_FLAG_FORCE = $80000000; (* force usage of selected flags (OR) *)
 
     (* lower 16 bits - CPU features *)
@@ -80,13 +81,13 @@
  * before. So av_get_cpu_flags() can easily be used in an application to
  * detect the enabled cpu flags.
  *)
-function cint av_get_cpu_flags();
+function av_get_cpu_flags(): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Disables cpu detection and forces the specified flags.
  * -1 is a special case that disables forcing of specific flags.
  *)
-procedure av_force_cpu_flags(int flags);
+procedure av_force_cpu_flags(flags: cint); cdecl; external LIB_AVUTIL;
 
 (**
  * Set a mask on flags returned by av_get_cpu_flags().
@@ -94,7 +95,7 @@ procedure av_force_cpu_flags(int flags);
  * Please use av_force_cpu_flags() and av_get_cpu_flags() instead which are more flexible
  *)
 //TODO attribute_deprecated
-procedure av_set_cpu_flags_mask(int mask);
+procedure av_set_cpu_flags_mask(mask: cint); cdecl; external LIB_AVUTIL;
 
 (**
  * Parse CPU flags from a string.
@@ -106,18 +107,18 @@ procedure av_set_cpu_flags_mask(int mask);
  * @return a combination of AV_CPU_* flags, negative on error.
  *)
 //TODO attribute_deprecated
-function cint av_parse_cpu_flags(const pchar s);
+function av_parse_cpu_flags(const s: pchar): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Parse CPU caps from a string and update the given AV_CPU_* flags based on that.
  *
  * @return negative on error.
  *)
-function cint av_parse_cpu_caps(unsigned *flags, const pchar s);
+function av_parse_cpu_caps(flags: pcunsigned; const s: pchar): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * @return the number of logical CPU cores present.
  *)
-function cint av_cpu_count();
+function av_cpu_count(): cint; cdecl; external LIB_AVUTIL;
 
 // #endif (* AVUTIL_CPU_H *)

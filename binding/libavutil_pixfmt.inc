@@ -32,9 +32,10 @@
  * pixel format definitions
  *)
 
-#include "libavutil/avconfig.h"
-#include "version.h"
+// #include "libavutil/avconfig.h"
+// #include "version.h"
 
+const
   AVPALETTE_SIZE = 1024;
   AVPALETTE_COUNT = 256;
 
@@ -63,7 +64,8 @@
  * for pal8. This palette is filled in automatically by the function
  * allocating the picture.
  *)
-enum AVPixelFormat {
+type
+  AVPixelFormat = (
     AV_PIX_FMT_NONE = -1,
     AV_PIX_FMT_YUV420P, ///< planar YUV 4:2:0, 12bpp, (1 Cr & Cb sample per 2x2 Y samples)
     AV_PIX_FMT_YUYV422, ///< packed YUV 4:2:2, 16bpp, Y0 Cb Y1 Cr
@@ -84,7 +86,7 @@ enum AVPixelFormat {
     AV_PIX_FMT_XVMC_MPEG2_MC,///< XVideo Motion Acceleration via common packet passing
     AV_PIX_FMT_XVMC_MPEG2_IDCT,
     AV_PIX_FMT_XVMC = AV_PIX_FMT_XVMC_MPEG2_IDCT,
-#endif (* FF_API_XVMC *)
+{$endif} (* FF_API_XVMC *)
     AV_PIX_FMT_UYVY422, ///< packed YUV 4:2:2, 16bpp, Cb Y0 Cr Y1
     AV_PIX_FMT_UYYVYY411, ///< packed YUV 4:1:1, 12bpp, Cb Y0 Y1 Cr Y2 Y3
     AV_PIX_FMT_BGR8, ///< packed RGB 3:3:2,  8bpp, (msb)2B 3G 3R(lsb)
@@ -112,7 +114,7 @@ enum AVPixelFormat {
     AV_PIX_FMT_VDPAU_MPEG2,///< MPEG-2 HW decoding with VDPAU, data[0] contains a vdpau_render_state struct which contains the bitstream of the slices as well as various fields extracted from headers
     AV_PIX_FMT_VDPAU_WMV3,///< WMV3 HW decoding with VDPAU, data[0] contains a vdpau_render_state struct which contains the bitstream of the slices as well as various fields extracted from headers
     AV_PIX_FMT_VDPAU_VC1, ///< VC-1 HW decoding with VDPAU, data[0] contains a vdpau_render_state struct which contains the bitstream of the slices as well as various fields extracted from headers
-#endif
+{$endif}
     AV_PIX_FMT_RGB48BE, ///< packed RGB 16:16:16, 48bpp, 16R, 16G, 16B, the 2-byte value for each R/G/B component is stored as big-endian
     AV_PIX_FMT_RGB48LE, ///< packed RGB 16:16:16, 48bpp, 16R, 16G, 16B, the 2-byte value for each R/G/B component is stored as little-endian
 
@@ -134,13 +136,13 @@ enum AVPixelFormat {
     AV_PIX_FMT_VAAPI_VLD, ///< HW decoding through VA API, Picture.data[3] contains a VASurfaceID
     (**@}*)
     AV_PIX_FMT_VAAPI = AV_PIX_FMT_VAAPI_VLD,
-#else
+{$else}
     (**
      *  Hardware acceleration through VA-API, data[3] contains a
      *  VASurfaceID.
      *)
     AV_PIX_FMT_VAAPI,
-#endif
+{$endif}
 
     AV_PIX_FMT_YUV420P16LE, ///< planar YUV 4:2:0, 24bpp, (1 Cr & Cb sample per 2x2 Y samples), little-endian
     AV_PIX_FMT_YUV420P16BE, ///< planar YUV 4:2:0, 24bpp, (1 Cr & Cb sample per 2x2 Y samples), big-endian
@@ -150,7 +152,7 @@ enum AVPixelFormat {
     AV_PIX_FMT_YUV444P16BE, ///< planar YUV 4:4:4, 48bpp, (1 Cr & Cb sample per 1x1 Y samples), big-endian
 {$if FF_API_VDPAU}
     AV_PIX_FMT_VDPAU_MPEG4, ///< MPEG-4 HW decoding with VDPAU, data[0] contains a vdpau_render_state struct which contains the bitstream of the slices as well as various fields extracted from headers
-#endif
+{$endif}
     AV_PIX_FMT_DXVA2_VLD, ///< HW decoding through DXVA2, Picture.data[3] contains a LPDIRECT3DSURFACE9 pointer
 
     AV_PIX_FMT_RGB444LE, ///< packed RGB 4:4:4, 16bpp, (msb)4X 4R 4G 4B(lsb), little-endian, X=unused/undefined
@@ -291,7 +293,7 @@ enum AVPixelFormat {
     AV_PIX_FMT_BAYER_GRBG16BE, ///< bayer, GRGR..(odd line), BGBG..(even line), 16-bit samples, big-endian
 {$if not FF_API_XVMC}
     AV_PIX_FMT_XVMC,///< XVideo Motion Acceleration via common packet passing
-#endif (* !FF_API_XVMC *)
+{$endif} (* !FF_API_XVMC *)
     AV_PIX_FMT_YUV440P10LE, ///< planar YUV 4:4:0,20bpp, (1 Cr & Cb sample per 1x2 Y samples), little-endian
     AV_PIX_FMT_YUV440P10BE, ///< planar YUV 4:4:0,20bpp, (1 Cr & Cb sample per 1x2 Y samples), big-endian
     AV_PIX_FMT_YUV440P12LE, ///< planar YUV 4:4:0,24bpp, (1 Cr & Cb sample per 1x2 Y samples), little-endian
@@ -321,9 +323,9 @@ enum AVPixelFormat {
     AV_PIX_FMT_P016BE, ///< like NV12, with 16bpp per component, big-endian
 
     AV_PIX_FMT_NB ///< number of pixel formats, DO NOT USE THIS if you want to link with shared libav* because the number of formats might differ between versions
-};
+  );
 
-{$if AV_HAVE_BIGENDIAN}
+#if AV_HAVE_BIGENDIAN
 #   define AV_PIX_FMT_NE(be, le) AV_PIX_FMT_##be
 #else
 #   define AV_PIX_FMT_NE(be, le) AV_PIX_FMT_##le
@@ -403,7 +405,8 @@ enum AVPixelFormat {
 (**
   * Chromaticity coordinates of the source primaries.
   *)
-enum AVColorPrimaries {
+type
+  AVColorPrimaries = (
     AVCOL_PRI_RESERVED0 = 0,
     AVCOL_PRI_BT709 = 1, ///< also ITU-R BT1361 / IEC 61966-2-4 / SMPTE RP177 Annex B
     AVCOL_PRI_UNSPECIFIED = 2,
@@ -421,12 +424,12 @@ enum AVColorPrimaries {
     AVCOL_PRI_SMPTE432 = 12, ///< SMPTE ST 432-1 (2010) / P3 D65 / Display P3
     AVCOL_PRI_JEDEC_P22 = 22, ///< JEDEC P22 phosphors
     AVCOL_PRI_NB ///< Not part of ABI
-};
+  );
 
 (**
  * Color Transfer Characteristic.
  *)
-enum AVColorTransferCharacteristic {
+  AVColorTransferCharacteristic = (
     AVCOL_TRC_RESERVED0 = 0,
     AVCOL_TRC_BT709 = 1, ///< also ITU-R BT1361
     AVCOL_TRC_UNSPECIFIED = 2,
@@ -449,12 +452,12 @@ enum AVColorTransferCharacteristic {
     AVCOL_TRC_SMPTEST428_1 = AVCOL_TRC_SMPTE428,
     AVCOL_TRC_ARIB_STD_B67 = 18, ///< ARIB STD-B67, known as "Hybrid log-gamma"
     AVCOL_TRC_NB ///< Not part of ABI
-};
+  );
 
 (**
  * YUV colorspace type.
  *)
-enum AVColorSpace {
+  AVColorSpace = (
     AVCOL_SPC_RGB = 0, ///< order of coefficients is actually GBR, also IEC 61966-2-1 (sRGB)
     AVCOL_SPC_BT709 = 1, ///< also ITU-R BT1361 / IEC 61966-2-4 xvYCC709 / SMPTE RP177 Annex B
     AVCOL_SPC_UNSPECIFIED = 2,
@@ -469,19 +472,20 @@ enum AVColorSpace {
     AVCOL_SPC_BT2020_CL = 10, ///< ITU-R BT2020 constant luminance system
     AVCOL_SPC_SMPTE2085 = 11, ///< SMPTE 2085, Y'D'zD'x
     AVCOL_SPC_NB ///< Not part of ABI
-};
-  AVCOL_SPC_YCGCO = AVCOL_SPC_YCOCG;
+  );
 
+const
+  AVCOL_SPC_YCGCO = AVCOL_SPC_YCOCG;
 
 (**
  * MPEG vs JPEG YUV range.
  *)
-enum AVColorRange {
+  AVColorRange = (
     AVCOL_RANGE_UNSPECIFIED = 0,
     AVCOL_RANGE_MPEG = 1, ///< the normal 219*2^(n-8) "MPEG" YUV ranges
     AVCOL_RANGE_JPEG = 2, ///< the normal     2^n-1   "JPEG" YUV ranges
     AVCOL_RANGE_NB ///< Not part of ABI
-};
+  );
 
 (**
  * Location of chroma samples.
@@ -498,7 +502,7 @@ enum AVColorRange {
  *                |             |1 2           1-6 are possible chroma positions
  *2nd luma line > |X   X ...    |5 6 X ...     0 is undefined/unknown position
  *)
-enum AVChromaLocation {
+  AVChromaLocation = (
     AVCHROMA_LOC_UNSPECIFIED = 0,
     AVCHROMA_LOC_LEFT = 1, ///< MPEG-2/4 4:2:0, H.264 default for 4:2:0
     AVCHROMA_LOC_CENTER = 2, ///< MPEG-1 4:2:0, JPEG 4:2:0, H.263 4:2:0
@@ -507,6 +511,6 @@ enum AVChromaLocation {
     AVCHROMA_LOC_BOTTOMLEFT = 5,
     AVCHROMA_LOC_BOTTOM = 6,
     AVCHROMA_LOC_NB ///< Not part of ABI
-};
+  );
 
 // #endif (* AVUTIL_PIXFMT_H *)

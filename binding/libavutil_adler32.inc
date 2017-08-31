@@ -57,7 +57,7 @@
  * @return      updated checksum
  *)
 //TODO av_pure
-function av_adler32_update(adler: culong; const buf: pcuint8_t; len: cuint): culong; cdecl; external LIB_AVUTIL;
+function av_adler32_update(adler: culong; const buf: pcuint8; len: cuint): culong; cdecl; external LIB_AVUTIL;
 
 (**
  * @}

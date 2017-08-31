@@ -41,7 +41,7 @@
 type
   PAVXTEA = ^AVXTEA;
   AVXTEA = record
-    key: array[0..15] of cuint32_t;
+    key: array[0..15] of cuint32;
   end;
 
 (**
@@ -56,7 +56,7 @@ function av_xtea_alloc(): PAVXTEA;
  * @param key a key of 16 bytes used for encryption/decryption,
  *            interpreted as big endian 32 bit numbers
  *)
-procedure av_xtea_init(ctx: PAVXTEA; const key: array[0..15] of cuint8_t);
+procedure av_xtea_init(ctx: PAVXTEA; const key: array[0..15] of cuint8);
 
 (**
  * Initialize an AVXTEA context.
@@ -65,7 +65,7 @@ procedure av_xtea_init(ctx: PAVXTEA; const key: array[0..15] of cuint8_t);
  * @param key a key of 16 bytes used for encryption/decryption,
  *            interpreted as little endian 32 bit numbers
  *)
-procedure av_xtea_le_init(ctx: PAVXTEA; const key: array[0..15] of cuint8_t);
+procedure av_xtea_le_init(ctx: PAVXTEA; const key: array[0..15] of cuint8);
 
 (**
  * Encrypt or decrypt a buffer using a previously initialized context,
@@ -78,7 +78,7 @@ procedure av_xtea_le_init(ctx: PAVXTEA; const key: array[0..15] of cuint8_t);
  * @param iv initialization vector for CBC mode, if NULL then ECB will be used
  * @param decrypt 0 for encryption, 1 for decryption
  *)
-procedure av_xtea_crypt(ctx: PAVXTEA; dst: pcuint8_t; const src: pcuint8_t; count: cint; iv: pcuint8_t; decrypt: cint);
+procedure av_xtea_crypt(ctx: PAVXTEA; dst: pcuint8; const src: pcuint8; count: cint; iv: pcuint8; decrypt: cint);
 
 (**
  * Encrypt or decrypt a buffer using a previously initialized context,
@@ -91,7 +91,7 @@ procedure av_xtea_crypt(ctx: PAVXTEA; dst: pcuint8_t; const src: pcuint8_t; coun
  * @param iv initialization vector for CBC mode, if NULL then ECB will be used
  * @param decrypt 0 for encryption, 1 for decryption
  *)
-procedure av_xtea_le_crypt(ctx: PAVXTEA; dst: pcuint8_t; const src: pcuint8_t; count: cint; iv: pcuint8_t; decrypt: cint);
+procedure av_xtea_le_crypt(ctx: PAVXTEA; dst: pcuint8; const src: pcuint8; count: cint; iv: pcuint8; decrypt: cint);
 
 (**
  * @}

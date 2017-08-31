@@ -32,7 +32,7 @@
 (**
  * Get the current time in microseconds.
  *)
-function av_gettime(): cint64_t; cdecl; external LIB_AVUTIL;
+function av_gettime(): cint64; cdecl; external LIB_AVUTIL;
 
 (**
  * Get the current time in microseconds since some unspecified starting point.
@@ -41,7 +41,7 @@ function av_gettime(): cint64_t; cdecl; external LIB_AVUTIL;
  * The returned values may not be monotonic on platforms where a monotonic
  * clock is not available.
  *)
-function av_gettime_relative(): cint64_t; cdecl; external LIB_AVUTIL;
+function av_gettime_relative(): cint64; cdecl; external LIB_AVUTIL;
 
 (**
  * Indicates with a boolean result if the av_gettime_relative() time source

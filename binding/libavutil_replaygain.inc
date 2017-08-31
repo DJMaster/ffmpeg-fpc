@@ -39,20 +39,20 @@ type
      * Track replay gain in microbels (divide by 100000 to get the value in dB).
      * Should be set to INT32_MIN when unknown.
      *)
-    track_gain: cint32_t;
+    track_gain: cint32;
     (**
      * Peak track amplitude, with 100000 representing full scale (but values
      * may overflow). 0 when unknown.
      *)
-    track_peak: cuint32_t;
+    track_peak: cuint32;
     (**
      * Same as track_gain, but for the whole album.
      *)
-    album_gain: cint32_t;
+    album_gain: cint32;
     (**
      * Same as track_peak, but for the whole album,
      *)
-    album_peak: cuint32_t;
+    album_peak: cuint32;
   end;
 
 // #endif (* AVUTIL_REPLAYGAIN_H *)

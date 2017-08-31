@@ -27,10 +27,10 @@
 // #ifndef AVUTIL_AES_H
 // #define AVUTIL_AES_H
 
-#include <stdint.h>
+// #include <stdint.h>
 
-#include "attributes.h"
-#include "version.h"
+// #include "attributes.h"
+// #include "version.h"
 
 (**
  * @defgroup lavu_aes AES
@@ -40,19 +40,22 @@
 
 extern const int av_aes_size;
 
-struct AVAES;
+type
+  PAVAES = ^AVAES;
+  AVAES = record
+  end;
 
 (**
  * Allocate an AVAES context.
  *)
-struct AVAES *av_aes_alloc();
+function av_aes_alloc(): PAVAES; cdecl; external LIB_AVUTIL;
 
 (**
  * Initialize an AVAES context.
  * @param key_bits 128, 192 or 256
  * @param decrypt 0 for encryption, 1 for decryption
  *)
-function cint av_aes_init(struct AVAES *a, const uint8_t *key, int key_bits, int decrypt);
+function av_aes_init(a: PAVAES; const key: pcuint8; key_bits: cint; decrypt: cint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Encrypt or decrypt a buffer using a previously initialized context.
@@ -62,7 +65,7 @@ function cint av_aes_init(struct AVAES *a, const uint8_t *key, int key_bits, int
  * @param iv initialization vector for CBC mode, if NULL then ECB will be used
  * @param decrypt 0 for encryption, 1 for decryption
  *)
-procedure av_aes_crypt(struct AVAES *a, uint8_t *dst, const uint8_t *src, int count, uint8_t *iv, int decrypt);
+procedure av_aes_crypt(a: PAVAES; dst: pcuint8; const src: pcuint8; count: cint; iv: pcuint8; decrypt: cint); cdecl; external LIB_AVUTIL;
 
 (**
  * @}

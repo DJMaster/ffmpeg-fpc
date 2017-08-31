@@ -131,9 +131,9 @@ type
      * ^ - the default up vector
      * @endcode
      *)
-    yaw: cint32_t; ///< Rotation around the up vector [-180, 180].
-    pitch_ cint32_t; ///< Rotation around the right vector [-90, 90].
-    roll: cint32_t; ///< Rotation around the forward vector [-180, 180].
+    yaw: cint32; ///< Rotation around the up vector [-180, 180].
+    pitch_ cint32; ///< Rotation around the right vector [-90, 90].
+    roll: cint32; ///< Rotation around the forward vector [-180, 180].
     (**
      * @}
      *)
@@ -172,10 +172,10 @@ type
      *       projection type (@ref AV_SPHERICAL_EQUIRECTANGULAR_TILE),
      *       and should be ignored in all other cases.
      *)
-    bound_left: cuint32_t; ///< Distance from the left edge
-    bound_top: cuint32_t; ///< Distance from the top edge
-    bound_right: cuint32_t; ///< Distance from the right edge
-    bound_bottom: cuint32_t; ///< Distance from the bottom edge
+    bound_left: cuint32; ///< Distance from the left edge
+    bound_top: cuint32; ///< Distance from the top edge
+    bound_right: cuint32; ///< Distance from the right edge
+    bound_bottom: cuint32; ///< Distance from the bottom edge
     (**
      * @}
      *)
@@ -187,7 +187,7 @@ type
      *       (@ref AV_SPHERICAL_CUBEMAP), and should be ignored in all other
      *       cases.
      *)
-    padding: cuint32_t;
+    padding: cuint32;
   );
 
 (**

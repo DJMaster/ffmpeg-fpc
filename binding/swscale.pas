@@ -235,7 +235,7 @@ function sws_getContext(srcW: cint; srcH: cint; srcFormat: AVPixelFormat; dstW: 
  *                  the destination image
  * @return          the height of the output slice
  *)
-function sws_scale(c: PSwsContext; const srcSlice: array of pcuint8_t; const srcStride: array of cint; srcSliceY: cint; srcSliceH: cint; dst: array of pcuint8_t; const dstStride: array of cint): cint; cdecl; external LIB_SWSCALE;
+function sws_scale(c: PSwsContext; const srcSlice: array of pcuint8; const srcStride: array of cint; srcSliceY: cint; srcSliceH: cint; dst: array of pcuint8; const dstStride: array of cint): cint; cdecl; external LIB_SWSCALE;
 
 (**
  * @param dstRange flag indicating the while-black range of the output (1=jpeg / 0=mpeg)
@@ -323,7 +323,7 @@ function sws_getCachedContext(context: PSwsContext; srcW: cint; srcH: cint; srcF
  * @param num_pixels number of pixels to convert
  * @param palette    array with [256] entries, which must match color arrangement (RGB or BGR) of src
  *)
-procedure sws_convertPalette8ToPacked32(const src: pcuint8_t; dst: pcuint8_t; num_pixels: cint; const palette: pcuint8_t); cdecl; external LIB_SWSCALE;
+procedure sws_convertPalette8ToPacked32(const src: pcuint8; dst: pcuint8; num_pixels: cint; const palette: pcuint8); cdecl; external LIB_SWSCALE;
 
 (**
  * Convert an 8-bit paletted frame into a frame with a color depth of 24 bits.
@@ -335,7 +335,7 @@ procedure sws_convertPalette8ToPacked32(const src: pcuint8_t; dst: pcuint8_t; nu
  * @param num_pixels number of pixels to convert
  * @param palette    array with [256] entries, which must match color arrangement (RGB or BGR) of src
  *)
-procedure sws_convertPalette8ToPacked24(const src: pcuint8_t; dst: pcuint8_t; num_pixels: cint; const palette: pcuint8_t); cdecl; external LIB_SWSCALE;
+procedure sws_convertPalette8ToPacked24(const src: pcuint8; dst: pcuint8; num_pixels: cint; const palette: pcuint8); cdecl; external LIB_SWSCALE;
 
 (**
  * Get the AVClass for swsContext. It can be used in combination with

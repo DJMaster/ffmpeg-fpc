@@ -100,16 +100,16 @@ type
     type_: cint; (**< Type of the entry *)
     utf8: cint; (**< Set to 1 when name is encoded with UTF-8, 0 otherwise.
                      Name can be encoded with UTF-8 even though 0 is set. *)
-    size: cint64_t; (**< File size in bytes, -1 if unknown. *)
-    modification_timestamp: cint64_t; (**< Time of last modification in microseconds since unix
+    size: cint64; (**< File size in bytes, -1 if unknown. *)
+    modification_timestamp: cint64; (**< Time of last modification in microseconds since unix
                                            epoch, -1 if unknown. *)
-    access_timestamp: cint64_t; (**< Time of last access in microseconds since unix epoch,
+    access_timestamp: cint64; (**< Time of last access in microseconds since unix epoch,
                                      -1 if unknown. *)
-    status_change_timestamp: cint64_t; (**< Time of last status change in microseconds since unix
+    status_change_timestamp: cint64; (**< Time of last status change in microseconds since unix
                                             epoch, -1 if unknown. *)
-    user_id: cint64_t; (**< User ID of owner, -1 if unknown. *)
-    group_id: cint64_t; (**< Group ID of owner, -1 if unknown. *)
-    filemode: cint64_t; (**< Unix file mode, -1 if unknown. *)
+    user_id: cint64; (**< User ID of owner, -1 if unknown. *)
+    group_id: cint64; (**< Group ID of owner, -1 if unknown. *)
+    filemode: cint64; (**< Unix file mode, -1 if unknown. *)
   end;
 
   PAVIODirContext = ^AVIODirContext;
@@ -239,7 +239,7 @@ type
     int (*read_packet)(void *opaque, uint8_t *buf, int buf_size);
     int (*write_packet)(void *opaque, uint8_t *buf, int buf_size);
     int64_t (*seek)(void *opaque, int64_t offset, int whence);
-    pos: cint64_t; (**< position in the file of the current buffer *)
+    pos: cint64; (**< position in the file of the current buffer *)
     must_flush: cint; (**< true if the next seek should flush *)
     eof_reached: cint; (**< true if eof reached *)
     write_flag: cint; (**< true if open for writing *)
@@ -268,7 +268,7 @@ type
      * max filesize, used to limit allocations
      * This field is internal to libavformat and access from outside is not allowed.
      *)
-    maxsize: cint64_t;
+    maxsize: cint64;
 
     (**
      * avio_read and avio_write should if possible be satisfied directly
@@ -281,7 +281,7 @@ type
      * Bytes read statistic
      * This field is internal to libavformat and access from outside is not allowed.
      *)
-    bytes_read: cint64_t;
+    bytes_read: cint64;
 
     (**
      * seek statistic
@@ -334,7 +334,7 @@ type
      * Internal, not meant to be used from outside of AVIOContext.
      *)
     current_type: AVIODataMarkerType;
-    last_time: cint64_t;
+    last_time: cint64;
 
     (**
      * A callback that is used instead of short_seek_threshold.
@@ -452,13 +452,13 @@ procedure avio_free_directory_entry(entry: PPAVIODirEntry); cdecl; external LIB_
 function  avio_alloc_context(buffer: pcuchar; buffer_size: cint; write_flag: cint; opaque: pointer;
                   cint ( *read_packet)(void *opaque, uint8_t *buf, int buf_size),
                   cint ( *write_packet)(void *opaque, uint8_t *buf, int buf_size),
-                  cint64_t ( *seek)(void *opaque, int64_t offset, int whence)
+                  cint64 ( *seek)(void *opaque, int64_t offset, int whence)
                   ): PAVIOContext; cdecl; external LIB_AVFORMAT;
 
 procedure avio_w8(s: PAVIOContext; b: cint); cdecl; external LIB_AVFORMAT;
 procedure avio_write(s: PAVIOContext; const buf: pcuchar; size: cint); cdecl; external LIB_AVFORMAT;
-procedure avio_wl64(s: PAVIOContext; val: cuint64_t); cdecl; external LIB_AVFORMAT;
-procedure avio_wb64(s: PAVIOContext; val: cuint64_t); cdecl; external LIB_AVFORMAT;
+procedure avio_wl64(s: PAVIOContext; val: cuint64); cdecl; external LIB_AVFORMAT;
+procedure avio_wb64(s: PAVIOContext; val: cuint64); cdecl; external LIB_AVFORMAT;
 procedure avio_wl32(s: PAVIOContext; val: cuint); cdecl; external LIB_AVFORMAT;
 procedure avio_wb32(s: PAVIOContext; val: cuint); cdecl; external LIB_AVFORMAT;
 procedure avio_wl24(s: PAVIOContext; val: cuint); cdecl; external LIB_AVFORMAT;
@@ -500,7 +500,7 @@ function avio_put_str16be(s: PAVIOContext; const str: pchar): cint; cdecl; exter
  *             applicable
  * @param type the kind of data written starting at the current pos
  *)
-procedure avio_write_marker(s: PAVIOContext; time: cint64_t; type_: AVIODataMarkerType); cdecl; external LIB_AVFORMAT;
+procedure avio_write_marker(s: PAVIOContext; time: cint64; type_: AVIODataMarkerType); cdecl; external LIB_AVFORMAT;
 
 const
 (**
@@ -522,19 +522,19 @@ const
  * fseek() equivalent for AVIOContext.
  * @return new position or AVERROR.
  *)
-function avio_seek(s: PAVIOContext; offset: cint64_t; whence: cint): cint64_t; cdecl; external LIB_AVFORMAT;
+function avio_seek(s: PAVIOContext; offset: cint64; whence: cint): cint64; cdecl; external LIB_AVFORMAT;
 
 (**
  * Skip given number of bytes forward
  * @return new position or AVERROR.
  *)
-function avio_skip(s: PAVIOContext; offset: cint64_t): cint64_t; cdecl; external LIB_AVFORMAT;
+function avio_skip(s: PAVIOContext; offset: cint64): cint64; cdecl; external LIB_AVFORMAT;
 
 (**
  * ftell() equivalent for AVIOContext.
  * @return position or AVERROR.
  *)
-function avio_tell(s: PAVIOContext): cint64_t; inline;
+function avio_tell(s: PAVIOContext): cint64; inline;
 {
     return avio_seek(s, 0, SEEK_CUR);
 }
@@ -543,7 +543,7 @@ function avio_tell(s: PAVIOContext): cint64_t; inline;
  * Get the filesize.
  * @return filesize or AVERROR
  *)
-function avio_size(s: PAVIOContext): cint64_t; cdecl; external LIB_AVFORMAT;
+function avio_size(s: PAVIOContext): cint64; cdecl; external LIB_AVFORMAT;
 
 (**
  * feof() equivalent for AVIOContext.
@@ -591,11 +591,11 @@ function avio_r8(s: PAVIOContext): cint; cdecl; external LIB_AVFORMAT;
 function avio_rl16(s: PAVIOContext): cuint; cdecl; external LIB_AVFORMAT;
 function avio_rl24(s: PAVIOContext): cuint; cdecl; external LIB_AVFORMAT;
 function avio_rl32(s: PAVIOContext): cuint; cdecl; external LIB_AVFORMAT;
-function avio_rl64(s: PAVIOContext): cuint64_t; cdecl; external LIB_AVFORMAT;
+function avio_rl64(s: PAVIOContext): cuint64; cdecl; external LIB_AVFORMAT;
 function avio_rb16(s: PAVIOContext): cuint; cdecl; external LIB_AVFORMAT;
 function avio_rb24(s: PAVIOContext): cuint; cdecl; external LIB_AVFORMAT;
 function avio_rb32(s: PAVIOContext): cuint; cdecl; external LIB_AVFORMAT;
-function avio_rb64(s: PAVIOContext): cuint64_t; cdecl; external LIB_AVFORMAT;
+function avio_rb64(s: PAVIOContext): cuint64; cdecl; external LIB_AVFORMAT;
 (**
  * @}
  *)
@@ -738,7 +738,7 @@ function avio_open_dyn_buf(s: PPAVIOContext): cint; cdecl; external LIB_AVFORMAT
  * @param pbuffer pointer to a byte buffer
  * @return the length of the byte buffer
  *)
-function avio_get_dyn_buf(s: PAVIOContext; pbuffer: ppcuint8_t): cint; cdecl; external LIB_AVFORMAT;
+function avio_get_dyn_buf(s: PAVIOContext; pbuffer: ppcuint8): cint; cdecl; external LIB_AVFORMAT;
 
 (**
  * Return the written size and a pointer to the buffer. The buffer
@@ -749,7 +749,7 @@ function avio_get_dyn_buf(s: PAVIOContext; pbuffer: ppcuint8_t): cint; cdecl; ex
  * @param pbuffer pointer to a byte buffer
  * @return the length of the byte buffer
  *)
-function avio_close_dyn_buf(s: PAVIOContext; pbuffer: ppcuint8_t): cint; cdecl; external LIB_AVFORMAT;
+function avio_close_dyn_buf(s: PAVIOContext; pbuffer: ppcuint8): cint; cdecl; external LIB_AVFORMAT;
 
 (**
  * Iterate through names of available protocols.
@@ -792,7 +792,7 @@ function avio_pause(h: PAVIOContext; pause: cint): cint; cdecl; external LIB_AVF
  * @return >= 0 on success
  * @see AVInputFormat::read_seek
  *)
-function avio_seek_time(h: PAVIOContext; stream_index: cint; timestamp: cint64_t; flags: cint): cint64_t; cdecl; external LIB_AVFORMAT;
+function avio_seek_time(h: PAVIOContext; stream_index: cint; timestamp: cint64; flags: cint): cint64; cdecl; external LIB_AVFORMAT;
 
 (* Avoid a warning. The header can not be included because it breaks c++. *)
 type

@@ -25,20 +25,24 @@
 // #ifndef AVUTIL_HWCONTEXT_H
 // #define AVUTIL_HWCONTEXT_H
 
-#include "buffer.h"
-#include "frame.h"
-#include "log.h"
-#include "pixfmt.h"
+// #include "buffer.h"
+// #include "frame.h"
+// #include "log.h"
+// #include "pixfmt.h"
 
-enum AVHWDeviceType {
+type
+  AVHWDeviceType = (
     AV_HWDEVICE_TYPE_VDPAU,
     AV_HWDEVICE_TYPE_CUDA,
     AV_HWDEVICE_TYPE_VAAPI,
     AV_HWDEVICE_TYPE_DXVA2,
-    AV_HWDEVICE_TYPE_QSV,
-};
+    AV_HWDEVICE_TYPE_QSV
+  );
 
-typedef struct AVHWDeviceInternal AVHWDeviceInternal;
+type
+  PAVHWDeviceInternal = ^AVHWDeviceInternal;
+  AVHWDeviceInternal = record
+  end;
 
 (**
  * This struct aggregates all the (hardware/vendor-specific) "high-level" state,
@@ -57,17 +61,21 @@ typedef struct AVHWDeviceInternal AVHWDeviceInternal;
  * optionally invoking a user-specified callback for uninitializing the hardware
  * state.
  *)
-typedef struct AVHWDeviceContext {
+type
+  free_proc = procedure (ctx: PAVHWDeviceContext); cdecl;
+
+  PAVHWDeviceContext = ^AVHWDeviceContext;
+  AVHWDeviceContext = record
     (**
      * A class for logging. Set by av_hwdevice_ctx_alloc().
      *)
-    const AVClass *av_class;
+    const av_class: PAVClass;
 
     (**
      * Private data used internally by libavutil. Must not be accessed in any
      * way by the caller.
      *)
-    AVHWDeviceInternal *internal;
+    internal: PAVHWDeviceInternal;
 
     (**
      * This field identifies the underlying API used for hardware access.
@@ -75,7 +83,7 @@ typedef struct AVHWDeviceContext {
      * This field is set when this struct is allocated and never changed
      * afterwards.
      *)
-    enum AVHWDeviceType type;
+    type_: AVHWDeviceType;
 
     (**
      * The format-specific data, allocated and freed by libavutil along with
@@ -88,7 +96,7 @@ typedef struct AVHWDeviceContext {
      * After calling av_hwdevice_ctx_init() this struct should not be modified
      * by the caller.
      *)
-    void *hwctx;
+    hwctx: pointer;
 
     (**
      * This field may be set by the caller before calling av_hwdevice_ctx_init().
@@ -100,15 +108,18 @@ typedef struct AVHWDeviceContext {
      *       struct, this callback will be invoked after all such child objects
      *       are fully uninitialized and their respective destructors invoked.
      *)
-    void (*free)(struct AVHWDeviceContext *ctx);
+    free: free_proc;
 
     (**
      * Arbitrary user data, to be used e.g. by the free() callback.
      *)
-    void *user_opaque;
-} AVHWDeviceContext;
+    user_opaque: pointer;
+  end;
 
-typedef struct AVHWFramesInternal AVHWFramesInternal;
+type
+  PAVHWFramesInternal = ^AVHWFramesInternal;
+  AVHWFramesInternal = record
+  end;
 
 (**
  * This struct describes a set or pool of "hardware" frames (i.e. those with
@@ -120,24 +131,28 @@ typedef struct AVHWFramesInternal AVHWFramesInternal;
  * yields a reference, whose data field points to the actual AVHWFramesContext
  * struct.
  *)
-typedef struct AVHWFramesContext {
+type
+  free_proc = procedure (ctx: PAVHWFramesContext); cdecl;
+
+  PAVHWFramesContext = ^AVHWFramesContext;
+  AVHWFramesContext = record
     (**
      * A class for logging.
      *)
-    const AVClass *av_class;
+    av_class: PAVClass;
 
     (**
      * Private data used internally by libavutil. Must not be accessed in any
      * way by the caller.
      *)
-    AVHWFramesInternal *internal;
+    internal: PAVHWFramesInternal;
 
     (**
      * A reference to the parent AVHWDeviceContext. This reference is owned and
      * managed by the enclosing AVHWFramesContext, but the caller may derive
      * additional references from it.
      *)
-    AVBufferRef *device_ref;
+    device_ref: PAVBufferRef;
 
     (**
      * The parent AVHWDeviceContext. This is simply a pointer to
@@ -145,7 +160,7 @@ typedef struct AVHWFramesContext {
      *
      * Set by libavutil in av_hwframe_ctx_init().
      *)
-    AVHWDeviceContext *device_ctx;
+    device_ctx: PAVHWDeviceContext;
 
     (**
      * The format-specific data, allocated and freed automatically along with
@@ -158,7 +173,7 @@ typedef struct AVHWFramesContext {
      * After any frames using this context are created, the contents of this
      * struct should not be modified by the caller.
      *)
-    void *hwctx;
+    hwctx: pointer;
 
     (**
      * This field may be set by the caller before calling av_hwframe_ctx_init().
@@ -166,12 +181,12 @@ typedef struct AVHWFramesContext {
      * If non-NULL, this callback will be called when the last reference to
      * this context is unreferenced, immediately before it is freed.
      *)
-    procedure (*free)(struct AVHWFramesContext *ctx);
+    free: free_proc;
 
     (**
      * Arbitrary user data, to be used e.g. by the free() callback.
      *)
-    void *user_opaque;
+    user_opaque: pointer;
 
     (**
      * A pool from which the frames are allocated by av_hwframe_get_buffer().
@@ -186,7 +201,7 @@ typedef struct AVHWFramesContext {
      * fixed size (frame count), which cannot be extended dynamically. In such a
      * case, initial_pool_size must be set appropriately.
      *)
-    AVBufferPool *pool;
+    pool: PAVBufferPool;
 
     (**
      * Initial size of the frame pool. If a device type does not support
@@ -195,7 +210,7 @@ typedef struct AVHWFramesContext {
      * May be set by the caller before calling av_hwframe_ctx_init(). Must be
      * set if pool is NULL and the device type does not support dynamic pools.
      *)
-    int initial_pool_size;
+    initial_pool_size: cint;
 
     (**
      * The pixel format identifying the underlying HW surface type.
@@ -205,7 +220,7 @@ typedef struct AVHWFramesContext {
      *
      * Must be set by the user before calling av_hwframe_ctx_init().
      *)
-    enum AVPixelFormat format;
+    format: AVPixelFormat;
 
     (**
      * The pixel format identifying the actual data layout of the hardware
@@ -218,15 +233,15 @@ typedef struct AVHWFramesContext {
      * planar version of that format (e.g. for 8-bit 420 YUV it should be
      * AV_PIX_FMT_YUV420P, not AV_PIX_FMT_NV12 or anything else).
      *)
-    enum AVPixelFormat sw_format;
+    sw_format: AVPixelFormat;
 
     (**
      * The allocated dimensions of the frames in this pool.
      *
      * Must be set by the user before calling av_hwframe_ctx_init().
      *)
-    int width, height;
-} AVHWFramesContext;
+    width, height: cint;
+  end;
 
 (**
  * Allocate an AVHWDeviceContext for a given hardware type.
@@ -235,7 +250,7 @@ typedef struct AVHWFramesContext {
  * @return a reference to the newly created AVHWDeviceContext on success or NULL
  *         on failure.
  *)
-AVBufferRef *av_hwdevice_ctx_alloc(enum AVHWDeviceType type);
+function av_hwdevice_ctx_alloc(type_: AVHWDeviceType): PAVBufferRef; cdecl; external LIB_AVUTIL;
 
 (**
  * Finalize the device context before use. This function must be called after
@@ -245,7 +260,7 @@ AVBufferRef *av_hwdevice_ctx_alloc(enum AVHWDeviceType type);
  * @param ref a reference to the AVHWDeviceContext
  * @return 0 on success, a negative AVERROR code on failure
  *)
-function cint av_hwdevice_ctx_init(AVBufferRef *ref);
+function av_hwdevice_ctx_init(ref: PAVBufferRef): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Open a device of the specified type and create an AVHWDeviceContext for it.
@@ -272,8 +287,7 @@ function cint av_hwdevice_ctx_init(AVBufferRef *ref);
  *
  * @return 0 on success, a negative AVERROR code on failure.
  *)
-function cint av_hwdevice_ctx_create(AVBufferRef **device_ctx, enum AVHWDeviceType type,
-                           const pchar device, AVDictionary *opts, int flags);
+function av_hwdevice_ctx_create(device_ctx: PPAVBufferRef; type_: AVHWDeviceType; const device: pchar; opts: PAVDictionary; flags: cint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Allocate an AVHWFramesContext tied to a given device context.
@@ -284,7 +298,7 @@ function cint av_hwdevice_ctx_create(AVBufferRef **device_ctx, enum AVHWDeviceTy
  * @return a reference to the newly created AVHWFramesContext on success or NULL
  *         on failure.
  *)
-AVBufferRef *av_hwframe_ctx_alloc(AVBufferRef *device_ctx);
+function av_hwframe_ctx_alloc(device_ctx: PAVBufferRef): PAVBufferRef; cdecl; external LIB_AVUTIL;
 
 (**
  * Finalize the context before use. This function must be called after the
@@ -294,7 +308,7 @@ AVBufferRef *av_hwframe_ctx_alloc(AVBufferRef *device_ctx);
  * @param ref a reference to the AVHWFramesContext
  * @return 0 on success, a negative AVERROR code on failure
  *)
-function cint av_hwframe_ctx_init(AVBufferRef *ref);
+function av_hwframe_ctx_init(ref: PAVBufferRef): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Allocate a new frame attached to the given AVHWFramesContext.
@@ -305,7 +319,7 @@ function cint av_hwframe_ctx_init(AVBufferRef *ref);
  * @param flags currently unused, should be set to zero
  * @return 0 on success, a negative AVERROR code on failure
  *)
-function cint av_hwframe_get_buffer(AVBufferRef *hwframe_ctx, AVFrame *frame, int flags);
+function av_hwframe_get_buffer(hwframe_ctx: PAVBufferRef; frame: PAVFrame; flags: cint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Copy data to or from a hw surface. At least one of dst/src must have an
@@ -336,9 +350,10 @@ function cint av_hwframe_get_buffer(AVBufferRef *hwframe_ctx, AVFrame *frame, in
  * @param flags currently unused, should be set to zero
  * @return 0 on success, a negative AVERROR error code on failure.
  *)
-function cint av_hwframe_transfer_data(AVFrame *dst, const AVFrame *src, int flags);
+function av_hwframe_transfer_data(dst: PAVFrame; const src: PAVFrame; flags: cint): cint; cdecl; external LIB_AVUTIL;
 
-enum AVHWFrameTransferDirection {
+type
+  AVHWFrameTransferDirection = (
     (**
      * Transfer the data from the queried hw frame.
      *)
@@ -347,8 +362,8 @@ enum AVHWFrameTransferDirection {
     (**
      * Transfer the data to the queried hw frame.
      *)
-    AV_HWFRAME_TRANSFER_DIRECTION_TO,
-};
+    AV_HWFRAME_TRANSFER_DIRECTION_TO
+  );
 
 (**
  * Get a list of possible source or target formats usable in
@@ -365,10 +380,7 @@ enum AVHWFrameTransferDirection {
  * @param flags currently unused, should be set to zero
  * @return 0 on success, a negative AVERROR code on failure.
  *)
-function cint av_hwframe_transfer_get_formats(AVBufferRef *hwframe_ctx,
-                                    enum AVHWFrameTransferDirection dir,
-                                    enum AVPixelFormat **formats, int flags);
-
+function av_hwframe_transfer_get_formats(hwframe_ctx: PAVBufferRef; dir: AVHWFrameTransferDirection; formats: PPAVPixelFormat; flags: cint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * This struct describes the constraints on hardware frames attached to
@@ -376,34 +388,36 @@ function cint av_hwframe_transfer_get_formats(AVBufferRef *hwframe_ctx,
  * by av_hwdevice_get_hwframe_constraints() and must be freed by
  * av_hwframe_constraints_free() after use.
  *)
-typedef struct AVHWFramesConstraints {
+type
+  PAVHWFramesConstraints = ^AVHWFramesConstraints;
+  AVHWFramesConstraints = record
     (**
      * A list of possible values for format in the hw_frames_ctx,
      * terminated by AV_PIX_FMT_NONE.  This member will always be filled.
      *)
-    enum AVPixelFormat *valid_hw_formats;
+    valid_hw_formats: PAVPixelFormat;
 
     (**
      * A list of possible values for sw_format in the hw_frames_ctx,
      * terminated by AV_PIX_FMT_NONE.  Can be NULL if this information is
      * not known.
      *)
-    enum AVPixelFormat *valid_sw_formats;
+    valid_sw_formats: PAVPixelFormat;
 
     (**
      * The minimum size of frames in this hw_frames_ctx.
      * (Zero if not known.)
      *)
-    int min_width;
-    int min_height;
+    min_width: cint;
+    min_height: cint;
 
     (**
      * The maximum size of frames in this hw_frames_ctx.
      * (INT_MAX if not known / no limit.)
      *)
-    int max_width;
-    int max_height;
-} AVHWFramesConstraints;
+    max_width: cint;
+    max_height: cint;
+  end;
 
 (**
  * Allocate a HW-specific configuration structure for a given HW device.
@@ -415,7 +429,7 @@ typedef struct AVHWFramesConstraints {
  * @return The newly created HW-specific configuration structure on
  *         success or NULL on failure.
  *)
-void *av_hwdevice_hwconfig_alloc(AVBufferRef *device_ctx);
+function av_hwdevice_hwconfig_alloc(device_ctx: PAVBufferRef): pointer; cdecl; external LIB_AVUTIL;
 
 (**
  * Get the constraints on HW frames given a device and the HW-specific
@@ -429,42 +443,39 @@ void *av_hwdevice_hwconfig_alloc(AVBufferRef *device_ctx);
  * @return AVHWFramesConstraints structure describing the constraints
  *         on the device, or NULL if not available.
  *)
-AVHWFramesConstraints *av_hwdevice_get_hwframe_constraints(AVBufferRef *ref,
-                                                           const void *hwconfig);
+function av_hwdevice_get_hwframe_constraints(ref: PAVBufferRef; const hwconfig: pointer): PAVHWFramesConstraints; cdecl; external LIB_AVUTIL;
 
 (**
  * Free an AVHWFrameConstraints structure.
  *
  * @param constraints The (filled or unfilled) AVHWFrameConstraints structure.
  *)
-procedure av_hwframe_constraints_free(AVHWFramesConstraints **constraints);
-
+procedure av_hwframe_constraints_free(constraints: PPAVHWFramesConstraints); cdecl; external LIB_AVUTIL;
 
 (**
  * Flags to apply to frame mappings.
  *)
-enum {
+const
     (**
      * The mapping must be readable.
      *)
-    AV_HWFRAME_MAP_READ = 1 shl 0,
+    AV_HWFRAME_MAP_READ = 1 shl 0;
     (**
      * The mapping must be writeable.
      *)
-    AV_HWFRAME_MAP_WRITE = 1 shl 1,
+    AV_HWFRAME_MAP_WRITE = 1 shl 1;
     (**
      * The mapped frame will be overwritten completely in subsequent
      * operations, so the current frame data need not be loaded.  Any values
      * which are not overwritten are unspecified.
      *)
-    AV_HWFRAME_MAP_OVERWRITE = 1 shl 2,
+    AV_HWFRAME_MAP_OVERWRITE = 1 shl 2;
     (**
      * The mapping must be direct.  That is, there must not be any copying in
      * the map or unmap steps.  Note that performance of direct mappings may
      * be much lower than normal memory.
      *)
-    AV_HWFRAME_MAP_DIRECT = 1 shl 3,
-};
+    AV_HWFRAME_MAP_DIRECT = 1 shl 3;
 
 (**
  * Map a hardware frame.
@@ -502,8 +513,7 @@ enum {
  * @param flags Some combination of AV_HWFRAME_MAP_* flags.
  * @return Zero on success, negative AVERROR code on failure.
  *)
-function cint av_hwframe_map(AVFrame *dst, const AVFrame *src, int flags);
-
+function av_hwframe_map(dst: PAVFrame; const src: PAVFrame; flags: cint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Create and initialise an AVHWFramesContext as a mapping of another existing
@@ -520,10 +530,6 @@ function cint av_hwframe_map(AVFrame *dst, const AVFrame *src, int flags);
  * @param flags  Currently unused; should be set to zero.
  * @return       Zero on success, negative AVERROR code on failure.
  *)
-function cint av_hwframe_ctx_create_derived(AVBufferRef **derived_frame_ctx,
-                                  enum AVPixelFormat format,
-                                  AVBufferRef *derived_device_ctx,
-                                  AVBufferRef *source_frame_ctx,
-                                  int flags);
+function av_hwframe_ctx_create_derived(derived_frame_ctx: PPAVBufferRef; format: AVPixelFormat; derived_device_ctx: PAVBufferRef; source_frame_ctx: PAVBufferRef; flags: cint): cint; cdecl; external LIB_AVUTIL;
 
 // #endif (* AVUTIL_HWCONTEXT_H *)

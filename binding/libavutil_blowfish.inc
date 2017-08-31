@@ -42,7 +42,7 @@ type
   PAVBlowfish = ^AVBlowfish;
   AVBlowfish = record
     p: array[0..AV_BF_ROUNDS + 1] of uint32_t;
-    s: array[0..3][0..255] of cuint32_t;
+    s: array[0..3][0..255] of cuint32;
   end;
 
 (**
@@ -57,7 +57,7 @@ function av_blowfish_alloc(): PAVBlowfish; cdecl; external LIB_AVUTIL;
  * @param key a key
  * @param key_len length of the key
  *)
-procedure av_blowfish_init(ctx: PAVBlowfish; const key: pcuint8_t; key_len: cint); cdecl; external LIB_AVUTIL;
+procedure av_blowfish_init(ctx: PAVBlowfish; const key: pcuint8; key_len: cint); cdecl; external LIB_AVUTIL;
 
 (**
  * Encrypt or decrypt a buffer using a previously initialized context.
@@ -67,7 +67,7 @@ procedure av_blowfish_init(ctx: PAVBlowfish; const key: pcuint8_t; key_len: cint
  * @param xr right four bytes halves of input to be encrypted
  * @param decrypt 0 for encryption, 1 for decryption
  *)
-procedure av_blowfish_crypt_ecb(ctx: PAVBlowfish; xl: pcuint32_t; xr: pcuint32_t; decrypt: cint); cdecl; external LIB_AVUTIL;
+procedure av_blowfish_crypt_ecb(ctx: PAVBlowfish; xl: pcuint32; xr: pcuint32; decrypt: cint); cdecl; external LIB_AVUTIL;
 
 (**
  * Encrypt or decrypt a buffer using a previously initialized context.
@@ -79,7 +79,7 @@ procedure av_blowfish_crypt_ecb(ctx: PAVBlowfish; xl: pcuint32_t; xr: pcuint32_t
  * @param iv initialization vector for CBC mode, if NULL ECB will be used
  * @param decrypt 0 for encryption, 1 for decryption
  *)
-procedure av_blowfish_crypt(ctx: PAVBlowfish; dst: pcuint8_t; const src: pcuint8_t; count: cint; iv: pcuint8_t; decrypt: cint); cdecl; external LIB_AVUTIL;
+procedure av_blowfish_crypt(ctx: PAVBlowfish; dst: pcuint8; const src: pcuint8; count: cint; iv: pcuint8; decrypt: cint); cdecl; external LIB_AVUTIL;
 
 (**
  * @}

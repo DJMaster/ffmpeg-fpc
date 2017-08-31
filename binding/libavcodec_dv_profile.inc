@@ -57,7 +57,7 @@ type
     sar: array[0..1] of AVRational; (* sample aspect ratios for 4:3 and 16:9 *)
     pix_fmt: AVPixelFormat;(* picture pixel format *)
     bpm: cint;(* blocks per macroblock *)
-    block_sizes: pcuint8_t; (* AC block sizes, in bits *)
+    block_sizes: pcuint8; (* AC block sizes, in bits *)
     audio_stride: cint; (* size of audio_shuffle table *)
     audio_min_samples: array[0..2] of cint; (* min amount of audio samples *)
                                             (* for 48kHz, 44.1kHz and 32kHz *)
@@ -74,7 +74,7 @@ type
  * @param buf_size size of the buffer in bytes
  * @return the DV profile for the supplied data or NULL on failure
  *)
-function av_dv_frame_profile(const sys: PAVDVProfile; const frame: pcuint8_t; buf_size: cunsigned): PAVDVProfile;
+function av_dv_frame_profile(const sys: PAVDVProfile; const frame: pcuint8; buf_size: cunsigned): PAVDVProfile;
 
 (**
  * Get a DV profile for the provided stream parameters.

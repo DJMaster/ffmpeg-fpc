@@ -72,7 +72,7 @@ procedure av_md5_init(ctx: PAVMD5); cdecl; external LIB_AVUTIL;
  * @param src input data to update hash with
  * @param len input data length
  *)
-procedure av_md5_update(ctx: PAVMD5; const src: pcuint8_t; len: cint); cdecl; external LIB_AVUTIL;
+procedure av_md5_update(ctx: PAVMD5; const src: pcuint8; len: cint); cdecl; external LIB_AVUTIL;
 
 (**
  * Finish hashing and output digest value.
@@ -80,7 +80,7 @@ procedure av_md5_update(ctx: PAVMD5; const src: pcuint8_t; len: cint); cdecl; ex
  * @param ctx hash function context
  * @param dst buffer where output digest value is stored
  *)
-procedure av_md5_final(ctx: PAVMD5; dst: pcuint8_t); cdecl; external LIB_AVUTIL;
+procedure av_md5_final(ctx: PAVMD5; dst: pcuint8); cdecl; external LIB_AVUTIL;
 
 (**
  * Hash an array of data.
@@ -89,7 +89,7 @@ procedure av_md5_final(ctx: PAVMD5; dst: pcuint8_t); cdecl; external LIB_AVUTIL;
  * @param src The data to hash
  * @param len The length of the data, in bytes
  *)
-procedure av_md5_sum(dst: pcuint8_t; const src: pcuint8_t; const len: cint); cdecl; external LIB_AVUTIL;
+procedure av_md5_sum(dst: pcuint8; const src: pcuint8; const len: cint); cdecl; external LIB_AVUTIL;
 
 (**
  * @}

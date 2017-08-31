@@ -256,7 +256,7 @@ procedure avresample_free(avr: PPAVAudioResampleContext); cdecl; external LIB_AV
  * @param matrix_encoding     matrixed stereo downmix mode (e.g. dplii)
  * @return                    0 on success, negative AVERROR code on failure
  *)
-function avresample_build_matrix(in_layout: cuint64_t; out_layout: cuint64_t; center_mix_level: cdouble; surround_mix_level: cdouble; lfe_mix_level: cdouble; normalize: cint; matrix: pcdouble; stride: cint; matrix_encoding: AVMatrixEncoding): cint; cdecl; external LIB_AVRESAMPLE;
+function avresample_build_matrix(in_layout: cuint64; out_layout: cuint64; center_mix_level: cdouble; surround_mix_level: cdouble; lfe_mix_level: cdouble; normalize: cint; matrix: pcdouble; stride: cint; matrix_encoding: AVMatrixEncoding): cint; cdecl; external LIB_AVRESAMPLE;
 
 (**
  * Get the current channel mixing matrix.
@@ -391,7 +391,7 @@ function avresample_get_out_samples(avr: PAVAudioResampleContext; in_nb_samples:
  *                        not including converted samples added to the internal
  *                        output FIFO
  *)
-function avresample_convert(avr: PAVAudioResampleContext; output: ppcuint8_t; out_plane_size: cint; out_samples: cint; input: ppcuint8_t; in_plane_size: cint; in_samples: cint): cint; cdecl; external LIB_AVRESAMPLE;
+function avresample_convert(avr: PAVAudioResampleContext; output: ppcuint8; out_plane_size: cint; out_samples: cint; input: ppcuint8; in_plane_size: cint; in_samples: cint): cint; cdecl; external LIB_AVRESAMPLE;
 
 (**
  * Return the number of samples currently in the resampling delay buffer.
@@ -442,7 +442,7 @@ function avresample_available(avr: PAVAudioResampleContext): cint; cdecl; extern
  * @param nb_samples  number of samples to read from the FIFO
  * @return            the number of samples written to output
  *)
-function avresample_read(avr: PAVAudioResampleContext; output: ppcuint8_t; nb_samples: cint): cint; cdecl; external LIB_AVRESAMPLE;
+function avresample_read(avr: PAVAudioResampleContext; output: ppcuint8; nb_samples: cint): cint; cdecl; external LIB_AVRESAMPLE;
 
 (**
  * Convert the samples in the input AVFrame and write them to the output AVFrame.

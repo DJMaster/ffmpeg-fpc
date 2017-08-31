@@ -28,7 +28,7 @@
 // #ifndef AVUTIL_CHANNEL_LAYOUT_H
 // #define AVUTIL_CHANNEL_LAYOUT_H
 
-#include <stdint.h>
+// #include <stdint.h>
 
 (**
  * @file
@@ -52,6 +52,7 @@
  *
  * @{
  *)
+const
   AV_CH_FRONT_LEFT = $00000001;
   AV_CH_FRONT_RIGHT = $00000002;
   AV_CH_FRONT_CENTER = $00000004;
@@ -89,35 +90,36 @@
  * @{
  * *)
   AV_CH_LAYOUT_MONO = (AV_CH_FRONT_CENTER);
-  AV_CH_LAYOUT_STEREO = (AV_CH_FRONT_LEFT|AV_CH_FRONT_RIGHT);
-  AV_CH_LAYOUT_2POINT1 = (AV_CH_LAYOUT_STEREO|AV_CH_LOW_FREQUENCY);
-  AV_CH_LAYOUT_2_1 = (AV_CH_LAYOUT_STEREO|AV_CH_BACK_CENTER);
-  AV_CH_LAYOUT_SURROUND = (AV_CH_LAYOUT_STEREO|AV_CH_FRONT_CENTER);
-  AV_CH_LAYOUT_3POINT1 = (AV_CH_LAYOUT_SURROUND|AV_CH_LOW_FREQUENCY);
-  AV_CH_LAYOUT_4POINT0 = (AV_CH_LAYOUT_SURROUND|AV_CH_BACK_CENTER);
-  AV_CH_LAYOUT_4POINT1 = (AV_CH_LAYOUT_4POINT0|AV_CH_LOW_FREQUENCY);
-  AV_CH_LAYOUT_2_2 = (AV_CH_LAYOUT_STEREO|AV_CH_SIDE_LEFT|AV_CH_SIDE_RIGHT);
-  AV_CH_LAYOUT_QUAD = (AV_CH_LAYOUT_STEREO|AV_CH_BACK_LEFT|AV_CH_BACK_RIGHT);
-  AV_CH_LAYOUT_5POINT0 = (AV_CH_LAYOUT_SURROUND|AV_CH_SIDE_LEFT|AV_CH_SIDE_RIGHT);
-  AV_CH_LAYOUT_5POINT1 = (AV_CH_LAYOUT_5POINT0|AV_CH_LOW_FREQUENCY);
-  AV_CH_LAYOUT_5POINT0_BACK = (AV_CH_LAYOUT_SURROUND|AV_CH_BACK_LEFT|AV_CH_BACK_RIGHT);
-  AV_CH_LAYOUT_5POINT1_BACK = (AV_CH_LAYOUT_5POINT0_BACK|AV_CH_LOW_FREQUENCY);
-  AV_CH_LAYOUT_6POINT0 = (AV_CH_LAYOUT_5POINT0|AV_CH_BACK_CENTER);
-  AV_CH_LAYOUT_6POINT0_FRONT = (AV_CH_LAYOUT_2_2|AV_CH_FRONT_LEFT_OF_CENTER|AV_CH_FRONT_RIGHT_OF_CENTER);
-  AV_CH_LAYOUT_HEXAGONAL = (AV_CH_LAYOUT_5POINT0_BACK|AV_CH_BACK_CENTER);
-  AV_CH_LAYOUT_6POINT1 = (AV_CH_LAYOUT_5POINT1|AV_CH_BACK_CENTER);
-  AV_CH_LAYOUT_6POINT1_BACK = (AV_CH_LAYOUT_5POINT1_BACK|AV_CH_BACK_CENTER);
-  AV_CH_LAYOUT_6POINT1_FRONT = (AV_CH_LAYOUT_6POINT0_FRONT|AV_CH_LOW_FREQUENCY);
-  AV_CH_LAYOUT_7POINT0 = (AV_CH_LAYOUT_5POINT0|AV_CH_BACK_LEFT|AV_CH_BACK_RIGHT);
-  AV_CH_LAYOUT_7POINT0_FRONT = (AV_CH_LAYOUT_5POINT0|AV_CH_FRONT_LEFT_OF_CENTER|AV_CH_FRONT_RIGHT_OF_CENTER);
-  AV_CH_LAYOUT_7POINT1 = (AV_CH_LAYOUT_5POINT1|AV_CH_BACK_LEFT|AV_CH_BACK_RIGHT);
-  AV_CH_LAYOUT_7POINT1_WIDE = (AV_CH_LAYOUT_5POINT1|AV_CH_FRONT_LEFT_OF_CENTER|AV_CH_FRONT_RIGHT_OF_CENTER);
-  AV_CH_LAYOUT_7POINT1_WIDE_BACK = (AV_CH_LAYOUT_5POINT1_BACK|AV_CH_FRONT_LEFT_OF_CENTER|AV_CH_FRONT_RIGHT_OF_CENTER);
-  AV_CH_LAYOUT_OCTAGONAL = (AV_CH_LAYOUT_5POINT0|AV_CH_BACK_LEFT|AV_CH_BACK_CENTER|AV_CH_BACK_RIGHT);
-  AV_CH_LAYOUT_HEXADECAGONAL = (AV_CH_LAYOUT_OCTAGONAL|AV_CH_WIDE_LEFT|AV_CH_WIDE_RIGHT|AV_CH_TOP_BACK_LEFT|AV_CH_TOP_BACK_RIGHT|AV_CH_TOP_BACK_CENTER|AV_CH_TOP_FRONT_CENTER|AV_CH_TOP_FRONT_LEFT|AV_CH_TOP_FRONT_RIGHT);
-  AV_CH_LAYOUT_STEREO_DOWNMIX = (AV_CH_STEREO_LEFT|AV_CH_STEREO_RIGHT);
+  AV_CH_LAYOUT_STEREO = (AV_CH_FRONT_LEFT or AV_CH_FRONT_RIGHT);
+  AV_CH_LAYOUT_2POINT1 = (AV_CH_LAYOUT_STEREO or AV_CH_LOW_FREQUENCY);
+  AV_CH_LAYOUT_2_1 = (AV_CH_LAYOUT_STEREO or AV_CH_BACK_CENTER);
+  AV_CH_LAYOUT_SURROUND = (AV_CH_LAYOUT_STEREO or AV_CH_FRONT_CENTER);
+  AV_CH_LAYOUT_3POINT1 = (AV_CH_LAYOUT_SURROUND or AV_CH_LOW_FREQUENCY);
+  AV_CH_LAYOUT_4POINT0 = (AV_CH_LAYOUT_SURROUND or AV_CH_BACK_CENTER);
+  AV_CH_LAYOUT_4POINT1 = (AV_CH_LAYOUT_4POINT0 or AV_CH_LOW_FREQUENCY);
+  AV_CH_LAYOUT_2_2 = (AV_CH_LAYOUT_STEREO or AV_CH_SIDE_LEFT or AV_CH_SIDE_RIGHT);
+  AV_CH_LAYOUT_QUAD = (AV_CH_LAYOUT_STEREO or AV_CH_BACK_LEFT or AV_CH_BACK_RIGHT);
+  AV_CH_LAYOUT_5POINT0 = (AV_CH_LAYOUT_SURROUND or AV_CH_SIDE_LEFT or AV_CH_SIDE_RIGHT);
+  AV_CH_LAYOUT_5POINT1 = (AV_CH_LAYOUT_5POINT0 or AV_CH_LOW_FREQUENCY);
+  AV_CH_LAYOUT_5POINT0_BACK = (AV_CH_LAYOUT_SURROUND or AV_CH_BACK_LEFT or AV_CH_BACK_RIGHT);
+  AV_CH_LAYOUT_5POINT1_BACK = (AV_CH_LAYOUT_5POINT0_BACK or AV_CH_LOW_FREQUENCY);
+  AV_CH_LAYOUT_6POINT0 = (AV_CH_LAYOUT_5POINT0 or AV_CH_BACK_CENTER);
+  AV_CH_LAYOUT_6POINT0_FRONT = (AV_CH_LAYOUT_2_2 or AV_CH_FRONT_LEFT_OF_CENTER or AV_CH_FRONT_RIGHT_OF_CENTER);
+  AV_CH_LAYOUT_HEXAGONAL = (AV_CH_LAYOUT_5POINT0_BACK or AV_CH_BACK_CENTER);
+  AV_CH_LAYOUT_6POINT1 = (AV_CH_LAYOUT_5POINT1 or AV_CH_BACK_CENTER);
+  AV_CH_LAYOUT_6POINT1_BACK = (AV_CH_LAYOUT_5POINT1_BACK or AV_CH_BACK_CENTER);
+  AV_CH_LAYOUT_6POINT1_FRONT = (AV_CH_LAYOUT_6POINT0_FRONT or AV_CH_LOW_FREQUENCY);
+  AV_CH_LAYOUT_7POINT0 = (AV_CH_LAYOUT_5POINT0 or AV_CH_BACK_LEFT or AV_CH_BACK_RIGHT);
+  AV_CH_LAYOUT_7POINT0_FRONT = (AV_CH_LAYOUT_5POINT0 or AV_CH_FRONT_LEFT_OF_CENTER or AV_CH_FRONT_RIGHT_OF_CENTER);
+  AV_CH_LAYOUT_7POINT1 = (AV_CH_LAYOUT_5POINT1 or AV_CH_BACK_LEFT or AV_CH_BACK_RIGHT);
+  AV_CH_LAYOUT_7POINT1_WIDE = (AV_CH_LAYOUT_5POINT1 or AV_CH_FRONT_LEFT_OF_CENTER or AV_CH_FRONT_RIGHT_OF_CENTER);
+  AV_CH_LAYOUT_7POINT1_WIDE_BACK = (AV_CH_LAYOUT_5POINT1_BACK or AV_CH_FRONT_LEFT_OF_CENTER or AV_CH_FRONT_RIGHT_OF_CENTER);
+  AV_CH_LAYOUT_OCTAGONAL = (AV_CH_LAYOUT_5POINT0 or AV_CH_BACK_LEFT or AV_CH_BACK_CENTER or AV_CH_BACK_RIGHT);
+  AV_CH_LAYOUT_HEXADECAGONAL = (AV_CH_LAYOUT_OCTAGONAL or AV_CH_WIDE_LEFT or AV_CH_WIDE_RIGHT or AV_CH_TOP_BACK_LEFT or AV_CH_TOP_BACK_RIGHT or AV_CH_TOP_BACK_CENTER or AV_CH_TOP_FRONT_CENTER or AV_CH_TOP_FRONT_LEFT or AV_CH_TOP_FRONT_RIGHT);
+  AV_CH_LAYOUT_STEREO_DOWNMIX = (AV_CH_STEREO_LEFT or AV_CH_STEREO_RIGHT);
 
-enum AVMatrixEncoding {
+type
+  AVMatrixEncoding = (
     AV_MATRIX_ENCODING_NONE,
     AV_MATRIX_ENCODING_DOLBY,
     AV_MATRIX_ENCODING_DPLII,
@@ -126,7 +128,7 @@ enum AVMatrixEncoding {
     AV_MATRIX_ENCODING_DOLBYEX,
     AV_MATRIX_ENCODING_DOLBYHEADPHONE,
     AV_MATRIX_ENCODING_NB
-};
+  );
 
 (**
  * Return a channel layout id that matches name, or 0 if no match is found.
@@ -145,7 +147,7 @@ enum AVMatrixEncoding {
  *
  * Example: "stereo+FC" = "2c+FC" = "2c+1c" = "0x7"
  *)
-uint64_t av_get_channel_layout(const name: pchar);
+function av_get_channel_layout(const name: pchar): cuint64; cdecl; external LIB_AVUTIL;
 
 (**
  * Return a channel layout and the number of channels based on the specified name.
@@ -159,7 +161,7 @@ uint64_t av_get_channel_layout(const name: pchar);
  *
  * @return 0 on success, AVERROR(EINVAL) if the parsing fails.
  *)
-function cint av_get_extended_channel_layout(const pchar name, uint64_t* channel_layout, int* nb_channels);
+function av_get_extended_channel_layout(const name: pchar; channel_layout: pcuint64; nb_channels: pcint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Return a description of a channel layout.
@@ -168,23 +170,27 @@ function cint av_get_extended_channel_layout(const pchar name, uint64_t* channel
  * @param buf put here the string containing the channel layout
  * @param buf_size size in bytes of the buffer
  *)
-procedure av_get_channel_layout_string(char *buf, int buf_size, int nb_channels, uint64_t channel_layout);
+procedure av_get_channel_layout_string(buf: pchar; buf_size: cint; nb_channels: cint; channel_layout: cuint64); cdecl; external LIB_AVUTIL;
 
-struct AVBPrint;
+type
+  PAVBPrint = ^AVBPrint;
+  AVBPrint = record
+  end;
+
 (**
  * Append a description of a channel layout to a bprint buffer.
  *)
-procedure av_bprint_channel_layout(struct AVBPrint *bp, int nb_channels, uint64_t channel_layout);
+procedure av_bprint_channel_layout(bp: PAVBPrint; nb_channels: cint; channel_layout: cuint64); cdecl; external LIB_AVUTIL;
 
 (**
  * Return the number of channels in the channel layout.
  *)
-function cint av_get_channel_layout_nb_channels(uint64_t channel_layout);
+function av_get_channel_layout_nb_channels(channel_layout: cuint64): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Return default channel layout for a given number of channels.
  *)
-int64_t av_get_default_channel_layout(int nb_channels);
+function av_get_default_channel_layout(nb_channels: cint): cint64; cdecl; external LIB_AVUTIL;
 
 (**
  * Get the index of a channel in channel_layout.
@@ -195,20 +201,19 @@ int64_t av_get_default_channel_layout(int nb_channels);
  * @return index of channel in channel_layout on success, a negative AVERROR
  *         on error.
  *)
-function cint av_get_channel_layout_channel_index(uint64_t channel_layout,
-                                        uint64_t channel);
+function av_get_channel_layout_channel_index(channel_layout: cuint64; channel: cuint64): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Get the channel with the given index in channel_layout.
  *)
-uint64_t av_channel_layout_extract_channel(uint64_t channel_layout, int index);
+function av_channel_layout_extract_channel(channel_layout: cuint64; index: cint): cuint64; cdecl; external LIB_AVUTIL;
 
 (**
  * Get the name of a given channel.
  *
  * @return channel name on success, NULL on error.
  *)
-const pchar av_get_channel_name(uint64_t channel);
+function av_get_channel_name(channel: cuint64): pchar; cdecl; external LIB_AVUTIL;
 
 (**
  * Get the description of a given channel.
@@ -216,7 +221,7 @@ const pchar av_get_channel_name(uint64_t channel);
  * @param channel  a channel layout with a single channel
  * @return  channel description on success, NULL on error
  *)
-const pchar av_get_channel_description(uint64_t channel);
+function av_get_channel_description(channel: cuint64): pchar; cdecl; external LIB_AVUTIL;
 
 (**
  * Get the value and name of a standard channel layout.
@@ -227,8 +232,7 @@ const pchar av_get_channel_description(uint64_t channel);
  * @return  0  if the layout exists,
  *          <0 if index is beyond the limits
  *)
-function cint av_get_standard_channel_layout(unsigned index, uint64_t *layout,
-                                   const ppchar name);
+function av_get_standard_channel_layout(index: cunsigned; layout: pcuint64; const name: ppchar): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * @}

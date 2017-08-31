@@ -57,7 +57,7 @@ function av_tea_alloc(): PAVTEA; cdecl; external LIB_AVUTIL;
  * @param key a key of 16 bytes used for encryption/decryption
  * @param rounds the number of rounds in TEA (64 is the "standard")
  *)
-procedure av_tea_init(ctx: PAVTEA; const key: array[0..15] of cuint8_t; rounds: cint); cdecl; external LIB_AVUTIL;
+procedure av_tea_init(ctx: PAVTEA; const key: array[0..15] of cuint8; rounds: cint); cdecl; external LIB_AVUTIL;
 
 (**
  * Encrypt or decrypt a buffer using a previously initialized context.
@@ -69,7 +69,7 @@ procedure av_tea_init(ctx: PAVTEA; const key: array[0..15] of cuint8_t; rounds: 
  * @param iv initialization vector for CBC mode, if NULL then ECB will be used
  * @param decrypt 0 for encryption, 1 for decryption
  *)
-procedure av_tea_crypt(ctx: PAVTEA; dst: pcuint8_t; const src: pcuint8_t; count: cint; iv: pcuint8_t; decrypt: cint); cdecl; external LIB_AVUTIL;
+procedure av_tea_crypt(ctx: PAVTEA; dst: pcuint8; const src: pcuint8; count: cint; iv: pcuint8; decrypt: cint); cdecl; external LIB_AVUTIL;
 
 (**
  * @}

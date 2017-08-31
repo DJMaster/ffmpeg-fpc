@@ -33,44 +33,44 @@
 // #ifndef AVUTIL_MATHEMATICS_H
 // #define AVUTIL_MATHEMATICS_H
 
-#include <stdint.h>
-#include <math.h>
-#include "attributes.h"
-#include "rational.h"
-#include "intfloat.h"
+// #include <stdint.h>
+// #include <math.h>
+// #include "attributes.h"
+// #include "rational.h"
+// #include "intfloat.h"
 
 {$ifndef M_E}
-  M_E = 2.7182818284590452354; (* e *)
+{$define M_E := 2.7182818284590452354} (* e *)
 {$endif}
 {$ifndef M_LN2}
-  M_LN2 = 0.69314718055994530942; (* log_e 2 *)
+{$define M_LN2 := 0.69314718055994530942} (* log_e 2 *)
 {$endif}
 {$ifndef M_LN10}
-  M_LN10 = 2.30258509299404568402; (* log_e 10 *)
+{$define M_LN10 := 2.30258509299404568402} (* log_e 10 *)
 {$endif}
 {$ifndef M_LOG2_10}
-  M_LOG2_10 = 3.32192809488736234787; (* log_2 10 *)
+{$define M_LOG2_10 := 3.32192809488736234787} (* log_2 10 *)
 {$endif}
 {$ifndef M_PHI}
-  M_PHI = 1.61803398874989484820; (* phi / golden ratio *)
+{$define M_PHI := 1.61803398874989484820} (* phi / golden ratio *)
 {$endif}
 {$ifndef M_PI}
-  M_PI = 3.14159265358979323846; (* pi *)
+{$define M_PI := 3.14159265358979323846} (* pi *)
 {$endif}
 {$ifndef M_PI_2}
-  M_PI_2 = 1.57079632679489661923; (* pi/2 *)
+{$define M_PI_2 := 1.57079632679489661923} (* pi/2 *)
 {$endif}
 {$ifndef M_SQRT1_2}
-  M_SQRT1_2 = 0.70710678118654752440; (* 1/sqrt(2) *)
+{$define M_SQRT1_2 := 0.70710678118654752440} (* 1/sqrt(2) *)
 {$endif}
 {$ifndef M_SQRT2}
-  M_SQRT2 = 1.41421356237309504880; (* sqrt(2) *)
+{$define M_SQRT2 := 1.41421356237309504880} (* sqrt(2) *)
 {$endif}
 {$ifndef NAN}
-  NAN = av_int2float(0x7fc00000);
+{$define NAN := av_int2float(0x7fc00000)}
 {$endif}
 {$ifndef INFINITY}
-  INFINITY = av_int2float(0x7f800000);
+{$define INFINITY := av_int2float(0x7f800000)}
 {$endif}
 
 (**
@@ -82,7 +82,8 @@
 (**
  * Rounding methods.
  *)
-enum AVRounding {
+type
+  AVRounding = (
     AV_ROUND_ZERO = 0, ///< Round toward zero.
     AV_ROUND_INF = 1, ///< Round away from zero.
     AV_ROUND_DOWN = 2, ///< Round toward -infinity.
@@ -111,8 +112,8 @@ enum AVRounding {
      * //     => AV_NOPTS_VALUE
      * @endcode
      *)
-    AV_ROUND_PASS_MINMAX = 8192,
-};
+    AV_ROUND_PASS_MINMAX = 8192
+  );
 
 (**
  * Compute the greatest common divisor of two integer operands.
@@ -121,7 +122,7 @@ enum AVRounding {
  * @return GCD of a and b up to sign; if a >= 0 and b >= 0, return value is >= 0;
  * if a == 0 and b == 0, returns 0.
  *)
-int64_t av_const av_gcd(int64_t a, int64_t b);
+function av_const av_gcd(a: int64; b: int64): cint64; cdecl; external LIB_AVUTIL;
 
 (**
  * Rescale a 64-bit integer with rounding to nearest.
@@ -133,7 +134,8 @@ int64_t av_const av_gcd(int64_t a, int64_t b);
  *
  * @see av_rescale_rnd(), av_rescale_q(), av_rescale_q_rnd()
  *)
-int64_t av_rescale(int64_t a, int64_t b, int64_t c) av_const;
+//TODO av_const
+function av_rescale(a: cint64; b: cint64; c: cint64): cint64; cdecl; external LIB_AVUTIL;
 
 (**
  * Rescale a 64-bit integer with specified rounding.
@@ -143,7 +145,8 @@ int64_t av_rescale(int64_t a, int64_t b, int64_t c) av_const;
  *
  * @see av_rescale(), av_rescale_q(), av_rescale_q_rnd()
  *)
-int64_t av_rescale_rnd(int64_t a, int64_t b, int64_t c, enum AVRounding rnd) av_const;
+//TODO av_const
+function av_rescale_rnd(a: cint64_t; b: cint64_t; c: cint64_t; rnd: AVRounding): cint64; cdecl; external LIB_AVUTIL;
 
 (**
  * Rescale a 64-bit integer by 2 rational numbers.
@@ -154,7 +157,8 @@ int64_t av_rescale_rnd(int64_t a, int64_t b, int64_t c, enum AVRounding rnd) av_
  *
  * @see av_rescale(), av_rescale_rnd(), av_rescale_q_rnd()
  *)
-int64_t av_rescale_q(int64_t a, AVRational bq, AVRational cq) av_const;
+// av_const
+function av_rescale_q(a: cint64_t; bq: AVRational; cq: AVRational): cint64; cdecl; external LIB_AVUTIL;
 
 (**
  * Rescale a 64-bit integer by 2 rational numbers with specified rounding.
@@ -163,8 +167,8 @@ int64_t av_rescale_q(int64_t a, AVRational bq, AVRational cq) av_const;
  *
  * @see av_rescale(), av_rescale_rnd(), av_rescale_q()
  *)
-int64_t av_rescale_q_rnd(int64_t a, AVRational bq, AVRational cq,
-                         enum AVRounding rnd) av_const;
+// av_const
+function av_rescale_q_rnd(a: cint64; bq: AVRational; cq: AVRational; rnd: AVRounding): cint64; cdecl; external LIB_AVUTIL;
 
 (**
  * Compare two timestamps each in its own time base.
@@ -178,7 +182,7 @@ int64_t av_rescale_q_rnd(int64_t a, AVRational bq, AVRational cq,
  * The result of the function is undefined if one of the timestamps is outside
  * the `int64_t` range when represented in the other's timebase.
  *)
-function cint av_compare_ts(int64_t ts_a, AVRational tb_a, int64_t ts_b, AVRational tb_b);
+function av_compare_ts(ts_a: cint64; tb_a: AVRational; ts_b: cint64; tb_b: AVRational): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Compare the remainders of two integer operands divided by a common divisor.
@@ -198,7 +202,7 @@ function cint av_compare_ts(int64_t ts_a, AVRational tb_a, int64_t ts_b, AVRatio
  *         - a positive value if `a % mod > b % mod`
  *         - zero             if `a % mod == b % mod`
  *)
-int64_t av_compare_mod(uint64_t a, uint64_t b, uint64_t mod);
+function av_compare_mod(a: cuint64; b: cuint64; mod_: cuint64): cint64; cdecl; external LIB_AVUTIL;
 
 (**
  * Rescale a timestamp while preserving known durations.
@@ -225,7 +229,7 @@ int64_t av_compare_mod(uint64_t a, uint64_t b, uint64_t mod);
  * @note In the context of this function, "duration" is in term of samples, not
  *       seconds.
  *)
-int64_t av_rescale_delta(AVRational in_tb, int64_t in_ts,  AVRational fs_tb, int duration, int64_t *last, AVRational out_tb);
+function av_rescale_delta(in_tb: AVRational; in_ts: cint64_t; fs_tb: AVRational; duration: cint; last: pcint64; out_tb: AVRational): cint64; cdecl; external LIB_AVUTIL;
 
 (**
  * Add a value to a timestamp.
@@ -238,8 +242,7 @@ int64_t av_rescale_delta(AVRational in_tb, int64_t in_ts,  AVRational fs_tb, int
  * @param[in] inc    Value to be added
  * @param[in] inc_tb Time base of `inc`
  *)
-int64_t av_add_stable(AVRational ts_tb, int64_t ts, AVRational inc_tb, int64_t inc);
-
+function av_add_stable(ts_tb: AVRational; ts: cint64; inc_tb: AVRational; inc_: cint64): cint64; cdecl; external LIB_AVUTIL;
 
 (**
  * @}

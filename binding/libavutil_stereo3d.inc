@@ -27,9 +27,9 @@
 // #ifndef AVUTIL_STEREO3D_H
 // #define AVUTIL_STEREO3D_H
 
-#include <stdint.h>
+// #include <stdint.h>
 
-#include "frame.h"
+// #include "frame.h"
 
 (**
  * List of possible 3D Types

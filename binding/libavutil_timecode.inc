@@ -49,7 +49,7 @@ type
   PAVTimecode = ^AVTimecode;
   AVTimecode = record
     start: cint; ///< timecode frame start (first base frame number)
-    flags: cuint32_t; ///< flags such as drop frame, +24 hours support, ...
+    flags: cuint32; ///< flags such as drop frame, +24 hours support, ...
     rate: AVRational; ///< frame rate in rational form
     fps: cunsigned; ///< frame per second; must be consistent with the rate field
   end;
@@ -77,7 +77,7 @@ function av_timecode_adjust_ntsc_framenum2(framenum: cint; fps: cint): cint; cde
  * @note Color frame (CF), binary group flags (BGF) and biphase mark polarity
  *       correction (PC) bits are set to zero.
  *)
-function av_timecode_get_smpte_from_framenum(const tc: PAVTimecode; framenum: cint): cuint32_t; cdecl; external LIB_AVUTIL;
+function av_timecode_get_smpte_from_framenum(const tc: PAVTimecode; framenum: cint): cuint32; cdecl; external LIB_AVUTIL;
 
 (**
  * Load timecode string in buf.
@@ -102,7 +102,7 @@ function av_timecode_make_string(const tc: PAVTimecode; buf: pchar; framenum: ci
  *                   is arbitrary
  * @return           the buf parameter
  *)
-function av_timecode_make_smpte_tc_string(buf: pchar; tcsmpte: cuint32_t; prevent_df: cint): pchar; cdecl; external LIB_AVUTIL;
+function av_timecode_make_smpte_tc_string(buf: pchar; tcsmpte: cuint32; prevent_df: cint): pchar; cdecl; external LIB_AVUTIL;
 
 (**
  * Get the timecode string from the 25-bit timecode format (MPEG GOP format).
@@ -111,7 +111,7 @@ function av_timecode_make_smpte_tc_string(buf: pchar; tcsmpte: cuint32_t; preven
  * @param tc25bit the 25-bits timecode
  * @return        the buf parameter
  *)
-function av_timecode_make_mpeg_tc_string(buf: pchar; tc25bit: cuint32_t): pchar; cdecl; external LIB_AVUTIL;
+function av_timecode_make_mpeg_tc_string(buf: pchar; tc25bit: cuint32): pchar; cdecl; external LIB_AVUTIL;
 
 (**
  * Init a timecode struct with the passed parameters.

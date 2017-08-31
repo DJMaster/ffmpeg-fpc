@@ -28,7 +28,7 @@
 // #ifndef AVFILTER_AVFILTERGRAPH_H
 // #define AVFILTER_AVFILTERGRAPH_H
 
-#include "avfilter.h"
-#include "libavutil/log.h"
+// #include "avfilter.h"
+// #include "libavutil/log.h"
 
 // #endif (* AVFILTER_AVFILTERGRAPH_H *)

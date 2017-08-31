@@ -275,7 +275,7 @@ function swr_is_initialized(s: PSwrContext): cint; cdecl; external LIB_SWRESAMPL
  * @see swr_init(), swr_free()
  * @return NULL on error, allocated context otherwise
  *)
-function swr_alloc_set_opts(s: PSwrContext; out_ch_layout: cint64_t; out_sample_fmt: AVSampleFormat; out_sample_rate: cint; in_ch_layout: cint64_t; in_sample_fmt: AVSampleFormat; in_sample_rate: cint; log_offset: cint; log_ctx: pointer): PSwrContext; cdecl; external LIB_SWRESAMPLE;
+function swr_alloc_set_opts(s: PSwrContext; out_ch_layout: cint64; out_sample_fmt: AVSampleFormat; out_sample_rate: cint; in_ch_layout: cint64; in_sample_fmt: AVSampleFormat; in_sample_rate: cint; log_offset: cint; log_ctx: pointer): PSwrContext; cdecl; external LIB_SWRESAMPLE;
 
 (**
  * @}
@@ -328,7 +328,7 @@ procedure swr_close(s: PSwrContext); cdecl; external LIB_SWRESAMPLE;
  *
  * @return number of samples output per channel, negative value on error
  *)
-function swr_convert(s: PSwrContext; out_: ppcuint8_t; out_count: cint; const in_: ppcuint8_t; in_count: cint): cint; cdecl; external LIB_SWRESAMPLE;
+function swr_convert(s: PSwrContext; out_: ppcuint8; out_count: cint; const in_: ppcuint8; in_count: cint): cint; cdecl; external LIB_SWRESAMPLE;
 
 (**
  * Convert the next timestamp from input to output
@@ -347,7 +347,7 @@ function swr_convert(s: PSwrContext; out_: ppcuint8_t; out_count: cint; const in
  *      function used internally for timestamp compensation.
  * @return the output timestamp for the next output sample
  *)
-function swr_next_pts(s: PSwrContext; pts: cint64_t): cint64_t; cdecl; external LIB_SWRESAMPLE;
+function swr_next_pts(s: PSwrContext; pts: cint64): cint64; cdecl; external LIB_SWRESAMPLE;
 
 (**
  * @}
@@ -409,7 +409,7 @@ function swr_set_channel_mapping(s: PSwrContext; const channel_map: pcint): cint
  * @param log_ctx             parent logging context, can be NULL
  * @return                    0 on success, negative AVERROR code on failure
  *)
-function swr_build_matrix(in_layout: cuint64_t; out_layout: cuint64_t; center_mix_level: cdouble; surround_mix_level: cdouble; lfe_mix_level: cdouble; rematrix_maxval: cdouble; rematrix_volume: cdouble; matrix: pcdouble; stride: cint; matrix_encoding: AVMatrixEncoding; log_ctx: pointer): cint; cdecl; external LIB_SWRESAMPLE;
+function swr_build_matrix(in_layout: cuint64; out_layout: cuint64; center_mix_level: cdouble; surround_mix_level: cdouble; lfe_mix_level: cdouble; rematrix_maxval: cdouble; rematrix_volume: cdouble; matrix: pcdouble; stride: cint; matrix_encoding: AVMatrixEncoding; log_ctx: pointer): cint; cdecl; external LIB_SWRESAMPLE;
 
 (**
  * Set a customized remix matrix.
@@ -479,7 +479,7 @@ function swr_inject_silence(s: PSwrContext; count: cint): cint; cdecl; external 
  *                  returned
  * @returns     the delay in 1 / @c base units.
  *)
-function swr_get_delay(s: PSwrContext; base: cint64_t): cint64_t; cdecl; external LIB_SWRESAMPLE;
+function swr_get_delay(s: PSwrContext; base: cint64): cint64; cdecl; external LIB_SWRESAMPLE;
 
 (**
  * Find an upper bound on the number of samples that the next swr_convert

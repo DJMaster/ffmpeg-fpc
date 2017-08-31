@@ -27,10 +27,10 @@
 // #ifndef AVUTIL_BPRINT_H
 // #define AVUTIL_BPRINT_H
 
-#include <stdarg.h>
+// #include <stdarg.h>
 
-#include "attributes.h"
-#include "avstring.h"
+// #include "attributes.h"
+// #include "avstring.h"
 
 (**
  * Define a structure with extra padding to a fixed size
@@ -97,7 +97,8 @@ FF_PAD_STRUCTURE(AVBPrint, 1024,
  * Convenience macros for special values for av_bprint_init() size_max
  * parameter.
  *)
-#define AV_BPRINT_SIZE_UNLIMITED  ((unsigned)-1)
+const
+  AV_BPRINT_SIZE_UNLIMITED: cunsigned = -1;
   AV_BPRINT_SIZE_AUTOMATIC = 1;
   AV_BPRINT_SIZE_COUNT_ONLY = 0;
 
@@ -114,7 +115,7 @@ FF_PAD_STRUCTURE(AVBPrint, 1024,
  *                   UINT_MAX, the largest limit possible.
  *                   Check also AV_BPRINT_SIZE_* macros.
  *)
-procedure av_bprint_init(AVBPrint *buf, unsigned size_init, unsigned size_max);
+procedure av_bprint_init(buf: PAVBPrint; size_init: cunsigned; size_max: cunsigned); cdecl; external LIB_AVUTIL;
 
 (**
  * Init a print buffer using a pre-existing buffer.
@@ -125,22 +126,23 @@ procedure av_bprint_init(AVBPrint *buf, unsigned size_init, unsigned size_max);
  * @param buffer  byte buffer to use for the string data
  * @param size    size of buffer
  *)
-procedure av_bprint_init_for_buffer(AVBPrint *buf, char *buffer, unsigned size);
+procedure av_bprint_init_for_buffer(buf: PAVBPrint; buffer: pchar; size: cunsigned); cdecl; external LIB_AVUTIL;
 
 (**
  * Append a formatted string to a print buffer.
  *)
-procedure av_bprintf(AVBPrint *buf, const pchar fmt, ...) av_printf_format(2, 3);
+//TODO av_printf_format(2, 3)
+procedure av_bprintf(buf: PAVBPrint; const fmt: pchar; ...); cdecl; external LIB_AVUTIL;
 
 (**
  * Append a formatted string to a print buffer.
  *)
-procedure av_vbprintf(AVBPrint *buf, const pchar fmt, va_list vl_arg);
+procedure av_vbprintf(buf: PAVBPrint; const fmt: pchar; vl_arg: va_list); cdecl; external LIB_AVUTIL;
 
 (**
  * Append char c n times to a print buffer.
  *)
-procedure av_bprint_chars(AVBPrint *buf, char c, unsigned n);
+procedure av_bprint_chars(buf: PAVBPrint; c: char; n: cunsigned); cdecl; external LIB_AVUTIL;
 
 (**
  * Append data to a print buffer.
@@ -149,9 +151,13 @@ procedure av_bprint_chars(AVBPrint *buf, char c, unsigned n);
  * param data pointer to data
  * param size size of data
  *)
-procedure av_bprint_append_data(AVBPrint *buf, const pchar data, unsigned size);
+procedure av_bprint_append_data(buf: PAVBPrint, const data: pchar; size: cunsigned); cdecl; external LIB_AVUTIL;
 
-struct tm;
+type
+  Ptm = ^tm;
+  tm = record
+  end;
+
 (**
  * Append a formatted date and time to a print buffer.
  *
@@ -163,7 +169,7 @@ struct tm;
  * produce poor results if the format string expands to a very long text and
  * the bprint buffer is near the limit stated by the size_max option.
  *)
-procedure av_bprint_strftime(AVBPrint *buf, const pchar fmt, const struct tm *tm);
+procedure av_bprint_strftime(buf: PAVBPrint; const fmt: pchar; const tm: Ptm); cdecl; external LIB_AVUTIL;
 
 (**
  * Allocate bytes in the buffer for external use.
@@ -174,13 +180,12 @@ procedure av_bprint_strftime(AVBPrint *buf, const pchar fmt, const struct tm *tm
  * @param[out] actual_size  size of the memory area after allocation;
  *                          can be larger or smaller than size
  *)
-procedure av_bprint_get_buffer(AVBPrint *buf, unsigned size,
-                          unsigned char **mem, unsigned *actual_size);
+procedure av_bprint_get_buffer(buf: PAVBPrint; size: cunsigned; mem: ppcuchar; actual_size: pcunsigned); cdecl; external LIB_AVUTIL;
 
 (**
  * Reset the string to "" but keep internal allocated data.
  *)
-procedure av_bprint_clear(AVBPrint *buf);
+procedure av_bprint_clear(buf: PAVBPrint); cdecl; external LIB_AVUTIL;
 
 (**
  * Test if the print buffer is complete (not truncated).
@@ -188,7 +193,7 @@ procedure av_bprint_clear(AVBPrint *buf);
  * It may have been truncated due to a memory allocation failure
  * or the size_max limit (compare size and size_max if necessary).
  *)
-static inline int av_bprint_is_complete(const AVBPrint *buf)
+function av_bprint_is_complete(const buf: PAVBPrint): cint; inline;
 {
     return buf->len < buf->size;
 }
@@ -204,7 +209,7 @@ static inline int av_bprint_is_complete(const AVBPrint *buf)
  *                    if NULL, the buffer is discarded and freed
  * @return  0 for success or error code (probably AVERROR(ENOMEM))
  *)
-function cint av_bprint_finalize(AVBPrint *buf, char **ret_str);
+function av_bprint_finalize(buf: PAVBPrint; ret_str: ppchar): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Escape the content in src and append it to dstbuf.
@@ -219,7 +224,6 @@ function cint av_bprint_finalize(AVBPrint *buf, char **ret_str);
  *                      notice.
  * @param flags         flags which control how to escape, see AV_ESCAPE_FLAG_* macros
  *)
-procedure av_bprint_escape(AVBPrint *dstbuf, const pchar src, const pchar special_chars,
-                      enum AVEscapeMode mode, int flags);
+procedure av_bprint_escape(dstbuf: PAVBPrint; const src: pchar; const special_chars: pchar; mode: AVEscapeMode; flags: cint ); cdecl; external LIB_AVUTIL;
 
 // #endif (* AVUTIL_BPRINT_H *)

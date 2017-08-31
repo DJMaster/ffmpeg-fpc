@@ -32,7 +32,7 @@
  * Libswresample version macros
  *)
 
-#include "libavutil/avutil.h"
+// #include "libavutil/avutil.h"
 
 const
   LIBSWRESAMPLE_VERSION_MAJOR = 2;

@@ -81,7 +81,7 @@ function av_murmur3_alloc(): PAVMurMur3; cdecl; external LIB_AVUTIL;
  * @see @ref lavu_murmur3_seedinfo "Detailed description" on a discussion of
  * seeds for MurmurHash3.
  *)
-procedure av_murmur3_init_seeded(c: PAVMurMur3; seed: cuint64_t); cdecl; external LIB_AVUTIL;
+procedure av_murmur3_init_seeded(c: PAVMurMur3; seed: cuint64); cdecl; external LIB_AVUTIL;
 
 (**
  * Initialize or reinitialize an AVMurMur3 hash context.
@@ -103,7 +103,7 @@ procedure av_murmur3_init(c: PAVMurMur3); cdecl; external LIB_AVUTIL;
  * @param[in]  src  Input data to update hash with
  * @param[in]  len  Number of bytes to read from `src`
  *)
-procedure av_murmur3_update(c: PAVMurMur3; const src: pcuint8_t; len: cint); cdecl; external LIB_AVUTIL;
+procedure av_murmur3_update(c: PAVMurMur3; const src: pcuint8; len: cint); cdecl; external LIB_AVUTIL;
 
 (**
  * Finish hashing and output digest value.
@@ -111,7 +111,7 @@ procedure av_murmur3_update(c: PAVMurMur3; const src: pcuint8_t; len: cint); cde
  * @param[in,out] c    Hash context
  * @param[out]    dst  Buffer where output digest value is stored
  *)
-procedure av_murmur3_final(c: PAVMurMur3; dst: array[0..15] of cuint8_t); cdecl; external LIB_AVUTIL;
+procedure av_murmur3_final(c: PAVMurMur3; dst: array[0..15] of cuint8); cdecl; external LIB_AVUTIL;
 
 (**
  * @}

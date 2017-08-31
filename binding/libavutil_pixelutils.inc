@@ -33,7 +33,7 @@
  * Sum of abs(src1[x] - src2[x])
  *)
 type
-  av_pixelutils_sad_fn = function (const src1: pcuint8_t; stride1: ptrdiff_t; const src2: pcuint8_t; stride2: ptrdiff_t): cint; cdecl;
+  av_pixelutils_sad_fn = function (const src1: pcuint8; stride1: ptrdiff_t; const src2: pcuint8; stride2: ptrdiff_t): cint; cdecl;
 
 (**
  * Get a potentially optimized pointer to a Sum-of-absolute-differences

@@ -393,7 +393,7 @@ const
  * value in case of invalid sequence
  *)
 //TODO av_warn_unused_result
-function av_utf8_decode(codep: pcint32_t; const bufp: ppcuint8_t; const buf_end: pcuint8_t; flags: cuint): cint; cdecl; external LIB_AVUTIL;
+function av_utf8_decode(codep: pcint32; const bufp: ppcuint8; const buf_end: pcuint8; flags: cuint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Check if a name is in a list.

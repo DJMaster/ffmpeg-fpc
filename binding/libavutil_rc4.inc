@@ -38,7 +38,7 @@
 type
   PAVRC4 = ^AVRC4;
   AVRC4 = record
-    state: array[0..255] of cuint8_t;
+    state: array[0..255] of cuint8;
     x, y: cint;
   end;
 
@@ -54,7 +54,7 @@ function av_rc4_alloc(): PAVRC4; cdecl; external LIB_AVUTIL;
  * @param decrypt 0 for encryption, 1 for decryption, currently has no effect
  * @return zero on success, negative value otherwise
  *)
-function av_rc4_init(d: PAVRC4; const key: pcuint8_t; key_bits: cint; decrypt: cint): cint; cdecl; external LIB_AVUTIL;
+function av_rc4_init(d: PAVRC4; const key: pcuint8; key_bits: cint; decrypt: cint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * @brief Encrypts / decrypts using the RC4 algorithm.
@@ -65,7 +65,7 @@ function av_rc4_init(d: PAVRC4; const key: pcuint8_t; key_bits: cint; decrypt: c
  * @param iv not (yet) used for RC4, should be NULL
  * @param decrypt 0 for encryption, 1 for decryption, not (yet) used
  *)
-procedure av_rc4_crypt(d: PAVRC4; dst: pcuint8_t; const src: pcuint8_t; count: cint; iv: pcuint8_t; decrypt: cint); cdecl; external LIB_AVUTIL;
+procedure av_rc4_crypt(d: PAVRC4; dst: pcuint8; const src: pcuint8; count: cint; iv: pcuint8; decrypt: cint); cdecl; external LIB_AVUTIL;
 
 (**
  * @}

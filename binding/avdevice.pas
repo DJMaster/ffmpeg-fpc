@@ -423,7 +423,7 @@ type
     pixel_format: AVPixelFormat;
     sample_rate: cint;
     channels: cint;
-    channel_layout: cint64_t;
+    channel_layout: cint64;
     window_width: cint;
     window_height: cint;
     frame_width: cint;

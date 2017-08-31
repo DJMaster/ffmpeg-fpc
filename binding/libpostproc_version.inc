@@ -32,7 +32,7 @@
  * Libpostproc version macros
  *)
 
-#include "libavutil/avutil.h"
+// #include "libavutil/avutil.h"
 
 const
   LIBPOSTPROC_VERSION_MAJOR = 54;
@@ -50,7 +50,7 @@ const
   LIBPOSTPROC_IDENT = 'postproc' + AV_STRINGIFY(LIBPOSTPROC_VERSION);
 
 {$ifndef FF_API_QP_TYPE}
-  FF_API_QP_TYPE = (LIBPOSTPROC_VERSION_MAJOR < 55);
+{$define FF_API_QP_TYPE := (LIBPOSTPROC_VERSION_MAJOR < 55)}
 {$endif}
 
 // #endif (* POSTPROC_VERSION_H *)

@@ -90,21 +90,21 @@ type
   AVDiracSeqHeader = record
     width: cunsigned;
     height: cunsigned;
-    chroma_format: cuint8_t; ///< 0: 444  1: 422  2: 420
+    chroma_format: cuint8; ///< 0: 444  1: 422  2: 420
 
-    interlaced: cuint8_t;
-    top_field_first: cuint8_t;
+    interlaced: cuint8;
+    top_field_first: cuint8;
 
-    frame_rate_index: cuint8_t; ///< index into dirac_frame_rate[]
-    aspect_ratio_index: cuint8_t; ///< index into dirac_aspect_ratio[]
+    frame_rate_index: cuint8; ///< index into dirac_frame_rate[]
+    aspect_ratio_index: cuint8; ///< index into dirac_aspect_ratio[]
 
     clean_width: cuint16_t;
     clean_height: cuint16_t;
     clean_left_offset: cuint16_t;
     clean_right_offset: cuint16_t;
 
-    pixel_range_index: cuint8_t; ///< index into dirac_pixel_range_presets[]
-    color_spec_index: cuint8_t; ///< index into dirac_color_spec_presets[]
+    pixel_range_index: cuint8; ///< index into dirac_pixel_range_presets[]
+    color_spec_index: cuint8; ///< index into dirac_color_spec_presets[]
 
     profile: cint;
     level: cint;
@@ -133,6 +133,6 @@ type
  * @param log_ctx if non-NULL, this function will log errors here
  * @return 0 on success, a negative AVERROR code on failure
  *)
-function av_dirac_parse_sequence_header(dsh: PPAVDiracSeqHeader; const buf: pcuint8_t; buf_size: csize_t; log_ctx: pointer): cint; cdecl; external LIB_AVCODEC;
+function av_dirac_parse_sequence_header(dsh: PPAVDiracSeqHeader; const buf: pcuint8; buf_size: csize_t; log_ctx: pointer): cint; cdecl; external LIB_AVCODEC;
 
 // #endif (* AVCODEC_DIRAC_H *)

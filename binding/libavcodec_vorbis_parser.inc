@@ -45,7 +45,7 @@ type
  * @param avctx codec context
  * @param s     Vorbis parser context
  *)
-function av_vorbis_parse_init(const extradata: pcuint8_t; extradata_size: cint): PAVVorbisParseContext; cdecl; external LIB_AVCODEC;
+function av_vorbis_parse_init(const extradata: pcuint8; extradata_size: cint): PAVVorbisParseContext; cdecl; external LIB_AVCODEC;
 
 (**
  * Free the parser and everything associated with it.
@@ -68,7 +68,7 @@ const
  * @param buf_size size of the buffer
  * @param flags    flags for special frames
  *)
-function av_vorbis_parse_frame_flags(s: PAVVorbisParseContext; const buf: pcuint8_t; buf_size: cint; flags: pcint): cint; cdecl; external LIB_AVCODEC;
+function av_vorbis_parse_frame_flags(s: PAVVorbisParseContext; const buf: pcuint8; buf_size: cint; flags: pcint): cint; cdecl; external LIB_AVCODEC;
 
 (**
  * Get the duration for a Vorbis packet.
@@ -77,7 +77,7 @@ function av_vorbis_parse_frame_flags(s: PAVVorbisParseContext; const buf: pcuint
  * @param buf      buffer containing a Vorbis frame
  * @param buf_size size of the buffer
  *)
-function av_vorbis_parse_frame(s: PAVVorbisParseContext; const buf: pcuint8_t; buf_size: cint): cint; cdecl; external LIB_AVCODEC;
+function av_vorbis_parse_frame(s: PAVVorbisParseContext; const buf: pcuint8; buf_size: cint): cint; cdecl; external LIB_AVCODEC;
 
 procedure av_vorbis_parse_reset(s: PAVVorbisParseContext); cdecl; external LIB_AVCODEC;
 

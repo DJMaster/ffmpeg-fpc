@@ -36,9 +36,9 @@
  * Public libavcodec VA API header.
  *)
 
-#include <stdint.h>
-#include "libavutil/attributes.h"
-#include "version.h"
+// #include <stdint.h>
+// #include "libavutil/attributes.h"
+// #include "version.h"
 
 {$if FF_API_STRUCT_VAAPI_CONTEXT}
 
@@ -60,14 +60,16 @@
  * Deprecated: use AVCodecContext.hw_frames_ctx instead.
  *)
 //TODO attribute_deprecated
-  vaapi_context {
+type
+  Pvaapi_context = ^vaapi_context;
+  vaapi_context = record
     (**
      * Window system dependent data
      *
      * - encoding: unused
      * - decoding: Set by user
      *)
-    void *display;
+    display: pointer;
 
     (**
      * Configuration ID
@@ -75,7 +77,7 @@
      * - encoding: unused
      * - decoding: Set by user
      *)
-    uint32_t config_id;
+    config_id: cuint32;
 
     (**
      * Context ID (video decode pipeline)
@@ -83,7 +85,7 @@
      * - encoding: unused
      * - decoding: Set by user
      *)
-    uint32_t context_id;
+    context_id: cuint32;
 
 {$if FF_API_VAAPI_CONTEXT}
     (**
@@ -93,7 +95,7 @@
      * - decoding: Set by libavcodec
      *)
     //TODO attribute_deprecated
-    uint32_t pic_param_buf_id;
+    pic_param_buf_id: cuint32;
 
     (**
      * VAIQMatrixBuffer ID
@@ -102,7 +104,7 @@
      * - decoding: Set by libavcodec
      *)
     //TODO attribute_deprecated
-    uint32_t iq_matrix_buf_id;
+    iq_matrix_buf_id: cuint32;
 
     (**
      * VABitPlaneBuffer ID (for VC-1 decoding)
@@ -111,7 +113,7 @@
      * - decoding: Set by libavcodec
      *)
     //TODO attribute_deprecated
-    uint32_t bitplane_buf_id;
+    bitplane_buf_id: cuint32;
 
     (**
      * Slice parameter/data buffer IDs
@@ -120,7 +122,7 @@
      * - decoding: Set by libavcodec
      *)
     //TODO attribute_deprecated
-    uint32_t *slice_buf_ids;
+    slice_buf_ids: pcuint32;
 
     (**
      * Number of effective slice buffer IDs to send to the HW
@@ -129,7 +131,7 @@
      * - decoding: Set by libavcodec
      *)
     //TODO attribute_deprecated
-    unsigned int n_slice_buf_ids;
+    n_slice_buf_ids: cuint;
 
     (**
      * Size of pre-allocated slice_buf_ids
@@ -138,7 +140,7 @@
      * - decoding: Set by libavcodec
      *)
     //TODO attribute_deprecated
-    unsigned int slice_buf_ids_alloc;
+    slice_buf_ids_alloc: cuint;
 
     (**
      * Pointer to VASliceParameterBuffers
@@ -147,7 +149,7 @@
      * - decoding: Set by libavcodec
      *)
     //TODO attribute_deprecated
-    void *slice_params;
+    slice_params: pointer;
 
     (**
      * Size of a VASliceParameterBuffer element
@@ -156,7 +158,7 @@
      * - decoding: Set by libavcodec
      *)
     //TODO attribute_deprecated
-    unsigned int slice_param_size;
+    slice_param_size: cuint;
 
     (**
      * Size of pre-allocated slice_params
@@ -165,7 +167,7 @@
      * - decoding: Set by libavcodec
      *)
     //TODO attribute_deprecated
-    unsigned int slice_params_alloc;
+    slice_params_alloc: cuint;
 
     (**
      * Number of slices currently filled in
@@ -174,7 +176,7 @@
      * - decoding: Set by libavcodec
      *)
     //TODO attribute_deprecated
-    unsigned int slice_count;
+    slice_count: cuint;
 
     (**
      * Pointer to slice data buffer base
@@ -182,7 +184,7 @@
      * - decoding: Set by libavcodec
      *)
     //TODO attribute_deprecated
-    const uint8_t *slice_data;
+    slice_data: pcuint8;
 
     (**
      * Current size of slice data
@@ -191,9 +193,9 @@
      * - decoding: Set by libavcodec
      *)
     //TODO attribute_deprecated
-    uint32_t slice_data_size;
+    slice_data_size: cuint32;
 {$endif}
-};
+  end;
 
 (* @} *)
 

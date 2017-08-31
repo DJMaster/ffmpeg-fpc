@@ -55,29 +55,34 @@
  * @{
  *)
 
-#include <vdpau/vdpau.h>
-#include <vdpau/vdpau_x11.h>
-#include "libavutil/avconfig.h"
-#include "libavutil/attributes.h"
+// #include <vdpau/vdpau.h>
+// #include <vdpau/vdpau_x11.h>
+// #include "libavutil/avconfig.h"
+// #include "libavutil/attributes.h"
 
-#include "avcodec.h"
-#include "version.h"
+// #include "avcodec.h"
+// #include "version.h"
 
 {$if FF_API_BUFS_VDPAU}
-union AVVDPAUPictureInfo {
-    VdpPictureInfoH264        h264;
-    VdpPictureInfoMPEG1Or2    mpeg;
-    VdpPictureInfoVC1          vc1;
-    VdpPictureInfoMPEG4Part2 mpeg4;
-};
+type
+  AVVDPAUPictureInfo = record
+    h264: VdpPictureInfoH264;
+    mpeg: VdpPictureInfoMPEG1Or2;
+    vc1: VdpPictureInfoVC1;
+    mpeg4: VdpPictureInfoMPEG4Part2;
+  end;
 {$endif}
 
-struct AVCodecContext;
-struct AVFrame;
+type
+  PAVCodecContext = ^AVCodecContext;
+  AVCodecContext = record
+  end;
 
-typedef int (*AVVDPAU_Render2)(struct AVCodecContext *, struct AVFrame *,
-                               const VdpPictureInfo *, uint32_t,
-                               const VdpBitstreamBuffer *);
+  PAVFrame = ^AVFrame;
+  AVFrame = record
+  end;
+
+  AVVDPAU_Render2 = function (ctx: PAVCodecContext; frame: PAVFrame; const pi: PVdpPictureInfo; arg: cuint32; const bb: PVdpBitstreamBuffer): cint; cdecl;
 
 (**
  * This structure is used to share data between the libavcodec library and
@@ -93,20 +98,21 @@ typedef int (*AVVDPAU_Render2)(struct AVCodecContext *, struct AVFrame *,
  * be used outside of libavcodec. Use av_vdpau_alloc_context() to allocate an
  * AVVDPAUContext.
  *)
-typedef struct AVVDPAUContext {
+  PAVVDPAUContext = ^AVVDPAUContext;
+  AVVDPAUContext = record
     (**
      * VDPAU decoder handle
      *
      * Set by user.
      *)
-    VdpDecoder decoder;
+    decoder: VdpDecoder;
 
     (**
      * VDPAU decoder render callback
      *
      * Set by the user.
      *)
-    VdpDecoderRender *render;
+    render: PVdpDecoderRender;
 
 {$if FF_API_BUFS_VDPAU}
     (**
@@ -115,7 +121,7 @@ typedef struct AVVDPAUContext {
      * Set by libavcodec.
      *)
     //TODO attribute_deprecated
-    union AVVDPAUPictureInfo info;
+    info: AVVDPAUPictureInfo;
 
     (**
      * Allocated size of the bitstream_buffers table.
@@ -123,7 +129,7 @@ typedef struct AVVDPAUContext {
      * Set by libavcodec.
      *)
     //TODO attribute_deprecated
-    int bitstream_buffers_allocated;
+    bitstream_buffers_allocated: cint;
 
     (**
      * Useful bitstream buffers in the bitstream buffers table.
@@ -131,7 +137,7 @@ typedef struct AVVDPAUContext {
      * Set by libavcodec.
      *)
     //TODO attribute_deprecated
-    int bitstream_buffers_used;
+    bitstream_buffers_used: cint;
 
    (**
      * Table of bitstream buffers.
@@ -140,20 +146,20 @@ typedef struct AVVDPAUContext {
      * Set by libavcodec.
      *)
     //TODO attribute_deprecated
-    VdpBitstreamBuffer *bitstream_buffers;
+    bitstream_buffers: PVdpBitstreamBuffer;
 {$endif}
-    AVVDPAU_Render2 render2;
-} AVVDPAUContext;
+    render2: AVVDPAU_Render2;
+  end;
 
 (**
  * @brief allocation function for AVVDPAUContext
  *
  * Allows extending the struct without breaking API/ABI
  *)
-AVVDPAUContext *av_alloc_vdpaucontext();
+function av_alloc_vdpaucontext(): PAVVDPAUContext; cdecl; external LIB_AVCODEC;
 
-AVVDPAU_Render2 av_vdpau_hwaccel_get_render2(const AVVDPAUContext *);
-procedure av_vdpau_hwaccel_set_render2(AVVDPAUContext *, AVVDPAU_Render2);
+function av_vdpau_hwaccel_get_render2(const ctx: PAVVDPAUContext): AVVDPAU_Render2; cdecl; external LIB_AVCODEC;
+procedure av_vdpau_hwaccel_set_render2(ctx: PAVVDPAUContext; render2: AVVDPAU_Render2): AVVDPAU_Render2; cdecl; external LIB_AVCODEC;
 
 (**
  * Associate a VDPAU device with a codec context for hardware acceleration.
@@ -172,8 +178,7 @@ procedure av_vdpau_hwaccel_set_render2(AVVDPAUContext *, AVVDPAU_Render2);
  *
  * @return 0 on success, an AVERROR code on failure.
  *)
-function cint av_vdpau_bind_context(AVCodecContext *avctx, VdpDevice device,
-                          VdpGetProcAddress *get_proc_address, unsigned flags);
+function av_vdpau_bind_context(avctx: PAVCodecContext; device: VdpDevice; get_proc_address: PVdpGetProcAddress; flags: cunsigned): cint; cdecl; external LIB_AVCODEC;
 
 (**
  * Gets the parameters to create an adequate VDPAU video surface for the codec
@@ -192,15 +197,14 @@ function cint av_vdpau_bind_context(AVCodecContext *avctx, VdpDevice device,
  *
  * @return 0 on success, a negative AVERROR code on failure.
  *)
-function cint av_vdpau_get_surface_parameters(AVCodecContext *avctx, VdpChromaType *type,
-                                    uint32_t *width, uint32_t *height);
+function av_vdpau_get_surface_parameters(avctx: PAVCodecContext; type_: PVdpChromaType; width: pcuint32; height: pcuint32): cint; cdecl; external LIB_AVCODEC;
 
 (**
  * Allocate an AVVDPAUContext.
  *
  * @return Newly-allocated AVVDPAUContext or NULL on failure.
  *)
-AVVDPAUContext *av_vdpau_alloc_context();
+function av_vdpau_alloc_context(): PAVVDPAUContext; cdecl; external LIB_AVCODEC;
 
 {$if FF_API_VDPAU_PROFILE}
 (**
@@ -217,10 +221,11 @@ AVVDPAUContext *av_vdpau_alloc_context();
  * @return 0 on success (non-negative), a negative AVERROR on failure.
  *)
 //TODO attribute_deprecated
-function cint av_vdpau_get_profile(AVCodecContext *avctx, VdpDecoderProfile *profile);
+function av_vdpau_get_profile(avctx: PAVCodecContext; profile: PVdpDecoderProfile): cint; cdecl; external LIB_AVCODEC;
 {$endif}
 
 {$if FF_API_CAP_VDPAU}
+const
 (** @brief The videoSurface is used for rendering. *)
   FF_VDPAU_STATE_USED_FOR_RENDER = 1;
 
@@ -237,21 +242,23 @@ function cint av_vdpau_get_profile(AVCodecContext *avctx, VdpDecoderProfile *pro
  * picture parameter, bitstream information etc which are passed
  * between the FFmpeg decoder and its clients.
  *)
-struct vdpau_render_state {
-    VdpVideoSurface surface; ///< Used as rendered surface, never changed.
+type
+  Pvdpau_render_state = ^vdpau_render_state;
+  vdpau_render_state = record
+    surface: VdpVideoSurface; ///< Used as rendered surface, never changed.
 
-    int state; ///< Holds FF_VDPAU_STATE_* values.
+    state: cint; ///< Holds FF_VDPAU_STATE_* values.
 
     (** picture parameter information for all supported codecs *)
-    union AVVDPAUPictureInfo info;
+    info: AVVDPAUPictureInfo;
 
     (** Describe size/location of the compressed video data.
         Set to 0 when freeing bitstream_buffers. *)
-    int bitstream_buffers_allocated;
-    int bitstream_buffers_used;
+    bitstream_buffers_allocated: cint;
+    bitstream_buffers_used: cint;
     (** The user is responsible for freeing this buffer using av_freep(). *)
-    VdpBitstreamBuffer *bitstream_buffers;
-};
+    bitstream_buffers: PVdpBitstreamBuffer;
+  end;
 {$endif}
 
 (* @}*)

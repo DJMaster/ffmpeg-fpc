@@ -27,7 +27,7 @@
 // #ifndef AVUTIL_BASE64_H
 // #define AVUTIL_BASE64_H
 
-#include <stdint.h>
+// #include <stdint.h>
 
 (**
  * @defgroup lavu_base64 Base64
@@ -45,7 +45,7 @@
  * @return         number of bytes written, or a negative value in case of
  *                 invalid input
  *)
-function cint av_base64_decode(uint8_t *out_, const pchar in_, int out_size);
+function av_base64_decode(out_: pcuint8; const in_: pchar; out_size: cint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Calculate the output size in bytes needed to decode a base64 string
@@ -63,7 +63,7 @@ function cint av_base64_decode(uint8_t *out_, const pchar in_, int out_size);
  * @param in_size  size in bytes of the in buffer
  * @return         out or NULL in case of error
  *)
-char *av_base64_encode(char *out, int out_size, const uint8_t *in, int in_size);
+function av_base64_encode(out_: pchar; out_size: cint; const in_: pcuint8; in_size_ cint): pchar; cdecl; external LIB_AVUTIL;
 
 (**
  * Calculate the output size needed to base64-encode x bytes to a

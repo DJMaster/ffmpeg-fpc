@@ -28,55 +28,57 @@
 // #ifndef AVUTIL_PIXDESC_H
 // #define AVUTIL_PIXDESC_H
 
-#include <inttypes.h>
+// #include <inttypes.h>
 
-#include "attributes.h"
-#include "pixfmt.h"
-#include "version.h"
+// #include "attributes.h"
+// #include "pixfmt.h"
+// #include "version.h"
 
-typedef struct AVComponentDescriptor {
+type
+  PAVComponentDescriptor = ^AVComponentDescriptor;
+  AVComponentDescriptor = record
     (**
      * Which of the 4 planes contains the component.
      *)
-    int plane;
+    plane: cint;
 
     (**
      * Number of elements between 2 horizontally consecutive pixels.
      * Elements are bits for bitstream formats, bytes otherwise.
      *)
-    int step;
+    step: cint;
 
     (**
      * Number of elements before the component of the first pixel.
      * Elements are bits for bitstream formats, bytes otherwise.
      *)
-    int offset;
+    offset: cint;
 
     (**
      * Number of least significant bits that must be shifted away
      * to get the value.
      *)
-    int shift;
+    shift: cint;
 
     (**
      * Number of bits in the component.
      *)
-    int depth;
+    depth: cint;
 
 {$if FF_API_PLUS1_MINUS1}
     (** deprecated, use step instead *)
     //TODO attribute_deprecated
-    int step_minus1;
+    step_minus1: cint;
 
     (** deprecated, use depth instead *)
     //TODO attribute_deprecated
-    int depth_minus1;
+    depth_minus1: cint;
 
     (** deprecated, use offset instead *)
     //TODO attribute_deprecated
-    int offset_plus1;
-#endif
-} AVComponentDescriptor;
+    offset_plus1: cint ;
+{$endif}
+  end;
 
 (**
  * Descriptor that unambiguously describes how the bits of a pixel are
@@ -87,9 +89,10 @@ typedef struct AVComponentDescriptor {
  *       and all the YUV variants) AVPixFmtDescriptor just stores how values
  *       are stored not what these values represent.
  *)
-typedef struct AVPixFmtDescriptor {
-    const pchar name;
-    uint8_t nb_components; ///< The number of components each pixel has, (1-4)
+  PAVPixFmtDescriptor = ^AVPixFmtDescriptor;
+  AVPixFmtDescriptor = record
+    name: pchar;
+    nb_components: cuint8; ///< The number of components each pixel has, (1-4)
 
     (**
      * Amount to shift the luma width right to find the chroma width.
@@ -98,7 +101,7 @@ typedef struct AVPixFmtDescriptor {
      * The note above is needed to ensure rounding up.
      * This value only refers to the chroma components.
      *)
-    uint8_t log2_chroma_w;
+    log2_chroma_w_ cuint8;
 
     (**
      * Amount to shift the luma height right to find the chroma height.
@@ -107,12 +110,12 @@ typedef struct AVPixFmtDescriptor {
      * The note above is needed to ensure rounding up.
      * This value only refers to the chroma components.
      *)
-    uint8_t log2_chroma_h;
+    log2_chroma_h: cuint8;
 
     (**
      * Combination of AV_PIX_FMT_FLAG_... flags.
      *)
-    uint64_t flags;
+    flags: cuint64_t;
 
     (**
      * Parameters that describe how pixels are packed.
@@ -123,14 +126,15 @@ typedef struct AVPixFmtDescriptor {
      *
      * If present, the Alpha channel is always the last component.
      *)
-    AVComponentDescriptor comp[4];
+    comp: array[0..3] of AVComponentDescriptor;
 
     (**
      * Alternative comma-separated names.
      *)
-    const pchar alias;
-} AVPixFmtDescriptor;
+    alias: pchar;
+  end;
 
+const
 (**
  * Pixel format is big-endian.
  *)
@@ -195,19 +199,19 @@ typedef struct AVPixFmtDescriptor {
  * used for storing the pixel information, that is padding bits are
  * not counted.
  *)
-function cint av_get_bits_per_pixel(const AVPixFmtDescriptor *pixdesc);
+function av_get_bits_per_pixel(const pixdesc: PAVPixFmtDescriptor): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Return the number of bits per pixel for the pixel format
  * described by pixdesc, including any padding or unused bits.
  *)
-function cint av_get_padded_bits_per_pixel(const AVPixFmtDescriptor *pixdesc);
+function av_get_padded_bits_per_pixel(const pixdesc: PAVPixFmtDescriptor): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * @return a pixel format descriptor for provided pixel format or NULL if
  * this pixel format is unknown.
  *)
-const AVPixFmtDescriptor *av_pix_fmt_desc_get(enum AVPixelFormat pix_fmt);
+function av_pix_fmt_desc_get(pix_fmt: AVPixelFormat): PAVPixFmtDescriptor; cdecl; external LIB_AVUTIL;
 
 (**
  * Iterate over all pixel format descriptors known to libavutil.
@@ -216,13 +220,13 @@ const AVPixFmtDescriptor *av_pix_fmt_desc_get(enum AVPixelFormat pix_fmt);
  *
  * @return next descriptor or NULL after the last descriptor
  *)
-const AVPixFmtDescriptor *av_pix_fmt_desc_next(const AVPixFmtDescriptor *prev);
+function av_pix_fmt_desc_next(const prev: PAVPixFmtDescriptor): PAVPixFmtDescriptor; cdecl; external LIB_AVUTIL;
 
 (**
  * @return an AVPixelFormat id described by desc, or AV_PIX_FMT_NONE if desc
  * is not a valid pointer to a pixel format descriptor.
  *)
-enum AVPixelFormat av_pix_fmt_desc_get_id(const AVPixFmtDescriptor *desc);
+function av_pix_fmt_desc_get_id(const desc: PAVPixFmtDescriptor): AVPixelFormat; cdecl; external LIB_AVUTIL;
 
 (**
  * Utility function to access log2_chroma_w log2_chroma_h from
@@ -239,39 +243,38 @@ enum AVPixelFormat av_pix_fmt_desc_get_id(const AVPixFmtDescriptor *desc);
  *
  * @return 0 on success, AVERROR(ENOSYS) on invalid or unknown pixel format
  *)
-function cint av_pix_fmt_get_chroma_sub_sample(enum AVPixelFormat pix_fmt,
-                                     int *h_shift, int *v_shift);
+function av_pix_fmt_get_chroma_sub_sample(pix_fmt: AVPixelFormat; h_shift: pcint; v_shift: pcint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * @return number of planes in pix_fmt, a negative AVERROR if pix_fmt is not a
  * valid pixel format.
  *)
-function cint av_pix_fmt_count_planes(enum AVPixelFormat pix_fmt);
+function av_pix_fmt_count_planes(pix_fmt: AVPixelFormat): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * @return the name for provided color range or NULL if unknown.
  *)
-const pchar av_color_range_name(enum AVColorRange range);
+function av_color_range_name(range: AVColorRange): pchar; cdecl; external LIB_AVUTIL;
 
 (**
  * @return the name for provided color primaries or NULL if unknown.
  *)
-const pchar av_color_primaries_name(enum AVColorPrimaries primaries);
+function av_color_primaries_name(primaries: AVColorPrimaries ): pchar; cdecl; external LIB_AVUTIL;
 
 (**
  * @return the name for provided color transfer or NULL if unknown.
  *)
-const pchar av_color_transfer_name(enum AVColorTransferCharacteristic transfer);
+function av_color_transfer_name(transfer: AVColorTransferCharacteristic): pchar; cdecl; external LIB_AVUTIL;
 
 (**
  * @return the name for provided color space or NULL if unknown.
  *)
-const pchar av_color_space_name(enum AVColorSpace space);
+function av_color_space_name(space: AVColorSpace): pchar; cdecl; external LIB_AVUTIL;
 
 (**
  * @return the name for provided chroma location or NULL if unknown.
  *)
-const pchar av_chroma_location_name(enum AVChromaLocation location);
+function av_chroma_location_name(location: AVChromaLocation): pchar; cdecl; external LIB_AVUTIL;
 
 (**
  * Return the pixel format corresponding to name.
@@ -284,7 +287,7 @@ const pchar av_chroma_location_name(enum AVChromaLocation location);
  *
  * Finally if no pixel format has been found, returns AV_PIX_FMT_NONE.
  *)
-enum AVPixelFormat av_get_pix_fmt(const name: pchar);
+function av_get_pix_fmt(const name: pchar): AVPixelFormat; cdecl; external LIB_AVUTIL;
 
 (**
  * Return the short name for a pixel format, NULL in case pix_fmt is
@@ -292,7 +295,7 @@ enum AVPixelFormat av_get_pix_fmt(const name: pchar);
  *
  * @see av_get_pix_fmt(), av_get_pix_fmt_string()
  *)
-const pchar av_get_pix_fmt_name(enum AVPixelFormat pix_fmt);
+function av_get_pix_fmt_name(pix_fmt: AVPixelFormat): pchar; cdecl; external LIB_AVUTIL;
 
 (**
  * Print in buf the string corresponding to the pixel format with
@@ -304,8 +307,7 @@ const pchar av_get_pix_fmt_name(enum AVPixelFormat pix_fmt);
  * corresponding info string, or a negative value to print the
  * corresponding header.
  *)
-char *av_get_pix_fmt_string(char *buf, int buf_size,
-                            enum AVPixelFormat pix_fmt);
+function av_get_pix_fmt_string(buf: pchar; buf_size: cint; pix_fmt: AVPixelFormat): pchar; cdecl; external LIB_AVUTIL;
 
 (**
  * Read a line from an image, and write the values of the
@@ -323,9 +325,7 @@ char *av_get_pix_fmt_string(char *buf, int buf_size,
  * component c in data[1] to dst, rather than the palette indexes in
  * data[0]. The behavior is undefined if the format is not paletted.
  *)
-procedure av_read_image_line(uint16_t *dst, const uint8_t *data[4],
-                        const int linesize[4], const AVPixFmtDescriptor *desc,
-                        int x, int y, int c, int w, int read_pal_component);
+procedure av_read_image_line(dst: pcuint16; const data: array[0..3] of pcuint8; const linesize: array[0..3] of cint; const desc: PAVPixFmtDescriptor; x: cint; y: cint; c: cint; w: cint; read_pal_component: cint); cdecl; external LIB_AVUTIL;
 
 (**
  * Write the values from src to the pixel format component c of an
@@ -341,9 +341,7 @@ procedure av_read_image_line(uint16_t *dst, const uint8_t *data[4],
  * @param w the width of the line to write, that is the number of
  * values to write to the image line
  *)
-procedure av_write_image_line(const uint16_t *src, uint8_t *data[4],
-                         const int linesize[4], const AVPixFmtDescriptor *desc,
-                         int x, int y, int c, int w);
+procedure av_write_image_line(const src: pcuint16_t; data: array[0..3] of pcuint8; const linesize: array[0..3] of cint; const desc: PAVPixFmtDescriptor; x: cint; y: cint; c: cint; w: cint); cdecl; external LIB_AVUTIL;
 
 (**
  * Utility function to swap the endianness of a pixel format.
@@ -353,8 +351,9 @@ procedure av_write_image_line(const uint16_t *src, uint8_t *data[4],
  * @return pixel format with swapped endianness if it exists,
  * otherwise AV_PIX_FMT_NONE
  *)
-enum AVPixelFormat av_pix_fmt_swap_endianness(enum AVPixelFormat pix_fmt);
+function av_pix_fmt_swap_endianness(pix_fmt: AVPixelFormat): AVPixelFormat; cdecl; external LIB_AVUTIL;
 
+const
   FF_LOSS_RESOLUTION = $0001; (**< loss due to resolution change *)
   FF_LOSS_DEPTH = $0002; (**< loss due to color depth change *)
   FF_LOSS_COLORSPACE = $0004; (**< loss due to color space conversion *)
@@ -380,9 +379,7 @@ enum AVPixelFormat av_pix_fmt_swap_endianness(enum AVPixelFormat pix_fmt);
  * @return Combination of flags informing you what kind of losses will occur
  * (maximum loss for an invalid dst_pix_fmt).
  *)
-function cint av_get_pix_fmt_loss(enum AVPixelFormat dst_pix_fmt,
-                        enum AVPixelFormat src_pix_fmt,
-                        int has_alpha);
+function av_get_pix_fmt_loss(dst_pix_fmt: AVPixelFormat; src_pix_fmt: AVPixelFormat; has_alpha: cint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Compute what kind of losses will occur when converting from one specific
@@ -402,7 +399,6 @@ function cint av_get_pix_fmt_loss(enum AVPixelFormat dst_pix_fmt,
  * @return Combination of flags informing you what kind of losses will occur
  * (maximum loss for an invalid dst_pix_fmt).
  *)
-enum AVPixelFormat av_find_best_pix_fmt_of_2(enum AVPixelFormat dst_pix_fmt1, enum AVPixelFormat dst_pix_fmt2,
-                                             enum AVPixelFormat src_pix_fmt, int has_alpha, int *loss_ptr);
+function av_find_best_pix_fmt_of_2(dst_pix_fmt1: AVPixelFormat; dst_pix_fmt2: AVPixelFormat; src_pix_fmt: AVPixelFormat; has_alpha: cint; loss_ptr: pcint): AVPixelFormat; cdecl; external LIB_AVUTIL;
 
 // #endif (* AVUTIL_PIXDESC_H *)

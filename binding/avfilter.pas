@@ -53,19 +53,19 @@ const
  * @{
  *)
 
-#include <stddef.h>
+// #include <stddef.h>
 
-#include "libavutil/attributes.h"
-#include "libavutil/avutil.h"
-#include "libavutil/buffer.h"
-#include "libavutil/dict.h"
-#include "libavutil/frame.h"
-#include "libavutil/log.h"
-#include "libavutil/samplefmt.h"
-#include "libavutil/pixfmt.h"
-#include "libavutil/rational.h"
+// #include "libavutil/attributes.h"
+// #include "libavutil/avutil.h"
+// #include "libavutil/buffer.h"
+// #include "libavutil/dict.h"
+// #include "libavutil/frame.h"
+// #include "libavutil/log.h"
+// #include "libavutil/samplefmt.h"
+// #include "libavutil/pixfmt.h"
+// #include "libavutil/rational.h"
 
-#include "libavfilter/version.h"
+// #include "libavfilter/version.h"
 
 (**
  * Return the LIBAVFILTER_VERSION_INT constant.
@@ -82,10 +82,19 @@ function avfilter_configuration(): pchar; cdecl; external LIB_AVFILTER;
  *)
 function avfilter_license(): pchar; cdecl; external LIB_AVFILTER;
 
-typedef struct AVFilterContext AVFilterContext;
-typedef struct AVFilterLink    AVFilterLink;
-typedef struct AVFilterPad     AVFilterPad;
-typedef struct AVFilterFormats AVFilterFormats;
+type
+  PAVFilterContext = ^AVFilterContext;
+  AVFilterContext = record
+  end;
+  PAVFilterLink = ^AVFilterLink;
+  AVFilterLink = record
+  end;
+  PAVFilterPad = ^AVFilterPad;
+  AVFilterPad = record
+  end;
+  PAVFilterFormats = ^AVFilterFormats;
+  AVFilterFormats = record
+  end;
 
 (**
  * Get the number of elements in a NULL-terminated array of AVFilterPads (e.g.
@@ -120,6 +129,7 @@ function avfilter_pad_get_type(const pads: PAVFilterPad; pad_idx: cint): AVMedia
  * The filter might add additional inputs during initialization depending on the
  * options supplied to it.
  *)
+const
   AVFILTER_FLAG_DYNAMIC_INPUTS = (1 shl 0);
 (**
  * The number of the filter outputs is not determined just by AVFilter.outputs.
@@ -153,24 +163,26 @@ function avfilter_pad_get_type(const pads: PAVFilterPad; pad_idx: cint): AVMedia
  * Handy mask to test whether the filter supports or no the timeline feature
  * (internally or generically).
  *)
-  AVFILTER_FLAG_SUPPORT_TIMELINE = (AVFILTER_FLAG_SUPPORT_TIMELINE_GENERIC | AVFILTER_FLAG_SUPPORT_TIMELINE_INTERNAL);
+  AVFILTER_FLAG_SUPPORT_TIMELINE = (AVFILTER_FLAG_SUPPORT_TIMELINE_GENERIC or AVFILTER_FLAG_SUPPORT_TIMELINE_INTERNAL);
 
 (**
  * Filter definition. This defines the pads a filter contains, and all the
  * callback functions used to interact with the filter.
  *)
-typedef struct AVFilter {
+type
+  PAVFilter = ^AVFilter;
+  AVFilter = record
     (**
      * Filter name. Must be non-NULL and unique among filters.
      *)
-    const pchar name;
+    name: pchar;
 
     (**
      * A description of the filter. May be NULL.
      *
      * You should use the NULL_IF_CONFIG_SMALL() macro to define it.
      *)
-    const pchar description;
+    description: pchar;
 
     (**
      * List of inputs, terminated by a zeroed element.
@@ -179,7 +191,7 @@ typedef struct AVFilter {
      * AVFILTER_FLAG_DYNAMIC_INPUTS set may have more inputs than present in
      * this list.
      *)
-    const AVFilterPad *inputs;
+    inputs: PAVFilterPad;
     (**
      * List of outputs, terminated by a zeroed element.
      *
@@ -187,7 +199,7 @@ typedef struct AVFilter {
      * AVFILTER_FLAG_DYNAMIC_OUTPUTS set may have more outputs than present in
      * this list.
      *)
-    const AVFilterPad *outputs;
+    outputs: PAVFilterPad;
 
     (**
      * A class for the private data, used to declare filter private AVOptions.
@@ -197,12 +209,12 @@ typedef struct AVFilter {
      * must be a pointer to AVClass, which will be set by libavfilter generic
      * code to this class.
      *)
-    const AVClass *priv_class;
+    priv_class: PAVClass;
 
     (**
      * A combination of AVFILTER_FLAG_*
      *)
-    int flags;
+    flags: cint;
 
     (*****************************************************************
      * All fields below this line are not part of the public API. They
@@ -284,15 +296,15 @@ typedef struct AVFilter {
      *)
     int (*query_formats)(AVFilterContext *);
 
-    int priv_size; ///< size of private data to allocate for the filter
+    priv_size: cint; ///< size of private data to allocate for the filter
 
-    int flags_internal; ///< Additional flags for avfilter internal use only.
+    flags_internal: cint; ///< Additional flags for avfilter internal use only.
 
     (**
      * Used by the filter registration system. Must not be touched by any other
      * code.
      *)
-    struct AVFilter *next;
+    next: PAVFilter;
 
     (**
      * Make the filter instance process a command.
@@ -333,9 +345,13 @@ typedef struct AVFilter {
 (**
  * Process multiple parts of the frame concurrently.
  *)
+const
   AVFILTER_THREAD_SLICE = (1 shl 0);
 
-typedef struct AVFilterInternal AVFilterInternal;
+type
+  PAVFilterInternal = ^AVFilterInternal;
+  AVFilterInternal = record
+  end;
 
 (** An instance of a filter *)
 struct AVFilterContext {
@@ -708,7 +724,7 @@ function avfilter_register(filter: PAVFilter): cint; cdecl; external LIB_AVFILTE
  *             NULL if none found.
  *)
 {$if not FF_API_NOCONST_GET_NAME}
-const
+// const
 {$endif}
 function avfilter_get_by_name(const name: pchar): PAVFilter; cdecl; external LIB_AVFILTER;
 
@@ -822,7 +838,10 @@ function avfilter_insert_filter(link: PAVFilterLink; filt: PAVFilterContext; fil
  *)
 function avfilter_get_class(): PAVClass; cdecl; external LIB_AVFILTER;
 
-typedef struct AVFilterGraphInternal AVFilterGraphInternal;
+type
+  PAVFilterGraphInternal = ^AVFilterGraphInternal;
+  AVFilterGraphInternal = record
+  end;
 
 (**
  * A function pointer passed to the @ref AVFilterGraph.execute callback to be
@@ -876,26 +895,26 @@ typedef struct AVFilterGraph {
      * determining allowed threading types. I.e. a threading type needs to be
      * set in both to be allowed.
      *)
-    int thread_type;
+    thread_type: cint;
 
     (**
      * Maximum number of threads used by filters in this graph. May be set by
      * the caller before adding any filters to the filtergraph. Zero (the
      * default) means that the number of threads is determined automatically.
      *)
-    int nb_threads;
+    nb_threads: cint;
 
     (**
      * Opaque object for libavfilter internal use.
      *)
-    AVFilterGraphInternal *internal;
+    internal: PAVFilterGraphInternal;
 
     (**
      * Opaque user data. May be set by the caller to an arbitrary value, e.g. to
      * be used from callbacks like @ref AVFilterGraph.execute.
      * Libavfilter will not touch this field in any way.
      *)
-    void *opaque;
+    opaque: pointer;
 
     (**
      * This callback may be set by the caller immediately after allocating the
@@ -909,9 +928,9 @@ typedef struct AVFilterGraph {
      * implementation, which may or may not be multithreaded depending on the
      * platform and build options.
      *)
-    avfilter_execute_func *execute;
+    execute: Pavfilter_execute_func;
 
-    char *aresample_swr_opts; ///< swr options to use for the auto-inserted aresample filters, Access ONLY through AVOptions
+    aresample_swr_opts: pchar; ///< swr options to use for the auto-inserted aresample filters, Access ONLY through AVOptions
 
     (**
      * Private fields
@@ -920,11 +939,11 @@ typedef struct AVFilterGraph {
      * Their type, offset, number and semantic can change without notice.
      *)
 
-    AVFilterLink **sink_links;
-    int sink_links_count;
+    sink_links: PPAVFilterLink;
+    sink_links_count: cint;
 
-    unsigned disable_auto_convert;
-} AVFilterGraph;
+    disable_auto_convert: cunsigned;
+  end;
 
 (**
  * Allocate a filter graph.
@@ -998,10 +1017,9 @@ function avfilter_graph_create_filter(filt_ctx: PPAVFilterContext; const filt: P
  *)
 procedure avfilter_graph_set_auto_convert(graph: PAVFilterGraph; flags: cunsigned); cdecl; external LIB_AVFILTER;
 
-enum {
-    AVFILTER_AUTO_CONVERT_ALL  =  0, (**< all automatic conversions enabled *)
-    AVFILTER_AUTO_CONVERT_NONE = -1, (**< all automatic conversions disabled *)
-};
+const
+  AVFILTER_AUTO_CONVERT_ALL = 0; (**< all automatic conversions enabled *)
+  AVFILTER_AUTO_CONVERT_NONE = -1; (**< all automatic conversions disabled *)
 
 (**
  * Check validity and configure all the links and formats in the graph.
@@ -1027,19 +1045,21 @@ procedure avfilter_graph_free(graph: PPAVFilterGraph); cdecl; external LIB_AVFIL
  * This struct specifies, per each not connected pad contained in the graph, the
  * filter context and the pad index required for establishing a link.
  *)
-typedef struct AVFilterInOut {
+type
+  PAVFilterInOut = ^AVFilterInOut;
+  AVFilterInOut = record
     (** unique name for this input/output in the list *)
-    char *name;
+    name: pchar;
 
     (** filter context associated to this input/output *)
-    AVFilterContext *filter_ctx;
+    filter_ctx: PAVFilterContext;
 
     (** index of the filt_ctx pad to use for linking *)
-    int pad_idx;
+    pad_idx: cint;
 
     (** next input/input in the list, NULL if this is the last *)
-    struct AVFilterInOut *next;
-} AVFilterInOut;
+    next: PAVFilterInOut;
+  end;
 
 (**
  * Allocate a single AVFilterInOut entry.

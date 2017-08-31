@@ -25,7 +25,7 @@
 // #ifndef AVUTIL_HWCONTEXT_VDPAU_H
 // #define AVUTIL_HWCONTEXT_VDPAU_H
 
-#include <vdpau/vdpau.h>
+// #include <vdpau/vdpau.h>
 
 (**
  * @file

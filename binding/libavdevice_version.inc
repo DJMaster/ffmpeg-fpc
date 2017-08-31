@@ -31,7 +31,7 @@
  * Libavdevice version macros
  *)
 
-#include "libavutil/version.h"
+// #include "libavutil/version.h"
 
 const
   LIBAVDEVICE_VERSION_MAJOR = 57;

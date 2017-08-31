@@ -32,25 +32,25 @@
 // #ifndef AVUTIL_BSWAP_H
 // #define AVUTIL_BSWAP_H
 
-#include <stdint.h>
-#include "libavutil/avconfig.h"
-#include "attributes.h"
+// #include <stdint.h>
+// #include "libavutil/avconfig.h"
+// #include "attributes.h"
 
 #ifdef HAVE_AV_CONFIG_H
 
-#include "config.h"
+// #include "config.h"
 
-{$if   }ARCH_AARCH64
-#   include "aarch64/bswap.h"
-#elif ARCH_ARM
-#   include "arm/bswap.h"
-#elif ARCH_AVR32
-#   include "avr32/bswap.h"
-#elif ARCH_SH4
-#   include "sh4/bswap.h"
-#elif ARCH_X86
-#   include "x86/bswap.h"
-{$endif}
+//TODO #if ARCH_AARCH64
+//TODO #   include "aarch64/bswap.h"
+//TODO #elif ARCH_ARM
+//TODO #   include "arm/bswap.h"
+//TODO #elif ARCH_AVR32
+//TODO #   include "avr32/bswap.h"
+//TODO #elif ARCH_SH4
+//TODO #   include "sh4/bswap.h"
+//TODO #elif ARCH_X86
+//TODO #   include "x86/bswap.h"
+//TODO #endif
 
 {$endif} (* HAVE_AV_CONFIG_H *)
 
@@ -94,7 +94,7 @@ static inline uint64_t av_const av_bswap64(uint64_t x)
 #define av_le2ne64(x) av_bswap64(x)
 #define AV_BE2NEC(s, x) (x)
 #define AV_LE2NEC(s, x) AV_BSWAPC(s, x)
-#else
+{$else}
 #define av_be2ne16(x) av_bswap16(x)
 #define av_be2ne32(x) av_bswap32(x)
 #define av_be2ne64(x) av_bswap64(x)

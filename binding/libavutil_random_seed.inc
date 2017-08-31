@@ -27,7 +27,8 @@
 // #ifndef AVUTIL_RANDOM_SEED_H
 // #define AVUTIL_RANDOM_SEED_H
 
-#include <stdint.h>
+// #include <stdint.h>
+
 (**
  * @addtogroup lavu_crypto
  * @{
@@ -40,7 +41,7 @@
  * It can be quite slow, which is why it should only be used as seed for a faster
  * PRNG. The quality of the seed depends on the platform.
  *)
-function av_get_random_seed(): cuint32_t; cdecl; external LIB_AVUTIL;
+function av_get_random_seed(): cuint32; cdecl; external LIB_AVUTIL;
 
 (**
  * @}

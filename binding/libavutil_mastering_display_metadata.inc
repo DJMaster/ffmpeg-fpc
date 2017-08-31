@@ -27,9 +27,8 @@
 // #ifndef AVUTIL_MASTERING_DISPLAY_METADATA_H
 // #define AVUTIL_MASTERING_DISPLAY_METADATA_H
 
-#include "frame.h"
-#include "rational.h"
-
+// #include "frame.h"
+// #include "rational.h"
 
 (**
  * Mastering display metadata capable of representing the color volume of

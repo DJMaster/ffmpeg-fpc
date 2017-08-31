@@ -28,7 +28,7 @@
 // #ifndef AVUTIL_CAST5_H
 // #define AVUTIL_CAST5_H
 
-#include <stdint.h>
+// #include <stdint.h>
 
 
 (**
@@ -41,13 +41,16 @@
 
 extern const int av_cast5_size;
 
-struct AVCAST5;
+type
+  PAVCAST5 = ^AVCAST5;
+  AVCAST5 = record
+  end;
 
 (**
   * Allocate an AVCAST5 context
   * To free the struct: av_free(ptr)
   *)
-struct AVCAST5 *av_cast5_alloc();
+function av_cast5_alloc(): PAVCAST5; cdecl; external LIB_AVUTIL;
 (**
   * Initialize an AVCAST5 context.
   *
@@ -56,7 +59,7 @@ struct AVCAST5 *av_cast5_alloc();
   * @param key_bits number of keybits: possible are 40,48,...,128
   * @return 0 on success, less than 0 on failure
  *)
-function cint av_cast5_init(struct AVCAST5 *ctx, const uint8_t *key, int key_bits);
+function av_cast5_init(ctx: PAVCAST5; const key: pcuint8; key_bits: cint): cint; cdecl; external LIB_AVUTIL;
 
 (**
   * Encrypt or decrypt a buffer using a previously initialized context, ECB mode only
@@ -67,7 +70,7 @@ function cint av_cast5_init(struct AVCAST5 *ctx, const uint8_t *key, int key_bit
   * @param count number of 8 byte blocks
   * @param decrypt 0 for encryption, 1 for decryption
  *)
-procedure av_cast5_crypt(struct AVCAST5 *ctx, uint8_t *dst, const uint8_t *src, int count, int decrypt);
+procedure av_cast5_crypt(ctx: PAVCAST5; dst: pcuint8; const src: pcuint8; count: cint; decrypt: cint); cdecl; external LIB_AVUTIL;
 
 (**
   * Encrypt or decrypt a buffer using a previously initialized context
@@ -79,7 +82,7 @@ procedure av_cast5_crypt(struct AVCAST5 *ctx, uint8_t *dst, const uint8_t *src, 
   * @param iv initialization vector for CBC mode, NULL for ECB mode
   * @param decrypt 0 for encryption, 1 for decryption
  *)
-procedure av_cast5_crypt2(struct AVCAST5 *ctx, uint8_t *dst, const uint8_t *src, int count, uint8_t *iv, int decrypt);
+procedure av_cast5_crypt2(ctx: PAVCAST5; dst: pcuint8; const src: pcuint8; count: cint; iv: pcuint8; decrypt: cint); cdecl; external LIB_AVUTIL;
 (**
  * @}
  *)

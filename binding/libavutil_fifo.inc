@@ -37,9 +37,9 @@
 type
   PAVFifoBuffer = ^AVFifoBuffer;
   AVFifoBuffer = record
-    buffer: pcuint8_t;
-    rptr, wptr, end_: pcuint8_t;
-    rndx, wndx: cuint32_t;
+    buffer: pcuint8;
+    rptr, wptr, end_: pcuint8;
+    rndx, wndx: cuint32;
   end;
 
 (**
@@ -186,7 +186,7 @@ procedure av_fifo_drain(f: PAVFifoBuffer; size: cint); cdecl; external LIB_AVUTI
  *             point outside to the buffer data.
  *             The used buffer size can be checked with av_fifo_size().
  *)
-function av_fifo_peek2(const f: PAVFifoBuffer; offs: cint): pcuint8_t; inline;
+function av_fifo_peek2(const f: PAVFifoBuffer; offs: cint): pcuint8; inline;
 {
     uint8_t *ptr = f->rptr + offs;
     if (ptr >= f->end)

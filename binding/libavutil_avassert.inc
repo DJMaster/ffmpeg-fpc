@@ -57,7 +57,7 @@
 #define av_assert1(cond) av_assert0(cond)
 #else
 #define av_assert1(cond) ((void)0)
-{$endif}
+#endif
 
 
 (**
@@ -69,7 +69,7 @@
 #else
 #define av_assert2(cond) ((void)0)
 #define av_assert2_fpu() ((void)0)
-{$endif}
+#endif
 
 (**
  * Assert that floating point opperations can be executed.
