@@ -1020,7 +1020,7 @@ typedef struct AVStream {
      * A combination of AVSTREAM_EVENT_FLAG_*.
      *)
     int event_flags;
-  AVSTREAM_EVENT_FLAG_METADATA_UPDATED = $0001; ///< The call resulted in updated metadata.
+{$define AVSTREAM_EVENT_FLAG_METADATA_UPDATED := $0001} ///< The call resulted in updated metadata.
 
     (*****************************************************************
      * All fields below this line are not part of the public API. They
@@ -1035,7 +1035,7 @@ typedef struct AVStream {
     (**
      * Stream information used internally by avformat_find_stream_info()
      *)
-  MAX_STD_TIMEBASES = (30*12+30+3+6);
+{$define MAX_STD_TIMEBASES := (30*12+30+3+6)}
     struct {
         int64_t last_dts;
         int64_t duration_gcd;
@@ -1098,7 +1098,7 @@ typedef struct AVStream {
      *)
     struct AVPacketList *last_in_packet_buffer;
     AVProbeData probe_data;
-  MAX_REORDER_DELAY = 16;
+{$define MAX_REORDER_DELAY := 16}
     int64_t pts_buffer[MAX_REORDER_DELAY+1];
 
     AVIndexEntry *index_entries; (**< Only used if the format does not
@@ -1470,32 +1470,32 @@ typedef struct AVFormatContext {
      * Set by the user before avformat_open_input() / avformat_write_header().
      *)
     int flags;
-  AVFMT_FLAG_GENPTS = $0001; ///< Generate missing pts even if it requires parsing future frames.
-  AVFMT_FLAG_IGNIDX = $0002; ///< Ignore index.
-  AVFMT_FLAG_NONBLOCK = $0004; ///< Do not block when reading packets from input.
-  AVFMT_FLAG_IGNDTS = $0008; ///< Ignore DTS on frames that contain both DTS & PTS
-  AVFMT_FLAG_NOFILLIN = $0010; ///< Do not infer any values from other values, just return what is stored in the container
-  AVFMT_FLAG_NOPARSE = $0020; ///< Do not use AVParsers, you also must set AVFMT_FLAG_NOFILLIN as the fillin code works on frames and no parsing -> no frames. Also seeking to frames can not work if parsing to find frame boundaries has been disabled
-  AVFMT_FLAG_NOBUFFER = $0040; ///< Do not buffer frames when possible
-  AVFMT_FLAG_CUSTOM_IO = $0080; ///< The caller has supplied a custom AVIOContext, don't avio_close() it.
-  AVFMT_FLAG_DISCARD_CORRUPT = $0100; ///< Discard frames marked corrupted
-  AVFMT_FLAG_FLUSH_PACKETS = $0200; ///< Flush the AVIOContext every packet.
+{$define AVFMT_FLAG_GENPTS := $0001} ///< Generate missing pts even if it requires parsing future frames.
+{$define AVFMT_FLAG_IGNIDX := $0002} ///< Ignore index.
+{$define AVFMT_FLAG_NONBLOCK := $0004} ///< Do not block when reading packets from input.
+{$define AVFMT_FLAG_IGNDTS := $0008} ///< Ignore DTS on frames that contain both DTS & PTS
+{$define AVFMT_FLAG_NOFILLIN := $0010} ///< Do not infer any values from other values, just return what is stored in the container
+{$define AVFMT_FLAG_NOPARSE := $0020} ///< Do not use AVParsers, you also must set AVFMT_FLAG_NOFILLIN as the fillin code works on frames and no parsing -> no frames. Also seeking to frames can not work if parsing to find frame boundaries has been disabled
+{$define AVFMT_FLAG_NOBUFFER := $0040} ///< Do not buffer frames when possible
+{$define AVFMT_FLAG_CUSTOM_IO := $0080} ///< The caller has supplied a custom AVIOContext, don't avio_close() it.
+{$define AVFMT_FLAG_DISCARD_CORRUPT := $0100} ///< Discard frames marked corrupted
+{$define AVFMT_FLAG_FLUSH_PACKETS := $0200} ///< Flush the AVIOContext every packet.
 (**
  * When muxing, try to avoid writing any random/volatile data to the output.
  * This includes any random IDs, real-time timestamps/dates, muxer version, etc.
  *
  * This flag is mainly intended for testing.
  *)
-  AVFMT_FLAG_BITEXACT = $0400;
-  AVFMT_FLAG_MP4A_LATM = $8000; ///< Enable RTP MP4A-LATM payload
-  AVFMT_FLAG_SORT_DTS = $10000; ///< try to interleave outputted packets by dts (using this flag can slow demuxing down)
-  AVFMT_FLAG_PRIV_OPT = $20000; ///< Enable use of private options by delaying codec open (this could be made default once all code is converted)
+{$define AVFMT_FLAG_BITEXACT := $0400}
+{$define AVFMT_FLAG_MP4A_LATM := $8000} ///< Enable RTP MP4A-LATM payload
+{$define AVFMT_FLAG_SORT_DTS := $10000} ///< try to interleave outputted packets by dts (using this flag can slow demuxing down)
+{$define AVFMT_FLAG_PRIV_OPT := $20000} ///< Enable use of private options by delaying codec open (this could be made default once all code is converted)
 {$if FF_API_LAVF_KEEPSIDE_FLAG}
-  AVFMT_FLAG_KEEP_SIDE_DATA = $40000; ///< Don't merge side data but keep it separate. Deprecated, will be the default.
+{$define AVFMT_FLAG_KEEP_SIDE_DATA := $40000} ///< Don't merge side data but keep it separate. Deprecated, will be the default.
 {$endif}
-  AVFMT_FLAG_FAST_SEEK = $80000; ///< Enable fast, but inaccurate seeks for some formats
-  AVFMT_FLAG_SHORTEST = $100000; ///< Stop muxing when the shortest stream stops.
-  AVFMT_FLAG_AUTO_BSF = $200000; ///< Wait for packet data before writing a header, and add bitstream filters as requested by the muxer
+{$define AVFMT_FLAG_FAST_SEEK := $80000} ///< Enable fast, but inaccurate seeks for some formats
+{$define AVFMT_FLAG_SHORTEST := $100000} ///< Stop muxing when the shortest stream stops.
+{$define AVFMT_FLAG_AUTO_BSF := $200000} ///< Wait for packet data before writing a header, and add bitstream filters as requested by the muxer
 
     (**
      * Maximum size of the data read from input for determining
@@ -1620,7 +1620,7 @@ typedef struct AVFormatContext {
      * Flags to enable debugging.
      *)
     int debug;
-  FF_FDEBUG_TS = $0001;
+{$define FF_FDEBUG_TS := $0001}
 
     (**
      * Maximum buffering duration for interleaving.
@@ -1652,7 +1652,7 @@ typedef struct AVFormatContext {
      * A combination of AVFMT_EVENT_FLAG_*.
      *)
     int event_flags;
-  AVFMT_EVENT_FLAG_METADATA_UPDATED = $0001; ///< The call resulted in updated metadata.
+{$define AVFMT_EVENT_FLAG_METADATA_UPDATED := $0001} ///< The call resulted in updated metadata.
 
     (**
      * Maximum number of packets to read while waiting for the first timestamp.
@@ -1668,9 +1668,9 @@ typedef struct AVFormatContext {
      * - demuxing: unused
      *)
     int avoid_negative_ts;
-  AVFMT_AVOID_NEG_TS_AUTO = -1; ///< Enabled when required by target format
-  AVFMT_AVOID_NEG_TS_MAKE_NON_NEGATIVE = 1; ///< Shift timestamps so they are non negative
-  AVFMT_AVOID_NEG_TS_MAKE_ZERO = 2; ///< Shift timestamps so that they start at 0
+{$define AVFMT_AVOID_NEG_TS_AUTO := -1} ///< Enabled when required by target format
+{$define AVFMT_AVOID_NEG_TS_MAKE_NON_NEGATIVE := 1} ///< Shift timestamps so they are non negative
+{$define AVFMT_AVOID_NEG_TS_MAKE_ZERO := 2} ///< Shift timestamps so that they start at 0
 
     (**
      * Transport stream id.
@@ -2128,7 +2128,7 @@ function av_stream_new_side_data(stream: PAVStream; type_: AVPacketSideDataType;
  *)
 {$if FF_API_NOCONST_GET_SIDE_DATA}
 function av_stream_get_side_data(stream: PAVStream; type_: AVPacketSideDataType; size: pcint): pcuint8; cdecl; external LIB_AVFORMAT;
-#else
+{$else}
 function av_stream_get_side_data(const stream: PAVStream; type_: AVPacketSideDataType; size: pcint): pcuint8; cdecl; external LIB_AVFORMAT;
 {$endif}
 
@@ -2971,8 +2971,7 @@ type
     AVFMT_TBCF_AUTO = -1,
     AVFMT_TBCF_DECODER,
     AVFMT_TBCF_DEMUXER{$if FF_API_R_FRAME_RATE},
-    AVFMT_TBCF_R_FRAMERATE
-{$endif}
+    AVFMT_TBCF_R_FRAMERATE{$endif}
   );
 
 (**

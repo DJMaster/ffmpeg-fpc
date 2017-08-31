@@ -612,7 +612,7 @@ struct AVFilterLink {
      *)
     char reserved[0xF000];
 
-#else (* FF_INTERNAL_FIELDS *)
+{$else} (* FF_INTERNAL_FIELDS *)
 
     (**
      * Queue of frames waiting to be filtered.

@@ -373,7 +373,7 @@ type
     AV_CODEC_ID_ANM,
     AV_CODEC_ID_BINKVIDEO,
     AV_CODEC_ID_IFF_ILBM,
-#define AV_CODEC_ID_IFF_BYTERUN1 AV_CODEC_ID_IFF_ILBM
+{$define AV_CODEC_ID_IFF_BYTERUN1 := AV_CODEC_ID_IFF_ILBM}
     AV_CODEC_ID_KGV1,
     AV_CODEC_ID_YOP,
     AV_CODEC_ID_VP8,
@@ -411,7 +411,7 @@ type
     AV_CODEC_ID_WEBP,
     AV_CODEC_ID_HNM4_VIDEO,
     AV_CODEC_ID_HEVC,
-#define AV_CODEC_ID_H265 AV_CODEC_ID_HEVC
+{$define AV_CODEC_ID_H265 := AV_CODEC_ID_HEVC}
     AV_CODEC_ID_FIC,
     AV_CODEC_ID_ALIAS_PIX,
     AV_CODEC_ID_BRENDER_PIX,
@@ -1326,9 +1326,9 @@ const
   MB_TYPE_P1L0 = $2000;
   MB_TYPE_P0L1 = $4000;
   MB_TYPE_P1L1 = $8000;
-  MB_TYPE_L0 = (MB_TYPE_P0L0 | MB_TYPE_P1L0);
-  MB_TYPE_L1 = (MB_TYPE_P0L1 | MB_TYPE_P1L1);
-  MB_TYPE_L0L1 = (MB_TYPE_L0   | MB_TYPE_L1);
+  MB_TYPE_L0 = (MB_TYPE_P0L0 or MB_TYPE_P1L0);
+  MB_TYPE_L1 = (MB_TYPE_P0L1 or MB_TYPE_P1L1);
+  MB_TYPE_L0L1 = (MB_TYPE_L0 or MB_TYPE_L1);
   MB_TYPE_QUANT = $00010000;
   MB_TYPE_CBP = $00020000;
 // Note bits 24-31 are reserved for codec specific use (H.264 ref0, MPEG-1 0mv, ...)
@@ -1860,7 +1860,7 @@ type
      * - decoding: unused
      *)
     compression_level: cint ;
-  FF_COMPRESSION_DEFAULT = -1
+{$define FF_COMPRESSION_DEFAULT := -1}
 
     (**
      * AV_CODEC_FLAG_*.
@@ -1977,7 +1977,7 @@ type
     coded_width, coded_height: cint;
 
 {$if FF_API_ASPECT_EXTENDED}
-  FF_ASPECT_EXTENDED = 15;
+{$define FF_ASPECT_EXTENDED := 15}
 {$endif}
 
     (**
@@ -2072,7 +2072,7 @@ type
     (** @deprecated use codec private option instead *)
     //TODO attribute_deprecated
     rc_strategy: cint;
-  FF_RC_STRATEGY_XVID = 1;
+{$define FF_RC_STRATEGY_XVID := 1}
 {$endif}
 
 {$if FF_API_PRIVATE_OPT}
@@ -2164,9 +2164,9 @@ type
     (** @deprecated use encoder private options instead *)
     //TODO attribute_deprecated
      prediction_method: cint;
-  FF_PRED_LEFT = 0;
-  FF_PRED_PLANE = 1;
-  FF_PRED_MEDIAN = 2;
+{$define FF_PRED_LEFT := 0}
+{$define FF_PRED_PLANE := 1}
+{$define FF_PRED_MEDIAN := 2}
 {$endif}
 
     (**
@@ -2209,23 +2209,23 @@ type
      * - decoding: unused
      *)
     ildct_cmp: cint;
-  FF_CMP_SAD = 0;
-  FF_CMP_SSE = 1;
-  FF_CMP_SATD = 2;
-  FF_CMP_DCT = 3;
-  FF_CMP_PSNR = 4;
-  FF_CMP_BIT = 5;
-  FF_CMP_RD = 6;
-  FF_CMP_ZERO = 7;
-  FF_CMP_VSAD = 8;
-  FF_CMP_VSSE = 9;
-  FF_CMP_NSSE = 10;
-  FF_CMP_W53 = 11;
-  FF_CMP_W97 = 12;
-  FF_CMP_DCTMAX = 13;
-  FF_CMP_DCT264 = 14;
-  FF_CMP_MEDIAN_SAD = 15;
-  FF_CMP_CHROMA = 256;
+{$define FF_CMP_SAD := 0}
+{$define FF_CMP_SSE := 1}
+{$define FF_CMP_SATD := 2}
+{$define FF_CMP_DCT := 3}
+{$define FF_CMP_PSNR := 4}
+{$define FF_CMP_BIT := 5}
+{$define FF_CMP_RD := 6}
+{$define FF_CMP_ZERO := 7}
+{$define FF_CMP_VSAD := 8}
+{$define FF_CMP_VSSE := 9}
+{$define FF_CMP_NSSE := 10}
+{$define FF_CMP_W53 := 11}
+{$define FF_CMP_W97 := 12}
+{$define FF_CMP_DCTMAX := 13}
+{$define FF_CMP_DCT264 := 14}
+{$define FF_CMP_MEDIAN_SAD := 15}
+{$define FF_CMP_CHROMA := 256}
 
     (**
      * ME diamond size & shape
@@ -2280,13 +2280,13 @@ type
      *)
     //TODO attribute_deprecated
     dtg_active_format: cint;
-  FF_DTG_AFD_SAME = 8;
-  FF_DTG_AFD_4_3 = 9;
-  FF_DTG_AFD_16_9 = 10;
-  FF_DTG_AFD_14_9 = 11;
-  FF_DTG_AFD_4_3_SP_14_9 = 13;
-  FF_DTG_AFD_16_9_SP_14_9 = 14;
-  FF_DTG_AFD_SP_4_3 = 15;
+{$define FF_DTG_AFD_SAME := 8}
+{$define FF_DTG_AFD_4_3 := 9}
+{$define FF_DTG_AFD_16_9 := 10}
+{$define FF_DTG_AFD_14_9 := 11}
+{$define FF_DTG_AFD_4_3_SP_14_9 := 13}
+{$define FF_DTG_AFD_16_9_SP_14_9 := 14}
+{$define FF_DTG_AFD_SP_4_3 := 15}
 {$endif} (* FF_API_AFD *)
 
     (**
@@ -2304,7 +2304,7 @@ type
      *)
     //TODO attribute_deprecated
     intra_quant_bias: cint;
-  FF_DEFAULT_QUANT_BIAS = 999999;
+{$define FF_DEFAULT_QUANT_BIAS := 999999}
 
     (**
      * @deprecated use encoder private option instead
@@ -2319,9 +2319,9 @@ type
      * - decoding: Set by user.
      *)
     slice_flags: cint;
-  SLICE_FLAG_CODED_ORDER = $0001; ///< draw_horiz_band() is called in coded order instead of display
-  SLICE_FLAG_ALLOW_FIELD = $0002; ///< allow draw_horiz_band() with field slices (MPEG-2 field pics)
-  SLICE_FLAG_ALLOW_PLANE = $0004; ///< allow draw_horiz_band() with 1 component at a time (SVQ1)
+{$define SLICE_FLAG_CODED_ORDER := $0001} ///< draw_horiz_band() is called in coded order instead of display
+{$define SLICE_FLAG_ALLOW_FIELD := $0002} ///< allow draw_horiz_band() with field slices (MPEG-2 field pics)
+{$define SLICE_FLAG_ALLOW_PLANE := $0004} ///< allow draw_horiz_band() with 1 component at a time (SVQ1)
 
 {$if FF_API_XVMC}
     (**
@@ -2340,9 +2340,9 @@ type
      * - decoding: unused
      *)
     mb_decision: cint;
-  FF_MB_DECISION_SIMPLE = 0; ///< uses mb_cmp
-  FF_MB_DECISION_BITS = 1; ///< chooses the one which needs the fewest bits
-  FF_MB_DECISION_RD = 2; ///< rate distortion
+{$define FF_MB_DECISION_SIMPLE := 0} ///< uses mb_cmp
+{$define FF_MB_DECISION_BITS := 1} ///< chooses the one which needs the fewest bits
+{$define FF_MB_DECISION_RD := 2} ///< rate distortion
 
     (**
      * custom intra quantization matrix
@@ -2769,7 +2769,7 @@ type
      * @deprecated use encoder private options instead
      *)
     //TODO attribute_deprecated
-    const rc_eq: pchar;
+    rc_eq: pchar;
 {$endif}
 
     (**
@@ -2819,12 +2819,12 @@ type
     rc_initial_buffer_occupancy: cint;
 
 {$if FF_API_CODER_TYPE}
-  FF_CODER_TYPE_VLC = 0;
-  FF_CODER_TYPE_AC = 1;
-  FF_CODER_TYPE_RAW = 2;
-  FF_CODER_TYPE_RLE = 3;
+{$define FF_CODER_TYPE_VLC := 0}
+{$define FF_CODER_TYPE_AC := 1}
+{$define FF_CODER_TYPE_RAW := 2}
+{$define FF_CODER_TYPE_RLE := 3}
 {$if FF_API_UNUSED_MEMBERS}
-  FF_CODER_TYPE_DEFLATE = 4;
+{$define FF_CODER_TYPE_DEFLATE := 4}
 {$endif} (* FF_API_UNUSED_MEMBERS *)
     (**
      * @deprecated use encoder private options instead
@@ -2962,27 +2962,27 @@ type
      * - decoding: Set by user
      *)
     workaround_bugs: cint;
-  FF_BUG_AUTODETECT = 1; ///< autodetection
+{$define FF_BUG_AUTODETECT := 1} ///< autodetection
 {$if FF_API_OLD_MSMPEG4}
-  FF_BUG_OLD_MSMPEG4 = 2;
+{$define FF_BUG_OLD_MSMPEG4 := 2}
 {$endif}
-  FF_BUG_XVID_ILACE = 4;
-  FF_BUG_UMP4 = 8;
-  FF_BUG_NO_PADDING = 16;
-  FF_BUG_AMV = 32;
+{$define FF_BUG_XVID_ILACE := 4}
+{$define FF_BUG_UMP4 := 8}
+{$define FF_BUG_NO_PADDING := 16}
+{$define FF_BUG_AMV := 32}
 {$if FF_API_AC_VLC}
-  FF_BUG_AC_VLC = 0; ///< Will be removed, libavcodec can now handle these non-compliant files by default.
+{$define FF_BUG_AC_VLC := 0} ///< Will be removed, libavcodec can now handle these non-compliant files by default.
 {$endif}
-  FF_BUG_QPEL_CHROMA = 64;
-  FF_BUG_STD_QPEL = 128;
-  FF_BUG_QPEL_CHROMA2 = 256;
-  FF_BUG_DIRECT_BLOCKSIZE = 512;
-  FF_BUG_EDGE = 1024;
-  FF_BUG_HPEL_CHROMA = 2048;
-  FF_BUG_DC_CLIP = 4096;
-  FF_BUG_MS = 8192; ///< Work around various bugs in Microsoft's broken decoders.
-  FF_BUG_TRUNCATED = 16384;
-  FF_BUG_IEDGE = 32768;
+{$define FF_BUG_QPEL_CHROMA := 64}
+{$define FF_BUG_STD_QPEL := 128}
+{$define FF_BUG_QPEL_CHROMA2 := 256}
+{$define FF_BUG_DIRECT_BLOCKSIZE := 512}
+{$define FF_BUG_EDGE := 1024}
+{$define FF_BUG_HPEL_CHROMA := 2048}
+{$define FF_BUG_DC_CLIP := 4096}
+{$define FF_BUG_MS := 8192} ///< Work around various bugs in Microsoft's broken decoders.
+{$define FF_BUG_TRUNCATED := 16384}
+{$define FF_BUG_IEDGE := 32768}
 
     (**
      * strictly follow the standard (MPEG-4, ...).
@@ -2997,11 +2997,11 @@ type
      * (=strictly conform to the specs)
      *)
     strict_std_compliance: cint;
-  FF_COMPLIANCE_VERY_STRICT = 2; ///< Strictly conform to an older more strict version of the spec or reference software.
-  FF_COMPLIANCE_STRICT = 1; ///< Strictly conform to all the things in the spec no matter what consequences.
-  FF_COMPLIANCE_NORMAL = 0;
-  FF_COMPLIANCE_UNOFFICIAL = -1; ///< Allow unofficial extensions
-  FF_COMPLIANCE_EXPERIMENTAL = -2; ///< Allow nonstandardized experimental things.
+{$define FF_COMPLIANCE_VERY_STRICT := 2} ///< Strictly conform to an older more strict version of the spec or reference software.
+{$define FF_COMPLIANCE_STRICT := 1} ///< Strictly conform to all the things in the spec no matter what consequences.
+{$define FF_COMPLIANCE_NORMAL := 0}
+{$define FF_COMPLIANCE_UNOFFICIAL := -1} ///< Allow unofficial extensions
+{$define FF_COMPLIANCE_EXPERIMENTAL := -2} ///< Allow nonstandardized experimental things.
 
     (**
      * error concealment flags
@@ -3009,9 +3009,9 @@ type
      * - decoding: Set by user.
      *)
     error_concealment: cint;
-  FF_EC_GUESS_MVS = 1;
-  FF_EC_DEBLOCK = 2;
-  FF_EC_FAVOR_INTER = 256;
+{$define FF_EC_GUESS_MVS := 1}
+{$define FF_EC_DEBLOCK := 2}
+{$define FF_EC_FAVOR_INTER := 256}
 
     (**
      * debug
@@ -3019,34 +3019,34 @@ type
      * - decoding: Set by user.
      *)
     debug: cint;
-  FF_DEBUG_PICT_INFO = 1;
-  FF_DEBUG_RC = 2;
-  FF_DEBUG_BITSTREAM = 4;
-  FF_DEBUG_MB_TYPE = 8;
-  FF_DEBUG_QP = 16;
+{$define FF_DEBUG_PICT_INFO := 1}
+{$define FF_DEBUG_RC := 2}
+{$define FF_DEBUG_BITSTREAM := 4}
+{$define FF_DEBUG_MB_TYPE := 8}
+{$define FF_DEBUG_QP := 16}
 {$if FF_API_DEBUG_MV}
 (**
  * @deprecated this option does nothing
  *)
-  FF_DEBUG_MV = 32;
+{$define FF_DEBUG_MV := 32}
 {$endif}
-  FF_DEBUG_DCT_COEFF = $00000040;
-  FF_DEBUG_SKIP = $00000080;
-  FF_DEBUG_STARTCODE = $00000100;
+{$define FF_DEBUG_DCT_COEFF := $00000040}
+{$define FF_DEBUG_SKIP := $00000080}
+{$define FF_DEBUG_STARTCODE := $00000100}
 {$if FF_API_UNUSED_MEMBERS}
-  FF_DEBUG_PTS = $00000200;
+{$define FF_DEBUG_PTS := $00000200}
 {$endif} (* FF_API_UNUSED_MEMBERS *)
-  FF_DEBUG_ER = $00000400;
-  FF_DEBUG_MMCO = $00000800;
-  FF_DEBUG_BUGS = $00001000;
+{$define FF_DEBUG_ER := $00000400}
+{$define FF_DEBUG_MMCO := $00000800}
+{$define FF_DEBUG_BUGS := $00001000}
 {$if FF_API_DEBUG_MV}
-  FF_DEBUG_VIS_QP = $00002000;
-  FF_DEBUG_VIS_MB_TYPE = $00004000;
+{$define FF_DEBUG_VIS_QP := $00002000}
+{$define FF_DEBUG_VIS_MB_TYPE := $00004000}
 {$endif}
-  FF_DEBUG_BUFFERS = $00008000;
-  FF_DEBUG_THREADS = $00010000;
-  FF_DEBUG_GREEN_MD = $00800000;
-  FF_DEBUG_NOMC = $01000000;
+{$define FF_DEBUG_BUFFERS := $00008000}
+{$define FF_DEBUG_THREADS := $00010000}
+{$define FF_DEBUG_GREEN_MD := $00800000}
+{$define FF_DEBUG_NOMC := $01000000}
 
 {$if FF_API_DEBUG_MV}
     (**
@@ -3055,9 +3055,9 @@ type
      * - decoding: Set by user.
      *)
     debug_mv: cint;
-  FF_DEBUG_VIS_MV_P_FOR = $00000001; // visualize forward predicted MVs of P-frames
-  FF_DEBUG_VIS_MV_B_FOR = $00000002; // visualize forward predicted MVs of B-frames
-  FF_DEBUG_VIS_MV_B_BACK = $00000004; // visualize backward predicted MVs of B-frames
+{$define FF_DEBUG_VIS_MV_P_FOR := $00000001} // visualize forward predicted MVs of P-frames
+{$define FF_DEBUG_VIS_MV_B_FOR := $00000002} // visualize forward predicted MVs of B-frames
+{$define FF_DEBUG_VIS_MV_B_BACK := $00000004} // visualize backward predicted MVs of B-frames
 {$endif}
 
     (**
@@ -3073,15 +3073,15 @@ type
  * If AV_EF_EXPLODE is also set, a mismatching checksum will result in the
  * decoder returning an error.
  *)
-  AV_EF_CRCCHECK = (1 shl 0);
-  AV_EF_BITSTREAM = (1 shl 1); ///< detect bitstream specification deviations
-  AV_EF_BUFFER = (1 shl 2); ///< detect improper bitstream length
-  AV_EF_EXPLODE = (1 shl 3); ///< abort decoding on minor error detection
+{$define AV_EF_CRCCHECK := (1 shl 0)}
+{$define AV_EF_BITSTREAM := (1 shl 1)} ///< detect bitstream specification deviations
+{$define AV_EF_BUFFER := (1 shl 2)} ///< detect improper bitstream length
+{$define AV_EF_EXPLODE := (1 shl 3)} ///< abort decoding on minor error detection
 
-  AV_EF_IGNORE_ERR = (1 shl 15); ///< ignore errors and continue
-  AV_EF_CAREFUL = (1 shl 16); ///< consider things that violate the spec, are fast to calculate and have not been seen in the wild as errors
-  AV_EF_COMPLIANT = (1 shl 17); ///< consider all spec non compliances as errors
-  AV_EF_AGGRESSIVE = (1 shl 18); ///< consider things that a sane encoder should not do as an error
+{$define AV_EF_IGNORE_ERR := (1 shl 15)} ///< ignore errors and continue
+{$define AV_EF_CAREFUL := (1 shl 16)} ///< consider things that violate the spec, are fast to calculate and have not been seen in the wild as errors
+{$define AV_EF_COMPLIANT := (1 shl 17)} ///< consider all spec non compliances as errors
+{$define AV_EF_AGGRESSIVE := (1 shl 18)} ///< consider things that a sane encoder should not do as an error
 
 
     (**
@@ -3124,12 +3124,12 @@ type
      * - decoding: unused
      *)
     dct_algo: cint;
-  FF_DCT_AUTO = 0;
-  FF_DCT_FASTINT = 1;
-  FF_DCT_INT = 2;
-  FF_DCT_MMX = 3;
-  FF_DCT_ALTIVEC = 5;
-  FF_DCT_FAAN = 6;
+{$define FF_DCT_AUTO := 0}
+{$define FF_DCT_FASTINT := 1}
+{$define FF_DCT_INT := 2}
+{$define FF_DCT_MMX := 3}
+{$define FF_DCT_ALTIVEC := 5}
+{$define FF_DCT_FAAN := 6}
 
     (**
      * IDCT algorithm, see FF_IDCT_* below.
@@ -3137,34 +3137,34 @@ type
      * - decoding: Set by user.
      *)
     idct_algo: cint;
-  FF_IDCT_AUTO = 0;
-  FF_IDCT_INT = 1;
-  FF_IDCT_SIMPLE = 2;
-  FF_IDCT_SIMPLEMMX = 3;
-  FF_IDCT_ARM = 7;
-  FF_IDCT_ALTIVEC = 8;
+{$define FF_IDCT_AUTO := 0}
+{$define FF_IDCT_INT := 1}
+{$define FF_IDCT_SIMPLE := 2}
+{$define FF_IDCT_SIMPLEMMX := 3}
+{$define FF_IDCT_ARM := 7}
+{$define FF_IDCT_ALTIVEC := 8}
 {$if FF_API_ARCH_SH4}
-  FF_IDCT_SH4 = 9;
+{$define FF_IDCT_SH4 := 9}
 {$endif}
-  FF_IDCT_SIMPLEARM = 10;
+{$define FF_IDCT_SIMPLEARM := 10}
 {$if FF_API_UNUSED_MEMBERS}
-  FF_IDCT_IPP = 13;
+{$define FF_IDCT_IPP := 13}
 {$endif} (* FF_API_UNUSED_MEMBERS *)
-  FF_IDCT_XVID = 14;
+{$define FF_IDCT_XVID := 14}
 {$if FF_API_IDCT_XVIDMMX}
-  FF_IDCT_XVIDMMX = 14;
+{$define FF_IDCT_XVIDMMX := 14}
 {$endif} (* FF_API_IDCT_XVIDMMX *)
-  FF_IDCT_SIMPLEARMV5TE = 16;
-  FF_IDCT_SIMPLEARMV6 = 17;
+{$define FF_IDCT_SIMPLEARMV5TE := 16}
+{$define FF_IDCT_SIMPLEARMV6 := 17}
 {$if FF_API_ARCH_SPARC}
-  FF_IDCT_SIMPLEVIS = 18;
+{$define FF_IDCT_SIMPLEVIS := 18}
 {$endif}
-  FF_IDCT_FAAN = 20;
-  FF_IDCT_SIMPLENEON = 22;
+{$define FF_IDCT_FAAN := 20}
+{$define FF_IDCT_SIMPLENEON := 22}
 {$if FF_API_ARCH_ALPHA}
-  FF_IDCT_SIMPLEALPHA = 23;
+{$define FF_IDCT_SIMPLEALPHA := 23}
 {$endif}
-  FF_IDCT_SIMPLEAUTO = 128;
+{$define FF_IDCT_SIMPLEAUTO := 128}
 
     (**
      * bits per sample/pixel from the demuxer (needed for huffyuv).
@@ -3218,8 +3218,8 @@ type
      * - decoding: Set by user, otherwise the default is used.
      *)
     thread_type: cint;
-  FF_THREAD_FRAME = 1; ///< Decode more than one frame at once
-  FF_THREAD_SLICE = 2; ///< Decode more than one part of a single frame at once
+{$define FF_THREAD_FRAME := 1} ///< Decode more than one frame at once
+{$define FF_THREAD_SLICE := 2} ///< Decode more than one part of a single frame at once
 
     (**
      * Which multithreading methods are in use by the codec.
@@ -3282,97 +3282,97 @@ type
      * - decoding: Set by libavcodec.
      *)
      profile: cint;
-  FF_PROFILE_UNKNOWN = -99;
-  FF_PROFILE_RESERVED = -100;
+{$define FF_PROFILE_UNKNOWN := -99}
+{$define FF_PROFILE_RESERVED := -100}
 
-  FF_PROFILE_AAC_MAIN = 0;
-  FF_PROFILE_AAC_LOW = 1;
-  FF_PROFILE_AAC_SSR = 2;
-  FF_PROFILE_AAC_LTP = 3;
-  FF_PROFILE_AAC_HE = 4;
-  FF_PROFILE_AAC_HE_V2 = 28;
-  FF_PROFILE_AAC_LD = 22;
-  FF_PROFILE_AAC_ELD = 38;
-  FF_PROFILE_MPEG2_AAC_LOW = 128;
-  FF_PROFILE_MPEG2_AAC_HE = 131;
+{$define FF_PROFILE_AAC_MAIN := 0}
+{$define FF_PROFILE_AAC_LOW := 1}
+{$define FF_PROFILE_AAC_SSR := 2}
+{$define FF_PROFILE_AAC_LTP := 3}
+{$define FF_PROFILE_AAC_HE := 4}
+{$define FF_PROFILE_AAC_HE_V2 := 28}
+{$define FF_PROFILE_AAC_LD := 22}
+{$define FF_PROFILE_AAC_ELD := 38}
+{$define FF_PROFILE_MPEG2_AAC_LOW := 128}
+{$define FF_PROFILE_MPEG2_AAC_HE := 131}
 
-  FF_PROFILE_DNXHD = 0;
-  FF_PROFILE_DNXHR_LB = 1;
-  FF_PROFILE_DNXHR_SQ = 2;
-  FF_PROFILE_DNXHR_HQ = 3;
-  FF_PROFILE_DNXHR_HQX = 4;
-  FF_PROFILE_DNXHR_444 = 5;
+{$define FF_PROFILE_DNXHD := 0}
+{$define FF_PROFILE_DNXHR_LB := 1}
+{$define FF_PROFILE_DNXHR_SQ := 2}
+{$define FF_PROFILE_DNXHR_HQ := 3}
+{$define FF_PROFILE_DNXHR_HQX := 4}
+{$define FF_PROFILE_DNXHR_444 := 5}
 
-  FF_PROFILE_DTS = 20;
-  FF_PROFILE_DTS_ES = 30;
-  FF_PROFILE_DTS_96_24 = 40;
-  FF_PROFILE_DTS_HD_HRA = 50;
-  FF_PROFILE_DTS_HD_MA = 60;
-  FF_PROFILE_DTS_EXPRESS = 70;
+{$define FF_PROFILE_DTS := 20}
+{$define FF_PROFILE_DTS_ES := 30}
+{$define FF_PROFILE_DTS_96_24 := 40}
+{$define FF_PROFILE_DTS_HD_HRA := 50}
+{$define FF_PROFILE_DTS_HD_MA := 60}
+{$define FF_PROFILE_DTS_EXPRESS := 70}
 
-  FF_PROFILE_MPEG2_422 = 0;
-  FF_PROFILE_MPEG2_HIGH = 1;
-  FF_PROFILE_MPEG2_SS = 2;
-  FF_PROFILE_MPEG2_SNR_SCALABLE = 3;
-  FF_PROFILE_MPEG2_MAIN = 4;
-  FF_PROFILE_MPEG2_SIMPLE = 5;
+{$define FF_PROFILE_MPEG2_422 := 0}
+{$define FF_PROFILE_MPEG2_HIGH := 1}
+{$define FF_PROFILE_MPEG2_SS := 2}
+{$define FF_PROFILE_MPEG2_SNR_SCALABLE := 3}
+{$define FF_PROFILE_MPEG2_MAIN := 4}
+{$define FF_PROFILE_MPEG2_SIMPLE := 5}
 
-  FF_PROFILE_H264_CONSTRAINED = (1 shl 9); // 8+1; constraint_set1_flag
-  FF_PROFILE_H264_INTRA = (1 shl 11); // 8+3; constraint_set3_flag
+{$define FF_PROFILE_H264_CONSTRAINED := (1 shl 9)} // 8+1; constraint_set1_flag
+{$define FF_PROFILE_H264_INTRA := (1 shl 11)} // 8+3; constraint_set3_flag
 
-  FF_PROFILE_H264_BASELINE = 66;
-  FF_PROFILE_H264_CONSTRAINED_BASELINE = (66|FF_PROFILE_H264_CONSTRAINED);
-  FF_PROFILE_H264_MAIN = 77;
-  FF_PROFILE_H264_EXTENDED = 88;
-  FF_PROFILE_H264_HIGH = 100;
-  FF_PROFILE_H264_HIGH_10 = 110;
-  FF_PROFILE_H264_HIGH_10_INTRA = (110|FF_PROFILE_H264_INTRA);
-  FF_PROFILE_H264_MULTIVIEW_HIGH = 118;
-  FF_PROFILE_H264_HIGH_422 = 122;
-  FF_PROFILE_H264_HIGH_422_INTRA = (122|FF_PROFILE_H264_INTRA);
-  FF_PROFILE_H264_STEREO_HIGH = 128;
-  FF_PROFILE_H264_HIGH_444 = 144;
-  FF_PROFILE_H264_HIGH_444_PREDICTIVE = 244;
-  FF_PROFILE_H264_HIGH_444_INTRA = (244|FF_PROFILE_H264_INTRA);
-  FF_PROFILE_H264_CAVLC_444 = 44;
+{$define FF_PROFILE_H264_BASELINE := 66}
+{$define FF_PROFILE_H264_CONSTRAINED_BASELINE := (66 or FF_PROFILE_H264_CONSTRAINED)}
+{$define FF_PROFILE_H264_MAIN := 77}
+{$define FF_PROFILE_H264_EXTENDED := 88}
+{$define FF_PROFILE_H264_HIGH := 100}
+{$define FF_PROFILE_H264_HIGH_10 := 110}
+{$define FF_PROFILE_H264_HIGH_10_INTRA := (110 or FF_PROFILE_H264_INTRA)}
+{$define FF_PROFILE_H264_MULTIVIEW_HIGH := 118}
+{$define FF_PROFILE_H264_HIGH_422 := 122}
+{$define FF_PROFILE_H264_HIGH_422_INTRA := (122 or FF_PROFILE_H264_INTRA)}
+{$define FF_PROFILE_H264_STEREO_HIGH := 128}
+{$define FF_PROFILE_H264_HIGH_444 := 144}
+{$define FF_PROFILE_H264_HIGH_444_PREDICTIVE := 244}
+{$define FF_PROFILE_H264_HIGH_444_INTRA := (244 or FF_PROFILE_H264_INTRA)}
+{$define FF_PROFILE_H264_CAVLC_444 := 44}
 
-  FF_PROFILE_VC1_SIMPLE = 0;
-  FF_PROFILE_VC1_MAIN = 1;
-  FF_PROFILE_VC1_COMPLEX = 2;
-  FF_PROFILE_VC1_ADVANCED = 3;
+{$define FF_PROFILE_VC1_SIMPLE := 0}
+{$define FF_PROFILE_VC1_MAIN := 1}
+{$define FF_PROFILE_VC1_COMPLEX := 2}
+{$define FF_PROFILE_VC1_ADVANCED := 3}
 
-  FF_PROFILE_MPEG4_SIMPLE = 0;
-  FF_PROFILE_MPEG4_SIMPLE_SCALABLE = 1;
-  FF_PROFILE_MPEG4_CORE = 2;
-  FF_PROFILE_MPEG4_MAIN = 3;
-  FF_PROFILE_MPEG4_N_BIT = 4;
-  FF_PROFILE_MPEG4_SCALABLE_TEXTURE = 5;
-  FF_PROFILE_MPEG4_SIMPLE_FACE_ANIMATION = 6;
-  FF_PROFILE_MPEG4_BASIC_ANIMATED_TEXTURE = 7;
-  FF_PROFILE_MPEG4_HYBRID = 8;
-  FF_PROFILE_MPEG4_ADVANCED_REAL_TIME = 9;
-  FF_PROFILE_MPEG4_CORE_SCALABLE = 10;
-  FF_PROFILE_MPEG4_ADVANCED_CODING = 11;
-  FF_PROFILE_MPEG4_ADVANCED_CORE = 12;
-  FF_PROFILE_MPEG4_ADVANCED_SCALABLE_TEXTURE = 13;
-  FF_PROFILE_MPEG4_SIMPLE_STUDIO = 14;
-  FF_PROFILE_MPEG4_ADVANCED_SIMPLE = 15;
+{$define FF_PROFILE_MPEG4_SIMPLE := 0}
+{$define FF_PROFILE_MPEG4_SIMPLE_SCALABLE := 1}
+{$define FF_PROFILE_MPEG4_CORE := 2}
+{$define FF_PROFILE_MPEG4_MAIN := 3}
+{$define FF_PROFILE_MPEG4_N_BIT := 4}
+{$define FF_PROFILE_MPEG4_SCALABLE_TEXTURE := 5}
+{$define FF_PROFILE_MPEG4_SIMPLE_FACE_ANIMATION := 6}
+{$define FF_PROFILE_MPEG4_BASIC_ANIMATED_TEXTURE := 7}
+{$define FF_PROFILE_MPEG4_HYBRID := 8}
+{$define FF_PROFILE_MPEG4_ADVANCED_REAL_TIME := 9}
+{$define FF_PROFILE_MPEG4_CORE_SCALABLE := 10}
+{$define FF_PROFILE_MPEG4_ADVANCED_CODING := 11}
+{$define FF_PROFILE_MPEG4_ADVANCED_CORE := 12}
+{$define FF_PROFILE_MPEG4_ADVANCED_SCALABLE_TEXTURE := 13}
+{$define FF_PROFILE_MPEG4_SIMPLE_STUDIO := 14}
+{$define FF_PROFILE_MPEG4_ADVANCED_SIMPLE := 15}
 
-  FF_PROFILE_JPEG2000_CSTREAM_RESTRICTION_0 = 1;
-  FF_PROFILE_JPEG2000_CSTREAM_RESTRICTION_1 = 2;
-  FF_PROFILE_JPEG2000_CSTREAM_NO_RESTRICTION = 32768;
-  FF_PROFILE_JPEG2000_DCINEMA_2K = 3;
-  FF_PROFILE_JPEG2000_DCINEMA_4K = 4;
+{$define FF_PROFILE_JPEG2000_CSTREAM_RESTRICTION_0 := 1}
+{$define FF_PROFILE_JPEG2000_CSTREAM_RESTRICTION_1 := 2}
+{$define FF_PROFILE_JPEG2000_CSTREAM_NO_RESTRICTION := 32768}
+{$define FF_PROFILE_JPEG2000_DCINEMA_2K := 3}
+{$define FF_PROFILE_JPEG2000_DCINEMA_4K := 4}
 
-  FF_PROFILE_VP9_0 = 0;
-  FF_PROFILE_VP9_1 = 1;
-  FF_PROFILE_VP9_2 = 2;
-  FF_PROFILE_VP9_3 = 3;
+{$define FF_PROFILE_VP9_0 := 0}
+{$define FF_PROFILE_VP9_1 := 1}
+{$define FF_PROFILE_VP9_2 := 2}
+{$define FF_PROFILE_VP9_3 := 3}
 
-  FF_PROFILE_HEVC_MAIN = 1;
-  FF_PROFILE_HEVC_MAIN_10 = 2;
-  FF_PROFILE_HEVC_MAIN_STILL_PICTURE = 3;
-  FF_PROFILE_HEVC_REXT = 4;
+{$define FF_PROFILE_HEVC_MAIN := 1}
+{$define FF_PROFILE_HEVC_MAIN_10 := 2}
+{$define FF_PROFILE_HEVC_MAIN_STILL_PICTURE := 3}
+{$define FF_PROFILE_HEVC_REXT := 4}
 
     (**
      * level
@@ -3380,7 +3380,7 @@ type
      * - decoding: Set by libavcodec.
      *)
      level: cint;
-  FF_LEVEL_UNKNOWN = -99;
+{$define FF_LEVEL_UNKNOWN := -99}
 
     (**
      * Skip loop filtering for selected frames.
@@ -3496,7 +3496,7 @@ type
      * - encoding: unused.
      * - decoding: set by libavcodec.
      *)
-    const codec_descriptor: PAVCodecDescriptor;
+    codec_descriptor: PAVCodecDescriptor;
 
 {$if not FF_API_LOWRES}
     (**
@@ -3531,9 +3531,9 @@ type
      * - encoding: unused
      *)
     sub_charenc_mode: cint;
-  FF_SUB_CHARENC_MODE_DO_NOTHING = -1; ///< do nothing (demuxer outputs a stream supposed to be already in UTF-8, or the codec is bitmap for instance)
-  FF_SUB_CHARENC_MODE_AUTOMATIC = 0; ///< libavcodec will select the mode itself
-  FF_SUB_CHARENC_MODE_PRE_DECODER = 1; ///< the AVPacket data needs to be recoded to UTF-8 before being fed to the decoder, requires iconv
+{$define FF_SUB_CHARENC_MODE_DO_NOTHING := -1} ///< do nothing (demuxer outputs a stream supposed to be already in UTF-8, or the codec is bitmap for instance)
+{$define FF_SUB_CHARENC_MODE_AUTOMATIC := 0} ///< libavcodec will select the mode itself
+{$define FF_SUB_CHARENC_MODE_PRE_DECODER := 1} ///< the AVPacket data needs to be recoded to UTF-8 before being fed to the decoder, requires iconv
 
     (**
      * Skip processing alpha if supported by codec.
@@ -3563,9 +3563,9 @@ type
      * - decoding: Set by user.
      *)
     debug_mv: cint;
-  FF_DEBUG_VIS_MV_P_FOR = $00000001;  //visualize forward predicted MVs of P frames
-  FF_DEBUG_VIS_MV_B_FOR = $00000002;  //visualize forward predicted MVs of B frames
-  FF_DEBUG_VIS_MV_B_BACK = $00000004; //visualize backward predicted MVs of B frames
+{$define FF_DEBUG_VIS_MV_P_FOR := $00000001}  //visualize forward predicted MVs of P frames
+{$define FF_DEBUG_VIS_MV_B_FOR := $00000002}  //visualize forward predicted MVs of B frames
+{$define FF_DEBUG_VIS_MV_B_BACK := $00000004} //visualize backward predicted MVs of B frames
 {$endif}
 
     (**
@@ -3597,8 +3597,8 @@ type
      * - decoding: set by libavcodec
      *)
     properties: cunsigned;
-  FF_CODEC_PROPERTY_LOSSLESS = $00000001;
-  FF_CODEC_PROPERTY_CLOSED_CAPTIONS = $00000002;
+{$define FF_CODEC_PROPERTY_LOSSLESS := $00000001}
+{$define FF_CODEC_PROPERTY_CLOSED_CAPTIONS := $00000002}
 
     (**
      * Additional data associated with the entire coded stream.
@@ -3639,9 +3639,9 @@ type
      * - encoding: unused
      *)
     sub_text_format: cint;
-  FF_SUB_TEXT_FMT_ASS = 0;
+{$define FF_SUB_TEXT_FMT_ASS := 0}
 {$if FF_API_ASS_TIMING}
-  FF_SUB_TEXT_FMT_ASS_WITH_TIMINGS = 1;
+{$define FF_SUB_TEXT_FMT_ASS_WITH_TIMINGS := 1}
 {$endif}
 
     (**
@@ -3992,6 +3992,7 @@ typedef struct AVHWAccel {
     int caps_internal;
 } AVHWAccel;
 
+const
 (**
  * Hardware acceleration should be used for decoding even if the codec level
  * used is unknown or higher than the maximum supported level reported by the
@@ -4057,6 +4058,7 @@ enum AVSubtitleType {
     SUBTITLE_ASS,
 };
 
+const
   AV_SUBTITLE_FLAG_FORCED = $00000001;
 
 typedef struct AVSubtitleRect {
@@ -5142,18 +5144,18 @@ typedef struct AVCodecParserContext {
     int64_t last_dts;
     int fetch_timestamp;
 
-  AV_PARSER_PTS_NB = 4;
+{$define AV_PARSER_PTS_NB := 4}
     int cur_frame_start_index;
     int64_t cur_frame_offset[AV_PARSER_PTS_NB];
     int64_t cur_frame_pts[AV_PARSER_PTS_NB];
     int64_t cur_frame_dts[AV_PARSER_PTS_NB];
 
     int flags;
-  PARSER_FLAG_COMPLETE_FRAMES = $0001;
-  PARSER_FLAG_ONCE = $0002;
+{$define PARSER_FLAG_COMPLETE_FRAMES := $0001}
+{$define PARSER_FLAG_ONCE := $0002}
 /// Set if the parser has a valid file offset
-  PARSER_FLAG_FETCHED_OFFSET = $0004;
-  PARSER_FLAG_USE_CODEC_TS = $1000;
+{$define PARSER_FLAG_FETCHED_OFFSET := $0004}
+{$define PARSER_FLAG_USE_CODEC_TS := $1000}
 
     int64_t offset; ///< byte offset from starting packet start
     int64_t cur_frame_end[AV_PARSER_PTS_NB];
@@ -6146,6 +6148,7 @@ function av_bsf_list_append(lst: PAVBSFList; bsf: PAVBSFContext): cint; cdecl; e
  * @return >=0 on success, negative AVERROR in case of failure
  *)
 function av_bsf_list_append2(lst: PAVBSFList; const bsf_name: pchar; options: PPAVDictionary): cint; cdecl; external LIB_AVCODEC;
+
 (**
  * Finalize list of bitstream filters.
  *
