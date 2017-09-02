@@ -513,9 +513,7 @@ function avresample_config(avr: PAVAudioResampleContext; out_: PAVFrame: in_: PA
 
 // #endif (* AVRESAMPLE_AVRESAMPLE_H *)
 
-
 implementation
-
 
 end.
 

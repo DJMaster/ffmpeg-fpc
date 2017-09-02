@@ -141,7 +141,7 @@ const
  *)
 type
   free_proc = procedure (opaque: pointer; data: pcuint8); cdecl;
-  
+
 function av_buffer_create(data: pcuint8; size: cint; free: free_proc; opaque: pointer; flags: cint): PAVBufferRef; cdecl; external LIB_AVUTIL;
 
 (**

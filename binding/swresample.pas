@@ -596,9 +596,7 @@ function swr_config_frame(swr: PSwrContext; const out_: PAVFrame; const in_: PAV
 
 // #endif (* SWRESAMPLE_SWRESAMPLE_H *)
 
-
 implementation
-
 
 end.
 

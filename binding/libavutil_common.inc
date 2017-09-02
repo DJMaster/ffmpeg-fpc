@@ -465,8 +465,6 @@ static av_always_inline av_const int av_parity_c(uint32_t v)
         }\
     }\
 
-
-
 #include "mem.h"
 
 {$ifdef HAVE_AV_CONFIG_H}

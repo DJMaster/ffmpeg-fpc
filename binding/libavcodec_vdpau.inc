@@ -36,7 +36,6 @@
  * Public libavcodec VDPAU header.
  *)
 
-
 (**
  * @defgroup lavc_codec_hwaccel_vdpau VDPAU Decoder and Renderer
  * @ingroup lavc_codec_hwaccel

@@ -100,7 +100,6 @@ var
 
 procedure pp_postprocess(const src: array[0..2] of pcuint8; const srcStride: array[0..2] of cint; dst: array[0..2] of pcuint8; const dstStride: array[0..2] of cint; horizontalSize: cint; verticalSize: cint; const QP_store: pcint8; QP_stride: cint; mode: Ppp_mode; ppContext: Ppp_context; pict_type: cint); cdecl; external LIB_POSTPROCESS;
 
-
 (**
  * Return a pp_mode or NULL if an error occurred.
  *
@@ -135,9 +134,7 @@ const
 
 // #endif (* POSTPROC_POSTPROCESS_H *)
 
-
 implementation
-
 
 end.
 

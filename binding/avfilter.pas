@@ -340,7 +340,7 @@ type
      * activation.
      *)
     int (*activate)(AVFilterContext *ctx);
-} AVFilter;
+  end;
 
 (**
  * Process multiple parts of the frame concurrently.
@@ -646,8 +646,7 @@ struct AVFilterLink {
     int status_out;
 
 {$endif} (* FF_INTERNAL_FIELDS *)
-
-};
+  end;
 
 (**
  * Link two filters together.
@@ -686,6 +685,7 @@ procedure avfilter_link_set_closed(link: PAVFilterLink; closed: cint); cdecl; ex
  *)
 function avfilter_config_links(filter: PAVFilterContext): cint; cdecl; external LIB_AVFILTER;
 
+const
   AVFILTER_CMD_FLAG_ONE = 1; ///< Stop once a filter understood the command (for target=all for example), fast filters are favored automatically
   AVFILTER_CMD_FLAG_FAST = 2; ///< Only execute command when its fast (like a video out that supports contrast adjustment in hw)
 
@@ -761,7 +761,6 @@ function av_filter_next(filter: PPAVFilter): PPAVFilter; cdecl; external LIB_AVF
 //TODO attribute_deprecated
 function avfilter_open(filter_ctx: PPAVFilterContext; filter: PAVFilter; const inst_name: pchar): cint; cdecl; external LIB_AVFILTER;
 {$endif}
-
 
 {$if FF_API_AVFILTER_INIT_FILTER}
 (**
@@ -1171,7 +1170,6 @@ function avfilter_graph_send_command(graph: PAVFilterGraph; const target: pchar;
  *)
 function avfilter_graph_queue_command(graph: PAVFilterGraph; const target: pchar; const cmd: pchar; const arg: pchar; flags: cint; ts: cdouble): cint; cdecl; external LIB_AVFILTER;
 
-
 (**
  * Dump a graph into a human-readable string representation.
  *
@@ -1208,9 +1206,7 @@ function avfilter_graph_request_oldest(graph: PAVFilterGraph): cint; cdecl; exte
 
 // #endif (* AVFILTER_AVFILTER_H *)
 
-
 implementation
-
 
 end.
 

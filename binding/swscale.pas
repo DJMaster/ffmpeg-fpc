@@ -351,9 +351,7 @@ function sws_get_class(): PAVClass; cdecl; external LIB_SWSCALE;
 
 // #endif (* SWSCALE_SWSCALE_H *)
 
-
 implementation
-
 
 end.
 

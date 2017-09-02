@@ -56,7 +56,6 @@
 
     fdct: procedure (block: pcint16_t (* align 16 *)); cdecl;
 
-
     (**
      * DCT algorithm.
      * must use AVOptions to set this field.

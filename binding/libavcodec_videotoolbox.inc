@@ -39,7 +39,7 @@
 
 //TODO #define Picture QuickdrawPicture
 //TODO #include <VideoToolbox/VideoToolbox.h>
-//TODO #undef Picture 
+//TODO #undef Picture
 
 // #include "libavcodec/avcodec.h"
 

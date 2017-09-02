@@ -197,7 +197,6 @@ function av_buffersrc_add_frame(ctx: PAVFilterContext; frame: PAVFrame): cint; c
 //TODO av_warn_unused_result
 function av_buffersrc_add_frame_flags(buffer_src: PAVFilterContext; frame: PAVFrame; flags: cint): cint; cdecl; external LIB_AVFILTER;
 
-
 (**
  * @}
  *)

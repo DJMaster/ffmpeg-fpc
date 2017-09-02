@@ -30,7 +30,6 @@
 
 // #include <stdint.h>
 
-
 (**
   * @file
   * @brief Public header for libavutil CAMELLIA algorithm

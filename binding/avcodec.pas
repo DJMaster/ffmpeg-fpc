@@ -214,7 +214,6 @@ const
  * @{
  *)
 
-
 (**
  * Identify the syntax and semantics of the bitstream.
  * The principle is roughly:
@@ -696,7 +695,6 @@ type
     AV_CODEC_ID_TIMED_ID3,
     AV_CODEC_ID_BIN_DATA,
 
-
     AV_CODEC_ID_PROBE = $19000, ///< codec_id is not known (like AV_CODEC_ID_NONE) but lavf should attempt to identify it
 
     AV_CODEC_ID_MPEG2TS = $20000, (**< _FAKE_ codec to indicate a raw MPEG-2 TS
@@ -1115,7 +1113,6 @@ const
  * Codec is lossless.
  *)
   AV_CODEC_CAP_LOSSLESS = $80000000;
-
 
 {$if FF_API_WITHOUT_PREFIX}
 (**
@@ -1954,7 +1951,6 @@ type
      * - decoding: Set by libavcodec.
      *)
     delay: cint;
-
 
     (* video only *)
     (**
@@ -3093,7 +3089,6 @@ type
 {$define AV_EF_CAREFUL := (1 shl 16)} ///< consider things that violate the spec, are fast to calculate and have not been seen in the wild as errors
 {$define AV_EF_COMPLIANT := (1 shl 17)} ///< consider all spec non compliances as errors
 {$define AV_EF_AGGRESSIVE := (1 shl 18)} ///< consider things that a sane encoder should not do as an error
-
 
     (**
      * opaque 64-bit number (generally a PTS) that will be reordered and
@@ -4730,7 +4725,6 @@ function av_packet_pack_dictionary(dict: PAVDictionary; size: pcint): pcuint8; c
  *)
 function av_packet_unpack_dictionary(const data: pcuint8; size: cint; dict: PPAVDictionary): cint; cdecl; external LIB_AVCODEC;
 
-
 (**
  * Convenience function to free all the side data stored.
  * All the other fields stay untouched.
@@ -5503,7 +5497,6 @@ function avcodec_encode_video2(avctx: PAVCodecContext; avpkt: PAVPacket; const f
 
 function avcodec_encode_subtitle(avctx: PAVCodecContext; buf: pcuint8; buf_size: cint; const sub: PAVSubtitle): cint; cdecl; external LIB_AVCODEC;
 
-
 (**
  * @}
  *)
@@ -5520,7 +5513,7 @@ type
   PReSampleContext = ^ReSampleContext;
   ReSampleContext = record
   end;
-  
+
   PAVResampleContext = ^AVResampleContext;
   AVResampleContext = record
   end;
@@ -6433,9 +6426,7 @@ function av_cpb_properties_alloc(size: pcsize_t): PAVCPBProperties; cdecl; exter
 
 // #endif (* AVCODEC_AVCODEC_H *)
 
-
 implementation
-
 
 end.
 

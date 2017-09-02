@@ -37,7 +37,7 @@ const
 // #ifndef AVDEVICE_AVDEVICE_H
 // #define AVDEVICE_AVDEVICE_H
 
-#include "version.h"
+// #include "version.h"
 
 (**
  * @file
@@ -63,10 +63,10 @@ const
  * @{
  *)
 
-#include "libavutil/log.h"
-#include "libavutil/opt.h"
-#include "libavutil/dict.h"
-#include "libavformat/avformat.h"
+// #include "libavutil/log.h"
+// #include "libavutil/opt.h"
+// #include "libavutil/dict.h"
+// #include "libavformat/avformat.h"
 
 (**
  * Return the LIBAVDEVICE_VERSION_INT constant.
@@ -531,9 +531,7 @@ function avdevice_list_output_sinks(device: PAVOutputFormat; const device_name: 
 
 // #endif (* AVDEVICE_AVDEVICE_H *)
 
-
 implementation
-
 
 end.
 

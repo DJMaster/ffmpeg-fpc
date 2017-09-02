@@ -142,7 +142,6 @@ const
 {$define FF_API_PKT_PTS := (LIBAVUTIL_VERSION_MAJOR < 56)}
 {$endif}
 
-
 (**
  * @}
  * @}
