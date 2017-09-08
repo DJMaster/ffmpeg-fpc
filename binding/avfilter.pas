@@ -439,24 +439,26 @@ struct AVFilterContext {
  * In the future, access to the header may be reserved for filters
  * implementation.
  *)
-struct AVFilterLink {
-    AVFilterContext *src; ///< source filter
-    AVFilterPad *srcpad; ///< output pad on the source filter
+type
+  PAVFilterLink = ^AVFilterLink;
+  AVFilterLink = record
+    src: PAVFilterContext; ///< source filter
+    srcpad: PAVFilterPad; ///< output pad on the source filter
 
-    AVFilterContext *dst; ///< dest filter
-    AVFilterPad *dstpad; ///< input pad on the dest filter
+    dst: PAVFilterContext; ///< dest filter
+    dstpad: PAVFilterPad; ///< input pad on the dest filter
 
-    enum AVMediaType type; ///< filter media type
+    type_: AVMediaType; ///< filter media type
 
     (* These parameters apply only to video *)
-    int w; ///< agreed upon image width
-    int h; ///< agreed upon image height
-    AVRational sample_aspect_ratio; ///< agreed upon sample aspect ratio
+    w: cint; ///< agreed upon image width
+    h: cint; ///< agreed upon image height
+    sample_aspect_ratio: AVRational; ///< agreed upon sample aspect ratio
     (* These parameters apply only to audio *)
-    uint64_t channel_layout; ///< channel layout of current buffer (see libavutil/channel_layout.h)
-    int sample_rate; ///< samples per second
+    channel_layout: cuint64; ///< channel layout of current buffer (see libavutil/channel_layout.h)
+    sample_rate: cint; ///< samples per second
 
-    int format; ///< agreed upon media format
+    format: cint; ///< agreed upon media format
 
     (**
      * Define the time base used by the PTS of the frames/samples
@@ -465,7 +467,7 @@ struct AVFilterLink {
      * change only the output timebase, while the timebase of the
      * input link is assumed to be an unchangeable property.
      *)
-    AVRational time_base;
+    time_base: AVRational;
 
     (*****************************************************************
      * All fields below this line are not part of the public API. They
@@ -481,17 +483,17 @@ struct AVFilterLink {
      * channel_layout members, above, when chosen.
      *
      *)
-    AVFilterFormats *in_formats;
-    AVFilterFormats *out_formats;
+    in_formats: PAVFilterFormats;
+    out_formats: PAVFilterFormats;
 
     (**
      * Lists of channel layouts and sample rates used for automatic
      * negotiation.
      *)
-    AVFilterFormats  *in_samplerates;
-    AVFilterFormats *out_samplerates;
-    struct AVFilterChannelLayouts  *in_channel_layouts;
-    struct AVFilterChannelLayouts *out_channel_layouts;
+    in_samplerates: PAVFilterFormats;
+    out_samplerates: PAVFilterFormats;
+    in_channel_layouts: PAVFilterChannelLayouts;
+    out_channel_layouts: PAVFilterChannelLayouts;
 
     (**
      * Audio only, the destination filter sets this to a non-zero value to
@@ -500,7 +502,7 @@ struct AVFilterLink {
      * pad.
      * Last buffer before EOF will be padded with silence.
      *)
-    int request_samples;
+    request_samples: cint;
 
     (** stage of the initialization of the link properties (dimensions, etc) *)
     enum {
@@ -512,24 +514,24 @@ struct AVFilterLink {
     (**
      * Graph the filter belongs to.
      *)
-    struct graph: PAVFilterGraph;
+    graph: PAVFilterGraph;
 
     (**
      * Current timestamp of the link, as defined by the most recent
      * frame(s), in link time_base units.
      *)
-    int64_t current_pts;
+    current_pts: cint64;
 
     (**
      * Current timestamp of the link, as defined by the most recent
      * frame(s), in AV_TIME_BASE units.
      *)
-    int64_t current_pts_us;
+    current_pts_us: cint64;
 
     (**
      * Index in the age array.
      *)
-    int age_index;
+    age_index: cint;
 
     (**
      * Frame rate of the stream on the link, or 1/0 if unknown or variable;
@@ -542,18 +544,18 @@ struct AVFilterLink {
      * Sinks can use it to set a default output frame rate.
      * It is similar to the r_frame_rate field in AVStream.
      *)
-    AVRational frame_rate;
+    frame_rate: AVRational;
 
     (**
      * Buffer partially filled with samples to achieve a fixed/minimum size.
      *)
-    AVFrame *partial_buf;
+    partial_buf: PAVFrame;
 
     (**
      * Size of the partial buffer to allocate.
      * Must be between min_samples and max_samples.
      *)
-    int partial_buf_size;
+    partial_buf_size: cint;
 
     (**
      * Minimum number of samples to filter at once. If filter_frame() is
@@ -562,46 +564,46 @@ struct AVFilterLink {
      * has started.
      * If 0, all related fields are ignored.
      *)
-    int min_samples;
+    min_samples: cint;
 
     (**
      * Maximum number of samples to filter at once. If filter_frame() is
      * called with more samples, it will split them.
      *)
-    int max_samples;
+    max_samples: cint;
 
     (**
      * Number of channels.
      *)
-    int channels;
+    channels: cint;
 
     (**
      * Link processing flags.
      *)
-    unsigned flags;
+    flags: cunsigned;
 
     (**
      * Number of past frames sent through the link.
      *)
-    int64_t frame_count_in, frame_count_out;
+    frame_count_in, frame_count_out: cint64;
 
     (**
      * A pointer to a FFFramePool struct.
      *)
-    void *frame_pool;
+    frame_pool: pointer;
 
     (**
      * True if a frame is currently wanted on the output of this filter.
      * Set when ff_request_frame() is called by the output,
      * cleared when a frame is filtered.
      *)
-    int frame_wanted_out;
+    frame_wanted_out: cint;
 
     (**
      * For hwaccel pixel formats, this should be a reference to the
      * AVHWFramesContext describing the frames.
      *)
-    AVBufferRef *hw_frames_ctx;
+    hw_frames_ctx: PAVBufferRef;
 
 {$ifndef FF_INTERNAL_FIELDS}
 
@@ -610,40 +612,40 @@ struct AVFilterLink {
      * The fields below this limit are internal for libavfilter's use
      * and must in no way be accessed by applications.
      *)
-    char reserved[0xF000];
+    reserved: array[0..$F000-1] of char;
 
 {$else} (* FF_INTERNAL_FIELDS *)
 
     (**
      * Queue of frames waiting to be filtered.
      *)
-    FFFrameQueue fifo;
+    fifo: FFFrameQueue;
 
     (**
      * If set, the source filter can not generate a frame as is.
      * The goal is to avoid repeatedly calling the request_frame() method on
      * the same link.
      *)
-    int frame_blocked_in;
+    frame_blocked_in: cint;
 
     (**
      * Link input status.
      * If not zero, all attempts of filter_frame will fail with the
      * corresponding code.
      *)
-    int status_in;
+    status_in: cint;
 
     (**
      * Timestamp of the input status change.
      *)
-    int64_t status_in_pts;
+    status_in_pts: cint64;
 
     (**
      * Link output status.
      * If not zero, all attempts of request_frame will fail with the
      * corresponding code.
      *)
-    int status_out;
+    status_out: cint;
 
 {$endif} (* FF_INTERNAL_FIELDS *)
   end;
@@ -854,7 +856,9 @@ type
  *
  * @return 0 on success, a negative AVERROR on error
  *)
-typedef int (avfilter_action_func)(AVFilterContext *ctx, void *arg, int jobnr, int nb_jobs); cdecl;
+type
+  Pavfilter_action_func = ^avfilter_action_func;
+  avfilter_action_func = function (ctx: PAVFilterContext; arg: pointer; jobnr: cint; nb_jobs: cint): cint; cdecl;
 
 (**
  * A function executing multiple jobs, possibly in parallel.
@@ -868,18 +872,19 @@ typedef int (avfilter_action_func)(AVFilterContext *ctx, void *arg, int jobnr, i
  *
  * @return 0 on success, a negative AVERROR on error
  *)
-typedef int (avfilter_execute_func)(AVFilterContext *ctx, avfilter_action_func *func,
-                                    void *arg, int *ret, int nb_jobs); cdecl;
+type
+  avfilter_execute_func = function (ctx: PAVFilterContext; func: Pavfilter_action_func; arg: pointer; ret: pcint; nb_jobs: cint): cint; cdecl;
 
-typedef struct AVFilterGraph {
-    const AVClass *av_class;
-    AVFilterContext **filters;
-    unsigned nb_filters;
+  PAVFilterGraph = ^AVFilterGraph;
+  AVFilterGraph = record
+    av_class: PAVClass;
+    filters: PPAVFilterContext;
+    nb_filters: cunsigned;
 
-    char *scale_sws_opts; ///< sws options to use for the auto-inserted scale filters
+    scale_sws_opts: pchar; ///< sws options to use for the auto-inserted scale filters
 {$if FF_API_LAVR_OPTS}
     //TODO attribute_deprecated
-    char *resample_lavr_opts; ///< libavresample options to use for the auto-inserted resample filters
+    resample_lavr_opts: pchar; ///< libavresample options to use for the auto-inserted resample filters
 {$endif}
 
     (**
