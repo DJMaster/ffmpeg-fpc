@@ -165,6 +165,8 @@ type
  *       when implementing custom I/O. Normally these are set to the
  *       function pointers specified in avio_alloc_context()
  *)
+  write_data_type_func = function (opaque: pointer; buf: pcuint8_t; buf_size: cint; type_: AVIODataMarkerType; time: cint64): cint; cdecl;
+
   PAVIOContext = ^AVIOContext;
   AVIOContext = record
     (**
@@ -321,8 +323,8 @@ type
     (**
      * A callback that is used instead of write_packet.
      *)
-    int (*write_data_type)(void *opaque, uint8_t *buf, int buf_size,
-                           enum AVIODataMarkerType type, int64_t time);
+    write_data_type: write_data_type_func;
+
     (**
      * If set, don't call write_data_type separately for AVIO_DATA_MARKER_BOUNDARY_POINT,
      * but ignore them and treat them as AVIO_DATA_MARKER_UNKNOWN (to avoid needlessly

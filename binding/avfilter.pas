@@ -440,6 +440,12 @@ struct AVFilterContext {
  * implementation.
  *)
 type
+  init_state_enum = (
+    AVLINK_UNINIT = 0, ///< not started
+    AVLINK_STARTINIT, ///< started, but incomplete
+    AVLINK_INIT ///< complete
+  );
+
   PAVFilterLink = ^AVFilterLink;
   AVFilterLink = record
     src: PAVFilterContext; ///< source filter
@@ -505,11 +511,7 @@ type
     request_samples: cint;
 
     (** stage of the initialization of the link properties (dimensions, etc) *)
-    enum {
-        AVLINK_UNINIT = 0, ///< not started
-        AVLINK_STARTINIT, ///< started, but incomplete
-        AVLINK_INIT ///< complete
-    } init_state;
+    init_state: init_state_enum;
 
     (**
      * Graph the filter belongs to.

@@ -5833,7 +5833,7 @@ procedure avcodec_flush_buffers(avctx: PAVCodecContext); cdecl; external LIB_AVC
  * @param[in] codec_id the codec
  * @return Number of bits per sample or zero if unknown for the given codec.
  *)
-function av_get_bits_per_sample(enum AVCodecID codec_id): cint; cdecl; external LIB_AVCODEC;
+function av_get_bits_per_sample(codec_id: AVCodecID): cint; cdecl; external LIB_AVCODEC;
 
 (**
  * Return the PCM codec associated with a sample format.
