@@ -543,6 +543,10 @@ const
  * @{
  *)
 type
+  write_header_func = function (s: PAVFormatContext): cint; cdecl;
+  write_packet_func = function (s: PAVFormatContext; pkt: PAVPacket): cint; cdecl;
+  write_trailer_func = function (s: PAVFormatContext): cint; cdecl;
+  interleave_packet_func = function (s: PAVFormatContext; out_: PAVPacket; in_: PAVPacket; flush: cint): cint; cdecl;
   query_codec_func = function (id: AVCodecID; std_compliance: cint): cint; cdecl;
   get_output_timestamp_proc = procedure (s: PAVFormatContext; stream: cint; dts: pcint64; wall: pcint64); cdecl;
   control_message_func = function (s: PAVFormatContext; type_: cint; data: pointer; data_size: csize_t): cint; cdecl;
@@ -598,7 +602,7 @@ type
      *)
     priv_data_size: cint;
 
-    write_header: write_header_func; // function cint (*write_header)(struct AVFormatContext *);
+    write_header: write_header_func;
     (**
      * Write a packet. If AVFMT_ALLOW_FLUSH is set in flags,
      * pkt can be NULL in order to flush data buffered in the muxer.
@@ -606,12 +610,12 @@ type
      * or 1 if everything was flushed and there is no more buffered
      * data.
      *)
-    write_packet: write_packet_func; // function cint (*write_packet)(struct AVFormatContext *, AVPacket *pkt);
-    write_trailer: write_trailer_func; // function cint (*write_trailer)(struct AVFormatContext *);
+    write_packet: write_packet_func;
+    write_trailer: write_trailer_func;
     (**
      * Currently only used to set pixel format if not YUV420P.
      *)
-    interleave_packet: interleave_packet_func; // function cint (*interleave_packet)(struct AVFormatContext *, AVPacket *out, AVPacket *in, cint flush);
+    interleave_packet: interleave_packet_func;
     (**
      * Test if the given codec can be stored in this container.
      *
