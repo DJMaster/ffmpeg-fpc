@@ -9,6 +9,6 @@
 // #define AVUTIL_FFVERSION_H
 
 const
-  FFMPEG_VERSION = '3.3.3';
+  FFMPEG_VERSION = '3.3.4';
 
 // #endif (* AVUTIL_FFVERSION_H *)
