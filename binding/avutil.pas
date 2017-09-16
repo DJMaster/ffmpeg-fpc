@@ -27,6 +27,7 @@
 unit avutil;
 
 {$mode objfpc}{$H+}
+{$macro on}
 
 interface
 
@@ -39,7 +40,14 @@ const
 // #ifndef AVUTIL_AVUTIL_H
 // #define AVUTIL_AVUTIL_H
 
+{$include libavutil_common.inc}
+{$include libavutil_error.inc}
 {$include libavutil_rational.inc}
+{$include libavutil_version.inc}
+{$include libavutil_macros.inc}
+{$include libavutil_mathematics.inc}
+{$include libavutil_log.inc}
+{$include libavutil_pixfmt.inc}
 
 (**
  * @file
@@ -312,14 +320,14 @@ function av_get_picture_type_char(pict_type: AVPictureType): cchar; cdecl; exter
  * @}
  *)
 
-{$include libavutil_common.inc}
-{$include libavutil_error.inc}
-{$include libavutil_rational.inc}
-{$include libavutil_version.inc}
-{$include libavutil_macros.inc}
-{$include libavutil_mathematics.inc}
-{$include libavutil_log.inc}
-{$include libavutil_pixfmt.inc}
+// #include "common.h"
+// #include "error.h"
+// #include "rational.h"
+// #include "version.h"
+// #include "macros.h"
+// #include "mathematics.h"
+// #include "log.h"
+// #include "pixfmt.h"
 
 (**
  * Return x default pointer in case p is NULL.

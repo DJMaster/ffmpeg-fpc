@@ -25,7 +25,10 @@
 // #ifndef AVCODEC_AVDCT_H
 // #define AVCODEC_AVDCT_H
 
-#include "libavutil/opt.h"
+// #include "libavutil/opt.h"
+
+type
+  idct_proc = procedure (block: pcint16 (* align 16 *)); cdecl;
 
 (**
  * AVDCT context.
@@ -36,7 +39,7 @@
   AVDCT = record
     av_class: PAVClass;
 
-    idct: procedure (block: pcint16_t (* align 16 *)); cdecl;
+    idct: idct_proc;
 
     (**
      * IDCT input permutation.
@@ -54,13 +57,13 @@
      *)
     idct_permutation: array[0..63] of cuint8;
 
-    fdct: procedure (block: pcint16_t (* align 16 *)); cdecl;
+    fdct: procedure (block: pcint16 (* align 16 *)); cdecl;
 
     (**
      * DCT algorithm.
      * must use AVOptions to set this field.
      *)
-    int dct_algo;
+    dct_algo: cint;
 
     (**
      * IDCT algorithm.
@@ -68,7 +71,7 @@
      *)
     idct_algo: cint;
 
-    get_pixels: procedure (block: pcint16_t (* align 16 *); const pixels_ pcuint8 (* align 8 *); line_size: ptrdiff_t); cdecl;
+    get_pixels: procedure (block: pcint16 (* align 16 *); const pixels_: pcuint8 (* align 8 *); line_size: csize_t); cdecl;
 
     bits_per_sample: cint;
   end;

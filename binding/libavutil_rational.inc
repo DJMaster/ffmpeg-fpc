@@ -76,11 +76,11 @@ type
  * @note The return value is not reduced.
  * @see av_reduce()
  *)
-function av_make_q(num: cint; den: cint): AVRational; inline;
-{
-    AVRational r = { num, den };
-    return r;
-}
+//TODO function av_make_q(num: cint; den: cint): AVRational; inline;
+//TODO {
+//TODO     AVRational r = { num, den };
+//TODO     return r;
+//TODO }
 
 (**
  * Compare two rationals.
@@ -171,11 +171,11 @@ function av_sub_q(b: AVRational; c: AVRational): AVRational; cdecl; external LIB
  * @return 1 / q
  *)
 //TODO av_always_inline
-function av_inv_q(q: AVRational): AVRational; inline;
-{
-    AVRational r = { q.den, q.num };
-    return r;
-}
+//TODO function av_inv_q(q: AVRational): AVRational; inline;
+//TODO {
+//TODO     AVRational r = { q.den, q.num };
+//TODO     return r;
+//TODO }
 
 (**
  * Convert a double precision floating point number to a rational.

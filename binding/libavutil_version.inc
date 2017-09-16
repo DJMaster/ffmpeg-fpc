@@ -33,7 +33,7 @@
 // #ifndef AVUTIL_VERSION_H
 // #define AVUTIL_VERSION_H
 
-#include "macros.h"
+// #include "macros.h"
 
 (**
  * @addtogroup version_utils
@@ -59,17 +59,17 @@
  * @{
  *)
 
-#define AV_VERSION_INT(a, b, c) ((a)<<16 | (b)<<8 | (c))
-#define AV_VERSION_DOT(a, b, c) a ##.## b ##.## c
-#define AV_VERSION(a, b, c) AV_VERSION_DOT(a, b, c)
+//TODO #define AV_VERSION_INT(a, b, c) ((a)<<16 | (b)<<8 | (c))
+//TODO #define AV_VERSION_DOT(a, b, c) a ##.## b ##.## c
+//TODO #define AV_VERSION(a, b, c) AV_VERSION_DOT(a, b, c)
 
 (**
  * Extract version components from the full ::AV_VERSION_INT int as returned
  * by functions like ::avformat_version() and ::avcodec_version()
  *)
-#define AV_VERSION_MAJOR(a) ((a) >> 16)
-#define AV_VERSION_MINOR(a) (((a) & $00FF00) >> 8)
-#define AV_VERSION_MICRO(a) ((a) & $FF)
+//TODO #define AV_VERSION_MAJOR(a) ((a) >> 16)
+//TODO #define AV_VERSION_MINOR(a) (((a) & $00FF00) >> 8)
+//TODO #define AV_VERSION_MICRO(a) ((a) & $FF)
 
 (**
  * @}
