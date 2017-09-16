@@ -59,9 +59,9 @@
  * @{
  *)
 
-//TODO #define AV_VERSION_INT(a, b, c) ((a)<<16 | (b)<<8 | (c))
-//TODO #define AV_VERSION_DOT(a, b, c) a ##.## b ##.## c
-//TODO #define AV_VERSION(a, b, c) AV_VERSION_DOT(a, b, c)
+function AV_VERSION_INT(a, b, c: cint): cint;
+function AV_VERSION_DOT(a, b, c: cint): string;
+function AV_VERSION(a, b, c: cint): string;
 
 (**
  * Extract version components from the full ::AV_VERSION_INT int as returned
@@ -89,15 +89,12 @@ const
   LIBAVUTIL_VERSION_MINOR = 58;
   LIBAVUTIL_VERSION_MICRO = 100;
 
-  LIBAVUTIL_VERSION_INT = AV_VERSION_INT(LIBAVUTIL_VERSION_MAJOR, \
-                                               LIBAVUTIL_VERSION_MINOR, \
-                                               LIBAVUTIL_VERSION_MICRO);
-  LIBAVUTIL_VERSION = AV_VERSION(LIBAVUTIL_VERSION_MAJOR,     \
-                                           LIBAVUTIL_VERSION_MINOR,     \
-                                           LIBAVUTIL_VERSION_MICRO);
-  LIBAVUTIL_BUILD = LIBAVUTIL_VERSION_INT;
+var
+  LIBAVUTIL_VERSION_INT: cint;
+  LIBAVUTIL_VERSION: string;
+  LIBAVUTIL_BUILD: string;
 
-  LIBAVUTIL_IDENT = 'Lavu' + AV_STRINGIFY(LIBAVUTIL_VERSION);
+  LIBAVUTIL_IDENT: string;
 
 (**
  * @defgroup lavu_depr_guards Deprecation Guards

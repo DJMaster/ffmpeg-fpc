@@ -39,18 +39,18 @@
  * @{
  *)
 
-#define AV_STRINGIFY(s)         AV_TOSTRING(s)
-#define AV_TOSTRING(s) #s
+//TODO #define AV_STRINGIFY(s)         AV_TOSTRING(s)
+//TODO #define AV_TOSTRING(s) #s
 
-#define AV_GLUE(a, b) a ## b
-#define AV_JOIN(a, b) AV_GLUE(a, b)
+//TODO #define AV_GLUE(a, b) a ## b
+//TODO #define AV_JOIN(a, b) AV_GLUE(a, b)
 
 (**
  * @}
  *)
 
-#define AV_PRAGMA(s) _Pragma(#s)
+//TODO #define AV_PRAGMA(s) _Pragma(#s)
 
-#define FFALIGN(x, a) (((x)+(a)-1)&~((a)-1))
+//TODO #define FFALIGN(x, a) (((x)+(a)-1)&~((a)-1))
 
 // #endif (* AVUTIL_MACROS_H *)

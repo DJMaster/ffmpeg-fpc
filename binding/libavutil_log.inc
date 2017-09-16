@@ -54,15 +54,15 @@ type
     AV_CLASS_CATEGORY_NB ///< not part of ABI/API
   );
 
-#define AV_IS_INPUT_DEVICE(category) \
-    (((category) == AV_CLASS_CATEGORY_DEVICE_VIDEO_INPUT) || \
-     ((category) == AV_CLASS_CATEGORY_DEVICE_AUDIO_INPUT) || \
-     ((category) == AV_CLASS_CATEGORY_DEVICE_INPUT))
+//TODO #define AV_IS_INPUT_DEVICE(category) \
+//TODO     (((category) == AV_CLASS_CATEGORY_DEVICE_VIDEO_INPUT) || \
+//TODO      ((category) == AV_CLASS_CATEGORY_DEVICE_AUDIO_INPUT) || \
+//TODO      ((category) == AV_CLASS_CATEGORY_DEVICE_INPUT))
 
-#define AV_IS_OUTPUT_DEVICE(category) \
-    (((category) == AV_CLASS_CATEGORY_DEVICE_VIDEO_OUTPUT) || \
-     ((category) == AV_CLASS_CATEGORY_DEVICE_AUDIO_OUTPUT) || \
-     ((category) == AV_CLASS_CATEGORY_DEVICE_OUTPUT))
+//TODO #define AV_IS_OUTPUT_DEVICE(category) \
+//TODO     (((category) == AV_CLASS_CATEGORY_DEVICE_VIDEO_OUTPUT) || \
+//TODO      ((category) == AV_CLASS_CATEGORY_DEVICE_AUDIO_OUTPUT) || \
+//TODO      ((category) == AV_CLASS_CATEGORY_DEVICE_OUTPUT))
 
 type
   PAVOptionRanges = ^AVOptionRanges;
@@ -233,7 +233,7 @@ const
  * Requires 256color terminal support. Uses outside debugging is not
  * recommended.
  *)
-#define AV_LOG_C(x) ((x) << 8)
+//TODO #define AV_LOG_C(x) ((x) << 8)
 
 (**
  * Send the specified message to the log if the level is less than or equal
@@ -250,7 +250,7 @@ const
  *        subsequent arguments are converted to output.
  *)
 //TODO av_printf_format(3, 4)
-procedure av_log(avcl: pointer; level: cint; const fmt: pchar; ...); cdecl; external LIB_AVUTIL;
+procedure av_log(avcl: pointer; level: cint; const fmt: pchar; args : array of const); cdecl; external LIB_AVUTIL;
 
 (**
  * Send the specified message to the log if the level is less than or equal
@@ -298,7 +298,7 @@ procedure av_log_set_level(level: cint); cdecl; external LIB_AVUTIL;
  * @param callback A logging function with a compatible signature.
  *)
 type
-  callback_proc: procedure (arg1: pointer; arg2: cint; const arg3: pchar; vl: va_list); cdecl;
+  callback_proc = procedure (arg1: pointer; arg2: cint; const arg3: pchar; vl: va_list); cdecl;
 
 procedure av_log_set_callback(callback: callback_proc); cdecl; external LIB_AVUTIL;
 
@@ -352,19 +352,19 @@ procedure av_log_format_line(ptr: pointer; level: cint; const fmt: pchar; vl: va
  *)
 function av_log_format_line2(ptr: pointer; level: cint; const fmt: pchar; vl: va_list; line: pchar; line_size: cint; print_prefix: pcint): cint; cdecl; external LIB_AVUTIL;
 
-{$if FF_API_DLOG}
+{$ifdef FF_API_DLOG}
 (**
  * av_dlog macros
  * @deprecated unused
  * Useful to print debug messages that shouldn't get compiled in normally.
  *)
 
-#ifdef DEBUG
-#    define av_dlog(pctx, ...) av_log(pctx, AV_LOG_DEBUG, __VA_ARGS__)
-#else
-#    define av_dlog(pctx, ...) do { if (0) av_log(pctx, AV_LOG_DEBUG, __VA_ARGS__); } while (0)
-#endif
-#endif (* FF_API_DLOG *)
+//TODO #ifdef DEBUG
+//TODO #    define av_dlog(pctx, ...) av_log(pctx, AV_LOG_DEBUG, __VA_ARGS__)
+//TODO #else
+//TODO #    define av_dlog(pctx, ...) do { if (0) av_log(pctx, AV_LOG_DEBUG, __VA_ARGS__); } while (0)
+//TODO #endif
+{$endif} (* FF_API_DLOG *)
 
 (**
  * Skip repeated messages, this requires the user app to use av_log() instead of

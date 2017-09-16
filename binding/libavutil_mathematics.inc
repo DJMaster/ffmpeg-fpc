@@ -122,7 +122,7 @@ type
  * @return GCD of a and b up to sign; if a >= 0 and b >= 0, return value is >= 0;
  * if a == 0 and b == 0, returns 0.
  *)
-function av_const av_gcd(a: int64; b: int64): cint64; cdecl; external LIB_AVUTIL;
+function av_gcd(a: int64; b: int64): cint64; cdecl; external LIB_AVUTIL;
 
 (**
  * Rescale a 64-bit integer with rounding to nearest.
@@ -146,7 +146,7 @@ function av_rescale(a: cint64; b: cint64; c: cint64): cint64; cdecl; external LI
  * @see av_rescale(), av_rescale_q(), av_rescale_q_rnd()
  *)
 //TODO av_const
-function av_rescale_rnd(a: cint64_t; b: cint64_t; c: cint64_t; rnd: AVRounding): cint64; cdecl; external LIB_AVUTIL;
+function av_rescale_rnd(a: cint64; b: cint64; c: cint64; rnd: AVRounding): cint64; cdecl; external LIB_AVUTIL;
 
 (**
  * Rescale a 64-bit integer by 2 rational numbers.
@@ -158,7 +158,7 @@ function av_rescale_rnd(a: cint64_t; b: cint64_t; c: cint64_t; rnd: AVRounding):
  * @see av_rescale(), av_rescale_rnd(), av_rescale_q_rnd()
  *)
 // av_const
-function av_rescale_q(a: cint64_t; bq: AVRational; cq: AVRational): cint64; cdecl; external LIB_AVUTIL;
+function av_rescale_q(a: cint64; bq: AVRational; cq: AVRational): cint64; cdecl; external LIB_AVUTIL;
 
 (**
  * Rescale a 64-bit integer by 2 rational numbers with specified rounding.
@@ -229,7 +229,7 @@ function av_compare_mod(a: cuint64; b: cuint64; mod_: cuint64): cint64; cdecl; e
  * @note In the context of this function, "duration" is in term of samples, not
  *       seconds.
  *)
-function av_rescale_delta(in_tb: AVRational; in_ts: cint64_t; fs_tb: AVRational; duration: cint; last: pcint64; out_tb: AVRational): cint64; cdecl; external LIB_AVUTIL;
+function av_rescale_delta(in_tb: AVRational; in_ts: cint64; fs_tb: AVRational; duration: cint; last: pcint64; out_tb: AVRational): cint64; cdecl; external LIB_AVUTIL;
 
 (**
  * Add a value to a timestamp.

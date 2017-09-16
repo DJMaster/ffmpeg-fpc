@@ -332,10 +332,10 @@ function av_get_picture_type_char(pict_type: AVPictureType): cchar; cdecl; exter
 (**
  * Return x default pointer in case p is NULL.
  *)
-function av_x_if_null(const p: pointer: const x: pointer): pointer; inline;
-{
-    return (void *)(intptr_t)(p ? p : x);
-}
+//TODO function av_x_if_null(const p: pointer; const x: pointer): pointer; inline;
+//TODO {
+//TODO     return (void *)(intptr_t)(p ? p : x);
+//TODO }
 
 (**
  * Compute the length of an integer list.
@@ -355,15 +355,15 @@ function av_int_list_length_for_size(elsize: cunsigned; const list: pointer; ter
  * @param list  pointer to the list
  * @return  length of the list, in elements, not counting the terminator
  *)
-#define av_int_list_length(list, term) \
-    av_int_list_length_for_size(sizeof(*(list)), list, term)
+//TODO #define av_int_list_length(list, term) \
+//TODO     av_int_list_length_for_size(sizeof(*(list)), list, term)
 
 (**
  * Open a file using a UTF-8 filename.
  * The API of this function matches POSIX fopen(), errors are returned through
  * errno.
  *)
-function av_fopen_utf8(const path_ pchar: const mode: pchar): file; cdecl; external LIB_AVUTIL;
+function av_fopen_utf8(const path_: pchar; const mode: pchar): pointer; cdecl; external LIB_AVUTIL;
 
 (**
  * Return the fractional representation of the internal time base.
@@ -373,7 +373,7 @@ function av_get_time_base_q(): AVRational; cdecl; external LIB_AVUTIL;
 const
   AV_FOURCC_MAX_STRING_SIZE = 32;
 
-#define av_fourcc2str(fourcc) av_fourcc_make_string((char[AV_FOURCC_MAX_STRING_SIZE]){0}, fourcc)
+//TODO #define av_fourcc2str(fourcc) av_fourcc_make_string((char[AV_FOURCC_MAX_STRING_SIZE]){0}, fourcc)
 
 (**
  * Fill the provided buffer with a string containing a FourCC (four-character
@@ -394,5 +394,25 @@ function av_fourcc_make_string(buf: pchar; fourcc: cuint32): pchar; cdecl; exter
 
 implementation
 
-end.
+function AV_VERSION_INT(a, b, c: cint): cint;
+begin
+  Result := (a shl 16) or (b shl 8) or (c);
+end;
 
+function AV_VERSION_DOT(a, b, c): string;
+begin
+  Result := Format('%D.%D.%D', [a, b, c]);
+end;
+
+function AV_VERSION(a, b, c): string;
+begin
+  Result := Format('%D.%D.%D', [a, b, c]);
+end;
+
+begin
+  LIBAVUTIL_VERSION_INT := AV_VERSION_INT(LIBAVUTIL_VERSION_MAJOR, LIBAVUTIL_VERSION_MINOR, LIBAVUTIL_VERSION_MICRO);
+  LIBAVUTIL_VERSION := AV_VERSION(LIBAVUTIL_VERSION_MAJOR, LIBAVUTIL_VERSION_MINOR, LIBAVUTIL_VERSION_MICRO);
+  LIBAVUTIL_BUILD := LIBAVUTIL_VERSION;
+
+  LIBAVUTIL_IDENT = 'Lavu' + LIBAVUTIL_VERSION;
+end.
