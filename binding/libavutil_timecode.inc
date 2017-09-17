@@ -33,8 +33,8 @@
 // #ifndef AVUTIL_TIMECODE_H
 // #define AVUTIL_TIMECODE_H
 
-#include <stdint.h>
-#include "rational.h"
+// #include <stdint.h>
+// #include "rational.h"
 
 const
   AV_TIMECODE_STR_SIZE = 16;

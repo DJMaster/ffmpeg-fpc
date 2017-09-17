@@ -36,7 +36,7 @@
 // #include "libavutil/avconfig.h"
 // #include "attributes.h"
 
-#ifdef HAVE_AV_CONFIG_H
+{$ifdef HAVE_AV_CONFIG_H}
 
 // #include "config.h"
 
@@ -54,18 +54,18 @@
 
 {$endif} (* HAVE_AV_CONFIG_H *)
 
-#define AV_BSWAP16C(x) (((x) << 8 & $ff00)  | ((x) >> 8 & $00ff))
-#define AV_BSWAP32C(x) (AV_BSWAP16C(x) << 16 | AV_BSWAP16C((x) >> 16))
-#define AV_BSWAP64C(x) (AV_BSWAP32C(x) << 32 | AV_BSWAP32C((x) >> 32))
+//TODO #define AV_BSWAP16C(x) (((x) << 8 & $ff00)  | ((x) >> 8 & $00ff))
+//TODO #define AV_BSWAP32C(x) (AV_BSWAP16C(x) << 16 | AV_BSWAP16C((x) >> 16))
+//TODO #define AV_BSWAP64C(x) (AV_BSWAP32C(x) << 32 | AV_BSWAP32C((x) >> 32))
 
-#define AV_BSWAPC(s, x) AV_BSWAP##s##C(x)
+//TODO #define AV_BSWAPC(s, x) AV_BSWAP##s##C(x)
 
 {$ifndef av_bswap16}
-static av_always_inline av_const uint16_t av_bswap16(uint16_t x)
-{
-    x= (x>>8) | (x<<8);
-    return x;
-}
+//TODO static av_always_inline av_const uint16_t av_bswap16(uint16_t x)
+//TODO {
+//TODO     x= (x>>8) | (x<<8);
+//TODO     return x;
+//TODO }
 {$endif}
 
 {$ifndef av_bswap32}

@@ -38,7 +38,8 @@
   * @{
   *)
 
-extern const int av_twofish_size;
+var
+  av_twofish_size: cint; external LIB_AVUTIL;
 
 type
   PAVTWOFISH = ^AVTWOFISH;

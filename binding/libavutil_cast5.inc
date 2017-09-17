@@ -38,7 +38,8 @@
   * @{
   *)
 
-extern const int av_cast5_size;
+var
+  av_cast5_size: cint; external LIB_AVUTIL;
 
 type
   PAVCAST5 = ^AVCAST5;

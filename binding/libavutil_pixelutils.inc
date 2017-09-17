@@ -25,9 +25,9 @@
 // #ifndef AVUTIL_PIXELUTILS_H
 // #define AVUTIL_PIXELUTILS_H
 
-#include <stddef.h>
-#include <stdint.h>
-#include "common.h"
+// #include <stddef.h>
+// #include <stdint.h>
+// #include "common.h"
 
 (**
  * Sum of abs(src1[x] - src2[x])

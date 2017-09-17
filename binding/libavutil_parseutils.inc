@@ -54,8 +54,8 @@
  *)
 function av_parse_ratio(q: PAVRational; const str: pchar; max: cint; log_offset: cint; log_ctx: pointer): cint; cdecl; external LIB_AVUTIL;
 
-#define av_parse_ratio_quiet(rate, str, max) \
-    av_parse_ratio(rate, str, max, AV_LOG_MAX_OFFSET, NULL)
+//TODO #define av_parse_ratio_quiet(rate, str, max) \
+//TODO     av_parse_ratio(rate, str, max, AV_LOG_MAX_OFFSET, NULL)
 
 (**
  * Parse str and put in width_ptr and height_ptr the detected values.

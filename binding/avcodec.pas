@@ -6308,7 +6308,7 @@ procedure av_log_missing_feature(avc: pointer; const feature: pchar; want_sample
  *)
 //TODO attribute_deprecated
 //TODO av_printf_format(2, 3)
-procedure av_log_ask_for_sample(avc: pointer; const msg: pchar; args : array of const); cdecl; external LIB_AVCODEC;
+procedure av_log_ask_for_sample(avc: pointer; const msg: pchar; args: array of const); cdecl; external LIB_AVCODEC;
 {$endif} (* FF_API_MISSING_SAMPLE *)
 
 (**

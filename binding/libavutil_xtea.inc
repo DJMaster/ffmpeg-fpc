@@ -28,7 +28,7 @@
 // #ifndef AVUTIL_XTEA_H
 // #define AVUTIL_XTEA_H
 
-#include <stdint.h>
+// #include <stdint.h>
 
 (**
  * @file

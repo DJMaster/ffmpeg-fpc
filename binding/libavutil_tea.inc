@@ -28,7 +28,7 @@
 // #ifndef AVUTIL_TEA_H
 // #define AVUTIL_TEA_H
 
-#include <stdint.h>
+// #include <stdint.h>
 
 (**
  * @file
@@ -38,8 +38,10 @@
  * @{
  *)
 
-extern const cint av_tea_size;
+var
+  av_tea_size: cint; external LIB_AVUTIL;
 
+type
   PAVTEA = ^AVTEA;
   AVTEA = record
   end;

@@ -39,7 +39,7 @@
 type
   PAVDES = ^AVDES;
   AVDES = record
-    round_keys: array[0..2][0..15] of cuint64;
+    round_keys: array[0..2, 0..15] of cuint64;
     triple_des: cint;
   end;
 

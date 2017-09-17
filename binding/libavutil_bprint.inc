@@ -132,7 +132,7 @@ procedure av_bprint_init_for_buffer(buf: PAVBPrint; buffer: pchar; size: cunsign
  * Append a formatted string to a print buffer.
  *)
 //TODO av_printf_format(2, 3)
-procedure av_bprintf(buf: PAVBPrint; const fmt: pchar; args : array of const); cdecl; external LIB_AVUTIL;
+procedure av_bprintf(buf: PAVBPrint; const fmt: pchar; args: array of const); cdecl; external LIB_AVUTIL;
 
 (**
  * Append a formatted string to a print buffer.

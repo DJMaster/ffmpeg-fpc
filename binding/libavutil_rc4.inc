@@ -27,7 +27,7 @@
 // #ifndef AVUTIL_RC4_H
 // #define AVUTIL_RC4_H
 
-#include <stdint.h>
+// #include <stdint.h>
 
 (**
  * @defgroup lavu_rc4 RC4

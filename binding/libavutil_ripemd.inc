@@ -34,10 +34,10 @@
 // #ifndef AVUTIL_RIPEMD_H
 // #define AVUTIL_RIPEMD_H
 
-#include <stdint.h>
+// #include <stdint.h>
 
-#include "attributes.h"
-#include "version.h"
+// #include "attributes.h"
+// #include "version.h"
 
 (**
  * @defgroup lavu_ripemd RIPEMD
@@ -47,7 +47,8 @@
  * @{
  *)
 
-extern const int av_ripemd_size;
+var
+  av_ripemd_size: cint; external LIB_AVUTIL;
 
 type
   PAVRIPEMD = ^AVRIPEMD;

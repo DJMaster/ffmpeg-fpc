@@ -250,7 +250,7 @@ const
  *        subsequent arguments are converted to output.
  *)
 //TODO av_printf_format(3, 4)
-procedure av_log(avcl: pointer; level: cint; const fmt: pchar; args : array of const); cdecl; external LIB_AVUTIL;
+procedure av_log(avcl: pointer; level: cint; const fmt: pchar; args: array of const); cdecl; external LIB_AVUTIL;
 
 (**
  * Send the specified message to the log if the level is less than or equal

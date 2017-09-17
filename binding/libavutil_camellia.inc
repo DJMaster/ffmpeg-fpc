@@ -38,7 +38,8 @@
   * @{
   *)
 
-extern const int av_camellia_size;
+var
+  av_camellia_size: cint; external LIB_AVUTIL;
 
 type
   PAVCAMELLIA = ^AVCAMELLIA;

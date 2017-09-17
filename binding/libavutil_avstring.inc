@@ -136,7 +136,7 @@ function av_strlcat(dst: pchar; const src: pchar; size: csize_t): csize_t; cdecl
  *  if enough space had been available
  *)
 //TODO av_printf_format(3, 4)
-function av_strlcatf(dst: pchar; size: csize_t; const fmt: pchar; args : array of const): csize_t; cdecl; external LIB_AVUTIL;
+function av_strlcatf(dst: pchar; size: csize_t; const fmt: pchar; args: array of const): csize_t; cdecl; external LIB_AVUTIL;
 
 (**
  * Get the count of continuous non zero chars starting from the beginning.
@@ -161,7 +161,7 @@ function av_strnlen(const s: pchar; len: csize_t): csize_t; inline;
  * @note You have to free the string yourself with av_free().
  *)
 //TODO av_printf_format(1, 2)
-function av_asprintf(const fmt: pchar; args : array of const): pchar; cdecl; external LIB_AVUTIL;
+function av_asprintf(const fmt: pchar; args: array of const): pchar; cdecl; external LIB_AVUTIL;
 
 (**
  * Convert a number to an av_malloced string.

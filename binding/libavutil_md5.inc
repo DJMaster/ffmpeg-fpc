@@ -33,10 +33,10 @@
 // #ifndef AVUTIL_MD5_H
 // #define AVUTIL_MD5_H
 
-#include <stdint.h>
+// #include <stdint.h>
 
-#include "attributes.h"
-#include "version.h"
+// #include "attributes.h"
+// #include "version.h"
 
 (**
  * @defgroup lavu_md5 MD5

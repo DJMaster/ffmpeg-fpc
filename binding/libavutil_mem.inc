@@ -33,12 +33,12 @@
 // #ifndef AVUTIL_MEM_H
 // #define AVUTIL_MEM_H
 
-#include <limits.h>
-#include <stdint.h>
+// #include <limits.h>
+// #include <stdint.h>
 
-#include "attributes.h"
-#include "error.h"
-#include "avutil.h"
+// #include "attributes.h"
+// #include "error.h"
+// #include "avutil.h"
 
 (**
  * @addtogroup lavu_mem

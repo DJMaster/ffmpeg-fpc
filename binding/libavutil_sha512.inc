@@ -34,10 +34,10 @@
 // #ifndef AVUTIL_SHA512_H
 // #define AVUTIL_SHA512_H
 
-#include <stdint.h>
+// #include <stdint.h>
 
-#include "attributes.h"
-#include "version.h"
+// #include "attributes.h"
+// #include "version.h"
 
 (**
  * @defgroup lavu_sha512 SHA-512
@@ -56,7 +56,8 @@
  * @{
  *)
 
-extern const int av_sha512_size;
+var
+  av_sha512_size: cint; external LIB_AVUTIL;
 
 type
   PAVSHA512 = ^AVSHA512;
