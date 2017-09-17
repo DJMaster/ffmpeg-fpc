@@ -28,7 +28,7 @@
 // #ifndef AVUTIL_BLOWFISH_H
 // #define AVUTIL_BLOWFISH_H
 
-#include <stdint.h>
+// #include <stdint.h>
 
 (**
  * @defgroup lavu_blowfish Blowfish
@@ -41,8 +41,8 @@ const
 type
   PAVBlowfish = ^AVBlowfish;
   AVBlowfish = record
-    p: array[0..AV_BF_ROUNDS + 1] of uint32_t;
-    s: array[0..3][0..255] of cuint32;
+    p: array[0..AV_BF_ROUNDS + 1] of cuint32;
+    s: array[0..3, 0..255] of cuint32;
   end;
 
 (**

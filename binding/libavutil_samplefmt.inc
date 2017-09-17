@@ -25,10 +25,10 @@
 // #ifndef AVUTIL_SAMPLEFMT_H
 // #define AVUTIL_SAMPLEFMT_H
 
-#include <stdint.h>
+// #include <stdint.h>
 
-#include "avutil.h"
-#include "attributes.h"
+// #include "avutil.h"
+// #include "attributes.h"
 
 (**
  * @addtogroup lavu_audio

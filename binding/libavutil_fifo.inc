@@ -35,6 +35,7 @@
 // #include "attributes.h"
 
 type
+  PPAVFifoBuffer = ^PAVFifoBuffer;
   PAVFifoBuffer = ^AVFifoBuffer;
   AVFifoBuffer = record
     buffer: pcuint8;
@@ -101,9 +102,9 @@ function av_fifo_space(const f: PAVFifoBuffer): cint; cdecl; external LIB_AVUTIL
  * @param dest data destination
  *)
 type
-  func_proc: procedure (arg1: pointer; arg2: pointer; arg3: cint); cdecl;
+  av_fifo_generic_peek_at_proc = procedure (arg1: pointer; arg2: pointer; arg3: cint); cdecl;
 
-function av_fifo_generic_peek_at(f: PAVFifoBuffer; dest: pointer; offset: cint; buf_size: cint; func: func_proc): cint; cdecl; external LIB_AVUTIL;
+function av_fifo_generic_peek_at(f: PAVFifoBuffer; dest: pointer; offset: cint; buf_size: cint; func: av_fifo_generic_peek_at_proc): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Feed data from an AVFifoBuffer to a user-supplied callback.
@@ -114,9 +115,9 @@ function av_fifo_generic_peek_at(f: PAVFifoBuffer; dest: pointer; offset: cint; 
  * @param dest data destination
  *)
 type
-  func_proc: procedure (arg1: pointer; arg2: pointer; arg3: cint); cdecl;
+  av_fifo_generic_peek_proc = procedure (arg1: pointer; arg2: pointer; arg3: cint); cdecl;
 
-function av_fifo_generic_peek(f: PAVFifoBuffer; dest: pointer; buf_size: cint; func: func_proc): cint; cdecl; external LIB_AVUTIL;
+function av_fifo_generic_peek(f: PAVFifoBuffer; dest: pointer; buf_size: cint; func: av_fifo_generic_peek_proc): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Feed data from an AVFifoBuffer to a user-supplied callback.
@@ -126,9 +127,9 @@ function av_fifo_generic_peek(f: PAVFifoBuffer; dest: pointer; buf_size: cint; f
  * @param dest data destination
  *)
 type
-  func_proc: procedure (arg1: pointer; arg2: pointer; arg3: cint); cdecl;
+  av_fifo_generic_read_proc = procedure (arg1: pointer; arg2: pointer; arg3: cint); cdecl;
 
-function av_fifo_generic_read(f: PAVFifoBuffer; dest: pointer; buf_size: cint; func: func_proc): cint; cdecl; external LIB_AVUTIL;
+function av_fifo_generic_read(f: PAVFifoBuffer; dest: pointer; buf_size: cint; func: av_fifo_generic_read_proc): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Feed data from a user-supplied callback to an AVFifoBuffer.
@@ -144,9 +145,9 @@ function av_fifo_generic_read(f: PAVFifoBuffer; dest: pointer; buf_size: cint; f
  * @return the number of bytes written to the FIFO
  *)
 type
-  func_func: function (arg1: pointer; arg2: pointer; arg3: cint): cint; cdecl;
+  av_fifo_generic_write_func = function (arg1: pointer; arg2: pointer; arg3: cint): cint; cdecl;
 
-function av_fifo_generic_write(f: PAVFifoBuffer; src: pointer; size: cint; func: func_func): cint; cdecl; external LIB_AVUTIL;
+function av_fifo_generic_write(f: PAVFifoBuffer; src: pointer; size: cint; func: av_fifo_generic_write_func): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Resize an AVFifoBuffer.

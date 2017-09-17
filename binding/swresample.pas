@@ -31,7 +31,8 @@ unit swresample;
 interface
 
 uses
-  ctypes;
+  ctypes,
+  avutil;
 
 const
   LIB_SWRESAMPLE = 'swresample-2.dll';
@@ -595,6 +596,8 @@ function swr_config_frame(swr: PSwrContext; const out_: PAVFrame; const in_: PAV
  *)
 
 // #endif (* SWRESAMPLE_SWRESAMPLE_H *)
+
+{$include libswresample_version.inc}
 
 implementation
 

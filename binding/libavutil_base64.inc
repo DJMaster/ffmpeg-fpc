@@ -51,7 +51,7 @@ function av_base64_decode(out_: pcuint8; const in_: pchar; out_size: cint): cint
  * Calculate the output size in bytes needed to decode a base64 string
  * with length x to a data buffer.
  *)
-#define AV_BASE64_DECODE_SIZE(x) ((x) * 3LL / 4)
+//TODO #define AV_BASE64_DECODE_SIZE(x) ((x) * 3LL / 4)
 
 (**
  * Encode data to base64 and null-terminate.
@@ -63,13 +63,13 @@ function av_base64_decode(out_: pcuint8; const in_: pchar; out_size: cint): cint
  * @param in_size  size in bytes of the in buffer
  * @return         out or NULL in case of error
  *)
-function av_base64_encode(out_: pchar; out_size: cint; const in_: pcuint8; in_size_ cint): pchar; cdecl; external LIB_AVUTIL;
+function av_base64_encode(out_: pchar; out_size: cint; const in_: pcuint8; in_size: cint): pchar; cdecl; external LIB_AVUTIL;
 
 (**
  * Calculate the output size needed to base64-encode x bytes to a
  * null-terminated string.
  *)
-#define AV_BASE64_SIZE(x)  (((x)+2) / 3 * 4 + 1)
+//TODO #define AV_BASE64_SIZE(x)  (((x)+2) / 3 * 4 + 1)
 
  (**
   * @}

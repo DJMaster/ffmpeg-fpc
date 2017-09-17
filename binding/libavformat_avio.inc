@@ -562,7 +562,7 @@ function url_feof(s: PAVIOContext): cint; cdecl; external LIB_AVFORMAT;
 
 (** @warning Writes up to 4 KiB per call *)
 //TODO av_printf_format(2, 3)
-function avio_printf(s: PAVIOContext; const fmt: pchar; ...): cint; cdecl; external LIB_AVFORMAT;
+function avio_printf(s: PAVIOContext; const fmt: pchar; args : array of const): cint; cdecl; external LIB_AVFORMAT;
 
 (**
  * Force flushing of buffered data.

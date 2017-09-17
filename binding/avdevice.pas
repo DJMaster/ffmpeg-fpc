@@ -29,7 +29,8 @@ unit avdevice;
 interface
 
 uses
-  ctypes;
+  ctypes,
+  avutil;
 
 const
   LIB_AVDEVICE = 'avdevice-57.dll';
@@ -530,6 +531,8 @@ function avdevice_list_output_sinks(device: PAVOutputFormat; const device_name: 
  *)
 
 // #endif (* AVDEVICE_AVDEVICE_H *)
+
+{$include libavdevice_version.inc}
 
 implementation
 

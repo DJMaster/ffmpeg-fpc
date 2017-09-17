@@ -38,7 +38,8 @@
  * @{
  *)
 
-extern const int av_aes_size;
+var
+  av_aes_size: cint; external LIB_AVUTIL;
 
 type
   PAVAES = ^AVAES;

@@ -6308,7 +6308,7 @@ procedure av_log_missing_feature(avc: pointer; const feature: pchar; want_sample
  *)
 //TODO attribute_deprecated
 //TODO av_printf_format(2, 3)
-procedure av_log_ask_for_sample(avc: pointer; const msg: pchar; ...); cdecl; external LIB_AVCODEC;
+procedure av_log_ask_for_sample(avc: pointer; const msg: pchar; args : array of const); cdecl; external LIB_AVCODEC;
 {$endif} (* FF_API_MISSING_SAMPLE *)
 
 (**
@@ -6425,6 +6425,23 @@ function av_cpb_properties_alloc(size: pcsize_t): PAVCPBProperties; cdecl; exter
  *)
 
 // #endif (* AVCODEC_AVCODEC_H *)
+
+{$include libavcodec_avdct.inc}
+{$include libavcodec_avfft.inc}
+{$include libavcodec_d3d11va.inc}
+{$include libavcodec_dirac.inc}
+{$include libavcodec_dv_profile.inc}
+{$include libavcodec_dxva2.inc}
+{$include libavcodec_jni.inc}
+{$include libavcodec_mediacodec.inc}
+{$include libavcodec_qsv.inc}
+{$include libavcodec_vaapi.inc}
+{$include libavcodec_vda.inc}
+{$include libavcodec_vdpau.inc}
+{$include libavcodec_version.inc}
+{$include libavcodec_videotoolbox.inc}
+{$include libavcodec_vorbis_parser.inc}
+{$include libavcodec_xvmc.inc}
 
 implementation
 

@@ -31,7 +31,8 @@ unit avformat;
 interface
 
 uses
-  ctypes;
+  ctypes,
+  avutil;
 
 const
   LIB_AVFORMAT = 'avformat-57.dll';
@@ -3039,6 +3040,9 @@ function av_stream_get_codec_timebase(const st: PAVStream): AVRational; cdecl; e
  *)
 
 // #endif (* AVFORMAT_AVFORMAT_H *)
+
+{$include libavformat_avio.inc}
+{$include libavformat_version.inc}
 
 implementation
 

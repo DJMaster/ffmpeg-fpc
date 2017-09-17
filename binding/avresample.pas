@@ -31,7 +31,8 @@ unit avresample;
 interface
 
 uses
-  ctypes;
+  ctypes,
+  avutil;
 
 const
   LIB_AVRESAMPLE = 'avresample-3.dll';
@@ -512,6 +513,8 @@ function avresample_config(avr: PAVAudioResampleContext; out_: PAVFrame: in_: PA
  *)
 
 // #endif (* AVRESAMPLE_AVRESAMPLE_H *)
+
+{$include libavresample_version.inc}
 
 implementation
 

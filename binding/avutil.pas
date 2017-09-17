@@ -34,20 +34,17 @@ interface
 uses
   ctypes;
 
+type
+  pppcuint8 = ^ppcuint8;
+  ppcuint8 = ^pcuint8;
+
 const
   LIB_AVUTIL = 'avutil-55.dll';
 
 // #ifndef AVUTIL_AVUTIL_H
 // #define AVUTIL_AVUTIL_H
 
-{$include libavutil_common.inc}
-{$include libavutil_error.inc}
 {$include libavutil_rational.inc}
-{$include libavutil_version.inc}
-{$include libavutil_macros.inc}
-{$include libavutil_mathematics.inc}
-{$include libavutil_log.inc}
-{$include libavutil_pixfmt.inc}
 
 (**
  * @file
@@ -391,6 +388,82 @@ function av_fourcc_make_string(buf: pchar; fourcc: cuint32): pchar; cdecl; exter
  *)
 
 // #endif (* AVUTIL_AVUTIL_H *)
+
+{$include libavutil_fifo.inc}
+{$include libavutil_samplefmt.inc}
+
+{$include libavutil_adler32.inc}
+{$include libavutil_aes.inc}
+{$include libavutil_aes_ctr.inc}
+{$include libavutil_attributes.inc}
+{$include libavutil_audio_fifo.inc}
+{$include libavutil_avassert.inc}
+{$include libavutil_avconfig.inc}
+{$include libavutil_avstring.inc}
+{$include libavutil_base64.inc}
+{$include libavutil_blowfish.inc}
+{$include libavutil_bprint.inc}
+{$include libavutil_bswap.inc}
+{$include libavutil_buffer.inc}
+{$include libavutil_camellia.inc}
+{$include libavutil_cast5.inc}
+{$include libavutil_channel_layout.inc}
+{$include libavutil_common.inc}
+{$include libavutil_cpu.inc}
+{$include libavutil_crc.inc}
+{$include libavutil_des.inc}
+{$include libavutil_dict.inc}
+{$include libavutil_display.inc}
+{$include libavutil_downmix_info.inc}
+{$include libavutil_error.inc}
+{$include libavutil_eval.inc}
+{$include libavutil_ffversion.inc}
+{$include libavutil_file.inc}
+{$include libavutil_frame.inc}
+{$include libavutil_hash.inc}
+{$include libavutil_hmac.inc}
+{$include libavutil_hwcontext.inc}
+{$include libavutil_hwcontext_cuda.inc}
+{$include libavutil_hwcontext_dxva2.inc}
+{$include libavutil_hwcontext_qsv.inc}
+{$include libavutil_hwcontext_vaapi.inc}
+{$include libavutil_hwcontext_vdpau.inc}
+{$include libavutil_imgutils.inc}
+{$include libavutil_intfloat.inc}
+{$include libavutil_intreadwrite.inc}
+{$include libavutil_lfg.inc}
+{$include libavutil_log.inc}
+{$include libavutil_lzo.inc}
+{$include libavutil_macros.inc}
+{$include libavutil_mastering_display_metadata.inc}
+{$include libavutil_mathematics.inc}
+{$include libavutil_md5.inc}
+{$include libavutil_mem.inc}
+{$include libavutil_motion_vector.inc}
+{$include libavutil_murmur3.inc}
+{$include libavutil_opt.inc}
+{$include libavutil_parseutils.inc}
+{$include libavutil_pixdesc.inc}
+{$include libavutil_pixelutils.inc}
+{$include libavutil_pixfmt.inc}
+{$include libavutil_random_seed.inc}
+{.$include libavutil_rational.inc}
+{$include libavutil_rc4.inc}
+{$include libavutil_replaygain.inc}
+{$include libavutil_ripemd.inc}
+{$include libavutil_sha.inc}
+{$include libavutil_sha512.inc}
+{$include libavutil_spherical.inc}
+{$include libavutil_stereo3d.inc}
+{$include libavutil_tea.inc}
+{$include libavutil_threadmessage.inc}
+{$include libavutil_time.inc}
+{$include libavutil_timecode.inc}
+{$include libavutil_timestamp.inc}
+{$include libavutil_tree.inc}
+{$include libavutil_twofish.inc}
+{$include libavutil_version.inc}
+{$include libavutil_xtea.inc}
 
 implementation
 

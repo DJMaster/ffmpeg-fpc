@@ -32,7 +32,8 @@ unit avfilter;
 interface
 
 uses
-  ctypes;
+  ctypes,
+  avutil;
 
 const
   LIB_AVFILTER = 'avfilter-6.dll';
@@ -1212,6 +1213,11 @@ function avfilter_graph_request_oldest(graph: PAVFilterGraph): cint; cdecl; exte
  *)
 
 // #endif (* AVFILTER_AVFILTER_H *)
+
+{$include libavfilter_avfiltergraph.inc}
+{$include libavfilter_buffersink.inc}
+{$include libavfilter_buffersrc.inc}
+{$include libavfilter_version.inc}
 
 implementation
 

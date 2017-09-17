@@ -31,7 +31,8 @@ unit swscale;
 interface
 
 uses
-  ctypes;
+  ctypes,
+  avutil;
 
 const
   LIB_SWSCALE = 'swscale-4.dll';
@@ -350,6 +351,8 @@ function sws_get_class(): PAVClass; cdecl; external LIB_SWSCALE;
  *)
 
 // #endif (* SWSCALE_SWSCALE_H *)
+
+{$include libswscale_version.inc}
 
 implementation
 

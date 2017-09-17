@@ -27,9 +27,9 @@
 // #ifndef AVUTIL_AVSTRING_H
 // #define AVUTIL_AVSTRING_H
 
-#include <stddef.h>
-#include <stdint.h>
-#include "attributes.h"
+// #include <stddef.h>
+// #include <stdint.h>
+// #include "attributes.h"
 
 (**
  * @addtogroup lavu_string
@@ -136,7 +136,7 @@ function av_strlcat(dst: pchar; const src: pchar; size: csize_t): csize_t; cdecl
  *  if enough space had been available
  *)
 //TODO av_printf_format(3, 4)
-function av_strlcatf(dst: pchar; size: csize_t; const fmt: pchar; ...): csize_t; cdecl; external LIB_AVUTIL;
+function av_strlcatf(dst: pchar; size: csize_t; const fmt: pchar; args : array of const): csize_t; cdecl; external LIB_AVUTIL;
 
 (**
  * Get the count of continuous non zero chars starting from the beginning.
@@ -161,7 +161,7 @@ function av_strnlen(const s: pchar; len: csize_t): csize_t; inline;
  * @note You have to free the string yourself with av_free().
  *)
 //TODO av_printf_format(1, 2)
-function av_asprintf(const fmt: pchar; ...): pchar; cdecl; external LIB_AVUTIL;
+function av_asprintf(const fmt: pchar; args : array of const): pchar; cdecl; external LIB_AVUTIL;
 
 (**
  * Convert a number to an av_malloced string.
@@ -400,7 +400,7 @@ function av_utf8_decode(codep: pcint32; const bufp: ppcuint8; const buf_end: pcu
  * @returns 0 if not found, or the 1 based index where it has been found in the
  *            list.
  *)
-function av_match_list(const pchar name, const pchar list, char separator): cint; cdecl; external LIB_AVUTIL;
+function av_match_list(const name: pchar; const list: pchar; separator: char): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * @}

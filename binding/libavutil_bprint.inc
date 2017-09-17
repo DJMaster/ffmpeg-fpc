@@ -37,12 +37,12 @@
  * This helps ensuring binary compatibility with future versions.
  *)
 
-#define FF_PAD_STRUCTURE(name, size, ...) \
-struct ff_pad_helper_##name { __VA_ARGS__ }; \
-typedef struct name { \
-    __VA_ARGS__ \
-    char reserved_padding[size - sizeof(struct ff_pad_helper_##name)]; \
-} name;
+//TODO #define FF_PAD_STRUCTURE(name, size, ...) \
+//TODO struct ff_pad_helper_##name { __VA_ARGS__ }; \
+//TODO typedef struct name { \
+//TODO     __VA_ARGS__ \
+//TODO     char reserved_padding[size - sizeof(struct ff_pad_helper_##name)]; \
+//TODO } name;
 
 (**
  * Buffer to print data progressively
@@ -132,7 +132,7 @@ procedure av_bprint_init_for_buffer(buf: PAVBPrint; buffer: pchar; size: cunsign
  * Append a formatted string to a print buffer.
  *)
 //TODO av_printf_format(2, 3)
-procedure av_bprintf(buf: PAVBPrint; const fmt: pchar; ...); cdecl; external LIB_AVUTIL;
+procedure av_bprintf(buf: PAVBPrint; const fmt: pchar; args : array of const); cdecl; external LIB_AVUTIL;
 
 (**
  * Append a formatted string to a print buffer.

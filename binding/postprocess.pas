@@ -134,6 +134,8 @@ const
 
 // #endif (* POSTPROC_POSTPROCESS_H *)
 
+{$include libpostproc_version.inc}
+
 implementation
 
 end.

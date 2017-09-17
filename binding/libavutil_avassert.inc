@@ -33,41 +33,41 @@
 // #ifndef AVUTIL_AVASSERT_H
 // #define AVUTIL_AVASSERT_H
 
-#include <stdlib.h>
-#include "avutil.h"
-#include "log.h"
+// #include <stdlib.h>
+// #include "avutil.h"
+// #include "log.h"
 
 (**
  * assert() equivalent, that is always enabled.
  *)
-#define av_assert0(cond) do {                                           \
-    if (!(cond)) {                                                      \
-        av_log(NULL, AV_LOG_PANIC, "Assertion %s failed at %s:%d\n",    \
-               AV_STRINGIFY(cond), __FILE__, __LINE__);                 \
-        abort();                                                        \
-    }                                                                   \
-} while (0)
+//TODO #define av_assert0(cond) do {                                           \
+//TODO     if (!(cond)) {                                                      \
+//TODO         av_log(NULL, AV_LOG_PANIC, "Assertion %s failed at %s:%d\n",    \
+//TODO                AV_STRINGIFY(cond), __FILE__, __LINE__);                 \
+//TODO         abort();                                                        \
+//TODO     }                                                                   \
+//TODO } while (0)
 
 (**
  * assert() equivalent, that does not lie in speed critical code.
  * These asserts() thus can be enabled without fearing speed loss.
  *)
-#if defined(ASSERT_LEVEL) && ASSERT_LEVEL > 0
-#define av_assert1(cond) av_assert0(cond)
-#else
-#define av_assert1(cond) ((void)0)
-#endif
+//TODO #if defined(ASSERT_LEVEL) && ASSERT_LEVEL > 0
+//TODO #define av_assert1(cond) av_assert0(cond)
+//TODO #else
+//TODO #define av_assert1(cond) ((void)0)
+//TODO #endif
 
 (**
  * assert() equivalent, that does lie in speed critical code.
  *)
-#if defined(ASSERT_LEVEL) && ASSERT_LEVEL > 1
-#define av_assert2(cond) av_assert0(cond)
-#define av_assert2_fpu() av_assert0_fpu()
-#else
-#define av_assert2(cond) ((void)0)
-#define av_assert2_fpu() ((void)0)
-#endif
+//TODO #if defined(ASSERT_LEVEL) && ASSERT_LEVEL > 1
+//TODO #define av_assert2(cond) av_assert0(cond)
+//TODO #define av_assert2_fpu() av_assert0_fpu()
+//TODO #else
+//TODO #define av_assert2(cond) ((void)0)
+//TODO #define av_assert2_fpu() ((void)0)
+//TODO #endif
 
 (**
  * Assert that floating point opperations can be executed.
