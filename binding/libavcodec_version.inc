@@ -31,7 +31,7 @@
  * Libavcodec version macros.
  *)
 
-#include "libavutil/version.h"
+// #include "libavutil/version.h"
 
 const
   LIBAVCODEC_VERSION_MAJOR = 57;

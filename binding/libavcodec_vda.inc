@@ -35,19 +35,19 @@
  * Public libavcodec VDA header.
  *)
 
-#include "libavcodec/avcodec.h"
+// #include "libavcodec/avcodec.h"
 
-#include <stdint.h>
+// #include <stdint.h>
 
 // emmintrin.h is unable to compile with -std=c99 -Werror=missing-prototypes
 // http://openradar.appspot.com/8026390
-#undef __GNUC_STDC_INLINE__
+//TODO #undef __GNUC_STDC_INLINE__
 
   Picture = QuickdrawPicture;
 #include <VideoDecodeAcceleration/VDADecoder.h>
 #undef Picture
 
-#include "libavcodec/version.h"
+// #include "libavcodec/version.h"
 
 // extra flags not defined in VDADecoder.h
 const

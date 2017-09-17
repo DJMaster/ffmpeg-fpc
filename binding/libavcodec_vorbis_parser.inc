@@ -32,7 +32,7 @@
 // #ifndef AVCODEC_VORBIS_PARSER_H
 // #define AVCODEC_VORBIS_PARSER_H
 
-#include <stdint.h>
+// #include <stdint.h>
 
 type
   PAVVorbisParseContext = ^AVVorbisParseContext;

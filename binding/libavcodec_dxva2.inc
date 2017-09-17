@@ -35,14 +35,14 @@
  * Public libavcodec DXVA2 header.
  *)
 
-#if !defined(_WIN32_WINNT) || _WIN32_WINNT < $0602
-#undef _WIN32_WINNT
-  _WIN32_WINNT = $0602;
-#endif
+//TODO #if !defined(_WIN32_WINNT) || _WIN32_WINNT < $0602
+//TODO #undef _WIN32_WINNT
+//TODO   _WIN32_WINNT = $0602;
+//TODO #endif
 
-#include <stdint.h>
-#include <d3d9.h>
-#include <dxva2api.h>
+// #include <stdint.h>
+// #include <d3d9.h>
+// #include <dxva2api.h>
 
 (**
  * @defgroup lavc_codec_hwaccel_dxva2 DXVA2

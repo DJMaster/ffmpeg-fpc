@@ -25,11 +25,11 @@
 // #ifndef AVCODEC_DV_PROFILE_H
 // #define AVCODEC_DV_PROFILE_H
 
-#include <stdint.h>
+// #include <stdint.h>
 
-#include "libavutil/pixfmt.h"
-#include "libavutil/rational.h"
-#include "avcodec.h"
+// #include "libavutil/pixfmt.h"
+// #include "libavutil/rational.h"
+// #include "avcodec.h"
 
 (* minimum number of bytes to read from a DV stream in order to
  * determine the profile *)

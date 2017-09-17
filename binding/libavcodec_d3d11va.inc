@@ -36,13 +36,13 @@
  * Public libavcodec D3D11VA header.
  *)
 
-#if !defined(_WIN32_WINNT) || _WIN32_WINNT < $0602
-#undef _WIN32_WINNT
-  _WIN32_WINNT = $0602;
-#endif
+//TODO #if !defined(_WIN32_WINNT) || _WIN32_WINNT < $0602
+//TODO #undef _WIN32_WINNT
+//TODO   _WIN32_WINNT = $0602;
+//TODO #endif
 
-#include <stdint.h>
-#include <d3d11.h>
+// #include <stdint.h>
+// #include <d3d11.h>
 
 (**
  * @defgroup lavc_codec_hwaccel_d3d11va Direct3D11
