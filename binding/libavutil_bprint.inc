@@ -85,13 +85,13 @@
  * such as the current paragraph.
  *)
 
-FF_PAD_STRUCTURE(AVBPrint, 1024,
-    char *str; (**< string so far *)
-    unsigned len; (**< length so far *)
-    unsigned size; (**< allocated memory *)
-    unsigned size_max; (**< maximum allocated memory *)
-    char reserved_internal_buffer[1];
-)
+//TODO FF_PAD_STRUCTURE(AVBPrint, 1024,
+//TODO     char *str; (**< string so far *)
+//TODO     unsigned len; (**< length so far *)
+//TODO     unsigned size; (**< allocated memory *)
+//TODO     unsigned size_max; (**< maximum allocated memory *)
+//TODO     char reserved_internal_buffer[1];
+//TODO )
 
 (**
  * Convenience macros for special values for av_bprint_init() size_max

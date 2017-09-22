@@ -65,6 +65,7 @@ type
 //TODO      ((category) == AV_CLASS_CATEGORY_DEVICE_OUTPUT))
 
 type
+  PPAVOptionRanges = ^PAVOptionRanges;
   PAVOptionRanges = ^AVOptionRanges;
   AVOptionRanges = record
   end;
@@ -75,13 +76,14 @@ type
  * AVClass struct (e.g. AVCodecContext, AVFormatContext etc.).
  *)
 type
+  PAVClass = ^AVClass;
+
   item_name_func = function (ctx: pointer): pchar; cdecl;
   child_next_func = function (obj: pointer; prev: pointer): pointer; cdecl;
   child_class_next_func = function (const prev: PAVClass): PAVClass; cdecl;
   get_category_func = function (ctx: pointer): AVClassCategory; cdecl;
   query_ranges_func = function (arg1: PPAVOptionRanges; obj: pointer; const key: pchar; flags: cint): cint;
 
-  PAVClass = ^AVClass;
   AVClass = record
     (**
      * The name of the class; usually it is the same name as the

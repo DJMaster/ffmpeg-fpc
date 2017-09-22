@@ -37,6 +37,8 @@
 // #include "libavutil/common.h"
 // #include "libavutil/dict.h"
 // #include "libavutil/log.h"
+{$include libavutil_dict.inc}
+{$include libavutil_log.inc}
 
 // #include "libavformat/version.h"
 
@@ -63,7 +65,7 @@ const
  * or AVIOContext.
  *)
 type
-  callback_func: function (arg: pointer): cint;
+  callback_func = function (arg: pointer): cint;
 
   PAVIOInterruptCB = ^AVIOInterruptCB;
   AVIOInterruptCB = record
@@ -110,6 +112,10 @@ type
     user_id: cint64; (**< User ID of owner, -1 if unknown. *)
     group_id: cint64; (**< Group ID of owner, -1 if unknown. *)
     filemode: cint64; (**< Unix file mode, -1 if unknown. *)
+  end;
+
+  PURLContext = ^URLContext;
+  URLContext = record
   end;
 
   PAVIODirContext = ^AVIODirContext;
@@ -165,7 +171,7 @@ type
  *       when implementing custom I/O. Normally these are set to the
  *       function pointers specified in avio_alloc_context()
  *)
-  write_data_type_func = function (opaque: pointer; buf: pcuint8_t; buf_size: cint; type_: AVIODataMarkerType; time: cint64): cint; cdecl;
+  write_data_type_func = function (opaque: pointer; buf: pcuint8; buf_size: cint; type_: AVIODataMarkerType; time: cint64): cint; cdecl;
 
   PAVIOContext = ^AVIOContext;
   AVIOContext = record

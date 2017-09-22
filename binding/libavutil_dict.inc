@@ -91,6 +91,7 @@ type
     value: pchar;
   end;
 
+  PPAVDictionary = ^PAVDictionary;
   PAVDictionary = ^AVDictionary;
   AVDictionary = record
   end;
