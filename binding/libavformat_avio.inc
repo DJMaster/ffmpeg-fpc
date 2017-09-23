@@ -34,9 +34,7 @@
 
 // #include <stdint.h>
 
-// #include "libavutil/common.h"
-// #include "libavutil/dict.h"
-// #include "libavutil/log.h"
+{$include libavutil_common.inc}
 {$include libavutil_dict.inc}
 {$include libavutil_log.inc}
 
@@ -96,6 +94,7 @@ type
  * Only name and type fields are guaranteed be set.
  * Rest of fields are protocol or/and platform dependent and might be unknown.
  *)
+  PPAVIODirEntry = ^PAVIODirEntry;
   PAVIODirEntry = ^AVIODirEntry;
   AVIODirEntry = record
     name: pchar; (**< Filename *)
@@ -118,6 +117,7 @@ type
   URLContext = record
   end;
 
+  PPAVIODirContext = ^PAVIODirContext;
   PAVIODirContext = ^AVIODirContext;
   AVIODirContext = record
     url_context: PURLContext;
@@ -171,7 +171,14 @@ type
  *       when implementing custom I/O. Normally these are set to the
  *       function pointers specified in avio_alloc_context()
  *)
+  read_packet_func = function (opaque: pointer; buf: pcuint8; buf_size: cint): cint; cdecl;
+  write_packet_func = function (opaque: pointer; buf: pcuint8; buf_size: cint): cint; cdecl;
+  seek_func = function (opaque: pointer; offset: cint64; whence: cint): cint64; cdecl;
+  update_checksum_func = function (checksum: culong; const buf: pcuint8; size: cuint): culong; cdecl;
+  read_pause_func = function (opaque: pointer; pause: cint): cint; cdecl;
+  read_seek_func = function (opaque: pointer; stream_index: cint; timestamp: cint64; flags: cint): cint64; cdecl;
   write_data_type_func = function (opaque: pointer; buf: pcuint8; buf_size: cint; type_: AVIODataMarkerType; time: cint64): cint; cdecl;
+  short_seek_get_func = function (opaque: pointer): cint; cdecl;
 
   PAVIOContext = ^AVIOContext;
   AVIOContext = record
@@ -244,9 +251,9 @@ type
                            no more data has been received yet. *)
     opaque: pointer; (**< A private pointer, passed to the read/write/seek/...
                                  functions. *)
-    int (*read_packet)(void *opaque, uint8_t *buf, int buf_size);
-    int (*write_packet)(void *opaque, uint8_t *buf, int buf_size);
-    int64_t (*seek)(void *opaque, int64_t offset, int whence);
+    read_packet: read_packet_func;
+    write_packet: write_packet_func;
+    seek: seek_func;
     pos: cint64; (**< position in the file of the current buffer *)
     must_flush: cint; (**< true if the next seek should flush *)
     eof_reached: cint; (**< true if eof reached *)
@@ -254,19 +261,18 @@ type
     max_packet_size: cint;
     checksum: culong ;
     checksum_ptr: pcuchar;
-    culong (*update_checksum)(unsigned long checksum, const uint8_t *buf, unsigned int size);
+    update_checksum: update_checksum_func;
     error: cint; (**< contains the error code or 0 if no error happened *)
     (**
      * Pause or resume playback for network streaming protocols - e.g. MMS.
      *)
-    int (*read_pause)(void *opaque, int pause);
+    read_pause: read_pause_func;
     (**
      * Seek to a given timestamp in stream with the specified stream_index.
      * Needed for some network streaming protocols which don't support seeking
      * to byte position.
      *)
-    int64_t (*read_seek)(void *opaque, int stream_index,
-                         int64_t timestamp, int flags);
+    read_seek: read_seek_func;
     (**
      * A combination of AVIO_SEEKABLE_ flags or 0 when the stream is not seekable.
      *)
@@ -348,7 +354,7 @@ type
      * A callback that is used instead of short_seek_threshold.
      * This is current internal only, do not use from outside.
      *)
-    cint (*short_seek_get)(void *opaque);
+    short_seek_get: short_seek_get_func;
   end;
 
 (**
@@ -457,11 +463,12 @@ procedure avio_free_directory_entry(entry: PPAVIODirEntry); cdecl; external LIB_
  *
  * @return Allocated AVIOContext or NULL on failure.
  *)
-function  avio_alloc_context(buffer: pcuchar; buffer_size: cint; write_flag: cint; opaque: pointer;
-                  cint ( *read_packet)(void *opaque, uint8_t *buf, int buf_size),
-                  cint ( *write_packet)(void *opaque, uint8_t *buf, int buf_size),
-                  cint64 ( *seek)(void *opaque, int64_t offset, int whence)
-                  ): PAVIOContext; cdecl; external LIB_AVFORMAT;
+type
+  avio_alloc_context_read_packet_func = function (opaque: pointer; buf: pcuint8; buf_size: cint): cint; cdecl;
+  avio_alloc_context_write_packet_func = function (opaque: pointer; buf: pcuint8; buf_size: cint): cint; cdecl;
+  avio_alloc_context_seek_func = function (opaque: pointer; offset: cint64; whence: cint): cint64; cdecl;
+
+function  avio_alloc_context(buffer: pcuchar; buffer_size: cint; write_flag: cint; opaque: pointer; read_packet: avio_alloc_context_read_packet_func; write_packet: avio_alloc_context_write_packet_func; seek: avio_alloc_context_seek_func): PAVIOContext; cdecl; external LIB_AVFORMAT;
 
 procedure avio_w8(s: PAVIOContext; b: cint); cdecl; external LIB_AVFORMAT;
 procedure avio_write(s: PAVIOContext; const buf: pcuchar; size: cint); cdecl; external LIB_AVFORMAT;

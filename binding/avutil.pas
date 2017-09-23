@@ -389,7 +389,7 @@ function av_fourcc_make_string(buf: pchar; fourcc: cuint32): pchar; cdecl; exter
 
 // #endif (* AVUTIL_AVUTIL_H *)
 
-{$include libavformat_avio.inc}
+{$include libavutil_opt.inc}
 
 {$include libavutil_fifo.inc}
 {$include libavutil_samplefmt.inc}
@@ -443,7 +443,6 @@ function av_fourcc_make_string(buf: pchar; fourcc: cuint32): pchar; cdecl; exter
 {$include libavutil_mem.inc}
 {$include libavutil_motion_vector.inc}
 {$include libavutil_murmur3.inc}
-{$include libavutil_opt.inc}
 {$include libavutil_parseutils.inc}
 {$include libavutil_pixdesc.inc}
 {$include libavutil_pixelutils.inc}

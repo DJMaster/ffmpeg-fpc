@@ -102,14 +102,14 @@
  * @code
  * test_struct *alloc_test_struct(void)
  * {
- *     test_struct *ret = av_mallocz(sizeof(*ret));
+ *     test_struct *ret = av_mallocz(sizeof( *ret));
  *     ret->class = &test_class;
  *     av_opt_set_defaults(ret);
  *     return ret;
  * }
  * void free_test_struct(test_struct **foo)
  * {
- *     av_opt_free(*foo);
+ *     av_opt_free( *foo);
  *     av_freep(foo);
  * }
  * @endcode
