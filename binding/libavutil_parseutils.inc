@@ -192,6 +192,6 @@ function av_small_strptime(const p: pchar; const fmt: pchar; dt: Ptm): pchar; cd
 (**
  * Convert the decomposed UTC time in tm to a time_t value.
  *)
-function av_timegm(time: Ptm): cint64; cdecl; external LIB_AVUTIL;
+function av_timegm(time: Ptm): clong; cdecl; external LIB_AVUTIL;
 
 // #endif (* AVUTIL_PARSEUTILS_H *)

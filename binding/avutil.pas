@@ -41,6 +41,7 @@ type
   ppcuchar = ^pcuchar;
   PPAVOptionRanges = pointer;
   PAVOption = pointer;
+  PAVMurMur3 = pointer;
 
 const
   LIB_AVUTIL = 'avutil-55.dll';
