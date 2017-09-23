@@ -46,7 +46,7 @@ type
     (**
      * CIE 1931 xy chromaticity coords of color primaries (r, g, b order).
      *)
-    display_primaries: array[0..2][0..1] of AVRational;
+    display_primaries: array[0..2, 0..1] of AVRational;
 
     (**
      * CIE 1931 xy chromaticity coords of white point.

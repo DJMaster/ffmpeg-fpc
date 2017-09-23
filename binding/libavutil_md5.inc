@@ -46,7 +46,8 @@
  * @{
  *)
 
-extern const int av_md5_size;
+var
+  av_md5_size: cint; external LIB_AVUTIL;
 
 type
   PAVMD5 = ^AVMD5;

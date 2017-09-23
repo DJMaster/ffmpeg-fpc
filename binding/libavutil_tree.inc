@@ -48,6 +48,7 @@
  *)
 
 type
+  PPAVTreeNode = ^PAVTreeNode;
   PAVTreeNode = ^AVTreeNode;
   AVTreeNode = record
   end;
@@ -75,9 +76,9 @@ function av_tree_node_alloc(): PAVTreeNode; cdecl; external LIB_AVUTIL;
  *         exists in the tree.
  *)
 type
-  cmp_func = function (const key: pointer; const b: pointer): cint; cdecl;
+  av_tree_find_cmp_func = function (const key: pointer; const b: pointer): cint; cdecl;
 
-function av_tree_find(const root: PAVTreeNode; key: pointer; cmp: cmp_func; next: array[0..1] of pointer): pointer; cdecl; external LIB_AVUTIL;
+function av_tree_find(const root: PAVTreeNode; key: pointer; cmp: av_tree_find_cmp_func; next: ppointer{array[0..1] of pointer}): pointer; cdecl; external LIB_AVUTIL;
 
 (**
  * Insert or remove an element.
@@ -102,7 +103,7 @@ function av_tree_find(const root: PAVTreeNode; key: pointer; cmp: cmp_func; next
  *             You might want to define a function like:
  *             @code
  *             void *tree_insert(struct AVTreeNode **rootp, void *key,
- *                               int (*cmp)(void *key, const void *b),
+ *                               int ( *cmp)(void *key, const void *b),
  *                               AVTreeNode **next)
  *             {
  *                 if (!*next)
@@ -110,7 +111,7 @@ function av_tree_find(const root: PAVTreeNode; key: pointer; cmp: cmp_func; next
  *                 return av_tree_insert(rootp, key, cmp, next);
  *             }
  *             void *tree_remove(struct AVTreeNode **rootp, void *key,
- *                               int (*cmp)(void *key, const void *b, AVTreeNode **next))
+ *                               int ( *cmp)(void *key, const void *b, AVTreeNode **next))
  *             {
  *                 av_freep(next);
  *                 return av_tree_insert(rootp, key, cmp, next);
@@ -124,9 +125,9 @@ function av_tree_find(const root: PAVTreeNode; key: pointer; cmp: cmp_func; next
  *         should make no assumptions that it's one or the other in the code.
  *)
 type
-  cmp_func = function (const key: pointer; const b: pointer): cint; cdecl;
+  av_tree_insert_cmp_func = function (const key: pointer; const b: pointer): cint; cdecl;
 
-function av_tree_insert(rootp: PPAVTreeNode; key: pointer; cmp: cmp_func; next: PPAVTreeNode): pointer; cdecl; external LIB_AVUTIL;
+function av_tree_insert(rootp: PPAVTreeNode; key: pointer; cmp: av_tree_insert_cmp_func; next: PPAVTreeNode): pointer; cdecl; external LIB_AVUTIL;
 
 procedure av_tree_destroy(t: PAVTreeNode); cdecl; external LIB_AVUTIL;
 
@@ -141,10 +142,10 @@ procedure av_tree_destroy(t: PAVTreeNode); cdecl; external LIB_AVUTIL;
  *       tree.
  *)
 type
-  cmp_func = function (opaque: pointer; elem: pointer): cint; cdecl;
-  enu_func = function (opaque: pointer; elem: pointer): cint; cdecl;
+  av_tree_enumerate_cmp_func = function (opaque: pointer; elem: pointer): cint; cdecl;
+  av_tree_enumerate_enu_func = function (opaque: pointer; elem: pointer): cint; cdecl;
 
-procedure av_tree_enumerate(t: PAVTreeNode; opaque: pointer; cmp: cmp_func; enu: enu_func); cdecl; external LIB_AVUTIL;
+procedure av_tree_enumerate(t: PAVTreeNode; opaque: pointer; cmp: av_tree_enumerate_cmp_func; enu: av_tree_enumerate_enu_func); cdecl; external LIB_AVUTIL;
 
 (**
  * @}

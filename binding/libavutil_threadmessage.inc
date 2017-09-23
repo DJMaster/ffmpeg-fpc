@@ -26,6 +26,7 @@
 // #define AVUTIL_THREADMESSAGE_H
 
 type
+  PPAVThreadMessageQueue = ^PAVThreadMessageQueue;
   PAVThreadMessageQueue = ^AVThreadMessageQueue;
   AVThreadMessageQueue = record
   end;

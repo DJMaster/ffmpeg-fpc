@@ -64,7 +64,7 @@ const
  * Make sure all buffers are appropriately padded, in must provide
  * AV_LZO_INPUT_PADDING, out must provide AV_LZO_OUTPUT_PADDING additional bytes.
  *)
-function av_lzo1x_decode(out_: pointer; outlen: pcint; const in_: pointer;, inlen: pcint): cint; cdecl; external LIB_AVUTIL;
+function av_lzo1x_decode(out_: pointer; outlen: pcint; const in_: pointer; inlen: pcint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * @}

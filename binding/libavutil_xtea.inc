@@ -56,7 +56,7 @@ function av_xtea_alloc(): PAVXTEA;
  * @param key a key of 16 bytes used for encryption/decryption,
  *            interpreted as big endian 32 bit numbers
  *)
-procedure av_xtea_init(ctx: PAVXTEA; const key: array[0..15] of cuint8);
+procedure av_xtea_init(ctx: PAVXTEA; const key: pcuint8{array[0..15] of cuint8});
 
 (**
  * Initialize an AVXTEA context.
@@ -65,7 +65,7 @@ procedure av_xtea_init(ctx: PAVXTEA; const key: array[0..15] of cuint8);
  * @param key a key of 16 bytes used for encryption/decryption,
  *            interpreted as little endian 32 bit numbers
  *)
-procedure av_xtea_le_init(ctx: PAVXTEA; const key: array[0..15] of cuint8);
+procedure av_xtea_le_init(ctx: PAVXTEA; const key: pcuint8{array[0..15] of cuint8});
 
 (**
  * Encrypt or decrypt a buffer using a previously initialized context,

@@ -132,7 +132,7 @@ type
      * @endcode
      *)
     yaw: cint32; ///< Rotation around the up vector [-180, 180].
-    pitch_ cint32; ///< Rotation around the right vector [-90, 90].
+    pitch: cint32; ///< Rotation around the right vector [-90, 90].
     roll: cint32; ///< Rotation around the forward vector [-180, 180].
     (**
      * @}
@@ -188,7 +188,7 @@ type
      *       cases.
      *)
     padding: cuint32;
-  );
+  end;
 
 (**
  * Allocate a AVSphericalVideo structure and initialize its fields to default

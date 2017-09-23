@@ -98,10 +98,10 @@ type
     frame_rate_index: cuint8; ///< index into dirac_frame_rate[]
     aspect_ratio_index: cuint8; ///< index into dirac_aspect_ratio[]
 
-    clean_width: cuint16_t;
-    clean_height: cuint16_t;
-    clean_left_offset: cuint16_t;
-    clean_right_offset: cuint16_t;
+    clean_width: cuint16;
+    clean_height: cuint16;
+    clean_left_offset: cuint16;
+    clean_right_offset: cuint16;
 
     pixel_range_index: cuint8; ///< index into dirac_pixel_range_presets[]
     color_spec_index: cuint8; ///< index into dirac_color_spec_presets[]

@@ -111,7 +111,7 @@ procedure av_murmur3_update(c: PAVMurMur3; const src: pcuint8; len: cint); cdecl
  * @param[in,out] c    Hash context
  * @param[out]    dst  Buffer where output digest value is stored
  *)
-procedure av_murmur3_final(c: PAVMurMur3; dst: array[0..15] of cuint8); cdecl; external LIB_AVUTIL;
+procedure av_murmur3_final(c: PAVMurMur3; dst: pcuint8{array[0..15] of cuint8}); cdecl; external LIB_AVUTIL;
 
 (**
  * @}

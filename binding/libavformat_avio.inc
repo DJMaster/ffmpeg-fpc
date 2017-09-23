@@ -549,10 +549,10 @@ function avio_skip(s: PAVIOContext; offset: cint64): cint64; cdecl; external LIB
  * ftell() equivalent for AVIOContext.
  * @return position or AVERROR.
  *)
-function avio_tell(s: PAVIOContext): cint64; inline;
-{
-    return avio_seek(s, 0, SEEK_CUR);
-}
+//TODO function avio_tell(s: PAVIOContext): cint64; inline;
+//TODO {
+//TODO     return avio_seek(s, 0, SEEK_CUR);
+//TODO }
 
 (**
  * Get the filesize.

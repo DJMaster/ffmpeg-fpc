@@ -217,12 +217,12 @@ function av_mallocz(size: csize_t): pointer; cdecl; external LIB_AVUTIL;
  * @see av_malloc()
  *)
 //TODO av_alloc_size(1, 2)
-static inline void *av_malloc_array(size_t nmemb, size_t size)
-{
-    if (!size || nmemb >= INT_MAX / size)
-        return NULL;
-    return av_malloc(nmemb * size);
-}
+//TODO static inline void *av_malloc_array(size_t nmemb, size_t size)
+//TODO {
+//TODO     if (!size || nmemb >= INT_MAX / size)
+//TODO         return NULL;
+//TODO     return av_malloc(nmemb * size);
+//TODO }
 
 (**
  * Allocate a memory block for an array with av_mallocz().
@@ -238,12 +238,12 @@ static inline void *av_malloc_array(size_t nmemb, size_t size)
  * @see av_malloc_array()
  *)
 //TODO av_alloc_size(1, 2)
-static inline void *av_mallocz_array(size_t nmemb, size_t size)
-{
-    if (!size || nmemb >= INT_MAX / size)
-        return NULL;
-    return av_mallocz(nmemb * size);
-}
+//TODO static inline void *av_mallocz_array(size_t nmemb, size_t size)
+//TODO {
+//TODO     if (!size || nmemb >= INT_MAX / size)
+//TODO         return NULL;
+//TODO     return av_mallocz(nmemb * size);
+//TODO }
 
 (**
  * Non-inlined equivalent of av_mallocz_array().
@@ -295,8 +295,8 @@ function av_realloc(ptr: pointer; size: csize_t): pointer; cdecl; external LIB_A
  * @warning Unlike av_malloc(), the allocated memory is not guaranteed to be
  *          correctly aligned.
  *)
-av_warn_unused_result
-function cint av_reallocp(ptr: pointer; size: csize_t); cdecl; external LIB_AVUTIL;
+//TODO av_warn_unused_result
+function av_reallocp(ptr: pointer; size: csize_t): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Allocate, reallocate, or free a block of memory.
@@ -580,13 +580,13 @@ procedure av_memcpy_backptr(dst: pcuint8; back: cint; cnt: cint); cdecl; externa
  * type to_be_added  = ...;
  * type to_be_added2 = ...;
  *
- * type *addr = av_dynarray2_add((void **)&array, &nb, sizeof(*array), NULL);
+ * type *addr = av_dynarray2_add((void ** )&array, &nb, sizeof( *array), NULL);
  * if (!addr)
  *     return AVERROR(ENOMEM);
  * memcpy(addr, &to_be_added, sizeof(to_be_added));
  *
  * // Shortcut of the above.
- * type *addr = av_dynarray2_add(( void ** )&array, &nb, sizeof(*array),
+ * type *addr = av_dynarray2_add(( void ** )&array, &nb, sizeof( *array),
  *                               ( const void * )&to_be_added2);
  * if (!addr)
  *     return AVERROR(ENOMEM);
@@ -682,16 +682,16 @@ function av_dynarray2_add(tab_ptr: ppointer; nb_ptr: pcint; elem_size: csize_t; 
  * @param[out] r   Pointer to the result of the operation
  * @return 0 on success, AVERROR(EINVAL) on overflow
  *)
-static inline int av_size_mult(size_t a, size_t b, size_t *r)
-{
-    size_t t = a * b;
-    (* Hack inspired from glibc: don't try the division if nelem and elsize
-     * are both less than sqrt(SIZE_MAX). *)
-    if ((a | b) >= ((size_t)1 << (sizeof(size_t) * 4)) && a && t / a != b)
-        return AVERROR(EINVAL);
-    *r = t;
-    return 0;
-}
+//TODO static inline int av_size_mult(size_t a, size_t b, size_t *r)
+//TODO {
+//TODO     size_t t = a * b;
+//TODO     (* Hack inspired from glibc: don't try the division if nelem and elsize
+//TODO      * are both less than sqrt(SIZE_MAX). *)
+//TODO     if ((a | b) >= ((size_t)1 << (sizeof(size_t) * 4)) && a && t / a != b)
+//TODO         return AVERROR(EINVAL);
+//TODO     *r = t;
+//TODO     return 0;
+//TODO }
 
 (**
  * Set the maximum size that may be allocated in one block.

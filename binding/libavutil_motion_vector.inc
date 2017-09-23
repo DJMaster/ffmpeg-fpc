@@ -43,11 +43,11 @@ type
     (**
      * Absolute source position. Can be outside the frame area.
      *)
-    src_x, src_y: cint16_t;
+    src_x, src_y: cint16;
     (**
      * Absolute destination position. Can be outside the frame area.
      *)
-    dst_x, dst_y: cint16_t;
+    dst_x, dst_y: cint16;
     (**
      * Extra flag information.
      * Currently unused.
@@ -59,7 +59,7 @@ type
      * src_y = dst_y + motion_y / motion_scale
      *)
     motion_x, motion_y: cint32;
-    motion_scale: cuint16_t;
+    motion_scale: cuint16;
   end;
 
 // #endif (* AVUTIL_MOTION_VECTOR_H *)

@@ -76,6 +76,6 @@ function av_mlfg_get(c: PAVLFG): cuint; inline;
  *
  * @param out array where the two generated numbers are placed
  *)
-procedure av_bmg_get(lfg: PAVLFG; out_: array[0..1] of cdouble); cdecl; external LIB_AVUTIL;
+procedure av_bmg_get(lfg: PAVLFG; out_: pcdouble{array[0..1] of cdouble}); cdecl; external LIB_AVUTIL;
 
 // #endif (* AVUTIL_LFG_H *)

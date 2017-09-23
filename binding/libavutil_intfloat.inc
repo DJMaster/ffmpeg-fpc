@@ -29,16 +29,18 @@
 
 // #include <stdint.h>
 // #include "attributes.h"
+type
+  av_intfloat32 = record
+    case cint of
+      0: (i: cuint32);
+      1: (f: cfloat);
+  end;
 
-union av_intfloat32 {
-    uint32_t i;
-    float    f;
-};
-
-union av_intfloat64 {
-    uint64_t i;
-    double   f;
-};
+  av_intfloat64 = record
+    case cint of
+      0: (i: cuint64);
+      1: (f: cdouble);
+  end;
 
 (**
  * Reinterpret a 32-bit integer as a float.

@@ -57,6 +57,6 @@ function av_gettime_relative_is_monotonic(): cint; cdecl; external LIB_AVUTIL;
  * @param  usec Number of microseconds to sleep.
  * @return zero on success or (negative) error code.
  *)
-function av_usleep(unsigned usec): cint; cdecl; external LIB_AVUTIL;
+function av_usleep(usec: cunsigned): cint; cdecl; external LIB_AVUTIL;
 
 // #endif (* AVUTIL_TIME_H *)
