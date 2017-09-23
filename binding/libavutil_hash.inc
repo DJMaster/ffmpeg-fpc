@@ -117,6 +117,7 @@
  * initialization, updating, and finalizing.
  *)
 type
+  PPAVHashContext = ^PAVHashContext;
   PAVHashContext = ^AVHashContext;
   AVHashContext = record
   end;

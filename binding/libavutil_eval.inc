@@ -35,6 +35,7 @@
 // #include "avutil.h"
 
 type
+  PPAVExpr = ^PAVExpr;
   PAVExpr = ^AVExpr;
   AVExpr = record
   end;
@@ -58,10 +59,10 @@ type
  * AVERROR code otherwise
  *)
 type
-  funcs1_func = function (arg1: pointer; arg2: cdouble): cdouble; cdecl;
-  funcs2_func = function (arg1: pointer; arg2: cdouble; arg2: cdouble): cdouble; cdecl;
+  av_expr_parse_and_eval_funcs1_func = function (arg1: pointer; arg2: cdouble): cdouble; cdecl;
+  av_expr_parse_and_eval_funcs2_func = function (arg1: pointer; arg2: cdouble; arg3: cdouble): cdouble; cdecl;
 
-function av_expr_parse_and_eval(res: pcdouble; const s: pchar; const const_names: array of pchar; const const_values: array of cdouble; const func1_names: array of pchar; funcs1: array of funcs1_func; const func2_names: array of pchar; funcs2: array of funcs2_func; opaque: pointer;log_offset: cint; log_ctx: pointer): cint; cdecl; external LIB_AVUTIL;
+function av_expr_parse_and_eval(res: pcdouble; const s: pchar; const const_names: array of pchar; const const_values: array of cdouble; const func1_names: array of pchar; funcs1: array of av_expr_parse_and_eval_funcs1_func; const func2_names: array of pchar; funcs2: array of av_expr_parse_and_eval_funcs2_func; opaque: pointer; log_offset: cint; log_ctx: pointer): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Parse an expression.
@@ -81,10 +82,10 @@ function av_expr_parse_and_eval(res: pcdouble; const s: pchar; const const_names
  * AVERROR code otherwise
  *)
 type
-  funcs1_func = function (arg1: pointer; arg2: cdouble): cdouble; cdecl;
-  funcs2_func = function (arg1: pointer; arg2: cdouble; arg3: cdouble): cdouble; cdecl;
+  av_expr_parse_funcs1_func = function (arg1: pointer; arg2: cdouble): cdouble; cdecl;
+  av_expr_parse_funcs2_func = function (arg1: pointer; arg2: cdouble; arg3: cdouble): cdouble; cdecl;
 
-function av_expr_parse(expr: PPAVExpr; const s: pchar; const const_names: array of pchar; const func1_names: array of pchar; funcs1: array of funcs1_func; const func2_names: array of pchar; funcs2: array of funcs2_func; log_offset: cint; log_ctx: pointer): cint; cdecl; external LIB_AVUTIL;
+function av_expr_parse(expr: PPAVExpr; const s: pchar; const const_names: array of pchar; const func1_names: array of pchar; funcs1: array of av_expr_parse_funcs1_func; const func2_names: array of pchar; funcs2: array of av_expr_parse_funcs2_func; log_offset: cint; log_ctx: pointer): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Evaluate a previously parsed expression.

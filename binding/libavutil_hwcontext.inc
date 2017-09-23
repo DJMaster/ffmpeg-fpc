@@ -62,7 +62,7 @@ type
  * state.
  *)
 type
-  free_proc = procedure (ctx: PAVHWDeviceContext); cdecl;
+  AVHWDeviceContext_free_proc = procedure (ctx: PAVHWDeviceContext); cdecl;
 
   PAVHWDeviceContext = ^AVHWDeviceContext;
   AVHWDeviceContext = record
@@ -108,7 +108,7 @@ type
      *       struct, this callback will be invoked after all such child objects
      *       are fully uninitialized and their respective destructors invoked.
      *)
-    free: free_proc;
+    free: AVHWDeviceContext_free_proc;
 
     (**
      * Arbitrary user data, to be used e.g. by the free() callback.
@@ -132,7 +132,7 @@ type
  * struct.
  *)
 type
-  free_proc = procedure (ctx: PAVHWFramesContext); cdecl;
+  AVHWFramesContext_free_proc = procedure (ctx: PAVHWFramesContext); cdecl;
 
   PAVHWFramesContext = ^AVHWFramesContext;
   AVHWFramesContext = record
@@ -181,7 +181,7 @@ type
      * If non-NULL, this callback will be called when the last reference to
      * this context is unreferenced, immediately before it is freed.
      *)
-    free: free_proc;
+    free: AVHWFramesContext_free_proc;
 
     (**
      * Arbitrary user data, to be used e.g. by the free() callback.

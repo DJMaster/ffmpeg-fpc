@@ -441,7 +441,10 @@ function av_fourcc_make_string(buf: pchar; fourcc: cuint32): pchar; cdecl; exter
 {$include libavutil_hwcontext_qsv.inc}
 {$include libavutil_hwcontext_vaapi.inc}
 {$include libavutil_hwcontext_vdpau.inc}
+
+{$include libavutil_pixdesc.inc}
 {$include libavutil_imgutils.inc}
+
 {$include libavutil_intfloat.inc}
 {$include libavutil_intreadwrite.inc}
 {$include libavutil_lfg.inc}
@@ -454,7 +457,6 @@ function av_fourcc_make_string(buf: pchar; fourcc: cuint32): pchar; cdecl; exter
 {$include libavutil_motion_vector.inc}
 {$include libavutil_murmur3.inc}
 {$include libavutil_parseutils.inc}
-{$include libavutil_pixdesc.inc}
 {$include libavutil_pixelutils.inc}
 {$include libavutil_random_seed.inc}
 {.$include libavutil_rational.inc}

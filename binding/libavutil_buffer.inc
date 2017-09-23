@@ -141,9 +141,9 @@ const
  * @return an AVBufferRef referring to data on success, NULL on failure.
  *)
 type
-  free_proc = procedure (opaque: pointer; data: pcuint8); cdecl;
+  av_buffer_create_free_proc = procedure (opaque: pointer; data: pcuint8); cdecl;
 
-function av_buffer_create(data: pcuint8; size: cint; free: free_proc; opaque: pointer; flags: cint): PAVBufferRef; cdecl; external LIB_AVUTIL;
+function av_buffer_create(data: pcuint8; size: cint; free: av_buffer_create_free_proc; opaque: pointer; flags: cint): PAVBufferRef; cdecl; external LIB_AVUTIL;
 
 (**
  * Default free callback, which calls av_free() on the buffer data.

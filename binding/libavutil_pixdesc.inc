@@ -65,7 +65,7 @@ type
      *)
     depth: cint;
 
-{$if FF_API_PLUS1_MINUS1}
+{$ifdef FF_API_PLUS1_MINUS1}
     (** deprecated, use step instead *)
     //TODO attribute_deprecated
     step_minus1: cint;
@@ -101,7 +101,7 @@ type
      * The note above is needed to ensure rounding up.
      * This value only refers to the chroma components.
      *)
-    log2_chroma_w_ cuint8;
+    log2_chroma_w: cuint8;
 
     (**
      * Amount to shift the luma height right to find the chroma height.
@@ -115,7 +115,7 @@ type
     (**
      * Combination of AV_PIX_FMT_FLAG_... flags.
      *)
-    flags: cuint64_t;
+    flags: cuint64;
 
     (**
      * Parameters that describe how pixels are packed.
@@ -325,7 +325,7 @@ function av_get_pix_fmt_string(buf: pchar; buf_size: cint; pix_fmt: AVPixelForma
  * component c in data[1] to dst, rather than the palette indexes in
  * data[0]. The behavior is undefined if the format is not paletted.
  *)
-procedure av_read_image_line(dst: pcuint16; const data: array[0..3] of pcuint8; const linesize: array[0..3] of cint; const desc: PAVPixFmtDescriptor; x: cint; y: cint; c: cint; w: cint; read_pal_component: cint); cdecl; external LIB_AVUTIL;
+procedure av_read_image_line(dst: pcuint16; const data: ppcuint8{array[0..3] of pcuint8}; const linesize: pcint{array[0..3] of cint}; const desc: PAVPixFmtDescriptor; x: cint; y: cint; c: cint; w: cint; read_pal_component: cint); cdecl; external LIB_AVUTIL;
 
 (**
  * Write the values from src to the pixel format component c of an
@@ -341,7 +341,7 @@ procedure av_read_image_line(dst: pcuint16; const data: array[0..3] of pcuint8; 
  * @param w the width of the line to write, that is the number of
  * values to write to the image line
  *)
-procedure av_write_image_line(const src: pcuint16_t; data: array[0..3] of pcuint8; const linesize: array[0..3] of cint; const desc: PAVPixFmtDescriptor; x: cint; y: cint; c: cint; w: cint); cdecl; external LIB_AVUTIL;
+procedure av_write_image_line(const src: pcuint16; data: ppcuint8{array[0..3] of pcuint8}; const linesize: pcint{array[0..3] of cint}; const desc: PAVPixFmtDescriptor; x: cint; y: cint; c: cint; w: cint); cdecl; external LIB_AVUTIL;
 
 (**
  * Utility function to swap the endianness of a pixel format.

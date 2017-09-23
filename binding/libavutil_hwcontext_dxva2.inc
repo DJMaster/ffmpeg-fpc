@@ -56,7 +56,7 @@ type
      * The surface type (e.g. DXVA2_VideoProcessorRenderTarget or
      * DXVA2_VideoDecoderRenderTarget). Must be set by the caller.
      *)
-    DWORD surface_type;
+    surface_type: DWORD;
 
     (**
      * The surface pool. When an external pool is not provided by the caller,

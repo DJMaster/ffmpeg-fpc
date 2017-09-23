@@ -65,6 +65,7 @@ const
  * allocating the picture.
  *)
 type
+  PPAVPixelFormat = ^PAVPixelFormat;
   PAVPixelFormat = ^AVPixelFormat;
   AVPixelFormat = (
     AV_PIX_FMT_NONE = -1,
