@@ -39,6 +39,8 @@ type
   ppcuint8 = ^pcuint8;
   va_list = pointer;
   ppcuchar = ^pcuchar;
+  PPAVOptionRanges = pointer;
+  PAVOption = pointer;
 
 const
   LIB_AVUTIL = 'avutil-55.dll';
@@ -391,15 +393,17 @@ function av_fourcc_make_string(buf: pchar; fourcc: cuint32): pchar; cdecl; exter
 
 // #endif (* AVUTIL_AVUTIL_H *)
 
-{$include libavutil_log.inc}
+{$include libavutil_common.inc}
+
 {$include libavutil_dict.inc}
+{$include libavutil_log.inc}
+
 
 {$include libavutil_pixfmt.inc}
 {$include libavutil_fifo.inc}
 {$include libavutil_samplefmt.inc}
 
 {$include libavutil_opt.inc}
-
 
 {$include libavutil_adler32.inc}
 {$include libavutil_aes.inc}
@@ -419,7 +423,6 @@ function av_fourcc_make_string(buf: pchar; fourcc: cuint32): pchar; cdecl; exter
 {$include libavutil_buffer.inc}
 {$include libavutil_camellia.inc}
 {$include libavutil_cast5.inc}
-{$include libavutil_common.inc}
 {$include libavutil_cpu.inc}
 {$include libavutil_crc.inc}
 {$include libavutil_des.inc}

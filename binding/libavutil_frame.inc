@@ -132,7 +132,7 @@ type
      * The data represents the AVSphericalMapping structure defined in
      * libavutil/spherical.h.
      *)
-    AV_FRAME_DATA_SPHERICAL,
+    AV_FRAME_DATA_SPHERICAL
   );
 
   AVActiveFormatDescription = (
@@ -190,6 +190,7 @@ type
  * C structure field name for fields accessible through AVOptions. The AVClass
  * for AVFrame can be obtained from avcodec_get_frame_class()
  *)
+  PPAVFrame = ^PAVFrame;
   PAVFrame = ^AVFrame;
   AVFrame = record
 {$define AV_NUM_DATA_POINTERS := 8}
@@ -265,7 +266,7 @@ type
     (**
      * Picture type of the frame.
      *)
-    pict_type_ AVPictureType;
+    pict_type: AVPictureType;
 
     (**
      * Sample aspect ratio for the video frame, 0/1 if unknown/unspecified.
