@@ -98,7 +98,7 @@
  * parameter.
  *)
 const
-  AV_BPRINT_SIZE_UNLIMITED: cunsigned = -1;
+  AV_BPRINT_SIZE_UNLIMITED = cunsigned(-1);
   AV_BPRINT_SIZE_AUTOMATIC = 1;
   AV_BPRINT_SIZE_COUNT_ONLY = 0;
 
@@ -151,7 +151,7 @@ procedure av_bprint_chars(buf: PAVBPrint; c: char; n: cunsigned); cdecl; externa
  * param data pointer to data
  * param size size of data
  *)
-procedure av_bprint_append_data(buf: PAVBPrint, const data: pchar; size: cunsigned); cdecl; external LIB_AVUTIL;
+procedure av_bprint_append_data(buf: PAVBPrint; const data: pchar; size: cunsigned); cdecl; external LIB_AVUTIL;
 
 type
   Ptm = ^tm;

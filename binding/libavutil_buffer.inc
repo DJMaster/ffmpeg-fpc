@@ -88,6 +88,7 @@ type
  * to be allocated directly.
  *)
 type
+  PPAVBufferRef = ^PAVBufferRef;
   PAVBufferRef = ^AVBufferRef;
   AVBufferRef = record
     buffer: PAVBuffer;
@@ -249,6 +250,7 @@ function av_buffer_realloc(buf: PPAVBufferRef; size: cint): cint; cdecl; externa
  * av_buffer_pool_uninit().
  *)
 type
+  PPAVBufferPool = ^PAVBufferPool;
   PAVBufferPool = ^AVBufferPool;
   AVBufferPool = record
   end;
@@ -263,9 +265,9 @@ type
  * @return newly created buffer pool on success, NULL on error.
  *)
 type
-   alloc_func: function (size: cint): PAVBufferRef; cdecl;
+   av_buffer_pool_init_alloc_func = function (size: cint): PAVBufferRef; cdecl;
 
-function av_buffer_pool_init(size: cint; alloc: alloc_func): PAVBufferPool; cdecl; external LIB_AVUTIL;
+function av_buffer_pool_init(size: cint; alloc: av_buffer_pool_init_alloc_func): PAVBufferPool; cdecl; external LIB_AVUTIL;
 
 (**
  * Allocate and initialize a buffer pool with a more complex allocator.
@@ -282,10 +284,10 @@ function av_buffer_pool_init(size: cint; alloc: alloc_func): PAVBufferPool; cdec
  * @return newly created buffer pool on success, NULL on error.
  *)
 type
-  alloc_func = function (opaque: pointer; size: cint): PAVBufferRef; cdecl;
-  pool_free_proc = procedure (opaque: pointer); cdecl;
+  av_buffer_pool_init2_alloc_func = function (opaque: pointer; size: cint): PAVBufferRef; cdecl;
+  av_buffer_pool_init2_pool_free_proc = procedure (opaque: pointer); cdecl;
 
-function PAVBufferPool av_buffer_pool_init2(size: cint; opaque: pointer; alloc: alloc_func; pool_free: pool_free_proc); cdecl; external LIB_AVUTIL;
+function av_buffer_pool_init2(size: cint; opaque: pointer; alloc: av_buffer_pool_init2_alloc_func; pool_free: av_buffer_pool_init2_pool_free_proc): PAVBufferPool; cdecl; external LIB_AVUTIL;
 
 (**
  * Mark the pool as being available for freeing. It will actually be freed only

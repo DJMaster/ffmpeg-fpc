@@ -65,6 +65,7 @@ const
  * allocating the picture.
  *)
 type
+  PAVPixelFormat = ^AVPixelFormat;
   AVPixelFormat = (
     AV_PIX_FMT_NONE = -1,
     AV_PIX_FMT_YUV420P, ///< planar YUV 4:2:0, 12bpp, (1 Cr & Cb sample per 2x2 Y samples)

@@ -272,35 +272,34 @@ type
      *)
     default_val: record
       case cint of
-        0: i64: cint64;
-        1: dbl: cdouble;
-        2: str: pchar;
+        0: (i64: cint64);
+        1: (dbl: cdouble);
+        2: (str: pchar);
         (* TODO those are unused now *)
-        3: q: AVRational;
-      end;
+        3: (q: AVRational);
     end;
     min: cdouble; ///< minimum valid value for the option
     max: cdouble; ///< maximum valid value for the option
 
-    flags: cint ;
-  AV_OPT_FLAG_ENCODING_PARAM = 1; ///< a generic parameter which can be set by the user for muxing or encoding
-  AV_OPT_FLAG_DECODING_PARAM = 2; ///< a generic parameter which can be set by the user for demuxing or decoding
-{$if FF_API_OPT_TYPE_METADATA}
-  AV_OPT_FLAG_METADATA = 4; ///< some data extracted or inserted into the file like title, comment, ...
-#endif
-  AV_OPT_FLAG_AUDIO_PARAM = 8;
-  AV_OPT_FLAG_VIDEO_PARAM = 16;
-  AV_OPT_FLAG_SUBTITLE_PARAM = 32;
+    flags: cint;
+{$define AV_OPT_FLAG_ENCODING_PARAM := 1} ///< a generic parameter which can be set by the user for muxing or encoding
+{$define AV_OPT_FLAG_DECODING_PARAM := 2} ///< a generic parameter which can be set by the user for demuxing or decoding
+{$ifdef FF_API_OPT_TYPE_METADATA}
+{$define AV_OPT_FLAG_METADATA := 4} ///< some data extracted or inserted into the file like title, comment, ...
+{$endif}
+{$define AV_OPT_FLAG_AUDIO_PARAM := 8}
+{$define AV_OPT_FLAG_VIDEO_PARAM := 16}
+{$define AV_OPT_FLAG_SUBTITLE_PARAM := 32}
 (**
  * The option is intended for exporting values to the caller.
  *)
-  AV_OPT_FLAG_EXPORT = 64;
+{$define AV_OPT_FLAG_EXPORT := 64}
 (**
  * The option may not be set through the AVOptions API, only read.
  * This flag only makes sense when AV_OPT_FLAG_EXPORT is also set.
  *)
-  AV_OPT_FLAG_READONLY = 128;
-  AV_OPT_FLAG_FILTERING_PARAM = (1 shl 16); ///< a generic parameter which can be set by the user for filtering
+{$define AV_OPT_FLAG_READONLY := 128}
+{$define AV_OPT_FLAG_FILTERING_PARAM := (1 shl 16)} ///< a generic parameter which can be set by the user for filtering
 //FIXME think about enc-audio, ... style flags
 
     (**
@@ -314,6 +313,7 @@ type
 (**
  * A single allowed range of values, or a single allowed value.
  *)
+  PPAVOptionRange = ^PAVOptionRange;
   PAVOptionRange = ^AVOptionRange;
   AVOptionRange = record
     str: pchar;
@@ -338,6 +338,7 @@ type
 (**
  * List of AVOptionRange structs.
  *)
+  PPAVOptionRanges = ^PAVOptionRanges;
   PAVOptionRanges = ^AVOptionRanges;
   AVOptionRanges = record
     (**
@@ -427,7 +428,7 @@ procedure av_opt_set_defaults2(s: pointer; mask: cint; flags: cint); cdecl; exte
  * the error code issued by av_opt_set() if a key/value pair
  * cannot be set
  *)
-function cint av_set_options_string(ctx: pointer; const opts: pchar; const key_val_sep: pchar; const pairs_sep: pchar); cdecl; external LIB_AVUTIL;
+function av_set_options_string(ctx: pointer; const opts: pchar; const key_val_sep: pchar; const pairs_sep: pchar): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Parse the key-value pairs list in opts. For each key=value pair found,
@@ -707,11 +708,11 @@ function av_opt_set_dict_val(obj: pointer; const name: pchar; const val: PAVDict
  * @param term   list terminator (usually 0 or -1)
  * @param flags  search flags
  *)
-#define av_opt_set_int_list(obj, name, val, term, flags) \
-    (av_int_list_length(val, term) > INT_MAX / sizeof(*(val)) ? \
-     AVERROR(EINVAL) : \
-     av_opt_set_bin(obj, name, (const uint8_t *)(val), \
-                    av_int_list_length(val, term) * sizeof(*(val)), flags))
+//TODO #define av_opt_set_int_list(obj, name, val, term, flags) \
+//TODO     (av_int_list_length(val, term) > INT_MAX / sizeof(*(val)) ? \
+//TODO      AVERROR(EINVAL) : \
+//TODO      av_opt_set_bin(obj, name, (const uint8_t *)(val), \
+//TODO                     av_int_list_length(val, term) * sizeof(*(val)), flags))
 
 (**
  * @}

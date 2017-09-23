@@ -64,12 +64,6 @@ type
 //TODO      ((category) == AV_CLASS_CATEGORY_DEVICE_AUDIO_OUTPUT) || \
 //TODO      ((category) == AV_CLASS_CATEGORY_DEVICE_OUTPUT))
 
-type
-  PPAVOptionRanges = ^PAVOptionRanges;
-  PAVOptionRanges = ^AVOptionRanges;
-  AVOptionRanges = record
-  end;
-
 (**
  * Describe the class of an AVClass context structure. That is an
  * arbitrary struct of which the first field is a pointer to an

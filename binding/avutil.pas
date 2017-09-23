@@ -37,6 +37,8 @@ uses
 type
   pppcuint8 = ^ppcuint8;
   ppcuint8 = ^pcuint8;
+  va_list = pointer;
+  ppcuchar = ^pcuchar;
 
 const
   LIB_AVUTIL = 'avutil-55.dll';
@@ -389,10 +391,15 @@ function av_fourcc_make_string(buf: pchar; fourcc: cuint32): pchar; cdecl; exter
 
 // #endif (* AVUTIL_AVUTIL_H *)
 
-{$include libavutil_opt.inc}
+{$include libavutil_log.inc}
+{$include libavutil_dict.inc}
 
+{$include libavutil_pixfmt.inc}
 {$include libavutil_fifo.inc}
 {$include libavutil_samplefmt.inc}
+
+{$include libavutil_opt.inc}
+
 
 {$include libavutil_adler32.inc}
 {$include libavutil_aes.inc}
@@ -404,17 +411,18 @@ function av_fourcc_make_string(buf: pchar; fourcc: cuint32): pchar; cdecl; exter
 {$include libavutil_avstring.inc}
 {$include libavutil_base64.inc}
 {$include libavutil_blowfish.inc}
+
+{$include libavutil_channel_layout.inc}
+
 {$include libavutil_bprint.inc}
 {$include libavutil_bswap.inc}
 {$include libavutil_buffer.inc}
 {$include libavutil_camellia.inc}
 {$include libavutil_cast5.inc}
-{$include libavutil_channel_layout.inc}
 {$include libavutil_common.inc}
 {$include libavutil_cpu.inc}
 {$include libavutil_crc.inc}
 {$include libavutil_des.inc}
-{$include libavutil_dict.inc}
 {$include libavutil_display.inc}
 {$include libavutil_downmix_info.inc}
 {$include libavutil_error.inc}
@@ -434,7 +442,6 @@ function av_fourcc_make_string(buf: pchar; fourcc: cuint32): pchar; cdecl; exter
 {$include libavutil_intfloat.inc}
 {$include libavutil_intreadwrite.inc}
 {$include libavutil_lfg.inc}
-{$include libavutil_log.inc}
 {$include libavutil_lzo.inc}
 {$include libavutil_macros.inc}
 {$include libavutil_mastering_display_metadata.inc}
@@ -446,7 +453,6 @@ function av_fourcc_make_string(buf: pchar; fourcc: cuint32): pchar; cdecl; exter
 {$include libavutil_parseutils.inc}
 {$include libavutil_pixdesc.inc}
 {$include libavutil_pixelutils.inc}
-{$include libavutil_pixfmt.inc}
 {$include libavutil_random_seed.inc}
 {.$include libavutil_rational.inc}
 {$include libavutil_rc4.inc}

@@ -34,9 +34,9 @@
 
 // #include <stdint.h>
 
-{$include libavutil_common.inc}
-{$include libavutil_dict.inc}
-{$include libavutil_log.inc}
+// #include "libavutil/common.h"
+// #include "libavutil/dict.h"
+// #include "libavutil/log.h"
 
 // #include "libavformat/version.h"
 

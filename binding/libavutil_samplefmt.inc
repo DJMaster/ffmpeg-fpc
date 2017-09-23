@@ -62,6 +62,7 @@
  *
  *)
 type
+  PAVSampleFormat = ^AVSampleFormat;
   AVSampleFormat = (
     AV_SAMPLE_FMT_NONE = -1,
     AV_SAMPLE_FMT_U8, ///< unsigned 8 bits
