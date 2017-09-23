@@ -69,7 +69,7 @@ type
     (**
      * A class for logging. Set by av_hwdevice_ctx_alloc().
      *)
-    const av_class: PAVClass;
+    av_class: PAVClass;
 
     (**
      * Private data used internally by libavutil. Must not be accessed in any

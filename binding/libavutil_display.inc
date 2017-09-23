@@ -59,8 +59,8 @@
  *)
 
 type
-  Pmatrix = ^matrix9;
-  matrix9 = array[0..8] of cint32;
+  Pmatrix = ^matrix;
+  matrix = array[0..8] of cint32;
 (**
  * Extract the rotation component of the transformation matrix.
  *

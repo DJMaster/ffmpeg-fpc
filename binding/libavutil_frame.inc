@@ -151,6 +151,7 @@ type
  * sizeof(AVFrameSideData) is not a part of the public ABI, so new fields may be added
  * to the end with a minor bump.
  *)
+  PPAVFrameSideData = ^PAVFrameSideData;
   PAVFrameSideData = ^AVFrameSideData;
   AVFrameSideData = record
     type_: AVFrameSideDataType;
@@ -278,7 +279,7 @@ type
      *)
     pts: cint64;
 
-{$if FF_API_PKT_PTS}
+{$ifdef FF_API_PKT_PTS}
     (**
      * PTS copied from the AVPacket that was decoded to produce this frame.
      * @deprecated use the pts field instead
@@ -313,7 +314,7 @@ type
      *)
     opaque: pointer;
 
-{$if FF_API_ERROR_FRAME}
+{$ifdef FF_API_ERROR_FRAME}
     (**
      * @deprecated unused
      *)
@@ -499,7 +500,7 @@ type
      *)
     pkt_size: cint;
 
-{$if FF_API_FRAME_QP}
+{$ifdef FF_API_FRAME_QP}
     (**
      * QP table
      *)
@@ -557,7 +558,7 @@ procedure av_frame_set_decode_error_flags(frame: PAVFrame; val: cint); cdecl; ex
 function av_frame_get_pkt_size(const frame: PAVFrame): cint; cdecl; external LIB_AVUTIL;
 procedure av_frame_set_pkt_size(frame: PAVFrame; val: cint); cdecl; external LIB_AVUTIL;
 function avpriv_frame_get_metadatap(frame: PAVFrame): PPAVDictionary; cdecl; external LIB_AVUTIL;
-{$if FF_API_FRAME_QP}
+{$ifdef FF_API_FRAME_QP}
 function av_frame_get_qp_table(f: PAVFrame; stride: pcint; type_: pcint): pcint8; cdecl; external LIB_AVUTIL;
 function av_frame_set_qp_table(f: PAVFrame; buf: PAVBufferRef; stride: cint; type_: cint): cint; cdecl; external LIB_AVUTIL;
 {$endif}
