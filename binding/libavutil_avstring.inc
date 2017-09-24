@@ -144,13 +144,13 @@ function av_strlcatf(dst: pchar; size: csize_t; const fmt: pchar; args: array of
  * @param len maximum number of characters to check in the string, that
  *            is the maximum value which is returned by the function
  *)
-function av_strnlen(const s: pchar; len: csize_t): csize_t; inline;
-{
-    size_t i;
-    for (i = 0; i < len && s[i]; i++)
-        ;
-    return i;
-}
+//TODO function av_strnlen(const s: pchar; len: csize_t): csize_t; inline;
+//TODO {
+//TODO     size_t i;
+//TODO     for (i = 0; i < len && s[i]; i++)
+//TODO         ;
+//TODO     return i;
+//TODO }
 
 (**
  * Print arguments following specified format into a large enough auto
@@ -211,56 +211,56 @@ function av_strtok(s: pchar; const delim: pchar; saveptr: ppchar): pchar; cdecl;
 (**
  * Locale-independent conversion of ASCII isdigit.
  *)
-function av_isdigit(c: cint): cint; inline;
-{
-    return c >= '0' && c <= '9';
-}
+//TODO function av_isdigit(c: cint): cint; inline;
+//TODO {
+//TODO     return c >= '0' && c <= '9';
+//TODO }
 
 (**
  * Locale-independent conversion of ASCII isgraph.
  *)
-function av_isgraph(c: cint): cint; inline;
-{
-    return c > 32 && c < 127;
-}
+//TODO function av_isgraph(c: cint): cint; inline;
+//TODO {
+//TODO     return c > 32 && c < 127;
+//TODO }
 
 (**
  * Locale-independent conversion of ASCII isspace.
  *)
-function av_isspace(c: cint): cint; inline;
-{
-    return c == ' ' || c == '\f' || c == '\n' || c == '\r' || c == '\t' ||
-           c == '\v';
-}
+//TODO function av_isspace(c: cint): cint; inline;
+//TODO {
+//TODO     return c == ' ' || c == '\f' || c == '\n' || c == '\r' || c == '\t' ||
+//TODO            c == '\v';
+//TODO }
 
 (**
  * Locale-independent conversion of ASCII characters to uppercase.
  *)
-function av_toupper(c: cint): cint; inline;
-{
-    if (c >= 'a' && c <= 'z')
-        c ^= $20;
-    return c;
-}
+//TODO function av_toupper(c: cint): cint; inline;
+//TODO {
+//TODO     if (c >= 'a' && c <= 'z')
+//TODO         c ^= $20;
+//TODO     return c;
+//TODO }
 
 (**
  * Locale-independent conversion of ASCII characters to lowercase.
  *)
-function av_tolower(c: cint): cint; inline;
-{
-    if (c >= 'A' && c <= 'Z')
-        c ^= $20;
-    return c;
-}
+//TODO function av_tolower(c: cint): cint; inline;
+//TODO {
+//TODO     if (c >= 'A' && c <= 'Z')
+//TODO         c ^= $20;
+//TODO     return c;
+//TODO }
 
 (**
  * Locale-independent conversion of ASCII isxdigit.
  *)
-function av_isxdigit(c: cint): cint; inline;
-{
-    c = av_tolower(c);
-    return av_isdigit(c) || (c >= 'a' && c <= 'f');
-}
+//TODO function av_isxdigit(c: cint): cint; inline;
+//TODO {
+//TODO     c = av_tolower(c);
+//TODO     return av_isdigit(c) || (c >= 'a' && c <= 'f');
+//TODO }
 
 (**
  * Locale-independent case-insensitive compare.

@@ -193,10 +193,10 @@ procedure av_bprint_clear(buf: PAVBPrint); cdecl; external LIB_AVUTIL;
  * It may have been truncated due to a memory allocation failure
  * or the size_max limit (compare size and size_max if necessary).
  *)
-function av_bprint_is_complete(const buf: PAVBPrint): cint; inline;
-{
-    return buf->len < buf->size;
-}
+//TODO function av_bprint_is_complete(const buf: PAVBPrint): cint; inline;
+//TODO {
+//TODO     return buf->len < buf->size;
+//TODO }
 
 (**
  * Finalize a print buffer.

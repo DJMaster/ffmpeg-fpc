@@ -69,7 +69,7 @@
  * @note floating point numbers are inherently inexact, so callers are
  *       recommended to round the return value to nearest integer before use.
  *)
-function av_display_rotation_get(const matrix: pcint32{array[0..8] of cint32}): cdouble; cdecl; external LIB_AVUTIL;
+function av_display_rotation_get(const matrix: array{[0..8]} of cint32): cdouble; cdecl; external LIB_AVUTIL;
 
 (**
  * Initialize a transformation matrix describing a pure counterclockwise
@@ -79,7 +79,7 @@ function av_display_rotation_get(const matrix: pcint32{array[0..8] of cint32}): 
  *               by this function)
  * @param angle rotation angle in degrees.
  *)
-procedure av_display_rotation_set(matrix: pcint32{array[0..8] of cint32}; angle: cdouble); cdecl; external LIB_AVUTIL;
+procedure av_display_rotation_set(matrix: array{[0..8]} of cint32; angle: cdouble); cdecl; external LIB_AVUTIL;
 
 (**
  * Flip the input matrix horizontally and/or vertically.
@@ -88,6 +88,6 @@ procedure av_display_rotation_set(matrix: pcint32{array[0..8] of cint32}; angle:
  * @param hflip whether the matrix should be flipped horizontally
  * @param vflip whether the matrix should be flipped vertically
  *)
-procedure av_display_matrix_flip(matrix: pcint32{array[0..8] of cint32}; hflip: cint; vflip: cint); cdecl; external LIB_AVUTIL;
+procedure av_display_matrix_flip(matrix: array{[0..8]} of cint32; hflip: cint; vflip: cint); cdecl; external LIB_AVUTIL;
 
 // #endif (* AVUTIL_DISPLAY_H *)

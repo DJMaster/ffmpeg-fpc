@@ -112,11 +112,11 @@ function av_strerror(errnum: cint; errbuf: pchar; errbuf_size: csize_t): cint; c
  * @return the buffer in input, filled with the error description
  * @see av_strerror()
  *)
-function av_make_error_string(errbuf: pchar; errbuf_size: csize_t; errnum: cint): pchar; inline;
-{
-    av_strerror(errnum, errbuf, errbuf_size);
-    return errbuf;
-}
+//TODO function av_make_error_string(errbuf: pchar; errbuf_size: csize_t; errnum: cint): pchar; inline;
+//TODO {
+//TODO     av_strerror(errnum, errbuf, errbuf_size);
+//TODO     return errbuf;
+//TODO }
 
 (**
  * Convenience macro, the return value should be used only directly in

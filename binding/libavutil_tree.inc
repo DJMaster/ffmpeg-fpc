@@ -78,7 +78,7 @@ function av_tree_node_alloc(): PAVTreeNode; cdecl; external LIB_AVUTIL;
 type
   av_tree_find_cmp_func = function (const key: pointer; const b: pointer): cint; cdecl;
 
-function av_tree_find(const root: PAVTreeNode; key: pointer; cmp: av_tree_find_cmp_func; next: ppointer{array[0..1] of pointer}): pointer; cdecl; external LIB_AVUTIL;
+function av_tree_find(const root: PAVTreeNode; key: pointer; cmp: av_tree_find_cmp_func; next: array{[0..1]} of pointer): pointer; cdecl; external LIB_AVUTIL;
 
 (**
  * Insert or remove an element.

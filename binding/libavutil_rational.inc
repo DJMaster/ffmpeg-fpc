@@ -94,15 +94,15 @@ type
  *         - -1 if `a < b`
  *         - `INT_MIN` if one of the values is of the form `0 / 0`
  *)
-function av_cmp_q(a: AVRational; b: AVRational): cint; inline;
-{
-    const int64_t tmp= a.num * (int64_t)b.den - b.num * (int64_t)a.den;
-
-    if(tmp) return (int)((tmp ^ a.den ^ b.den)>>63)|1;
-    else if(b.den && a.den) return 0;
-    else if(a.num && b.num) return (a.num>>31) - (b.num>>31);
-    else                    return INT_MIN;
-}
+//TODO function av_cmp_q(a: AVRational; b: AVRational): cint; inline;
+//TODO {
+//TODO     const int64_t tmp= a.num * (int64_t)b.den - b.num * (int64_t)a.den;
+//TODO 
+//TODO     if(tmp) return (int)((tmp ^ a.den ^ b.den)>>63)|1;
+//TODO     else if(b.den && a.den) return 0;
+//TODO     else if(a.num && b.num) return (a.num>>31) - (b.num>>31);
+//TODO     else                    return INT_MIN;
+//TODO }
 
 (**
  * Convert an AVRational to a `double`.
@@ -110,10 +110,10 @@ function av_cmp_q(a: AVRational; b: AVRational): cint; inline;
  * @return `a` in floating-point form
  * @see av_d2q()
  *)
-function av_q2d(a: AVRational): cdouble; inline;
-{
-    return a.num / (double) a.den;
-}
+//TODO function av_q2d(a: AVRational): cdouble; inline;
+//TODO {
+//TODO     return a.num / (double) a.den;
+//TODO }
 
 (**
  * Reduce a fraction.

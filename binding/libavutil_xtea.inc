@@ -47,7 +47,7 @@ type
 (**
  * Allocate an AVXTEA context.
  *)
-function av_xtea_alloc(): PAVXTEA;
+function av_xtea_alloc(): PAVXTEA; cdecl; external LIB_AVUTIL;
 
 (**
  * Initialize an AVXTEA context.
@@ -56,7 +56,7 @@ function av_xtea_alloc(): PAVXTEA;
  * @param key a key of 16 bytes used for encryption/decryption,
  *            interpreted as big endian 32 bit numbers
  *)
-procedure av_xtea_init(ctx: PAVXTEA; const key: pcuint8{array[0..15] of cuint8});
+procedure av_xtea_init(ctx: PAVXTEA; const key: array{[0..15]} of cuint8); cdecl; external LIB_AVUTIL;
 
 (**
  * Initialize an AVXTEA context.
@@ -65,7 +65,7 @@ procedure av_xtea_init(ctx: PAVXTEA; const key: pcuint8{array[0..15] of cuint8})
  * @param key a key of 16 bytes used for encryption/decryption,
  *            interpreted as little endian 32 bit numbers
  *)
-procedure av_xtea_le_init(ctx: PAVXTEA; const key: pcuint8{array[0..15] of cuint8});
+procedure av_xtea_le_init(ctx: PAVXTEA; const key: array{[0..15]} of cuint8); cdecl; external LIB_AVUTIL;
 
 (**
  * Encrypt or decrypt a buffer using a previously initialized context,
@@ -78,7 +78,7 @@ procedure av_xtea_le_init(ctx: PAVXTEA; const key: pcuint8{array[0..15] of cuint
  * @param iv initialization vector for CBC mode, if NULL then ECB will be used
  * @param decrypt 0 for encryption, 1 for decryption
  *)
-procedure av_xtea_crypt(ctx: PAVXTEA; dst: pcuint8; const src: pcuint8; count: cint; iv: pcuint8; decrypt: cint);
+procedure av_xtea_crypt(ctx: PAVXTEA; dst: pcuint8; const src: pcuint8; count: cint; iv: pcuint8; decrypt: cint); cdecl; external LIB_AVUTIL;
 
 (**
  * Encrypt or decrypt a buffer using a previously initialized context,
@@ -91,7 +91,7 @@ procedure av_xtea_crypt(ctx: PAVXTEA; dst: pcuint8; const src: pcuint8; count: c
  * @param iv initialization vector for CBC mode, if NULL then ECB will be used
  * @param decrypt 0 for encryption, 1 for decryption
  *)
-procedure av_xtea_le_crypt(ctx: PAVXTEA; dst: pcuint8; const src: pcuint8; count: cint; iv: pcuint8; decrypt: cint);
+procedure av_xtea_le_crypt(ctx: PAVXTEA; dst: pcuint8; const src: pcuint8; count: cint; iv: pcuint8; decrypt: cint); cdecl; external LIB_AVUTIL;
 
 (**
  * @}
