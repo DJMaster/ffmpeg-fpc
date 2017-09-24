@@ -32,7 +32,8 @@ unit avutil;
 interface
 
 uses
-  ctypes;
+  ctypes,
+  sysutils;
 
 type
   pppcuint8 = ^ppcuint8;
@@ -42,6 +43,14 @@ type
   PPAVOptionRanges = pointer;
   PAVOption = pointer;
   PAVMurMur3 = pointer;
+
+  PIDirectXVideoDecoder = pointer;
+
+  PPIDirect3DSurface9 = ^PIDirect3DSurface9;
+  PIDirect3DSurface9 = pointer;
+
+  PPIDirect3DDeviceManager9 = ^PIDirect3DDeviceManager9;
+  PIDirect3DDeviceManager9 = pointer;
 
 const
   LIB_AVUTIL = 'avutil-55.dll';
@@ -428,20 +437,23 @@ function av_fourcc_make_string(buf: pchar; fourcc: cuint32): pchar; cdecl; exter
 {$include libavutil_crc.inc}
 {$include libavutil_des.inc}
 {$include libavutil_display.inc}
+
+{$include libavutil_frame.inc}
+
 {$include libavutil_downmix_info.inc}
 {$include libavutil_error.inc}
 {$include libavutil_eval.inc}
 {$include libavutil_ffversion.inc}
 {$include libavutil_file.inc}
-{$include libavutil_frame.inc}
+
 {$include libavutil_hash.inc}
 {$include libavutil_hmac.inc}
 {$include libavutil_hwcontext.inc}
-{$include libavutil_hwcontext_cuda.inc}
-{$include libavutil_hwcontext_dxva2.inc}
-{$include libavutil_hwcontext_qsv.inc}
-{$include libavutil_hwcontext_vaapi.inc}
-{$include libavutil_hwcontext_vdpau.inc}
+{-$include libavutil_hwcontext_cuda.inc}
+{-$include libavutil_hwcontext_dxva2.inc}
+{-$include libavutil_hwcontext_qsv.inc}
+{-$include libavutil_hwcontext_vaapi.inc}
+{-$include libavutil_hwcontext_vdpau.inc}
 
 {$include libavutil_pixdesc.inc}
 {$include libavutil_imgutils.inc}
@@ -485,12 +497,12 @@ begin
   Result := (a shl 16) or (b shl 8) or (c);
 end;
 
-function AV_VERSION_DOT(a, b, c): string;
+function AV_VERSION_DOT(a, b, c: cint): string;
 begin
   Result := Format('%D.%D.%D', [a, b, c]);
 end;
 
-function AV_VERSION(a, b, c): string;
+function AV_VERSION(a, b, c: cint): string;
 begin
   Result := Format('%D.%D.%D', [a, b, c]);
 end;
@@ -500,5 +512,5 @@ begin
   LIBAVUTIL_VERSION := AV_VERSION(LIBAVUTIL_VERSION_MAJOR, LIBAVUTIL_VERSION_MINOR, LIBAVUTIL_VERSION_MICRO);
   LIBAVUTIL_BUILD := LIBAVUTIL_VERSION;
 
-  LIBAVUTIL_IDENT = 'Lavu' + LIBAVUTIL_VERSION;
+  LIBAVUTIL_IDENT := 'Lavu' + LIBAVUTIL_VERSION;
 end.

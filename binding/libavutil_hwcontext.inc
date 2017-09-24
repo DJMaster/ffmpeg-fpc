@@ -62,9 +62,10 @@ type
  * state.
  *)
 type
+  PAVHWDeviceContext = ^AVHWDeviceContext;
+
   AVHWDeviceContext_free_proc = procedure (ctx: PAVHWDeviceContext); cdecl;
 
-  PAVHWDeviceContext = ^AVHWDeviceContext;
   AVHWDeviceContext = record
     (**
      * A class for logging. Set by av_hwdevice_ctx_alloc().
@@ -132,9 +133,10 @@ type
  * struct.
  *)
 type
+  PAVHWFramesContext = ^AVHWFramesContext;
+
   AVHWFramesContext_free_proc = procedure (ctx: PAVHWFramesContext); cdecl;
 
-  PAVHWFramesContext = ^AVHWFramesContext;
   AVHWFramesContext = record
     (**
      * A class for logging.
@@ -389,6 +391,7 @@ function av_hwframe_transfer_get_formats(hwframe_ctx: PAVBufferRef; dir: AVHWFra
  * av_hwframe_constraints_free() after use.
  *)
 type
+  PPAVHWFramesConstraints = ^PAVHWFramesConstraints;
   PAVHWFramesConstraints = ^AVHWFramesConstraints;
   AVHWFramesConstraints = record
     (**
