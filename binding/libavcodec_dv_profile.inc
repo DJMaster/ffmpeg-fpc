@@ -63,7 +63,7 @@ type
                                             (* for 48kHz, 44.1kHz and 32kHz *)
     audio_samples_dist: array[0..4] of cint; (* how many samples are supposed to be *)
                                              (* in each frame in a 5 frames window *)
-    const uint8_t  (*audio_shuffle)[9]; (* PCM shuffling table *)
+    audio_shuffle: array{[0..7]} of pcuint8; (* PCM shuffling table *)
   end;
 
 (**

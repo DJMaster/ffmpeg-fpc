@@ -946,7 +946,7 @@ type
     duration_gcd: cint64;
     duration_count: cint;
     rfps_duration_sum: cint64;
-    duration_error: array[0..1][0..MAX_STD_TIMEBASES-1] of cdouble;
+    duration_error: array[0..1, 0..MAX_STD_TIMEBASES-1] of cdouble;
     codec_info_duration: cint64;
     codec_info_duration_fields: cint64;
 

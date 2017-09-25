@@ -113,7 +113,7 @@ type
      *)
     render: PVdpDecoderRender;
 
-{$if FF_API_BUFS_VDPAU}
+{$ifdef FF_API_BUFS_VDPAU}
     (**
      * VDPAU picture information
      *

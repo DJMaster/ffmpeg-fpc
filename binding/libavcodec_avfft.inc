@@ -38,13 +38,14 @@
  * @{
  *)
 type
-  FFTSample: cfloat;
+  PFFTSample = ^FFTSample;
+  FFTSample = cfloat;
 
   PFFTComplex = ^FFTComplex;
   FFTComplex = record
     re: FFTSample;
     im: FFTSample;
-  end;;
+  end;
 
   PFFTContext = ^FFTContext;
   FFTContext = record

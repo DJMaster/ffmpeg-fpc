@@ -27,6 +27,7 @@
 unit avcodec;
 
 {$mode objfpc}{$H+}
+{$macro on}
 
 interface
 
@@ -36,6 +37,13 @@ uses
 
 const
   LIB_AVCODEC = 'avcodec-57.dll';
+
+type
+  PID3D11VideoDecoder = pointer;
+  PID3D11VideoContext = pointer;
+  PD3D11_VIDEO_DECODER_CONFIG = pointer;
+  PPID3D11VideoDecoderOutputView = PID3D11VideoDecoderOutputView;
+  PID3D11VideoDecoderOutputView = pointer;
 
 // #ifndef AVCODEC_AVCODEC_H
 // #define AVCODEC_AVCODEC_H
@@ -236,7 +244,7 @@ type
     (* video codecs *)
     AV_CODEC_ID_MPEG1VIDEO,
     AV_CODEC_ID_MPEG2VIDEO, ///< preferred ID for MPEG-1/2 video decoding
-{$if FF_API_XVMC}
+{$ifdef FF_API_XVMC}
     AV_CODEC_ID_MPEG2VIDEO_XVMC,
 {$endif} (* FF_API_XVMC *)
     AV_CODEC_ID_H261,
@@ -463,7 +471,7 @@ type
     AV_CODEC_ID_AV1,
 
     (* various PCM "codecs" *)
-    AV_CODEC_ID_FIRST_AUDIO = $10000, ///< A dummy id pointing at the start of audio codecs
+{$define AV_CODEC_ID_FIRST_AUDIO := $10000} ///< A dummy id pointing at the start of audio codecs
     AV_CODEC_ID_PCM_S16LE = $10000,
     AV_CODEC_ID_PCM_S16BE,
     AV_CODEC_ID_PCM_U16LE,
@@ -533,7 +541,7 @@ type
     AV_CODEC_ID_ADPCM_G722,
     AV_CODEC_ID_ADPCM_IMA_APC,
     AV_CODEC_ID_ADPCM_VIMA,
-{$if FF_API_VIMA_DECODER}
+{$ifdef FF_API_VIMA_DECODER}
     AV_CODEC_ID_VIMA = AV_CODEC_ID_ADPCM_VIMA,
 {$endif}
 
@@ -597,7 +605,7 @@ type
     AV_CODEC_ID_MLP,
     AV_CODEC_ID_GSM_MS, (* as found in WAV *)
     AV_CODEC_ID_ATRAC3,
-{$if FF_API_VOXWARE}
+{$ifdef FF_API_VOXWARE}
     AV_CODEC_ID_VOXWARE,
 {$endif}
     AV_CODEC_ID_APE,
@@ -654,7 +662,7 @@ type
     AV_CODEC_ID_ATRAC3PAL,
 
     (* subtitle codecs *)
-    AV_CODEC_ID_FIRST_SUBTITLE = $17000, ///< A dummy ID pointing at the start of subtitle codecs.
+{$define AV_CODEC_ID_FIRST_SUBTITLE := $17000} ///< A dummy ID pointing at the start of subtitle codecs.
     AV_CODEC_ID_DVD_SUBTITLE = $17000,
     AV_CODEC_ID_DVB_SUBTITLE,
     AV_CODEC_ID_TEXT, ///< raw UTF-8 text
@@ -683,7 +691,7 @@ type
 
     (* other specific kind of codecs (generally used for attachments) *)
     AV_CODEC_ID_FIRST_UNKNOWN = $18000, ///< A dummy ID pointing at the start of various fake codecs.
-    AV_CODEC_ID_TTF = $18000,
+{$define AV_CODEC_ID_TTF := $18000}
 
     AV_CODEC_ID_SCTE_35, ///< Contain timestamp estimated through PCR of program stream.
     AV_CODEC_ID_BINTEXT = $18800,
@@ -702,7 +710,7 @@ type
     AV_CODEC_ID_MPEG4SYSTEMS = $20001, (**< _FAKE_ codec to indicate a MPEG-4 Systems
                                 * stream (only used by libavformat) *)
     AV_CODEC_ID_FFMETADATA = $21000, ///< Dummy codec for streams containing only metadata information.
-    AV_CODEC_ID_WRAPPED_AVFRAME = $21001, ///< Passthrough codec, AVFrames wrapped in AVPacket
+    AV_CODEC_ID_WRAPPED_AVFRAME = $21001 ///< Passthrough codec, AVFrames wrapped in AVPacket
   );
 
 (**
@@ -710,6 +718,12 @@ type
  * AVCodecID.
  * @see avcodec_descriptor_get()
  *)
+  PAVProfile = ^AVProfile;
+  AVProfile = record
+    profile: cint;
+    name: pchar; ///< short name for the profile
+  end;
+
   PAVCodecDescriptor = ^AVCodecDescriptor;
   AVCodecDescriptor = record
     id: AVCodecID;
@@ -795,7 +809,7 @@ const
  *)
   AV_INPUT_BUFFER_MIN_SIZE = 16384;
 
-{$if FF_API_WITHOUT_PREFIX}
+{$ifdef FF_API_WITHOUT_PREFIX}
 (**
  * @deprecated use AV_INPUT_BUFFER_PADDING_SIZE instead
  *)
@@ -812,7 +826,7 @@ const
  * motion estimation type.
  * @deprecated use codec private option instead
  *)
-{$if FF_API_MOTION_EST}
+{$ifdef FF_API_MOTION_EST}
 type
   Motion_Est_ID = (
     ME_ZERO = 1, ///< no search, that is use 0,0 vector whenever one is needed
@@ -869,7 +883,7 @@ type
   end;
 
 const
-{$if FF_API_MAX_BFRAMES}
+{$ifdef FF_API_MAX_BFRAMES}
 (**
  * @deprecated there is no libavcodec-wide limit on the number of B-frames
  *)
@@ -952,7 +966,7 @@ const
  * interlaced motion estimation
  *)
   AV_CODEC_FLAG_INTERLACED_ME = (1 shl 29);
-  AV_CODEC_FLAG_CLOSED_GOP = (1U shl 31);
+  AV_CODEC_FLAG_CLOSED_GOP = (1 shl 31);
 
 (**
  * Allow non spec compliant speedup tricks.
@@ -1047,7 +1061,7 @@ const
  *)
   AV_CODEC_CAP_SMALL_LAST_FRAME = (1 shl 6);
 
-{$if FF_API_CAP_VDPAU}
+{$ifdef FF_API_CAP_VDPAU}
 (**
  * Codec can export data for HW decoding (VDPAU).
  *)
@@ -1114,7 +1128,7 @@ const
  *)
   AV_CODEC_CAP_LOSSLESS = $80000000;
 
-{$if FF_API_WITHOUT_PREFIX}
+{$ifdef FF_API_WITHOUT_PREFIX}
 (**
  * Allow decoders to produce frames with data planes that are not aligned
  * to CPU requirements (e.g. due to cropping).
@@ -1124,20 +1138,20 @@ const
   CODEC_FLAG_4MV = AV_CODEC_FLAG_4MV;
   CODEC_FLAG_OUTPUT_CORRUPT = AV_CODEC_FLAG_OUTPUT_CORRUPT;
   CODEC_FLAG_QPEL = AV_CODEC_FLAG_QPEL;
-{$if FF_API_GMC}
+{$ifdef FF_API_GMC}
 (**
  * @deprecated use the "gmc" private option of the libxvid encoder
  *)
   CODEC_FLAG_GMC = $0020; ///< Use GMC.
 {$endif}
-{$if FF_API_MV0}
+{$ifdef FF_API_MV0}
 (**
  * @deprecated use the flag "mv0" in the "mpv_flags" private option of the
  * mpegvideo encoders
  *)
   CODEC_FLAG_MV0 = $0040;
 {$endif}
-{$if FF_API_INPUT_PRESERVED}
+{$ifdef FF_API_INPUT_PRESERVED}
 (**
  * @deprecated passing reference-counted frames to the encoders replaces this
  * flag
@@ -1147,7 +1161,7 @@ const
   CODEC_FLAG_PASS1 = AV_CODEC_FLAG_PASS1;
   CODEC_FLAG_PASS2 = AV_CODEC_FLAG_PASS2;
   CODEC_FLAG_GRAY = AV_CODEC_FLAG_GRAY;
-{$if FF_API_EMU_EDGE}
+{$ifdef FF_API_EMU_EDGE}
 (**
  * @deprecated edges are not used/required anymore. I.e. this flag is now always
  * set.
@@ -1157,7 +1171,7 @@ const
   CODEC_FLAG_PSNR = AV_CODEC_FLAG_PSNR;
   CODEC_FLAG_TRUNCATED = AV_CODEC_FLAG_TRUNCATED;
 
-{$if FF_API_NORMALIZE_AQP}
+{$ifdef FF_API_NORMALIZE_AQP}
 (**
  * @deprecated use the flag "naq" in the "mpv_flags" private option of the
  * mpegvideo encoders
@@ -1198,7 +1212,7 @@ const
  *)
   CODEC_CAP_DR1 = AV_CODEC_CAP_DR1;
   CODEC_CAP_TRUNCATED = AV_CODEC_CAP_TRUNCATED;
-{$if FF_API_XVMC}
+{$ifdef FF_API_XVMC}
 (* Codec can export data for HW decoding. This flag indicates that
  * the codec would call get_format() with list that might contain HW accelerated
  * pixel formats (XvMC, VDPAU, VAAPI, etc). The application can pick any of them
@@ -1237,7 +1251,7 @@ const
  * This can be used to prevent truncation of the last audio samples.
  *)
   CODEC_CAP_SMALL_LAST_FRAME = AV_CODEC_CAP_SMALL_LAST_FRAME;
-{$if FF_API_CAP_VDPAU}
+{$ifdef FF_API_CAP_VDPAU}
 (**
  * Codec can export data for HW decoding (VDPAU).
  *)
@@ -1264,7 +1278,7 @@ const
  * Codec should fill in channel configuration and samplerate instead of container
  *)
   CODEC_CAP_CHANNEL_CONF = AV_CODEC_CAP_CHANNEL_CONF;
-{$if FF_API_NEG_LINESIZES}
+{$ifdef FF_API_NEG_LINESIZES}
 (**
  * @deprecated no codecs use this capability
  *)
@@ -1306,7 +1320,7 @@ const
   HWACCEL_CODEC_CAP_EXPERIMENTAL = $0200;
 {$endif} (* FF_API_WITHOUT_PREFIX *)
 
-{$if FF_API_MB_TYPE}
+{$ifdef FF_API_MB_TYPE}
 //The following defines may change, don't expect compatibility if you use them.
   MB_TYPE_INTRA4x4 = $0001;
   MB_TYPE_INTRA16x16 = $0002; //FIXME H.264-specific
@@ -1360,7 +1374,7 @@ type
      * - encoding: Set by user.
      * - decoding: Set by libavcodec.
      *)
-    position: array[0..2][0..1] of cint16;
+    position: array[0..2, 0..1] of cint16;
   end;
 
 (**
@@ -1402,7 +1416,7 @@ type
     vbv_delay: cuint64;
   end;
 
-{$if FF_API_QSCALE_TYPE}
+{$ifdef FF_API_QSCALE_TYPE}
 const
   FF_QSCALE_TYPE_MPEG1 = 0;
   FF_QSCALE_TYPE_MPEG2 = 1;
@@ -1664,6 +1678,7 @@ type
  * @see av_packet_unref
  *)
 type
+  PPAVPacket = ^PAVPacket;
   PAVPacket = ^AVPacket;
   AVPacket = record
     (**
@@ -1710,7 +1725,7 @@ type
 
     pos: cint64; ///< byte position in stream, -1 if unknown
 
-{$if FF_API_CONVERGENCE_DURATION}
+{$ifdef FF_API_CONVERGENCE_DURATION}
     (**
      * @deprecated Same as the duration field, but as int64_t. This was required
      * for Matroska subtitles, whose duration values could overflow when the
@@ -1770,7 +1785,12 @@ type
  * sizeof(AVCodecContext) must not be used outside libav*.
  *)
 type
-  draw_horiz_band_proc = procedure (s: PAVCodecContext; const src: PAVFrame; offset: array[0..AV_NUM_DATA_POINTERS-1] of cint; y: cint; type_: cint; height: cint); cdecl;
+  PPAVCodecContext = ^PAVCodecContext;
+  PAVCodecContext = ^AVCodecContext;
+  PAVHWAccel = ^AVHWAccel;
+  PAVCodec = ^AVCodec_;
+
+  draw_horiz_band_proc = procedure (s: PAVCodecContext; const src: PAVFrame; offset: array{[0..AV_NUM_DATA_POINTERS-1]} of cint; y: cint; type_: cint; height: cint); cdecl;
   get_format_func = function (s: PAVCodecContext; const fmt: PAVPixelFormat): AVPixelFormat; cdecl;
   get_buffer2_func = function (s: PAVCodecContext; frame: PAVFrame; flags: cint): cint; cdecl;
   rtp_callback_proc = procedure (avctx: PAVCodecContext; data: pointer; size: cint; mb_nb: cint); cdecl;
@@ -1779,7 +1799,6 @@ type
   func2_func = function (c2: PAVCodecContext; arg: pointer; jobnr: cint; threadnr: cint): cint; cdecl;
   execute2_func = function (c: PAVCodecContext; func: func2_func; arg2: pointer; ret: pcint; count: cint): cint; cdecl;
 
-  PAVCodecContext = ^AVCodecContext;
   AVCodecContext = record
     (**
      * information on struct for av_log
@@ -1790,7 +1809,7 @@ type
 
     codec_type: AVMediaType; (* see AVMEDIA_TYPE_xxx *)
     codec: PAVCodec;
-{$if FF_API_CODEC_NAME}
+{$ifdef FF_API_CODEC_NAME}
     (**
      * @deprecated this field is not used for anything in libavcodec
      *)
@@ -1814,7 +1833,7 @@ type
      *)
     codec_tag: cuint;
 
-{$if FF_API_STREAM_CODEC_TAG}
+{$ifdef FF_API_STREAM_CODEC_TAG}
     (**
      * @deprecated this field is unused
      *)
@@ -1983,7 +2002,7 @@ type
      *)
     coded_width, coded_height: cint;
 
-{$if FF_API_ASPECT_EXTENDED}
+{$ifdef FF_API_ASPECT_EXTENDED}
 {$define FF_ASPECT_EXTENDED := 15}
 {$endif}
 
@@ -2009,7 +2028,7 @@ type
      *)
     pix_fmt: AVPixelFormat;
 
-{$if FF_API_MOTION_EST}
+{$ifdef FF_API_MOTION_EST}
     (**
      * This option does nothing
      * @deprecated use codec private options instead
@@ -2075,14 +2094,14 @@ type
      *)
     b_quant_factor: cfloat;
 
-{$if FF_API_RC_STRATEGY}
+{$ifdef FF_API_RC_STRATEGY}
     (** @deprecated use codec private option instead *)
     //TODO attribute_deprecated
     rc_strategy: cint;
 {$define FF_RC_STRATEGY_XVID := 1}
 {$endif}
 
-{$if FF_API_PRIVATE_OPT}
+{$ifdef FF_API_PRIVATE_OPT}
     (** @deprecated use encoder private options instead *)
     //TODO attribute_deprecated
     b_frame_strategy: cint;
@@ -2103,7 +2122,7 @@ type
      *)
     has_b_frames: cint;
 
-{$if FF_API_PRIVATE_OPT}
+{$ifdef FF_API_PRIVATE_OPT}
     (** @deprecated use encoder private options instead *)
     //TODO attribute_deprecated
     mpeg_quant: cint;
@@ -2167,7 +2186,7 @@ type
      *)
     slice_count: cint;
 
-{$if FF_API_PRIVATE_OPT}
+{$ifdef FF_API_PRIVATE_OPT}
     (** @deprecated use encoder private options instead *)
     //TODO attribute_deprecated
      prediction_method: cint;
@@ -2248,7 +2267,7 @@ type
      *)
     last_predictor_count: cint;
 
-{$if FF_API_PRIVATE_OPT}
+{$ifdef FF_API_PRIVATE_OPT}
     (** @deprecated use encoder private options instead *)
     //TODO attribute_deprecated
     pre_me: cint;
@@ -2275,7 +2294,7 @@ type
      *)
     me_subpel_quality: cint;
 
-{$if FF_API_AFD}
+{$ifdef FF_API_AFD}
     (**
      * DTG active format information (additional aspect ratio
      * information only used in DVB MPEG-2 transport streams)
@@ -2305,7 +2324,7 @@ type
      *)
     me_range: cint;
 
-{$if FF_API_QUANT_BIAS}
+{$ifdef FF_API_QUANT_BIAS}
     (**
      * @deprecated use encoder private option instead
      *)
@@ -2330,7 +2349,7 @@ type
 {$define SLICE_FLAG_ALLOW_FIELD := $0002} ///< allow draw_horiz_band() with field slices (MPEG-2 field pics)
 {$define SLICE_FLAG_ALLOW_PLANE := $0004} ///< allow draw_horiz_band() with 1 component at a time (SVQ1)
 
-{$if FF_API_XVMC}
+{$ifdef FF_API_XVMC}
     (**
      * XVideo Motion Acceleration
      * - encoding: forbidden
@@ -2365,7 +2384,7 @@ type
      *)
     inter_matrix: pcuint16;
 
-{$if FF_API_PRIVATE_OPT}
+{$ifdef FF_API_PRIVATE_OPT}
     (** @deprecated use encoder private options instead *)
     //TODO attribute_deprecated
     scenechange_threshold: cint;
@@ -2375,7 +2394,7 @@ type
     noise_reduction: cint;
 {$endif}
 
-{$if FF_API_MPV_OPT}
+{$ifdef FF_API_MPV_OPT}
     (**
      * @deprecated this field is unused
      *)
@@ -2410,7 +2429,7 @@ type
      *)
     skip_bottom: cint;
 
-{$if FF_API_MPV_OPT}
+{$ifdef FF_API_MPV_OPT}
     (**
      * @deprecated use encoder private options instead
      *)
@@ -2432,7 +2451,7 @@ type
      *)
     mb_lmax: cint;
 
-{$if FF_API_PRIVATE_OPT}
+{$ifdef FF_API_PRIVATE_OPT}
     (**
      * @deprecated use encoder private options instead
      *)
@@ -2446,7 +2465,7 @@ type
      *)
     bidir_refine: cint;
 
-{$if FF_API_PRIVATE_OPT}
+{$ifdef FF_API_PRIVATE_OPT}
     (** @deprecated use encoder private options instead *)
     //TODO attribute_deprecated
     brd_scale: cint;
@@ -2466,13 +2485,13 @@ type
      *)
     refs: cint;
 
-{$if FF_API_PRIVATE_OPT}
+{$ifdef FF_API_PRIVATE_OPT}
     (** @deprecated use encoder private options instead *)
     //TODO attribute_deprecated
     chromaoffset: cint;
 {$endif}
 
-{$if FF_API_UNUSED_MEMBERS}
+{$ifdef FF_API_UNUSED_MEMBERS}
     (**
      * Multiplied by qscale for each frame and added to scene_change_score.
      * - encoding: Set by user.
@@ -2489,7 +2508,7 @@ type
      *)
     mv0_threshold: cint;
 
-{$if FF_API_PRIVATE_OPT}
+{$ifdef FF_API_PRIVATE_OPT}
     (** @deprecated use encoder private options instead *)
     //TODO attribute_deprecated
     b_sensitivity: cint;
@@ -2743,7 +2762,7 @@ type
      *)
     max_qdiff: cint;
 
-{$if FF_API_MPV_OPT}
+{$ifdef FF_API_MPV_OPT}
     (**
      * @deprecated use encoder private options instead
      *)
@@ -2771,7 +2790,7 @@ type
     rc_override_count: cint;
     rc_override: PRcOverride;
 
-{$if FF_API_MPV_OPT}
+{$ifdef FF_API_MPV_OPT}
     (**
      * @deprecated use encoder private options instead
      *)
@@ -2793,7 +2812,7 @@ type
      *)
     rc_min_rate: cint64;
 
-{$if FF_API_MPV_OPT}
+{$ifdef FF_API_MPV_OPT}
     (**
      * @deprecated use encoder private options instead
      *)
@@ -2825,12 +2844,12 @@ type
      *)
     rc_initial_buffer_occupancy: cint;
 
-{$if FF_API_CODER_TYPE}
+{$ifdef FF_API_CODER_TYPE}
 {$define FF_CODER_TYPE_VLC := 0}
 {$define FF_CODER_TYPE_AC := 1}
 {$define FF_CODER_TYPE_RAW := 2}
 {$define FF_CODER_TYPE_RLE := 3}
-{$if FF_API_UNUSED_MEMBERS}
+{$ifdef FF_API_UNUSED_MEMBERS}
 {$define FF_CODER_TYPE_DEFLATE := 4}
 {$endif} (* FF_API_UNUSED_MEMBERS *)
     (**
@@ -2840,13 +2859,13 @@ type
     coder_type: cint;
 {$endif} (* FF_API_CODER_TYPE *)
 
-{$if FF_API_PRIVATE_OPT}
+{$ifdef FF_API_PRIVATE_OPT}
     (** @deprecated use encoder private options instead *)
     //TODO attribute_deprecated
     context_model: cint;
 {$endif}
 
-{$if FF_API_MPV_OPT}
+{$ifdef FF_API_MPV_OPT}
     (**
      * @deprecated use encoder private options instead
      *)
@@ -2860,7 +2879,7 @@ type
     lmax: cint;
 {$endif}
 
-{$if FF_API_PRIVATE_OPT}
+{$ifdef FF_API_PRIVATE_OPT}
     (** @deprecated use encoder private options instead *)
     //TODO attribute_deprecated
     frame_skip_threshold: cint;
@@ -2885,7 +2904,7 @@ type
      *)
     trellis: cint;
 
-{$if FF_API_PRIVATE_OPT}
+{$ifdef FF_API_PRIVATE_OPT}
     (** @deprecated use encoder private options instead *)
     //TODO attribute_deprecated
     min_prediction_order: cint;
@@ -2899,7 +2918,7 @@ type
     timecode_frame_start: cint64;
 {$endif}
 
-{$if FF_API_RTP_CALLBACK}
+{$ifdef FF_API_RTP_CALLBACK}
     (**
      * @deprecated unused
      *)
@@ -2913,7 +2932,7 @@ type
     rtp_callback: rtp_callback_proc;
 {$endif}
 
-{$if FF_API_PRIVATE_OPT}
+{$ifdef FF_API_PRIVATE_OPT}
     (** @deprecated use encoder private options instead *)
     //TODO attribute_deprecated
     rtp_payload_size: cint; (* The size of the RTP payload: the coder will  *)
@@ -2924,7 +2943,7 @@ type
                             (* headers inside the transmitted RTP payload.  *)
 {$endif}
 
-{$if FF_API_STAT_BITS}
+{$ifdef FF_API_STAT_BITS}
     (* statistics, used for 2-pass encoding *)
     //TODO attribute_deprecated
     mv_bits: cint;
@@ -2970,14 +2989,14 @@ type
      *)
     workaround_bugs: cint;
 {$define FF_BUG_AUTODETECT := 1} ///< autodetection
-{$if FF_API_OLD_MSMPEG4}
+{$ifdef FF_API_OLD_MSMPEG4}
 {$define FF_BUG_OLD_MSMPEG4 := 2}
 {$endif}
 {$define FF_BUG_XVID_ILACE := 4}
 {$define FF_BUG_UMP4 := 8}
 {$define FF_BUG_NO_PADDING := 16}
 {$define FF_BUG_AMV := 32}
-{$if FF_API_AC_VLC}
+{$ifdef FF_API_AC_VLC}
 {$define FF_BUG_AC_VLC := 0} ///< Will be removed, libavcodec can now handle these non-compliant files by default.
 {$endif}
 {$define FF_BUG_QPEL_CHROMA := 64}
@@ -3031,7 +3050,7 @@ type
 {$define FF_DEBUG_BITSTREAM := 4}
 {$define FF_DEBUG_MB_TYPE := 8}
 {$define FF_DEBUG_QP := 16}
-{$if FF_API_DEBUG_MV}
+{$ifdef FF_API_DEBUG_MV}
 (**
  * @deprecated this option does nothing
  *)
@@ -3040,13 +3059,13 @@ type
 {$define FF_DEBUG_DCT_COEFF := $00000040}
 {$define FF_DEBUG_SKIP := $00000080}
 {$define FF_DEBUG_STARTCODE := $00000100}
-{$if FF_API_UNUSED_MEMBERS}
+{$ifdef FF_API_UNUSED_MEMBERS}
 {$define FF_DEBUG_PTS := $00000200}
 {$endif} (* FF_API_UNUSED_MEMBERS *)
 {$define FF_DEBUG_ER := $00000400}
 {$define FF_DEBUG_MMCO := $00000800}
 {$define FF_DEBUG_BUGS := $00001000}
-{$if FF_API_DEBUG_MV}
+{$ifdef FF_API_DEBUG_MV}
 {$define FF_DEBUG_VIS_QP := $00002000}
 {$define FF_DEBUG_VIS_MB_TYPE := $00004000}
 {$endif}
@@ -3055,7 +3074,7 @@ type
 {$define FF_DEBUG_GREEN_MD := $00800000}
 {$define FF_DEBUG_NOMC := $01000000}
 
-{$if FF_API_DEBUG_MV}
+{$ifdef FF_API_DEBUG_MV}
     (**
      * debug
      * - encoding: Set by user.
@@ -3149,25 +3168,25 @@ type
 {$define FF_IDCT_SIMPLEMMX := 3}
 {$define FF_IDCT_ARM := 7}
 {$define FF_IDCT_ALTIVEC := 8}
-{$if FF_API_ARCH_SH4}
+{$ifdef FF_API_ARCH_SH4}
 {$define FF_IDCT_SH4 := 9}
 {$endif}
 {$define FF_IDCT_SIMPLEARM := 10}
-{$if FF_API_UNUSED_MEMBERS}
+{$ifdef FF_API_UNUSED_MEMBERS}
 {$define FF_IDCT_IPP := 13}
 {$endif} (* FF_API_UNUSED_MEMBERS *)
 {$define FF_IDCT_XVID := 14}
-{$if FF_API_IDCT_XVIDMMX}
+{$ifdef FF_API_IDCT_XVIDMMX}
 {$define FF_IDCT_XVIDMMX := 14}
 {$endif} (* FF_API_IDCT_XVIDMMX *)
 {$define FF_IDCT_SIMPLEARMV5TE := 16}
 {$define FF_IDCT_SIMPLEARMV6 := 17}
-{$if FF_API_ARCH_SPARC}
+{$ifdef FF_API_ARCH_SPARC}
 {$define FF_IDCT_SIMPLEVIS := 18}
 {$endif}
 {$define FF_IDCT_FAAN := 20}
 {$define FF_IDCT_SIMPLENEON := 22}
-{$if FF_API_ARCH_ALPHA}
+{$ifdef FF_API_ARCH_ALPHA}
 {$define FF_IDCT_SIMPLEALPHA := 23}
 {$endif}
 {$define FF_IDCT_SIMPLEAUTO := 128}
@@ -3186,7 +3205,7 @@ type
      *)
     bits_per_raw_sample: cint;
 
-{$if FF_API_LOWRES}
+{$ifdef FF_API_LOWRES}
     (**
      * low resolution decoding, 1-> 1/2 size, 2->1/4 size
      * - encoding: unused
@@ -3195,7 +3214,7 @@ type
      lowres: cint;
 {$endif}
 
-{$if FF_API_CODED_FRAME}
+{$ifdef FF_API_CODED_FRAME}
     (**
      * the picture in the bitstream
      * - encoding: Set by libavcodec.
@@ -3420,7 +3439,7 @@ type
     subtitle_header: pcuint8;
     subtitle_header_size: cint;
 
-{$if FF_API_ERROR_RATE}
+{$ifdef FF_API_ERROR_RATE}
     (**
      * @deprecated use the 'error_rate' private AVOption of the mpegvideo
      * encoders
@@ -3429,7 +3448,7 @@ type
     error_rate: cint;
 {$endif}
 
-{$if FF_API_VBV_DELAY}
+{$ifdef FF_API_VBV_DELAY}
     (**
      * VBV delay coded in the last frame (in periods of a 27 MHz clock).
      * Used for compliant TS muxing.
@@ -3442,7 +3461,7 @@ type
     vbv_delay: cuint64;
 {$endif}
 
-{$if FF_API_SIDEDATA_ONLY_PKT}
+{$ifdef FF_API_SIDEDATA_ONLY_PKT}
     (**
      * Encoding only and set by default. Allow encoders to output packets
      * that do not contain any encoded data, only side data.
@@ -3504,7 +3523,7 @@ type
      *)
     codec_descriptor: PAVCodecDescriptor;
 
-{$if not FF_API_LOWRES}
+{$ifdef not FF_API_LOWRES}
     (**
      * low resolution decoding, 1-> 1/2 size, 2->1/4 size
      * - encoding: unused
@@ -3562,7 +3581,7 @@ type
      *)
     seek_preroll: cint;
 
-{$if not FF_API_DEBUG_MV}
+{$ifdef not FF_API_DEBUG_MV}
     (**
      * debug motion vectors
      * - encoding: Set by user.
@@ -3646,7 +3665,7 @@ type
      *)
     sub_text_format: cint;
 {$define FF_SUB_TEXT_FMT_ASS := 0}
-{$if FF_API_ASS_TIMING}
+{$ifdef FF_API_ASS_TIMING}
 {$define FF_SUB_TEXT_FMT_ASS_WITH_TIMINGS := 1}
 {$endif}
 
@@ -3701,173 +3720,6 @@ type
     hwaccel_flags: cint;
   end;
 
-function av_codec_get_pkt_timebase(const avctx: PAVCodecContext): AVRational; cdecl; external LIB_AVCODEC;
-procedure av_codec_set_pkt_timebase(avctx: PAVCodecContext; val: AVRational); cdecl; external LIB_AVCODEC;
-
-function av_codec_get_codec_descriptor(const avctx: PAVCodecContext): PAVCodecDescriptor; cdecl; external LIB_AVCODEC;
-procedure av_codec_set_codec_descriptor(avctx: PAVCodecContext; const desc: PAVCodecDescriptor); cdecl; external LIB_AVCODEC;
-
-function av_codec_get_codec_properties(const avctx: PAVCodecContext): cunsigned; cdecl; external LIB_AVCODEC;
-
-function av_codec_get_lowres(const avctx: PAVCodecContext): cint; cdecl; external LIB_AVCODEC;
-procedure av_codec_set_lowres(avctx: PAVCodecContext; val: cint); cdecl; external LIB_AVCODEC;
-
-function av_codec_get_seek_preroll(const avctx: PAVCodecContext): cint; cdecl; external LIB_AVCODEC;
-procedure av_codec_set_seek_preroll(avctx: PAVCodecContext; val: cint); cdecl; external LIB_AVCODEC;
-
-function av_codec_get_chroma_intra_matrix(const avctx: PAVCodecContext): pcuint16; cdecl; external LIB_AVCODEC;
-procedure av_codec_set_chroma_intra_matrix(avctx: PAVCodecContext; val: pcuint16); cdecl; external LIB_AVCODEC;
-
-(**
- * AVProfile.
- *)
-type
-  PAVProfile = ^AVProfile;
-  AVProfile = record
-    profile: cint;
-    name: pchar; ///< short name for the profile
-  end;
-
-  PAVCodecDefault = ^AVCodecDefault;
-  AVCodecDefault = record
-  end;
-
-  PAVSubtitle = ^AVSubtitle;
-  AVSubtitle = record
-  end;
-
-(**
- * AVCodec.
- *)
-type
-  init_thread_copy_func = function (c: PAVCodecContext): cint; cdecl;
-  update_thread_context_func = function (dst: PAVCodecContext; const src: PAVCodecContext): cint; cdecl;
-  init_static_data_proc = procedure (struct codec: PAVCodec); cdecl;
-  init_func = function (c: PAVCodecContext): cint; cdecl;
-  encode_sub_func = function (c: PAVCodecContext; buf: pcuint8; buf_size: cint; const sub: PAVSubtitle): cint; cdecl;
-  encode2_func = function (avctx: PAVCodecContext; avpkt: PAVPacket; const frame: PAVFrame; got_packet_ptr: pcint): cint; cdecl;
-  decode_func = function (c: PAVCodecContext; outdata: pointer; outdata_size: cint; avpkt: PAVPacket): cint; cdecl;
-  close_func = function (c: PAVCodecContext): cint; cdecl;
-  send_frame_func = function (avctx: PAVCodecContext; const frame: PAVFrame): cint; cdecl;
-  send_packet_func = function (avctx: PAVCodecContext; const avpkt: PAVPacket): cint; cdecl;
-  receive_frame_func = function (avctx: PAVCodecContext; frame: PAVFrame): cint; cdecl;
-  receive_packet_func = function (avctx: PAVCodecContext; avpkt: PAVPacket): cint; cdecl;
-  flush_proc = procedure (c: PAVCodecContext); cdecl;
-
-  PAVCodec = ^AVCodec;
-  AVCodec = record
-    (**
-     * Name of the codec implementation.
-     * The name is globally unique among encoders and among decoders (but an
-     * encoder and a decoder can share the same name).
-     * This is the primary way to find a codec from the user perspective.
-     *)
-    name: pchar;
-    (**
-     * Descriptive name for the codec, meant to be more human readable than name.
-     * You should use the NULL_IF_CONFIG_SMALL() macro to define it.
-     *)
-    long_name: pchar;
-    type_: AVMediaType;
-    id: AVCodecID;
-    (**
-     * Codec capabilities.
-     * see AV_CODEC_CAP_*
-     *)
-    capabilities: cint;
-    supported_framerates: PAVRational; ///< array of supported framerates, or NULL if any, array is terminated by {0,0}
-    pix_fmts: PAVPixelFormat; ///< array of supported pixel formats, or NULL if unknown, array is terminated by -1
-    supported_samplerates: pcint ; ///< array of supported audio samplerates, or NULL if unknown, array is terminated by 0
-    sample_fmts: PAVSampleFormat; ///< array of supported sample formats, or NULL if unknown, array is terminated by -1
-    channel_layouts: pcuint64; ///< array of support channel layouts, or NULL if unknown. array is terminated by 0
-    max_lowres: cuint8; ///< maximum value for lowres supported by the decoder
-    priv_class: PAVClass; ///< AVClass for the private context
-    profiles: PAVProfile; ///< array of recognized profiles, or NULL if unknown, array is terminated by {FF_PROFILE_UNKNOWN}
-
-    (*****************************************************************
-     * No fields below this line are part of the public API. They
-     * may not be used outside of libavcodec and can be changed and
-     * removed at will.
-     * New public fields should be added right above.
-     *****************************************************************
-     *)
-    priv_data_size: cint;
-    next: PAVCodec;
-    (**
-     * @name Frame-level threading support functions
-     * @{
-     *)
-    (**
-     * If defined, called on thread contexts when they are created.
-     * If the codec allocates writable tables in init(), re-allocate them here.
-     * priv_data will be set to a copy of the original.
-     *)
-    init_thread_copy: init_thread_copy_func;
-    (**
-     * Copy necessary context variables from a previous thread context to the current one.
-     * If not defined, the next thread will start automatically; otherwise, the codec
-     * must call ff_thread_finish_setup().
-     *
-     * dst and src will (rarely) point to the same context, in which case memcpy should be skipped.
-     *)
-    update_thread_context: update_thread_context_func;
-    (** @} *)
-
-    (**
-     * Private codec-specific defaults.
-     *)
-    defaults: PAVCodecDefault;
-
-    (**
-     * Initialize codec static data, called from avcodec_register().
-     *)
-    init_static_data: init_static_data_proc;
-
-    init: init_func;
-    encode_sub: encode_sub_func;
-    (**
-     * Encode data to an AVPacket.
-     *
-     * @param      avctx          codec context
-     * @param      avpkt          output AVPacket (may contain a user-provided buffer)
-     * @param[in]  frame          AVFrame containing the raw data to be encoded
-     * @param[out] got_packet_ptr encoder sets to 0 or 1 to indicate that a
-     *                            non-empty packet was returned in avpkt.
-     * @return 0 on success, negative error code on failure
-     *)
-    encode2: encode2_func;
-    decode: decode_func;
-    close: close_func;
-    (**
-     * Decode/encode API with decoupled packet/frame dataflow. The API is the
-     * same as the avcodec_ prefixed APIs (avcodec_send_frame() etc.), except
-     * that:
-     * - never called if the codec is closed or the wrong type,
-     * - AVPacket parameter change side data is applied right before calling
-     *   AVCodec->send_packet,
-     * - if AV_CODEC_CAP_DELAY is not set, drain packets or frames are never sent,
-     * - only one drain packet is ever passed down (until the next flush()),
-     * - a drain AVPacket is always NULL (no need to check for avpkt->size).
-     *)
-    send_frame: send_frame_func;
-    send_packet: send_packet_func;
-    receive_frame: receive_frame_func;
-    receive_packet: receive_packet_func;
-    (**
-     * Flush buffers.
-     * Will be called when seeking
-     *)
-    flush: flush_proc;
-    (**
-     * Internal codec capabilities.
-     * See FF_CODEC_CAP_* in internal.h
-     *)
-    caps_internal: cint;
-  end;
-
-function av_codec_get_max_lowres(const codec: PAVCodec): cint; cdecl; external LIB_AVCODEC;
-
-type
   PMpegEncContext = ^MpegEncContext;
   MpegEncContext = record
   end;
@@ -3876,16 +3728,14 @@ type
  * @defgroup lavc_hwaccel AVHWAccel
  * @{
  *)
-type
-  alloc_frame_func = function (avctx: PAVCodecContext; frame: PAVFrame): cint; cdecl;
-  start_frame_func = function (avctx: PAVCodecContext; const buf: pcuint8; buf_size: cuint32): cint; cdecl;
-  decode_slice_func = function (avctx: PAVCodecContext; const buf: pcuint8; buf_size: cuint32): cint; cdecl;
-  end_frame_func = function (avctx: PAVCodecContext): cint; cdecl;
-  decode_mb_proc = procedure (s: PMpegEncContext); cdecl;
-  init_func = function (avctx: PAVCodecContext): cint; cdecl;
-  uninit_func = function (avctx: PAVCodecContext): cint; cdecl;
+  AVHWAccel_alloc_frame_func = function (avctx: PAVCodecContext; frame: PAVFrame): cint; cdecl;
+  AVHWAccel_start_frame_func = function (avctx: PAVCodecContext; const buf: pcuint8; buf_size: cuint32): cint; cdecl;
+  AVHWAccel_decode_slice_func = function (avctx: PAVCodecContext; const buf: pcuint8; buf_size: cuint32): cint; cdecl;
+  AVHWAccel_end_frame_func = function (avctx: PAVCodecContext): cint; cdecl;
+  AVHWAccel_decode_mb_proc = procedure (s: PMpegEncContext); cdecl;
+  AVHWAccel_init_func = function (avctx: PAVCodecContext): cint; cdecl;
+  AVHWAccel_uninit_func = function (avctx: PAVCodecContext): cint; cdecl;
 
-  PAVHWAccel = ^AVHWAccel;
   AVHWAccel = record
     (**
      * Name of the hardware accelerated codec.
@@ -3933,7 +3783,7 @@ type
     (**
      * Allocate a custom buffer
      *)
-    alloc_frame: alloc_frame_func;
+    alloc_frame: AVHWAccel_alloc_frame_func;
 
     (**
      * Called at the beginning of each frame or field picture.
@@ -3949,7 +3799,7 @@ type
      * @param buf_size the size of the frame in bytes
      * @return zero if successful, a negative value otherwise
      *)
-    start_frame: start_frame_func;
+    start_frame: AVHWAccel_start_frame_func;
 
     (**
      * Callback for each slice.
@@ -3963,7 +3813,7 @@ type
      * @param buf_size the size of the slice in bytes
      * @return zero if successful, a negative value otherwise
      *)
-    decode_slice: decode_slice_func;
+    decode_slice: AVHWAccel_decode_slice_func;
 
     (**
      * Called at the end of each frame or field picture.
@@ -3974,7 +3824,7 @@ type
      * @param avctx the codec context
      * @return zero if successful, a negative value otherwise
      *)
-    end_frame: end_frame_func;
+    end_frame: AVHWAccel_end_frame_func;
 
     (**
      * Size of per-frame hardware accelerator private data.
@@ -3994,7 +3844,7 @@ type
      *
      * @param s the mpeg context
      *)
-    decode_mb: decode_mb_proc;
+    decode_mb: AVHWAccel_decode_mb_proc;
 
     (**
      * Initialize the hwaccel private data.
@@ -4003,7 +3853,7 @@ type
      * hwaccel_context are set and the hwaccel private data in AVCodecInternal
      * is allocated.
      *)
-    init: init_func;
+    init: AVHWAccel_init_func;
 
     (**
      * Uninitialize the hwaccel private data.
@@ -4011,7 +3861,7 @@ type
      * This will be called from get_format() or avcodec_close(), after hwaccel
      * and hwaccel_context are already uninitialized.
      *)
-    uninit: uninit_func;
+    uninit: AVHWAccel_uninit_func;
 
     (**
      * Size of the private data to allocate in
@@ -4024,6 +3874,224 @@ type
      *)
     caps_internal: cint;
   end;
+
+  AVSubtitleType = (
+    SUBTITLE_NONE,
+
+    SUBTITLE_BITMAP, ///< A bitmap, pict will be set
+
+    (**
+     * Plain text, the text field must be set by the decoder and is
+     * authoritative. ass and pict fields may contain approximations.
+     *)
+    SUBTITLE_TEXT,
+
+    (**
+     * Formatted text, the ass field must be set by the decoder and is
+     * authoritative. pict and text fields may contain approximations.
+     *)
+    SUBTITLE_ASS
+  );
+
+(**
+ * AVCodec.
+ *)
+  PPAVSubtitleRect = ^PAVSubtitleRect;
+  PAVSubtitleRect = ^AVSubtitleRect;
+  AVSubtitleRect = record
+    x: cint; ///< top left corner  of pict, undefined when pict is not set
+    y: cint; ///< top left corner  of pict, undefined when pict is not set
+    w: cint; ///< width            of pict, undefined when pict is not set
+    h: cint; ///< height           of pict, undefined when pict is not set
+    nb_colors: cint; ///< number of colors in pict, undefined when pict is not set
+
+{$ifdef FF_API_AVPICTURE}
+    (**
+     * @deprecated unused
+     *)
+    //TODO attribute_deprecated
+    pict: AVPicture;
+{$endif}
+    (**
+     * data+linesize for the bitmap of this subtitle.
+     * Can be set for text/ass as well once they are rendered.
+     *)
+    data: array[0..3] of pcuint8;
+    linesize: array[0..3] of cint;
+
+    type_: AVSubtitleType;
+
+    text: pchar; ///< 0 terminated plain UTF-8 text
+
+    (**
+     * 0 terminated ASS/SSA compatible event line.
+     * The presentation of this is unaffected by the other values in this
+     * struct.
+     *)
+    ass: pchar;
+
+    flags: cint;
+  end;
+
+  PAVCodecDefault = ^AVCodecDefault;
+  AVCodecDefault = record
+  end;
+
+  PAVSubtitle = ^AVSubtitle;
+  AVSubtitle = record
+    format: cuint16; (* 0 = graphics *)
+    start_display_time: cuint32; (* relative to packet pts, in ms *)
+    end_display_time: cuint32; (* relative to packet pts, in ms *)
+    num_rects: cunsigned;
+    rects: PPAVSubtitleRect;
+    pts: cint64; ///< Same as packet pts, in AV_TIME_BASE
+  end;
+
+  AVCodec_init_thread_copy_func = function (c: PAVCodecContext): cint; cdecl;
+  AVCodec_update_thread_context_func = function (dst: PAVCodecContext; const src: PAVCodecContext): cint; cdecl;
+  AVCodec_init_static_data_proc = procedure (codec: PAVCodec); cdecl;
+  AVCodec_init_func = function (c: PAVCodecContext): cint; cdecl;
+  AVCodec_encode_sub_func = function (c: PAVCodecContext; buf: pcuint8; buf_size: cint; const sub: PAVSubtitle): cint; cdecl;
+  AVCodec_encode2_func = function (avctx: PAVCodecContext; avpkt: PAVPacket; const frame: PAVFrame; got_packet_ptr: pcint): cint; cdecl;
+  AVCodec_decode_func = function (c: PAVCodecContext; outdata: pointer; outdata_size: cint; avpkt: PAVPacket): cint; cdecl;
+  AVCodec_close_func = function (c: PAVCodecContext): cint; cdecl;
+  AVCodec_send_frame_func = function (avctx: PAVCodecContext; const frame: PAVFrame): cint; cdecl;
+  AVCodec_send_packet_func = function (avctx: PAVCodecContext; const avpkt: PAVPacket): cint; cdecl;
+  AVCodec_receive_frame_func = function (avctx: PAVCodecContext; frame: PAVFrame): cint; cdecl;
+  AVCodec_receive_packet_func = function (avctx: PAVCodecContext; avpkt: PAVPacket): cint; cdecl;
+  AVCodec_flush_proc = procedure (c: PAVCodecContext); cdecl;
+
+  AVCodec_ = record
+    (**
+     * Name of the codec implementation.
+     * The name is globally unique among encoders and among decoders (but an
+     * encoder and a decoder can share the same name).
+     * This is the primary way to find a codec from the user perspective.
+     *)
+    name: pchar;
+    (**
+     * Descriptive name for the codec, meant to be more human readable than name.
+     * You should use the NULL_IF_CONFIG_SMALL() macro to define it.
+     *)
+    long_name: pchar;
+    type_: AVMediaType;
+    id: AVCodecID;
+    (**
+     * Codec capabilities.
+     * see AV_CODEC_CAP_*
+     *)
+    capabilities: cint;
+    supported_framerates: PAVRational; ///< array of supported framerates, or NULL if any, array is terminated by {0,0}
+    pix_fmts: PAVPixelFormat; ///< array of supported pixel formats, or NULL if unknown, array is terminated by -1
+    supported_samplerates: pcint ; ///< array of supported audio samplerates, or NULL if unknown, array is terminated by 0
+    sample_fmts: PAVSampleFormat; ///< array of supported sample formats, or NULL if unknown, array is terminated by -1
+    channel_layouts: pcuint64; ///< array of support channel layouts, or NULL if unknown. array is terminated by 0
+    max_lowres: cuint8; ///< maximum value for lowres supported by the decoder
+    priv_class: PAVClass; ///< AVClass for the private context
+    profiles: PAVProfile; ///< array of recognized profiles, or NULL if unknown, array is terminated by {FF_PROFILE_UNKNOWN}
+
+    (*****************************************************************
+     * No fields below this line are part of the public API. They
+     * may not be used outside of libavcodec and can be changed and
+     * removed at will.
+     * New public fields should be added right above.
+     *****************************************************************
+     *)
+    priv_data_size: cint;
+    next: PAVCodec;
+    (**
+     * @name Frame-level threading support functions
+     * @{
+     *)
+    (**
+     * If defined, called on thread contexts when they are created.
+     * If the codec allocates writable tables in init(), re-allocate them here.
+     * priv_data will be set to a copy of the original.
+     *)
+    init_thread_copy: AVCodec_init_thread_copy_func;
+    (**
+     * Copy necessary context variables from a previous thread context to the current one.
+     * If not defined, the next thread will start automatically; otherwise, the codec
+     * must call ff_thread_finish_setup().
+     *
+     * dst and src will (rarely) point to the same context, in which case memcpy should be skipped.
+     *)
+    update_thread_context: AVCodec_update_thread_context_func;
+    (** @} *)
+
+    (**
+     * Private codec-specific defaults.
+     *)
+    defaults: PAVCodecDefault;
+
+    (**
+     * Initialize codec static data, called from avcodec_register().
+     *)
+    init_static_data: AVCodec_init_static_data_proc;
+
+    init: AVCodec_init_func;
+    encode_sub: AVCodec_encode_sub_func;
+    (**
+     * Encode data to an AVPacket.
+     *
+     * @param      avctx          codec context
+     * @param      avpkt          output AVPacket (may contain a user-provided buffer)
+     * @param[in]  frame          AVFrame containing the raw data to be encoded
+     * @param[out] got_packet_ptr encoder sets to 0 or 1 to indicate that a
+     *                            non-empty packet was returned in avpkt.
+     * @return 0 on success, negative error code on failure
+     *)
+    encode2: AVCodec_encode2_func;
+    decode: AVCodec_decode_func;
+    close: AVCodec_close_func;
+    (**
+     * Decode/encode API with decoupled packet/frame dataflow. The API is the
+     * same as the avcodec_ prefixed APIs (avcodec_send_frame() etc.), except
+     * that:
+     * - never called if the codec is closed or the wrong type,
+     * - AVPacket parameter change side data is applied right before calling
+     *   AVCodec->send_packet,
+     * - if AV_CODEC_CAP_DELAY is not set, drain packets or frames are never sent,
+     * - only one drain packet is ever passed down (until the next flush()),
+     * - a drain AVPacket is always NULL (no need to check for avpkt->size).
+     *)
+    send_frame: AVCodec_send_frame_func;
+    send_packet: AVCodec_send_packet_func;
+    receive_frame: AVCodec_receive_frame_func;
+    receive_packet: AVCodec_receive_packet_func;
+    (**
+     * Flush buffers.
+     * Will be called when seeking
+     *)
+    flush: AVCodec_flush_proc;
+    (**
+     * Internal codec capabilities.
+     * See FF_CODEC_CAP_* in internal.h
+     *)
+    caps_internal: cint;
+  end;
+
+function av_codec_get_pkt_timebase(const avctx: PAVCodecContext): AVRational; cdecl; external LIB_AVCODEC;
+procedure av_codec_set_pkt_timebase(avctx: PAVCodecContext; val: AVRational); cdecl; external LIB_AVCODEC;
+
+function av_codec_get_codec_descriptor(const avctx: PAVCodecContext): PAVCodecDescriptor; cdecl; external LIB_AVCODEC;
+procedure av_codec_set_codec_descriptor(avctx: PAVCodecContext; const desc: PAVCodecDescriptor); cdecl; external LIB_AVCODEC;
+
+function av_codec_get_codec_properties(const avctx: PAVCodecContext): cunsigned; cdecl; external LIB_AVCODEC;
+
+function av_codec_get_lowres(const avctx: PAVCodecContext): cint; cdecl; external LIB_AVCODEC;
+procedure av_codec_set_lowres(avctx: PAVCodecContext; val: cint); cdecl; external LIB_AVCODEC;
+
+function av_codec_get_seek_preroll(const avctx: PAVCodecContext): cint; cdecl; external LIB_AVCODEC;
+procedure av_codec_set_seek_preroll(avctx: PAVCodecContext; val: cint); cdecl; external LIB_AVCODEC;
+
+function av_codec_get_chroma_intra_matrix(const avctx: PAVCodecContext): pcuint16; cdecl; external LIB_AVCODEC;
+procedure av_codec_set_chroma_intra_matrix(avctx: PAVCodecContext; val: pcuint16); cdecl; external LIB_AVCODEC;
+
+(**
+ * AVProfile.
+ *)
+function av_codec_get_max_lowres(const codec: PAVCodec): cint; cdecl; external LIB_AVCODEC;
 
 const
 (**
@@ -4046,7 +4114,7 @@ const
  * @}
  *)
 
-{$if FF_API_AVPICTURE}
+{$ifdef FF_API_AVPICTURE}
 (**
  * @defgroup lavc_picture AVPicture
  *
@@ -4075,74 +4143,8 @@ type
  *)
 {$endif}
 
-type
-  AVSubtitleType = (
-    SUBTITLE_NONE,
-
-    SUBTITLE_BITMAP, ///< A bitmap, pict will be set
-
-    (**
-     * Plain text, the text field must be set by the decoder and is
-     * authoritative. ass and pict fields may contain approximations.
-     *)
-    SUBTITLE_TEXT,
-
-    (**
-     * Formatted text, the ass field must be set by the decoder and is
-     * authoritative. pict and text fields may contain approximations.
-     *)
-    SUBTITLE_ASS
-  );
-
 const
   AV_SUBTITLE_FLAG_FORCED = $00000001;
-
-type
-  PAVSubtitleRect = ^AVSubtitleRect;
-  AVSubtitleRect = record
-    x: cint; ///< top left corner  of pict, undefined when pict is not set
-    y: cint; ///< top left corner  of pict, undefined when pict is not set
-    w: cint; ///< width            of pict, undefined when pict is not set
-    h: cint; ///< height           of pict, undefined when pict is not set
-    nb_colors: cint; ///< number of colors in pict, undefined when pict is not set
-
-{$if FF_API_AVPICTURE}
-    (**
-     * @deprecated unused
-     *)
-    //TODO attribute_deprecated
-    pict: AVPicture;
-{$endif}
-    (**
-     * data+linesize for the bitmap of this subtitle.
-     * Can be set for text/ass as well once they are rendered.
-     *)
-    data: array[0..3] of pcuint8;
-    linesize: array[0..3] of cint;
-
-    type_: AVSubtitleType ;
-
-    text: pchar; ///< 0 terminated plain UTF-8 text
-
-    (**
-     * 0 terminated ASS/SSA compatible event line.
-     * The presentation of this is unaffected by the other values in this
-     * struct.
-     *)
-    ass: pchar;
-
-    flags: cint;
-  end;
-
-  PAVSubtitle = ^AVSubtitle;
-  AVSubtitle = record
-    format: cuint16; (* 0 = graphics *)
-    start_display_time: cuint32; (* relative to packet pts, in ms *)
-    end_display_time: cuint32; (* relative to packet pts, in ms *)
-    num_rects: cunsigned;
-    rects: PPAVSubtitleRect;
-    pts: cint64; ///< Same as packet pts, in AV_TIME_BASE
-  end;
 
 (**
  * This struct describes the properties of an encoded stream.
@@ -4151,6 +4153,8 @@ type
  * be allocated with avcodec_parameters_alloc() and freed with
  * avcodec_parameters_free().
  *)
+type
+  PPAVCodecParameters = ^PAVCodecParameters;
   PAVCodecParameters = ^AVCodecParameters;
   AVCodecParameters = record
     (**
@@ -4241,7 +4245,7 @@ type
     (**
      * Video only. The order of the fields in interlaced video.
      *)
-    AVFieldOrder                  field_order;
+    field_order: AVFieldOrder;
 
     (**
      * Video only. Additional colorspace characteristics.
@@ -4368,7 +4372,7 @@ function avcodec_alloc_context3(const codec: PAVCodec): PAVCodecContext; cdecl; 
  *)
 procedure avcodec_free_context(avctx: PPAVCodecContext); cdecl; external LIB_AVCODEC;
 
-{$if FF_API_GET_CONTEXT_DEFAULTS}
+{$ifdef FF_API_GET_CONTEXT_DEFAULTS}
 (**
  * @deprecated This function should not be used, as closing and opening a codec
  * context multiple time is not supported. A new codec context should be
@@ -4385,7 +4389,7 @@ function avcodec_get_context_defaults3(s: PAVCodecContext; const codec: PAVCodec
  *)
 function avcodec_get_class(): PAVClass; cdecl; external LIB_AVCODEC;
 
-{$if FF_API_COPY_CONTEXT}
+{$ifdef FF_API_COPY_CONTEXT}
 (**
  * Get the AVClass for AVFrame. It can be used in combination with
  * AV_OPT_SEARCH_FAKE_OBJ for examining options.
@@ -4619,7 +4623,7 @@ function av_grow_packet(pkt: PAVPacket; grow_by: cint): cint; cdecl; external LI
  *)
 function av_packet_from_data(pkt: PAVPacket; data: pcuint8; size: cint): cint; cdecl; external LIB_AVCODEC;
 
-{$if FF_API_AVPACKET_OLD_API}
+{$ifdef FF_API_AVPACKET_OLD_API}
 (**
  * @warning This is a hack - the packet memory allocation stuff is broken. The
  * packet is allocated if it was not really allocated.
@@ -4697,7 +4701,7 @@ function av_packet_shrink_side_data(pkt: PAVPacket; type_: AVPacketSideDataType;
  *)
 function av_packet_get_side_data(const pkt: PAVPacket; type_: AVPacketSideDataType; size: pcint): pcuint8; cdecl; external LIB_AVCODEC;
 
-{$if FF_API_MERGE_SD_API}
+{$ifdef FF_API_MERGE_SD_API}
 //TODO attribute_deprecated
 function av_packet_merge_side_data(pkt: PAVPacket): cint; cdecl; external LIB_AVCODEC;
 
@@ -4829,7 +4833,7 @@ function avcodec_find_decoder_by_name(const name: pchar): PAVCodec; cdecl; exter
  *)
 function avcodec_default_get_buffer2(s: PAVCodecContext; frame: PAVFrame; flags: cint): cint; cdecl; external LIB_AVCODEC;
 
-{$if FF_API_EMU_EDGE}
+{$ifdef FF_API_EMU_EDGE}
 (**
  * Return the amount of padding in pixels which the get_buffer callback must
  * provide around the edge of the image for codecs which do not have the
@@ -4860,7 +4864,7 @@ procedure avcodec_align_dimensions(s: PAVCodecContext; width: pcint; height: pci
  *
  * May only be used if a codec with AV_CODEC_CAP_DR1 has been opened.
  *)
-procedure avcodec_align_dimensions2(s: PAVCodecContext; width: pcint; height: pcint; linesize_align: array[0..AV_NUM_DATA_POINTERS-1] of cint); cdecl; external LIB_AVCODEC;
+procedure avcodec_align_dimensions2(s: PAVCodecContext; width: pcint; height: pcint; linesize_align: array{[0..AV_NUM_DATA_POINTERS-1]} of cint); cdecl; external LIB_AVCODEC;
 
 (**
  * Converts AVChromaLocation to swscale x/y chroma position.
@@ -5208,7 +5212,7 @@ type
      *)
     key_frame: cint;
 
-{$if FF_API_CONVERGENCE_DURATION}
+{$ifdef FF_API_CONVERGENCE_DURATION}
     (**
      * @deprecated unused
      *)
@@ -5325,21 +5329,21 @@ type
   end;
 
 type
-  parser_init_func = function (s: PAVCodecParserContext): cint; cdecl;
-  parser_parse_func = function (s: PAVCodecParserContext; avctx: PAVCodecContext; const poutbuf: ppcuint8; poutbuf_size: pcint; const buf: pcuint8; buf_size: cint): cint; cdecl;
-  parser_close_proc = procedure (s: PAVCodecParserContext); cdecl;
-  split_func = function (avctx: PAVCodecContext; const buf: pcuint8; buf_size: cint): cint; cdecl;
+  AVCodecParser_parser_init_func = function (s: PAVCodecParserContext): cint; cdecl;
+  AVCodecParser_parser_parse_func = function (s: PAVCodecParserContext; avctx: PAVCodecContext; const poutbuf: ppcuint8; poutbuf_size: pcint; const buf: pcuint8; buf_size: cint): cint; cdecl;
+  AVCodecParser_parser_close_proc = procedure (s: PAVCodecParserContext); cdecl;
+  AVCodecParser_split_func = function (avctx: PAVCodecContext; const buf: pcuint8; buf_size: cint): cint; cdecl;
 
   PAVCodecParser = ^AVCodecParser;
   AVCodecParser = record
     codec_ids: array[0..4] of cint; (* several codec IDs are permitted *)
     priv_data_size: cint;
-    parser_init: parser_init_func;
+    parser_init: AVCodecParser_parser_init_func;
     (* This callback never returns an error, a negative value means that
      * the frame start was in a previous packet. *)
-    parser_parse: parser_parse_func;
-    parser_close: parser_close_proc;
-    split: split_func;
+    parser_parse: AVCodecParser_parser_parse_func;
+    parser_close: AVCodecParser_parser_close_proc;
+    split: AVCodecParser_split_func;
     next: PAVCodecParser;
   end;
 
@@ -5501,7 +5505,7 @@ function avcodec_encode_subtitle(avctx: PAVCodecContext; buf: pcuint8; buf_size:
  * @}
  *)
 
-{$if FF_API_AVCODEC_RESAMPLE}
+{$ifdef FF_API_AVCODEC_RESAMPLE}
 (**
  * @defgroup lavc_resample Audio resampling
  * @ingroup libavc
@@ -5599,7 +5603,7 @@ procedure av_resample_close(c: PAVResampleContext); cdecl; external LIB_AVCODEC;
  *)
 {$endif}
 
-{$if FF_API_AVPICTURE}
+{$ifdef FF_API_AVPICTURE}
 (**
  * @addtogroup lavc_picture
  * @{
@@ -5735,7 +5739,7 @@ function avcodec_default_get_format(s: PAVCodecContext; const fmt: PAVPixelForma
  * @}
  *)
 
-{$if FF_API_SET_DIMENSIONS}
+{$ifdef FF_API_SET_DIMENSIONS}
 (**
  * @deprecated this function is not supposed to be used from outside of lavc
  *)
@@ -5743,7 +5747,7 @@ function avcodec_default_get_format(s: PAVCodecContext; const fmt: PAVPixelForma
 procedure avcodec_set_dimensions(s: PAVCodecContext; width: cint; height: cint); cdecl; external LIB_AVCODEC;
 {$endif}
 
-{$if FF_API_TAG_STRING}
+{$ifdef FF_API_TAG_STRING}
 (**
  * Put a string representing the codec tag codec_tag in buf.
  *
@@ -5784,11 +5788,11 @@ function av_get_profile_name(const codec: PAVCodec; profile: cint): pchar; cdecl
 function avcodec_profile_name(codec_id: AVCodecID; profile: cint): pchar; cdecl; external LIB_AVCODEC;
 
 type
-  func2_func = function (c2: PAVCodecContext; arg2: pointer): cint; cdecl;
-  func4_func = function (c2: PAVCodecContext; arg2: pointer; arg3: cint; arg4: cint): cint; cdecl;
+  avcodec_default_execute_func2_func = function (c2: PAVCodecContext; arg2: pointer): cint; cdecl;
+  avcodec_default_execute2_func4_func = function (c2: PAVCodecContext; arg2: pointer; arg3: cint; arg4: cint): cint; cdecl;
 
-function avcodec_default_execute(c: PAVCodecContext; func: func2_func; arg: pointer; ret: pcint; count: cint; size: cint): cint; cdecl; external LIB_AVCODEC;
-function avcodec_default_execute2(c: PAVCodecContext; func: func4_func; arg: pointer; ret: pcint; count: cint): cint; cdecl; external LIB_AVCODEC;
+function avcodec_default_execute(c: PAVCodecContext; func: avcodec_default_execute_func2_func; arg: pointer; ret: pcint; count: cint; size: cint): cint; cdecl; external LIB_AVCODEC;
+function avcodec_default_execute2(c: PAVCodecContext; func: avcodec_default_execute2_func4_func; arg: pointer; ret: pcint; count: cint): cint; cdecl; external LIB_AVCODEC;
 //FIXME func typedef
 
 (**
@@ -5869,7 +5873,7 @@ function av_get_audio_frame_duration(avctx: PAVCodecContext; frame_bytes: cint):
  *)
 function av_get_audio_frame_duration2(par: PAVCodecParameters; frame_bytes: cint): cint; cdecl; external LIB_AVCODEC;
 
-{$if FF_API_OLD_BSF}
+{$ifdef FF_API_OLD_BSF}
 type
   PAVBitStreamFilterContext = ^AVBitStreamFilterContext;
   AVBitStreamFilterContext = record
@@ -5951,9 +5955,9 @@ type
     time_base_out: AVRational;
   end;
 
-  init_func = function (ctx: PAVBSFContext): cint; cdecl;
-  filter_func = function (ctx: PAVBSFContext; pkt: PAVPacket): cint; cdecl;
-  close_proc = procedure (ctx: PAVBSFContext); cdecl;
+  AVBitStreamFilter_init_func = function (ctx: PAVBSFContext): cint; cdecl;
+  AVBitStreamFilter_filter_func = function (ctx: PAVBSFContext; pkt: PAVPacket): cint; cdecl;
+  AVBitStreamFilter_close_proc = procedure (ctx: PAVBSFContext); cdecl;
 
   PAVBitStreamFilter = ^AVBitStreamFilter;
   AVBitStreamFilter = record
@@ -5986,12 +5990,12 @@ type
      *)
 
     priv_data_size: cint;
-    init: init_func;
-    filter: filter_func;
-    close: close_proc;
+    init: AVBitStreamFilter_init_func;
+    filter: AVBitStreamFilter_filter_func;
+    close: AVBitStreamFilter_close_proc;
   end;
 
-{$if FF_API_OLD_BSF}
+{$ifdef FF_API_OLD_BSF}
 (**
  * Register a bitstream filter.
  *
@@ -6280,7 +6284,7 @@ procedure av_fast_padded_mallocz(ptr: pointer; size: pcuint; min_size: csize_t);
  *)
 function av_xiphlacing(s: pcuchar; v: cuint): cuint; cdecl; external LIB_AVCODEC;
 
-{$if FF_API_MISSING_SAMPLE}
+{$ifdef FF_API_MISSING_SAMPLE}
 (**
  * Log a generic warning message about a missing feature. This function is
  * intended to be used internally by FFmpeg (libavcodec, libavformat, etc.)
@@ -6358,9 +6362,9 @@ type
  *           lockmgr will be unregistered.
  *)
 type
-  cb_func = function (mutex: ppointer; op: AVLockOp): cint; cdecl;
+  av_lockmgr_register_cb_func = function (mutex: ppointer; op: AVLockOp): cint; cdecl;
 
-function av_lockmgr_register(cb: cb_func): cint; cdecl; external LIB_AVCODEC;
+function av_lockmgr_register(cb: av_lockmgr_register_cb_func): cint; cdecl; external LIB_AVCODEC;
 
 (**
  * Get the type of the given codec.

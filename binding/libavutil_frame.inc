@@ -191,10 +191,13 @@ type
  * C structure field name for fields accessible through AVOptions. The AVClass
  * for AVFrame can be obtained from avcodec_get_frame_class()
  *)
+const
+  AV_NUM_DATA_POINTERS = 8;
+
+type
   PPAVFrame = ^PAVFrame;
   PAVFrame = ^AVFrame;
   AVFrame = record
-{$define AV_NUM_DATA_POINTERS := 8}
     (**
      * pointer to the picture/channel planes.
      * This might be different from the first allocated byte

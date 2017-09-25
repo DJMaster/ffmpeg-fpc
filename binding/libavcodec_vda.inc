@@ -43,16 +43,16 @@
 // http://openradar.appspot.com/8026390
 //TODO #undef __GNUC_STDC_INLINE__
 
-  Picture = QuickdrawPicture;
-#include <VideoDecodeAcceleration/VDADecoder.h>
-#undef Picture
+//TODO  Picture = QuickdrawPicture;
+//TODO #include <VideoDecodeAcceleration/VDADecoder.h>
+//TODO #undef Picture
 
 // #include "libavcodec/version.h"
 
 // extra flags not defined in VDADecoder.h
 const
-  kVDADecodeInfo_Asynchronous = 1UL shl 0;
-  kVDADecodeInfo_FrameDropped = 1UL shl 1;
+  kVDADecodeInfo_Asynchronous = (1 shl 0);
+  kVDADecodeInfo_FrameDropped = (1 shl 1);
 
 (**
  * @defgroup lavc_codec_hwaccel_vda VDA

@@ -40,7 +40,7 @@
 // #include "libavutil/attributes.h"
 // #include "version.h"
 
-{$if FF_API_STRUCT_VAAPI_CONTEXT}
+{$ifdef FF_API_STRUCT_VAAPI_CONTEXT}
 
 (**
  * @defgroup lavc_codec_hwaccel_vaapi VA API Decoding
