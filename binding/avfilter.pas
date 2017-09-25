@@ -171,8 +171,8 @@ const
  * callback functions used to interact with the filter.
  *)
 type
-  PAVFilter = ^AVFilter;
-  AVFilter = record
+  PAVFilter = ^AVFilter_;
+  AVFilter_ = record
     (**
      * Filter name. Must be non-NULL and unique among filters.
      *)

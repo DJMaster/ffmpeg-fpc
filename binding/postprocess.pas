@@ -27,6 +27,7 @@
 unit postprocess;
 
 {$mode objfpc}{$H+}
+{$macro on}
 
 interface
 
@@ -73,7 +74,7 @@ function postproc_license(): pchar; cdecl; external LIB_POSTPROCESS;
 const
   PP_QUALITY_MAX = 6;
 
-{$if FF_API_QP_TYPE}
+{$ifdef FF_API_QP_TYPE}
 type
   QP_STORE_T = cint8 deprecated;
 {$endif}
@@ -86,7 +87,7 @@ type
   pp_mode = record
   end;
 
-{$if LIBPOSTPROC_VERSION_INT < (52 shl 16)}
+{$if (LIBPOSTPROC_VERSION_INT < (52 shl 16))}
 type
   pp_context_t = ^pp_context;
   pp_mode_t = ^pp_mode;
@@ -138,5 +139,11 @@ const
 
 implementation
 
+begin
+  LIBPOSTPROC_VERSION_INT := AV_VERSION_INT(LIBPOSTPROC_VERSION_MAJOR, LIBPOSTPROC_VERSION_MINOR, LIBPOSTPROC_VERSION_MICRO);
+  LIBPOSTPROC_VERSION := AV_VERSION(LIBPOSTPROC_VERSION_MAJOR, LIBPOSTPROC_VERSION_MINOR, LIBPOSTPROC_VERSION_MICRO);
+  LIBPOSTPROC_BUILD := LIBPOSTPROC_VERSION_INT;
+
+  LIBPOSTPROC_IDENT := 'postproc' + LIBPOSTPROC_VERSION;
 end.
 

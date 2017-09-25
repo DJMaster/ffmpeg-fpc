@@ -32,20 +32,17 @@
  *)
 
 // #include "libavutil/version.h"
-
+const
   LIBAVRESAMPLE_VERSION_MAJOR = 3;
   LIBAVRESAMPLE_VERSION_MINOR = 5;
   LIBAVRESAMPLE_VERSION_MICRO = 0;
 
-  LIBAVRESAMPLE_VERSION_INT = AV_VERSION_INT(LIBAVRESAMPLE_VERSION_MAJOR, \
-                                                  LIBAVRESAMPLE_VERSION_MINOR, \
-                                                  LIBAVRESAMPLE_VERSION_MICRO);
-  LIBAVRESAMPLE_VERSION = AV_VERSION(LIBAVRESAMPLE_VERSION_MAJOR, \
-                                                  LIBAVRESAMPLE_VERSION_MINOR, \
-                                                  LIBAVRESAMPLE_VERSION_MICRO);
-  LIBAVRESAMPLE_BUILD = LIBAVRESAMPLE_VERSION_INT;
+var
+  LIBAVRESAMPLE_VERSION_INT: cint;
+  LIBAVRESAMPLE_VERSION: string;
+  LIBAVRESAMPLE_BUILD: string;
 
-  LIBAVRESAMPLE_IDENT = 'Lavr' + AV_STRINGIFY(LIBAVRESAMPLE_VERSION);
+  LIBAVRESAMPLE_IDENT: string;
 
 (**
  * FF_API_* defines may be placed below to indicate public API that will be

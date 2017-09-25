@@ -138,12 +138,12 @@ const
  * swr_free().
  *)
 
-#include <stdint.h>
-#include "libavutil/channel_layout.h"
-#include "libavutil/frame.h"
-#include "libavutil/samplefmt.h"
+// #include <stdint.h>
+// #include "libavutil/channel_layout.h"
+// #include "libavutil/frame.h"
+// #include "libavutil/samplefmt.h"
 
-#include "libswresample/version.h"
+// #include "libswresample/version.h"
 
 {$if LIBSWRESAMPLE_VERSION_MAJOR < 1}
 const
@@ -206,6 +206,7 @@ type
  * structure.
  *)
 type
+  PPSwrContext = ^PSwrContext;
   PSwrContext = ^SwrContext;
   SwrContext = record
   end;
@@ -601,5 +602,11 @@ function swr_config_frame(swr: PSwrContext; const out_: PAVFrame; const in_: PAV
 
 implementation
 
+begin
+  LIBSWRESAMPLE_VERSION_INT := AV_VERSION_INT(LIBSWRESAMPLE_VERSION_MAJOR, LIBSWRESAMPLE_VERSION_MINOR, LIBSWRESAMPLE_VERSION_MICRO);
+  LIBSWRESAMPLE_VERSION := AV_VERSION(LIBSWRESAMPLE_VERSION_MAJOR, LIBSWRESAMPLE_VERSION_MINOR, LIBSWRESAMPLE_VERSION_MICRO);
+  LIBSWRESAMPLE_BUILD := LIBSWRESAMPLE_VERSION;
+
+  LIBSWRESAMPLE_IDENT := 'SwR' + LIBSWRESAMPLE_VERSION;
 end.
 

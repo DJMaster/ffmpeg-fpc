@@ -111,19 +111,20 @@ const
  *  avresample_free().
  *)
 
-#include "libavutil/avutil.h"
-#include "libavutil/channel_layout.h"
-#include "libavutil/dict.h"
-#include "libavutil/frame.h"
-#include "libavutil/log.h"
-#include "libavutil/mathematics.h"
+// #include "libavutil/avutil.h"
+// #include "libavutil/channel_layout.h"
+// #include "libavutil/dict.h"
+// #include "libavutil/frame.h"
+// #include "libavutil/log.h"
+// #include "libavutil/mathematics.h"
 
-#include "libavresample/version.h"
+// #include "libavresample/version.h"
 
 const
   AVRESAMPLE_MAX_CHANNELS = 32;
 
 type
+  PPAVAudioResampleContext = ^PAVAudioResampleContext;
   PAVAudioResampleContext = ^AVAudioResampleContext;
   AVAudioResampleContext = record
   end;
@@ -506,7 +507,7 @@ function avresample_convert_frame(avr: PAVAudioResampleContext; output: PAVFrame
  * @param input           input AVFrame
  * @return                0 on success, AVERROR on failure.
  *)
-function avresample_config(avr: PAVAudioResampleContext; out_: PAVFrame: in_: PAVFrame): cint; cdecl; external LIB_AVRESAMPLE;
+function avresample_config(avr: PAVAudioResampleContext; out_: PAVFrame; in_: PAVFrame): cint; cdecl; external LIB_AVRESAMPLE;
 
 (**
  * @}
@@ -518,5 +519,11 @@ function avresample_config(avr: PAVAudioResampleContext; out_: PAVFrame: in_: PA
 
 implementation
 
+begin
+  LIBAVRESAMPLE_VERSION_INT := AV_VERSION_INT(LIBAVRESAMPLE_VERSION_MAJOR, LIBAVRESAMPLE_VERSION_MINOR, LIBAVRESAMPLE_VERSION_MICRO);
+  LIBAVRESAMPLE_VERSION := AV_VERSION(LIBAVRESAMPLE_VERSION_MAJOR, LIBAVRESAMPLE_VERSION_MINOR, LIBAVRESAMPLE_VERSION_MICRO);
+  LIBAVRESAMPLE_BUILD := LIBAVRESAMPLE_VERSION;
+
+  LIBAVRESAMPLE_IDENT := 'Lavr' + LIBAVRESAMPLE_VERSION;
 end.
 

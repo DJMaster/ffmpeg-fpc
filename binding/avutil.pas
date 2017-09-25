@@ -38,6 +38,7 @@ uses
 type
   pppcuint8 = ^ppcuint8;
   ppcuint8 = ^pcuint8;
+  ppcint = ^pcint;
   va_list = pointer;
   ppcuchar = ^pcuchar;
   PPAVOptionRanges = pointer;

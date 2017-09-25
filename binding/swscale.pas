@@ -27,6 +27,7 @@
 unit swscale;
 
 {$mode objfpc}{$H+}
+{$macro on}
 
 interface
 
@@ -46,12 +47,12 @@ const
  * external API header
  *)
 
-#include <stdint.h>
+// #include <stdint.h>
 
-#include "libavutil/avutil.h"
-#include "libavutil/log.h"
-#include "libavutil/pixfmt.h"
-#include "version.h"
+// #include "libavutil/avutil.h"
+// #include "libavutil/log.h"
+// #include "libavutil/pixfmt.h"
+// #include "version.h"
 
 (**
  * @defgroup libsws libswscale
@@ -248,7 +249,7 @@ function sws_scale(c: PSwsContext; const srcSlice: array of pcuint8; const srcSt
  * @param saturation 16.16 fixed point saturation correction
  * @return -1 if not supported
  *)
-function sws_setColorspaceDetails(c: PSwsContext; const inv_table: array[0..3] of cint; srcRange: cint; const table: array[0..3] of cint; dstRange: cint; brightness: cint; contrast: cint; saturation: cint): cint; cdecl; external LIB_SWSCALE;
+function sws_setColorspaceDetails(c: PSwsContext; const inv_table: array{[0..3]} of cint; srcRange: cint; const table: array{[0..3]} of cint; dstRange: cint; brightness: cint; contrast: cint; saturation: cint): cint; cdecl; external LIB_SWSCALE;
 
 (**
  * @return -1 if not supported
@@ -276,7 +277,7 @@ procedure sws_scaleVec(a: PSwsVector; scalar: cdouble); cdecl; external LIB_SWSC
  *)
 procedure sws_normalizeVec(a: PSwsVector; height: cdouble); cdecl; external LIB_SWSCALE;
 
-{$if FF_API_SWS_VECTOR}
+{$ifdef FF_API_SWS_VECTOR}
 //TODO attribute_deprecated
 function sws_getConstVec(c: cdouble; length: cint): PSwsVector; cdecl; external LIB_SWSCALE;
 //TODO attribute_deprecated
@@ -297,7 +298,7 @@ procedure sws_printVec2(a: PSwsVector; log_ctx: PAVClass; log_level: cint); cdec
 
 procedure sws_freeVec(a: PSwsVector); cdecl; external LIB_SWSCALE;
 
-function sws_getDefaultFilter(lumaGBlur: cfloat; chromaGBlur: cfloat; lumaSharpen: cfloat; chromaSharpen: float; chromaHShift: cfloat; chromaVShift: float; verbose: cint): PSwsFilter; cdecl; external LIB_SWSCALE;
+function sws_getDefaultFilter(lumaGBlur: cfloat; chromaGBlur: cfloat; lumaSharpen: cfloat; chromaSharpen: cfloat; chromaHShift: cfloat; chromaVShift: cfloat; verbose: cint): PSwsFilter; cdecl; external LIB_SWSCALE;
 procedure sws_freeFilter(filter: PSwsFilter); cdecl; external LIB_SWSCALE;
 
 (**
@@ -356,5 +357,11 @@ function sws_get_class(): PAVClass; cdecl; external LIB_SWSCALE;
 
 implementation
 
+begin
+  LIBSWSCALE_VERSION_INT := AV_VERSION_INT(LIBSWSCALE_VERSION_MAJOR, LIBSWSCALE_VERSION_MINOR, LIBSWSCALE_VERSION_MICRO);
+  LIBSWSCALE_VERSION := AV_VERSION(LIBSWSCALE_VERSION_MAJOR, LIBSWSCALE_VERSION_MINOR, LIBSWSCALE_VERSION_MICRO);
+  LIBSWSCALE_BUILD := LIBSWSCALE_VERSION;
+
+  LIBSWSCALE_IDENT := 'SwS' + LIBSWSCALE_VERSION;
 end.
 

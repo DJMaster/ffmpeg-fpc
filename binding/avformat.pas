@@ -493,7 +493,7 @@ type
     filename: pchar;
     buf: pcuchar; (**< Buffer must have AVPROBE_PADDING_SIZE of extra allocated bytes filled with zero. *)
     buf_size: cint; (**< Size of buf except extra allocated bytes *)
-    mime_type pchar; (**< mime_type, when known. *)
+    mime_type: pchar; (**< mime_type, when known. *)
   end;
 
 const
@@ -858,9 +858,9 @@ type
     AVSTREAM_PARSE_HEADERS, (**< Only parse headers, do not repack. *)
     AVSTREAM_PARSE_TIMESTAMPS, (**< full parsing and interpolation of timestamps for frames not starting on a packet boundary *)
     AVSTREAM_PARSE_FULL_ONCE, (**< full parsing and repack of the first frame only, only implemented for H.264 currently *)
-    AVSTREAM_PARSE_FULL_RAW=MKTAG(0,'R','A','W') (**< full parsing and repack with timestamp and position generation by parser for raw
-                                                      this assumes that each packet in the file contains no demuxer level headers and
-                                                      just codec level data, otherwise position generation would fail *)
+    AVSTREAM_PARSE_FULL_RAW = MKTAG(0,'R','A','W') (**< full parsing and repack with timestamp and position generation by parser for raw
+                                                        this assumes that each packet in the file contains no demuxer level headers and
+                                                       just codec level data, otherwise position generation would fail *)
   );
 
   PAVIndexEntry = ^AVIndexEntry;
@@ -872,10 +872,10 @@ type
                          * But demuxers can choose to store a different timestamp, if it is more convenient for the implementation or nothing better
                          * is known
                          *)
-{$define AVINDEX_KEYFRAME := $0001};
-{$define AVINDEX_DISCARD_FRAME := $0002}; (**
-                                            * Flag is used to indicate which frame should be discarded after decoding.
-                                            *)
+{$define AVINDEX_KEYFRAME := $0001}
+{$define AVINDEX_DISCARD_FRAME := $0002} (**
+                                           * Flag is used to indicate which frame should be discarded after decoding.
+                                           *)
     flags: 0..1;
     size: 0..29; //Yeah, trying to keep the size of this small to reduce memory requirements (it is 24 vs. 32 bytes due to possible 8-byte alignment).
     min_distance: cint; (**< Minimum distance between this and the previous keyframe, used to avoid unneeded searching. *)
@@ -981,7 +981,7 @@ type
      * encoding: set by the user, replaced by libavformat if left unset
      *)
     id: cint;
-{$if FF_API_LAVF_AVCTX}
+{$ifdef FF_API_LAVF_AVCTX}
     (**
      * @deprecated use the codecpar struct instead
      *)
@@ -990,7 +990,7 @@ type
 {$endif}
     priv_data: pointer;
 
-{$if FF_API_LAVF_FRAC}
+{$ifdef FF_API_LAVF_FRAC}
     (**
      * @deprecated this field is unused
      *)

@@ -37,15 +37,12 @@ const
   LIBSWSCALE_VERSION_MINOR = 6;
   LIBSWSCALE_VERSION_MICRO = 100;
 
-  LIBSWSCALE_VERSION_INT = AV_VERSION_INT(LIBSWSCALE_VERSION_MAJOR, \
-                                               LIBSWSCALE_VERSION_MINOR, \
-                                               LIBSWSCALE_VERSION_MICRO);
-  LIBSWSCALE_VERSION = AV_VERSION(LIBSWSCALE_VERSION_MAJOR, \
-                                           LIBSWSCALE_VERSION_MINOR, \
-                                           LIBSWSCALE_VERSION_MICRO);
-  LIBSWSCALE_BUILD = LIBSWSCALE_VERSION_INT;
+var
+  LIBSWSCALE_VERSION_INT: cint;
+  LIBSWSCALE_VERSION: string;
+  LIBSWSCALE_BUILD: string;
 
-  LIBSWSCALE_IDENT = 'SwS' + AV_STRINGIFY(LIBSWSCALE_VERSION);
+  LIBSWSCALE_IDENT: string;
 
 (**
  * FF_API_* defines may be placed below to indicate public API that will be
