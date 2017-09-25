@@ -42,7 +42,7 @@ type
   PID3D11VideoDecoder = pointer;
   PID3D11VideoContext = pointer;
   PD3D11_VIDEO_DECODER_CONFIG = pointer;
-  PPID3D11VideoDecoderOutputView = PID3D11VideoDecoderOutputView;
+  PPID3D11VideoDecoderOutputView = ^PID3D11VideoDecoderOutputView;
   PID3D11VideoDecoderOutputView = pointer;
 
 // #ifndef AVCODEC_AVCODEC_H
@@ -1138,20 +1138,20 @@ const
   CODEC_FLAG_4MV = AV_CODEC_FLAG_4MV;
   CODEC_FLAG_OUTPUT_CORRUPT = AV_CODEC_FLAG_OUTPUT_CORRUPT;
   CODEC_FLAG_QPEL = AV_CODEC_FLAG_QPEL;
-{$ifdef FF_API_GMC}
+{$if FF_API_GMC}
 (**
  * @deprecated use the "gmc" private option of the libxvid encoder
  *)
   CODEC_FLAG_GMC = $0020; ///< Use GMC.
 {$endif}
-{$ifdef FF_API_MV0}
+{$if FF_API_MV0}
 (**
  * @deprecated use the flag "mv0" in the "mpv_flags" private option of the
  * mpegvideo encoders
  *)
   CODEC_FLAG_MV0 = $0040;
 {$endif}
-{$ifdef FF_API_INPUT_PRESERVED}
+{$if FF_API_INPUT_PRESERVED}
 (**
  * @deprecated passing reference-counted frames to the encoders replaces this
  * flag
@@ -1161,7 +1161,7 @@ const
   CODEC_FLAG_PASS1 = AV_CODEC_FLAG_PASS1;
   CODEC_FLAG_PASS2 = AV_CODEC_FLAG_PASS2;
   CODEC_FLAG_GRAY = AV_CODEC_FLAG_GRAY;
-{$ifdef FF_API_EMU_EDGE}
+{$if FF_API_EMU_EDGE}
 (**
  * @deprecated edges are not used/required anymore. I.e. this flag is now always
  * set.
@@ -1171,7 +1171,7 @@ const
   CODEC_FLAG_PSNR = AV_CODEC_FLAG_PSNR;
   CODEC_FLAG_TRUNCATED = AV_CODEC_FLAG_TRUNCATED;
 
-{$ifdef FF_API_NORMALIZE_AQP}
+{$if FF_API_NORMALIZE_AQP}
 (**
  * @deprecated use the flag "naq" in the "mpv_flags" private option of the
  * mpegvideo encoders
@@ -1212,7 +1212,7 @@ const
  *)
   CODEC_CAP_DR1 = AV_CODEC_CAP_DR1;
   CODEC_CAP_TRUNCATED = AV_CODEC_CAP_TRUNCATED;
-{$ifdef FF_API_XVMC}
+{$if FF_API_XVMC}
 (* Codec can export data for HW decoding. This flag indicates that
  * the codec would call get_format() with list that might contain HW accelerated
  * pixel formats (XvMC, VDPAU, VAAPI, etc). The application can pick any of them
@@ -1251,7 +1251,7 @@ const
  * This can be used to prevent truncation of the last audio samples.
  *)
   CODEC_CAP_SMALL_LAST_FRAME = AV_CODEC_CAP_SMALL_LAST_FRAME;
-{$ifdef FF_API_CAP_VDPAU}
+{$if FF_API_CAP_VDPAU}
 (**
  * Codec can export data for HW decoding (VDPAU).
  *)
@@ -1278,7 +1278,7 @@ const
  * Codec should fill in channel configuration and samplerate instead of container
  *)
   CODEC_CAP_CHANNEL_CONF = AV_CODEC_CAP_CHANNEL_CONF;
-{$ifdef FF_API_NEG_LINESIZES}
+{$if FF_API_NEG_LINESIZES}
 (**
  * @deprecated no codecs use this capability
  *)
@@ -2849,7 +2849,7 @@ type
 {$define FF_CODER_TYPE_AC := 1}
 {$define FF_CODER_TYPE_RAW := 2}
 {$define FF_CODER_TYPE_RLE := 3}
-{$ifdef FF_API_UNUSED_MEMBERS}
+{$if FF_API_UNUSED_MEMBERS}
 {$define FF_CODER_TYPE_DEFLATE := 4}
 {$endif} (* FF_API_UNUSED_MEMBERS *)
     (**
@@ -6449,5 +6449,11 @@ function av_cpb_properties_alloc(size: pcsize_t): PAVCPBProperties; cdecl; exter
 
 implementation
 
+begin
+  LIBAVCODEC_VERSION_INT := AV_VERSION_INT(LIBAVCODEC_VERSION_MAJOR, LIBAVCODEC_VERSION_MINOR, LIBAVCODEC_VERSION_MICRO);
+  LIBAVCODEC_VERSION := AV_VERSION(LIBAVCODEC_VERSION_MAJOR, LIBAVCODEC_VERSION_MINOR, LIBAVCODEC_VERSION_MICRO);
+  LIBAVCODEC_BUILD := LIBAVCODEC_VERSION_INT;
+
+  LIBAVCODEC_IDENT := 'Lavc' + LIBAVCODEC_VERSION;
 end.
 

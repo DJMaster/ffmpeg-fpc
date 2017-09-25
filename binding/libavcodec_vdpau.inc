@@ -62,7 +62,7 @@
 // #include "avcodec.h"
 // #include "version.h"
 
-{$if FF_API_BUFS_VDPAU}
+{$ifdef FF_API_BUFS_VDPAU}
 type
   AVVDPAUPictureInfo = record
     h264: VdpPictureInfoH264;
@@ -205,7 +205,7 @@ function av_vdpau_get_surface_parameters(avctx: PAVCodecContext; type_: PVdpChro
  *)
 function av_vdpau_alloc_context(): PAVVDPAUContext; cdecl; external LIB_AVCODEC;
 
-{$if FF_API_VDPAU_PROFILE}
+{$ifdef FF_API_VDPAU_PROFILE}
 (**
  * Get a decoder profile that should be used for initializing a VDPAU decoder.
  * Should be called from the AVCodecContext.get_format() callback.
@@ -223,7 +223,7 @@ function av_vdpau_alloc_context(): PAVVDPAUContext; cdecl; external LIB_AVCODEC;
 function av_vdpau_get_profile(avctx: PAVCodecContext; profile: PVdpDecoderProfile): cint; cdecl; external LIB_AVCODEC;
 {$endif}
 
-{$if FF_API_CAP_VDPAU}
+{$ifdef FF_API_CAP_VDPAU}
 const
 (** @brief The videoSurface is used for rendering. *)
   FF_VDPAU_STATE_USED_FOR_RENDER = 1;

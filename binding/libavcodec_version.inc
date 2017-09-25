@@ -38,15 +38,12 @@ const
   LIBAVCODEC_VERSION_MINOR = 89;
   LIBAVCODEC_VERSION_MICRO = 100;
 
-  LIBAVCODEC_VERSION_INT = AV_VERSION_INT(LIBAVCODEC_VERSION_MAJOR, \
-                                               LIBAVCODEC_VERSION_MINOR, \
-                                               LIBAVCODEC_VERSION_MICRO);
-  LIBAVCODEC_VERSION = AV_VERSION(LIBAVCODEC_VERSION_MAJOR,    \
-                                           LIBAVCODEC_VERSION_MINOR,    \
-                                           LIBAVCODEC_VERSION_MICRO);
-  LIBAVCODEC_BUILD = LIBAVCODEC_VERSION_INT;
+var
+  LIBAVCODEC_VERSION_INT: cint;
+  LIBAVCODEC_VERSION: string;
+  LIBAVCODEC_BUILD: string;
 
-  LIBAVCODEC_IDENT = 'Lavc' + AV_STRINGIFY(LIBAVCODEC_VERSION);
+  LIBAVCODEC_IDENT: string;
 
 (**
  * FF_API_* defines may be placed below to indicate public API that will be
