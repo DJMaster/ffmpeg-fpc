@@ -159,6 +159,15 @@ function av_buffersrc_parameters_set(ctx: PAVFilterContext; param: PAVBufferSrcP
 function av_buffersrc_write_frame(ctx: PAVFilterContext; const frame: PAVFrame): cint; cdecl; external LIB_AVFILTER;
 
 (**
+ * Close the buffer source after EOF.
+ *
+ * This is similar to passing NULL to av_buffersrc_add_frame_flags()
+ * except it takes the timestamp of the EOF, i.e. the timestamp of the end
+ * of the last frame.
+ *)
+function av_buffersrc_close(ctx: PAVFilterContext; pts: cint64; flags: cunsigned): cint; cdecl; external LIB_AVFILTER;
+
+(**
  * Add a frame to the buffer source.
  *
  * @param ctx   an instance of the buffersrc filter

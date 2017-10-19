@@ -86,7 +86,7 @@ function AV_VERSION(a, b, c: cint): string;
 
 const
   LIBAVUTIL_VERSION_MAJOR = 55;
-  LIBAVUTIL_VERSION_MINOR = 58;
+  LIBAVUTIL_VERSION_MINOR = 78;
   LIBAVUTIL_VERSION_MICRO = 100;
 
 var
@@ -137,6 +137,9 @@ var
 {$endif}
 {$ifndef FF_API_PKT_PTS}
 {$define FF_API_PKT_PTS := (LIBAVUTIL_VERSION_MAJOR < 56)}
+{$endif}
+{$ifndef FF_API_CRYPTO_SIZE_T}
+{$define FF_API_CRYPTO_SIZE_T := (LIBAVUTIL_VERSION_MAJOR < 56)}
 {$endif}
 
 (**

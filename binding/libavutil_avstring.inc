@@ -275,6 +275,12 @@ function av_strcasecmp(const a: pchar; const b: pchar): cint; cdecl; external LI
 function av_strncasecmp(const a: pchar; const b: pchar; n: csize_t): cint; cdecl; external LIB_AVUTIL;
 
 (**
+ * Locale-independent strings replace.
+ * @note This means only ASCII-range characters are replace
+ *)
+function av_strireplace(const str: pchar; const from: pchar; const to_: pchar): pchar; cdecl; external LIB_AVUTIL;
+
+(**
  * Thread safe basename.
  * @param path the path, on DOS both \ and / are considered separators.
  * @return pointer to the basename substring.

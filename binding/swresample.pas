@@ -145,11 +145,6 @@ const
 
 // #include "libswresample/version.h"
 
-{$if LIBSWRESAMPLE_VERSION_MAJOR < 1}
-const
-  SWR_CH_MAX = 32; ///< Maximum number of channels
-{$endif}
-
 (**
  * @name Option constants
  * These constants are used for the @ref avoptions interface for lswr.

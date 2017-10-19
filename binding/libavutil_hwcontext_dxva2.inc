@@ -73,6 +73,9 @@ type
      *
      * If it is non-NULL, libavutil will call IDirectXVideoDecoder_Release() on
      * it just before the internal surface pool is freed.
+     *
+     * This is for convenience only. Some code uses other methods to manage the
+     * decoder reference.
      *)
     decoder_to_release: PIDirectXVideoDecoder;
   end;

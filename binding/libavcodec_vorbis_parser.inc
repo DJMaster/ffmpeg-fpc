@@ -41,9 +41,6 @@ type
 
 (**
  * Allocate and initialize the Vorbis parser using headers in the extradata.
- *
- * @param avctx codec context
- * @param s     Vorbis parser context
  *)
 function av_vorbis_parse_init(const extradata: pcuint8; extradata_size: cint): PAVVorbisParseContext; cdecl; external LIB_AVCODEC;
 

@@ -2992,6 +2992,7 @@ function avformat_match_stream_specifier(s: PAVFormatContext; st: PAVStream; con
 
 function avformat_queue_attached_pictures(s: PAVFormatContext): cint; cdecl; external LIB_AVFORMAT;
 
+{$if FF_API_OLD_BSF}
 (**
  * Apply a list of bitstream filters to a packet.
  *
@@ -3003,7 +3004,6 @@ function avformat_queue_attached_pictures(s: PAVFormatContext): cint; cdecl; ext
  * @return  >=0 on success;
  *          AVERROR code on failure
  *)
-{$if FF_API_OLD_BSF}
 //TODO attribute_deprecated
 function av_apply_bitstream_filters(codec: PAVCodecContext; pkt: PAVPacket; bsfc: PAVBitStreamFilterContext): cint; cdecl; external LIB_AVFORMAT;
 {$endif}

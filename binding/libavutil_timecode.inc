@@ -37,7 +37,7 @@
 // #include "rational.h"
 
 const
-  AV_TIMECODE_STR_SIZE = 16;
+  AV_TIMECODE_STR_SIZE = 23;
 
 type
   AVTimecodeFlag = (
