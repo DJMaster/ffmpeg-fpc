@@ -16,14 +16,14 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVUTIL_HWCONTEXT_VIDEOTOOLBOX_H
-#define AVUTIL_HWCONTEXT_VIDEOTOOLBOX_H
+// #ifndef AVUTIL_HWCONTEXT_VIDEOTOOLBOX_H
+// #define AVUTIL_HWCONTEXT_VIDEOTOOLBOX_H
 
-#include <stdint.h>
+// #include <stdint.h>
 
-#include <VideoToolbox/VideoToolbox.h>
+//TODO #include <VideoToolbox/VideoToolbox.h>
 
-#include "pixfmt.h"
+// #include "pixfmt.h"
 
 (**
  * @file
@@ -43,12 +43,12 @@
  * Convert a VideoToolbox (actually CoreVideo) format to AVPixelFormat.
  * Returns AV_PIX_FMT_NONE if no known equivalent was found.
  *)
-enum AVPixelFormat av_map_videotoolbox_format_to_pixfmt(uint32_t cv_fmt);
+function av_map_videotoolbox_format_to_pixfmt(cv_fmt: cuint32): AVPixelFormat; cdecl; external LIB_AVUTIL;
 
 (**
  * Convert an AVPixelFormat to a VideoToolbox (actually CoreVideo) format.
  * Returns 0 if no known equivalent was found.
  *)
-uint32_t av_map_videotoolbox_format_from_pixfmt(enum AVPixelFormat pix_fmt);
+function av_map_videotoolbox_format_from_pixfmt(pix_fmt: AVPixelFormat ): cuint32; cdecl; external LIB_AVUTIL;
 
-#endif (* AVUTIL_HWCONTEXT_VIDEOTOOLBOX_H *)
+// #endif (* AVUTIL_HWCONTEXT_VIDEOTOOLBOX_H *)

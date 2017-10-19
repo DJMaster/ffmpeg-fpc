@@ -16,8 +16,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *)
 
-#ifndef AVUTIL_HWCONTEXT_D3D11VA_H
-#define AVUTIL_HWCONTEXT_D3D11VA_H
+// #ifndef AVUTIL_HWCONTEXT_D3D11VA_H
+// #define AVUTIL_HWCONTEXT_D3D11VA_H
 
 (**
  * @file
@@ -36,7 +36,7 @@
  * code will try to load various supported D3D debugging layers.
  *)
 
-#include <d3d11.h>
+//TODO #include <d3d11.h>
 
 (**
  * This struct is allocated as AVHWDeviceContext.hwctx
@@ -165,4 +165,4 @@ typedef struct AVD3D11VAFramesContext {
     UINT MiscFlags;
 } AVD3D11VAFramesContext;
 
-#endif (* AVUTIL_HWCONTEXT_D3D11VA_H *)
+// #endif (* AVUTIL_HWCONTEXT_D3D11VA_H *)

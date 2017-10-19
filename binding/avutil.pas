@@ -451,10 +451,13 @@ function av_fourcc_make_string(buf: pchar; fourcc: cuint32): pchar; cdecl; exter
 {$include libavutil_hmac.inc}
 {$include libavutil_hwcontext.inc}
 {-$include libavutil_hwcontext_cuda.inc}
+{-$include libavutil_hwcontext_d3d11va.inc}
+{-$include libavutil_hwcontext_drm.inc}
 {-$include libavutil_hwcontext_dxva2.inc}
 {-$include libavutil_hwcontext_qsv.inc}
 {-$include libavutil_hwcontext_vaapi.inc}
 {-$include libavutil_hwcontext_vdpau.inc}
+{-$include libavutil_hwcontext_videotoolbox.inc}
 
 {$include libavutil_pixdesc.inc}
 {$include libavutil_imgutils.inc}
