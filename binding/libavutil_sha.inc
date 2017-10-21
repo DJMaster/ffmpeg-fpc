@@ -33,6 +33,7 @@
 // #ifndef AVUTIL_SHA_H
 // #define AVUTIL_SHA_H
 
+// #include <stddef.h>
 // #include <stdint.h>
 
 // #include "attributes.h"
@@ -79,11 +80,15 @@ function av_sha_init(context: PAVSHA; bits: cint): cint; cdecl; external LIB_AVU
 (**
  * Update hash value.
  *
- * @param context hash function context
+ * @param ctx     hash function context
  * @param data    input data to update hash with
  * @param len     input data length
  *)
-procedure av_sha_update(context: PAVSHA; const data: pcuint8; len: cuint); cdecl; external LIB_AVUTIL;
+{$if FF_API_CRYPTO_SIZE_T}
+procedure av_sha_update(ctx: PAVSHA; const data: pcuint8; len: cuint); cdecl; external LIB_AVUTIL;
+{$else}
+procedure av_sha_update(ctx: PAVSHA; const data: pcuint8; len: csize_t); cdecl; external LIB_AVUTIL;
+{$endif}
 
 (**
  * Finish hashing and output digest value.
