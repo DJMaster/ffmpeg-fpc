@@ -92,4 +92,44 @@ function av_mastering_display_metadata_alloc(): PAVMasteringDisplayMetadata; cde
  *)
 function av_mastering_display_metadata_create_side_data(frame: PAVFrame): PAVMasteringDisplayMetadata; cdecl; external LIB_AVUTIL;
 
+(**
+ * Content light level needed by to transmit HDR over HDMI (CTA-861.3).
+ *
+ * To be used as payload of a AVFrameSideData or AVPacketSideData with the
+ * appropriate type.
+ *
+ * @note The struct should be allocated with av_content_light_metadata_alloc()
+ *       and its size is not a part of the public ABI.
+ *)
+type
+  AVContentLightMetadata = record
+    (**
+     * Max content light level (cd/m^2).
+     *)
+    MaxCLL: cunsigned;
+
+    (**
+     * Max average light level per frame (cd/m^2).
+     *)
+    MaxFALL: cunsigned;
+  end;
+
+(**
+ * Allocate an AVContentLightMetadata structure and set its fields to
+ * default values. The resulting struct can be freed using av_freep().
+ *
+ * @return An AVContentLightMetadata filled with default values or NULL
+ *         on failure.
+ *)
+function av_content_light_metadata_alloc(size: pcsize_t): PAVContentLightMetadata; cdecl; external LIB_AVUTIL;
+
+(**
+ * Allocate a complete AVContentLightMetadata and add it to the frame.
+ *
+ * @param frame The frame which side data is added to.
+ *
+ * @return The AVContentLightMetadata structure to be filled by caller.
+ *)
+function av_content_light_metadata_create_side_data(frame: PAVFrame): PAVContentLightMetadata; cdecl; external LIB_AVUTIL;
+
 // #endif (* AVUTIL_MASTERING_DISPLAY_METADATA_H *)
