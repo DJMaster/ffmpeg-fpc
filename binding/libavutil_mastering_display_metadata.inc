@@ -102,6 +102,7 @@ function av_mastering_display_metadata_create_side_data(frame: PAVFrame): PAVMas
  *       and its size is not a part of the public ABI.
  *)
 type
+  PAVContentLightMetadata = ^AVContentLightMetadata;
   AVContentLightMetadata = record
     (**
      * Max content light level (cd/m^2).

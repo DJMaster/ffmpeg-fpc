@@ -84,7 +84,7 @@ function av_sha_init(context: PAVSHA; bits: cint): cint; cdecl; external LIB_AVU
  * @param data    input data to update hash with
  * @param len     input data length
  *)
-{$if FF_API_CRYPTO_SIZE_T}
+{$ifdef FF_API_CRYPTO_SIZE_T}
 procedure av_sha_update(ctx: PAVSHA; const data: pcuint8; len: cuint); cdecl; external LIB_AVUTIL;
 {$else}
 procedure av_sha_update(ctx: PAVSHA; const data: pcuint8; len: csize_t); cdecl; external LIB_AVUTIL;
