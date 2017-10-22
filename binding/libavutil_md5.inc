@@ -33,6 +33,7 @@
 // #ifndef AVUTIL_MD5_H
 // #define AVUTIL_MD5_H
 
+// #include <stddef.h>
 // #include <stdint.h>
 
 // #include "attributes.h"
@@ -73,7 +74,11 @@ procedure av_md5_init(ctx: PAVMD5); cdecl; external LIB_AVUTIL;
  * @param src input data to update hash with
  * @param len input data length
  *)
+{$ifdef FF_API_CRYPTO_SIZE_T}
 procedure av_md5_update(ctx: PAVMD5; const src: pcuint8; len: cint); cdecl; external LIB_AVUTIL;
+{$else}
+procedure av_md5_update(ctx: PAVMD5; const src: pcuint8; len: csize_t); cdecl; external LIB_AVUTIL;
+{$endif}
 
 (**
  * Finish hashing and output digest value.
@@ -90,7 +95,11 @@ procedure av_md5_final(ctx: PAVMD5; dst: pcuint8); cdecl; external LIB_AVUTIL;
  * @param src The data to hash
  * @param len The length of the data, in bytes
  *)
+{$ifdef FF_API_CRYPTO_SIZE_T}
 procedure av_md5_sum(dst: pcuint8; const src: pcuint8; const len: cint); cdecl; external LIB_AVUTIL;
+{$else}
+procedure av_md5_sum(dst: pcuint8; const src: pcuint8; len: csize_t); cdecl; external LIB_AVUTIL;
+{$endif}
 
 (**
  * @}
