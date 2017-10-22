@@ -191,6 +191,12 @@ const
   AV_PIX_FMT_FLAG_BAYER = (1 shl 8);
 
 (**
+ * The pixel format contains IEEE-754 floating point values. Precision (double,
+ * single, or half) should be determined by the pixel size (64, 32, or 16 bits).
+ *)
+  AV_PIX_FMT_FLAG_FLOAT = (1 shl 9);
+
+(**
  * Return the number of bits per pixel used by the pixel format
  * described by pixdesc. Note that this is not the same as the number
  * of bits per sample.
@@ -257,9 +263,19 @@ function av_pix_fmt_count_planes(pix_fmt: AVPixelFormat): cint; cdecl; external 
 function av_color_range_name(range: AVColorRange): pchar; cdecl; external LIB_AVUTIL;
 
 (**
+ * @return the AVColorRange value for name or an AVError if not found.
+ *)
+function av_color_range_from_name(const name: pchar): cint; cdecl; external LIB_AVUTIL;
+
+(**
  * @return the name for provided color primaries or NULL if unknown.
  *)
 function av_color_primaries_name(primaries: AVColorPrimaries ): pchar; cdecl; external LIB_AVUTIL;
+
+(**
+ * @return the AVColorPrimaries value for name or an AVError if not found.
+ *)
+function av_color_primaries_from_name(const name: pchar): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * @return the name for provided color transfer or NULL if unknown.
@@ -267,14 +283,29 @@ function av_color_primaries_name(primaries: AVColorPrimaries ): pchar; cdecl; ex
 function av_color_transfer_name(transfer: AVColorTransferCharacteristic): pchar; cdecl; external LIB_AVUTIL;
 
 (**
+ * @return the AVColorTransferCharacteristic value for name or an AVError if not found.
+ *)
+function av_color_transfer_from_name(const name: pchar): cint; cdecl; external LIB_AVUTIL;
+
+(**
  * @return the name for provided color space or NULL if unknown.
  *)
 function av_color_space_name(space: AVColorSpace): pchar; cdecl; external LIB_AVUTIL;
 
 (**
+ * @return the AVColorSpace value for name or an AVError if not found.
+ *)
+function av_color_space_from_name(const name: pchar): cint; cdecl; external LIB_AVUTIL;
+
+(**
  * @return the name for provided chroma location or NULL if unknown.
  *)
 function av_chroma_location_name(location: AVChromaLocation): pchar; cdecl; external LIB_AVUTIL;
+
+(**
+ * @return the AVChromaLocation value for name or an AVError if not found.
+ *)
+function av_chroma_location_from_name(const name: pchar): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Return the pixel format corresponding to name.
