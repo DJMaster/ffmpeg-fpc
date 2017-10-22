@@ -36,7 +36,11 @@ type
     AV_HWDEVICE_TYPE_CUDA,
     AV_HWDEVICE_TYPE_VAAPI,
     AV_HWDEVICE_TYPE_DXVA2,
-    AV_HWDEVICE_TYPE_QSV
+    AV_HWDEVICE_TYPE_QSV,
+    AV_HWDEVICE_TYPE_VIDEOTOOLBOX,
+    AV_HWDEVICE_TYPE_NONE,
+    AV_HWDEVICE_TYPE_D3D11VA,
+    AV_HWDEVICE_TYPE_DRM
   );
 
 type
@@ -246,6 +250,33 @@ type
   end;
 
 (**
+ * Look up an AVHWDeviceType by name.
+ *
+ * @param name String name of the device type (case-insensitive).
+ * @return The type from enum AVHWDeviceType, or AV_HWDEVICE_TYPE_NONE if
+ *         not found.
+ *)
+function av_hwdevice_find_type_by_name(const name: pchar): AVHWDeviceType; cdecl; external LIB_AVUTIL;
+
+(** Get the string name of an AVHWDeviceType.
+ *
+ * @param type Type from enum AVHWDeviceType.
+ * @return Pointer to a static string containing the name, or NULL if the type
+ *         is not valid.
+ *)
+function av_hwdevice_get_type_name(type_: AVHWDeviceType): pchar; cdecl; external LIB_AVUTIL;
+
+(**
+ * Iterate over supported device types.
+ *
+ * @param type AV_HWDEVICE_TYPE_NONE initially, then the previous type
+ *             returned by this function in subsequent iterations.
+ * @return The next usable device type from enum AVHWDeviceType, or
+ *         AV_HWDEVICE_TYPE_NONE if there are no more.
+ *)
+function av_hwdevice_iterate_types(prev: AVHWDeviceType): AVHWDeviceType; cdecl; external LIB_AVUTIL;
+
+(**
  * Allocate an AVHWDeviceContext for a given hardware type.
  *
  * @param type the type of the hardware device to allocate.
@@ -290,6 +321,29 @@ function av_hwdevice_ctx_init(ref: PAVBufferRef): cint; cdecl; external LIB_AVUT
  * @return 0 on success, a negative AVERROR code on failure.
  *)
 function av_hwdevice_ctx_create(device_ctx: PPAVBufferRef; type_: AVHWDeviceType; const device: pchar; opts: PAVDictionary; flags: cint): cint; cdecl; external LIB_AVUTIL;
+
+(**
+ * Create a new device of the specified type from an existing device.
+ *
+ * If the source device is a device of the target type or was originally
+ * derived from such a device (possibly through one or more intermediate
+ * devices of other types), then this will return a reference to the
+ * existing device of the same type as is requested.
+ *
+ * Otherwise, it will attempt to derive a new device from the given source
+ * device.  If direct derivation to the new type is not implemented, it will
+ * attempt the same derivation from each ancestor of the source device in
+ * turn looking for an implemented derivation method.
+ *
+ * @param dst_ctx On success, a reference to the newly-created
+ *                AVHWDeviceContext.
+ * @param type    The type of the new device to create.
+ * @param src_ctx A reference to an existing AVHWDeviceContext which will be
+ *                used to create the new device.
+ * @param flags   Currently unused; should be set to zero.
+ * @return        Zero on success, a negative AVERROR code on failure.
+ *)
+function av_hwdevice_ctx_create_derived(dst_ctx: PPAVBufferRef; type_: AVHWDeviceType; src_ctx: PAVBufferRef; flags: cint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * Allocate an AVHWFramesContext tied to a given device context.
@@ -440,7 +494,7 @@ function av_hwdevice_hwconfig_alloc(device_ctx: PAVBufferRef): pointer; cdecl; e
  * configuration is provided, returns the maximum possible capabilities
  * of the device.
  *
- * @param device_ctx a reference to the associated AVHWDeviceContext.
+ * @param ref a reference to the associated AVHWDeviceContext.
  * @param hwconfig a filled HW-specific configuration structure, or NULL
  *        to return the maximum possible capabilities of the device.
  * @return AVHWFramesConstraints structure describing the constraints
@@ -530,7 +584,9 @@ function av_hwframe_map(dst: PAVFrame; const src: PAVFrame; flags: cint): cint; 
  *                           AVHWFramesContext on.
  * @param source_frame_ctx   A reference to an existing AVHWFramesContext
  *                           which will be mapped to the derived context.
- * @param flags  Currently unused; should be set to zero.
+ * @param flags  Some combination of AV_HWFRAME_MAP_* flags, defining the
+ *               mapping parameters to apply to frames which are allocated
+ *               in the derived device.
  * @return       Zero on success, negative AVERROR code on failure.
  *)
 function av_hwframe_ctx_create_derived(derived_frame_ctx: PPAVBufferRef; format: AVPixelFormat; derived_device_ctx: PAVBufferRef; source_frame_ctx: PAVBufferRef; flags: cint): cint; cdecl; external LIB_AVUTIL;
