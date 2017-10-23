@@ -31,6 +31,7 @@
 // #ifndef AVUTIL_FRAME_H
 // #define AVUTIL_FRAME_H
 
+// #include <stddef.h>
 // #include <stdint.h>
 
 // #include "avutil.h"
@@ -132,7 +133,20 @@ type
      * The data represents the AVSphericalMapping structure defined in
      * libavutil/spherical.h.
      *)
-    AV_FRAME_DATA_SPHERICAL
+    AV_FRAME_DATA_SPHERICAL,
+
+    (**
+     * Content light level (based on CTA-861.3). This payload contains data in
+     * the form of the AVContentLightMetadata struct.
+     *)
+    AV_FRAME_DATA_CONTENT_LIGHT_LEVEL,
+
+    (**
+     * The data contains an ICC profile as an opaque octet buffer following the
+     * format described by ISO 15076-1 with an optional name defined in the
+     * metadata key entry "name".
+     *)
+    AV_FRAME_DATA_ICC_PROFILE
   );
 
   AVActiveFormatDescription = (
@@ -246,9 +260,18 @@ type
     extended_data: ppcuint8;
 
     (**
-     * width and height of the video frame
+     * @name Video dimensions
+     * Video frames only. The coded dimensions (in pixels) of the video frame,
+     * i.e. the size of the rectangle that contains some well-defined values.
+     *
+     * @note The part of the frame intended for display/presentation is further
+     * restricted by the @ref cropping "Cropping rectangle".
+     * @{
      *)
     width, height: cint;
+    (**
+     * @}
+     *)
 
     (**
      * number of audio samples (per channel) described by this frame
@@ -536,6 +559,22 @@ type
      * purpose.
      *)
     opaque_ref: PAVBufferRef;
+
+    (**
+     * @anchor cropping
+     * @name Cropping
+     * Video frames only. The number of pixels to discard from the the
+     * top/bottom/left/right border of the frame to obtain the sub-rectangle of
+     * the frame intended for presentation.
+     * @{
+     *)
+    crop_top: csize_t;
+    crop_bottom: csize_t;
+    crop_left: csize_t;
+    crop_right: csize_t;
+    (**
+     * @}
+     *)
   end;
 
 (**
@@ -654,7 +693,9 @@ procedure av_frame_move_ref(dst: PAVFrame; src: PAVFrame); cdecl; external LIB_A
  *           cases.
  *
  * @param frame frame in which to store the new buffers.
- * @param align required buffer size alignment
+ * @param align Required buffer size alignment. If equal to 0, alignment will be
+ *              chosen automatically for the current CPU. It is highly
+ *              recommended to pass 0 here unless you know what you are doing.
  *
  * @return 0 on success, a negative AVERROR on error.
  *)
@@ -742,6 +783,38 @@ function av_frame_get_side_data(const frame: PAVFrame; type_: AVFrameSideDataTyp
  * from the frame.
  *)
 procedure av_frame_remove_side_data(frame: PAVFrame; type_: AVFrameSideDataType); cdecl; external LIB_AVUTIL;
+
+(**
+ * Flags for frame cropping.
+ *)
+const
+  (**
+   * Apply the maximum possible cropping, even if it requires setting the
+   * AVFrame.data[] entries to unaligned pointers. Passing unaligned data
+   * to FFmpeg API is generally not allowed, and causes undefined behavior
+   * (such as crashes). You can pass unaligned data only to FFmpeg APIs that
+   * are explicitly documented to accept it. Use this flag only if you
+   * absolutely know what you are doing.
+   *)
+  AV_FRAME_CROP_UNALIGNED = (1 shl 0);
+
+(**
+ * Crop the given video AVFrame according to its crop_left/crop_top/crop_right/
+ * crop_bottom fields. If cropping is successful, the function will adjust the
+ * data pointers and the width/height fields, and set the crop fields to 0.
+ *
+ * In all cases, the cropping boundaries will be rounded to the inherent
+ * alignment of the pixel format. In some cases, such as for opaque hwaccel
+ * formats, the left/top cropping is ignored. The crop fields are set to 0 even
+ * if the cropping was rounded or ignored.
+ *
+ * @param frame the frame which should be cropped
+ * @param flags Some combination of AV_FRAME_CROP_* flags, or 0.
+ *
+ * @return >= 0 on success, a negative AVERROR on error. If the cropping fields
+ * were invalid, AVERROR(ERANGE) is returned, and nothing is changed.
+ *)
+function av_frame_apply_cropping(frame: PAVFrame; flags: cint): cint; cdecl; external LIB_AVUTIL;
 
 (**
  * @return a string identifying the side data type
