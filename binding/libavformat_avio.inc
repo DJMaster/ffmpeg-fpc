@@ -156,7 +156,13 @@ type
      * Trailer data, which doesn't contain actual content, but only for
      * finalizing the output file.
      *)
-    AVIO_DATA_MARKER_TRAILER
+    AVIO_DATA_MARKER_TRAILER,
+    (**
+     * A point in the output bytestream where the underlying AVIOContext might
+     * flush the buffer depending on latency or buffering requirements. Typically
+     * means the end of a packet.
+     *)
+    AVIO_DATA_MARKER_FLUSH_POINT
   );
 
 (**
@@ -180,6 +186,7 @@ type
   write_data_type_func = function (opaque: pointer; buf: pcuint8; buf_size: cint; type_: AVIODataMarkerType; time: cint64): cint; cdecl;
   short_seek_get_func = function (opaque: pointer): cint; cdecl;
 
+  PPAVIOContext = ^PAVIOContext;
   PAVIOContext = ^AVIOContext;
   AVIOContext = record
     (**
@@ -197,8 +204,9 @@ type
     av_class: PAVClass;
 
     (*
-     * The following shows the relationship between buffer, buf_ptr, buf_end, buf_size,
-     * and pos, when reading and when writing (since AVIOContext is used for both):
+     * The following shows the relationship between buffer, buf_ptr,
+     * buf_ptr_max, buf_end, buf_size, and pos, when reading and when writing
+     * (since AVIOContext is used for both):
      *
      **********************************************************************************
      *                                   READING
@@ -225,21 +233,24 @@ type
      *                                   WRITING
      **********************************************************************************
      *
-     *                                          |          buffer_size          |
-     *                                          |-------------------------------|
-     *                                          |                               |
+     *                             |          buffer_size                 |
+     *                             |--------------------------------------|
+     *                             |                                      |
      *
-     *                                       buffer              buf_ptr     buf_end
-     *                                          +-------------------+-----------+
-     *                                          |/ / / / / / / / / /|           |
-     *  write buffer:                           | / to be flushed / |           |
-     *                                          |/ / / / / / / / / /|           |
-     *                                          +-------------------+-----------+
+     *                                                buf_ptr_max
+     *                          buffer                 (buf_ptr)       buf_end
+     *                             +-----------------------+--------------+
+     *                             |/ / / / / / / / / / / /|              |
+     *  write buffer:              | / / to be flushed / / |              |
+     *                             |/ / / / / / / / / / / /|              |
+     *                             +-----------------------+--------------+
+     *                               buf_ptr can be in this
+     *                               due to a backward seek
      *
-     *                                         pos
-     *               +--------------------------+-----------------------------------+
-     *  output file: |                          |                                   |
-     *               +--------------------------+-----------------------------------+
+     *                            pos
+     *               +-------------+----------------------------------------------+
+     *  output file: |             |                                              |
+     *               +-------------+----------------------------------------------+
      *
      *)
     buffer: pcuchar; (**< Start of the buffer. *)
@@ -255,7 +266,7 @@ type
     write_packet: write_packet_func;
     seek: seek_func;
     pos: cint64; (**< position in the file of the current buffer *)
-    must_flush: cint; (**< true if the next seek should flush *)
+    must_flush: cint; (**< unused *)
     eof_reached: cint; (**< true if eof reached *)
     write_flag: cint; (**< true if open for writing *)
     max_packet_size: cint;
@@ -355,6 +366,19 @@ type
      * This is current internal only, do not use from outside.
      *)
     short_seek_get: short_seek_get_func;
+
+    written: cint64;
+
+    (**
+     * Maximum reached position before a backward seek in the write buffer,
+     * used keeping track of already written data for a later flush.
+     *)
+    buf_ptr_max: pcuchar;
+
+    (**
+     * Try to buffer at least this amount of data before flushing it
+     *)
+    min_packet_size: cint;
   end;
 
 (**
@@ -444,7 +468,7 @@ procedure avio_free_directory_entry(entry: PPAVIODirEntry); cdecl; external LIB_
 
 (**
  * Allocate and initialize an AVIOContext for buffered I/O. It must be later
- * freed with av_free().
+ * freed with avio_context_free().
  *
  * @param buffer Memory block for input/output operations via AVIOContext.
  *        The buffer must be allocated with av_malloc() and friends.
@@ -469,6 +493,14 @@ type
   avio_alloc_context_seek_func = function (opaque: pointer; offset: cint64; whence: cint): cint64; cdecl;
 
 function  avio_alloc_context(buffer: pcuchar; buffer_size: cint; write_flag: cint; opaque: pointer; read_packet: avio_alloc_context_read_packet_func; write_packet: avio_alloc_context_write_packet_func; seek: avio_alloc_context_seek_func): PAVIOContext; cdecl; external LIB_AVFORMAT;
+
+(**
+ * Free the supplied IO context and everything associated with it.
+ *
+ * @param s Double pointer to the IO context. This function will write NULL
+ * into s.
+ *)
+procedure avio_context_free(s: PPAVIOContext); cdecl; external LIB_AVFORMAT;
 
 procedure avio_w8(s: PAVIOContext; b: cint); cdecl; external LIB_AVFORMAT;
 procedure avio_write(s: PAVIOContext; const buf: pcuchar; size: cint); cdecl; external LIB_AVFORMAT;
@@ -594,6 +626,15 @@ procedure avio_flush(s: PAVIOContext); cdecl; external LIB_AVFORMAT;
  * @return number of bytes read or AVERROR
  *)
 function avio_read(s: PAVIOContext; buf: pcuchar; size: cint): cint; cdecl; external LIB_AVFORMAT;
+
+(**
+ * Read size bytes from AVIOContext into buf. Unlike avio_read(), this is allowed
+ * to read fewer bytes than requested. The missing bytes can be read in the next
+ * call. This always tries to read at least 1 byte.
+ * Useful to reduce latency in certain cases.
+ * @return number of bytes read or AVERROR
+ *)
+function avio_read_partial(s: PAVIOContext; buf: pcuchar; size: cint): cint; cdecl; external LIB_AVFORMAT;
 
 (**
  * @name Functions for reading from AVIOContext
