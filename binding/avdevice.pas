@@ -141,6 +141,17 @@ type
  *)
   AVAppToDevMessageType = (
     (**
+     * Mute control messages.
+     *
+     * Change mute state. It may be device-dependent if mute status
+     * is changed per stream or system wide. Per stream mute status
+     * change is expected when possible.
+     *
+     * data: NULL.
+     *)
+    AV_APP_TO_DEV_MUTE = $204D5554, // MKBETAG(' ', 'M', 'U', 'T'),
+
+    (**
      * Window size change message.
      *
      * Message is sent to the device every time the application changes the size
@@ -150,6 +161,17 @@ type
      * data: AVDeviceRect: new window size.
      *)
     AV_APP_TO_DEV_WINDOW_SIZE = $47454F4D, // MKBETAG('G','E','O','M'),
+
+    (**
+     * Get volume/mute messages.
+     *
+     * Force the device to send AV_DEV_TO_APP_VOLUME_LEVEL_CHANGED or
+     * AV_DEV_TO_APP_MUTE_STATE_CHANGED command respectively.
+     *
+     * data: NULL.
+     *)
+    AV_APP_TO_DEV_GET_MUTE = $474D5554, // MKBETAG('G', 'M', 'U', 'T')
+    AV_APP_TO_DEV_GET_VOLUME = $47564F4C, // MKBETAG('G', 'V', 'O', 'L'),
 
     (**
      * Dummy message.
@@ -166,8 +188,8 @@ type
      * data: NULL
      *)
     AV_APP_TO_DEV_PAUSE = $50415520, // MKBETAG('P', 'A', 'U', ' '),
-    AV_APP_TO_DEV_PLAY = $504C4159, // MKBETAG('P', 'L', 'A', 'Y'),
     AV_APP_TO_DEV_TOGGLE_PAUSE = $50415554, // MKBETAG('P', 'A', 'U', 'T'),
+    AV_APP_TO_DEV_PLAY = $504C4159, // MKBETAG('P', 'L', 'A', 'Y'),
 
     (**
      * Repaint request message.
@@ -199,31 +221,14 @@ type
      *
      * data: NULL.
      *)
-    AV_APP_TO_DEV_MUTE = $204D5554, // MKBETAG(' ', 'M', 'U', 'T'),
-    AV_APP_TO_DEV_UNMUTE = $554D5554, // MKBETAG('U', 'M', 'U', 'T'),
     AV_APP_TO_DEV_TOGGLE_MUTE = $544D5554, // MKBETAG('T', 'M', 'U', 'T'),
-
-    (**
-     * Get volume/mute messages.
-     *
-     * Force the device to send AV_DEV_TO_APP_VOLUME_LEVEL_CHANGED or
-     * AV_DEV_TO_APP_MUTE_STATE_CHANGED command respectively.
-     *
-     * data: NULL.
-     *)
-    AV_APP_TO_DEV_GET_VOLUME = $47564F4C, // MKBETAG('G', 'V', 'O', 'L'),
-    AV_APP_TO_DEV_GET_MUTE = $474D5554 // MKBETAG('G', 'M', 'U', 'T')
+    AV_APP_TO_DEV_UNMUTE = $554D5554 // MKBETAG('U', 'M', 'U', 'T')
   );
 
 (**
  * Message types used by avdevice_dev_to_app_control_message().
  *)
   AVDevToAppMessageType = (
-    (**
-     * Dummy message.
-     *)
-    AV_DEV_TO_APP_NONE = $4E4F4E45, // MKBETAG('N','O','N','E'),
-
     (**
      * Create window buffer message.
      *
@@ -241,15 +246,15 @@ type
     AV_DEV_TO_APP_CREATE_WINDOW_BUFFER = $42435245, // MKBETAG('B','C','R','E'),
 
     (**
-     * Prepare window buffer message.
+     * Destroy window buffer message.
      *
-     * Device requests to prepare a window buffer for rendering.
-     * Exact meaning is device- and application-dependent.
-     * Message is sent before rendering of each frame.
+     * Device requests to destroy a window buffer.
+     * Message is sent when device is about to be destroyed and window
+     * buffer is not required anymore.
      *
      * data: NULL.
      *)
-    AV_DEV_TO_APP_PREPARE_WINDOW_BUFFER = $42505245, // MKBETAG('B','P','R','E'),
+    AV_DEV_TO_APP_DESTROY_WINDOW_BUFFER = $42444553, // MKBETAG('B','D','E','S'),
 
     (**
      * Display window buffer message.
@@ -263,17 +268,6 @@ type
     AV_DEV_TO_APP_DISPLAY_WINDOW_BUFFER = $42444953, // MKBETAG('B','D','I','S'),
 
     (**
-     * Destroy window buffer message.
-     *
-     * Device requests to destroy a window buffer.
-     * Message is sent when device is about to be destroyed and window
-     * buffer is not required anymore.
-     *
-     * data: NULL.
-     *)
-    AV_DEV_TO_APP_DESTROY_WINDOW_BUFFER = $42444553, // MKBETAG('B','D','E','S'),
-
-    (**
      * Buffer fullness status messages.
      *
      * Device signals buffer overflow/underflow.
@@ -281,7 +275,17 @@ type
      * data: NULL.
      *)
     AV_DEV_TO_APP_BUFFER_OVERFLOW = $424F464C, // MKBETAG('B','O','F','L'),
-    AV_DEV_TO_APP_BUFFER_UNDERFLOW = $4255464C, // MKBETAG('B','U','F','L'),
+
+    (**
+     * Prepare window buffer message.
+     *
+     * Device requests to prepare a window buffer for rendering.
+     * Exact meaning is device- and application-dependent.
+     * Message is sent before rendering of each frame.
+     *
+     * data: NULL.
+     *)
+    AV_DEV_TO_APP_PREPARE_WINDOW_BUFFER = $42505245, // MKBETAG('B','P','R','E'),
 
     (**
      * Buffer readable/writable.
@@ -295,6 +299,27 @@ type
      *       NULL: amount of bytes available to read/write is not known.
      *)
     AV_DEV_TO_APP_BUFFER_READABLE = $42524420, // MKBETAG('B','R','D',' '),
+
+    (**
+     * Buffer fullness status messages.
+     *
+     * Device signals buffer overflow/underflow.
+     *
+     * data: NULL.
+     *)
+    AV_DEV_TO_APP_BUFFER_UNDERFLOW = $4255464C, // MKBETAG('B','U','F','L'),
+
+    (**
+     * Buffer readable/writable.
+     *
+     * Device informs that buffer is readable/writable.
+     * When possible, device informs how many bytes can be read/write.
+     *
+     * @warning Device may not inform when number of bytes than can be read/write changes.
+     *
+     * data: int64_t: amount of bytes available to read/write.
+     *       NULL: amount of bytes available to read/write is not known.
+     *)
     AV_DEV_TO_APP_BUFFER_WRITABLE = $42575220, // MKBETAG('B','W','R',' '),
 
     (**
@@ -313,7 +338,12 @@ type
      *
      * data: double: new volume with range of 0.0 - 1.0.
      *)
-    AV_DEV_TO_APP_VOLUME_LEVEL_CHANGED = $43564F4C // MKBETAG('C','V','O','L')
+    AV_DEV_TO_APP_VOLUME_LEVEL_CHANGED = $43564F4C, // MKBETAG('C','V','O','L')
+
+    (**
+     * Dummy message.
+     *)
+    AV_DEV_TO_APP_NONE = $4E4F4E45 // MKBETAG('N','O','N','E'),
   );
 
 (**
