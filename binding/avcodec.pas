@@ -238,6 +238,7 @@ type
  * descriptor list and bump libavcodec minor version.
  *)
 type
+  PAVCodecID = ^AVCodecID;
   AVCodecID = (
     AV_CODEC_ID_NONE,
 
@@ -5253,6 +5254,8 @@ type
   );
 
 type
+  PAVCodecParser = ^AVCodecParser;
+
   PAVCodecParserContext = ^AVCodecParserContext;
   AVCodecParserContext = record
     priv_data: pointer;
@@ -5421,13 +5424,11 @@ type
     format: cint;
   end;
 
-type
   AVCodecParser_parser_init_func = function (s: PAVCodecParserContext): cint; cdecl;
   AVCodecParser_parser_parse_func = function (s: PAVCodecParserContext; avctx: PAVCodecContext; const poutbuf: ppcuint8; poutbuf_size: pcint; const buf: pcuint8; buf_size: cint): cint; cdecl;
   AVCodecParser_parser_close_proc = procedure (s: PAVCodecParserContext); cdecl;
   AVCodecParser_split_func = function (avctx: PAVCodecContext; const buf: pcuint8; buf_size: cint): cint; cdecl;
 
-  PAVCodecParser = ^AVCodecParser;
   AVCodecParser = record
     codec_ids: array[0..4] of cint; (* several codec IDs are permitted *)
     priv_data_size: cint;
@@ -5990,6 +5991,9 @@ type
  * immutable otherwise.
  *)
 type
+  PAVBitStreamFilter = ^AVBitStreamFilter;
+
+  PPAVBSFContext = ^PAVBSFContext;
   PAVBSFContext = ^AVBSFContext;
   AVBSFContext = record
     (**
@@ -6044,7 +6048,6 @@ type
   AVBitStreamFilter_filter_func = function (ctx: PAVBSFContext; pkt: PAVPacket): cint; cdecl;
   AVBitStreamFilter_close_proc = procedure (ctx: PAVBSFContext); cdecl;
 
-  PAVBitStreamFilter = ^AVBitStreamFilter;
   AVBitStreamFilter = record
     name: pchar;
 
@@ -6258,6 +6261,7 @@ function av_bsf_get_class(): PAVClass; cdecl; external LIB_AVCODEC;
  * Empty list can be allocated by av_bsf_list_alloc().
  *)
 type
+  PPAVBSFList = ^PAVBSFList;
   PAVBSFList = ^AVBSFList;
   AVBSFList = record
   end;
@@ -6516,27 +6520,27 @@ function av_cpb_properties_alloc(size: pcsize_t): PAVCPBProperties; cdecl; exter
 
 {$include libavcodec_avdct.inc}
 {$include libavcodec_avfft.inc}
-{$include libavcodec_d3d11va.inc}
+{-$include libavcodec_d3d11va.inc}
 {$include libavcodec_dirac.inc}
 {$include libavcodec_dv_profile.inc}
-{$include libavcodec_dxva2.inc}
+{-$include libavcodec_dxva2.inc}
 {$include libavcodec_jni.inc}
 {$include libavcodec_mediacodec.inc}
-{$include libavcodec_qsv.inc}
+{-$include libavcodec_qsv.inc}
 {$include libavcodec_vaapi.inc}
-{$include libavcodec_vda.inc}
-{$include libavcodec_vdpau.inc}
+{-$include libavcodec_vda.inc}
+{-$include libavcodec_vdpau.inc}
 {$include libavcodec_version.inc}
-{$include libavcodec_videotoolbox.inc}
+{-$include libavcodec_videotoolbox.inc}
 {$include libavcodec_vorbis_parser.inc}
-{$include libavcodec_xvmc.inc}
+{-$include libavcodec_xvmc.inc}
 
 implementation
 
 begin
   LIBAVCODEC_VERSION_INT := AV_VERSION_INT(LIBAVCODEC_VERSION_MAJOR, LIBAVCODEC_VERSION_MINOR, LIBAVCODEC_VERSION_MICRO);
   LIBAVCODEC_VERSION := AV_VERSION(LIBAVCODEC_VERSION_MAJOR, LIBAVCODEC_VERSION_MINOR, LIBAVCODEC_VERSION_MICRO);
-  LIBAVCODEC_BUILD := LIBAVCODEC_VERSION_INT;
+  LIBAVCODEC_BUILD := LIBAVCODEC_VERSION;
 
   LIBAVCODEC_IDENT := 'Lavc' + LIBAVCODEC_VERSION;
 end.

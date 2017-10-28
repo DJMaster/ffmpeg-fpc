@@ -42,15 +42,12 @@ const
   LIBAVFORMAT_VERSION_MINOR = 83;
   LIBAVFORMAT_VERSION_MICRO = 100;
 
-  LIBAVFORMAT_VERSION_INT = AV_VERSION_INT(LIBAVFORMAT_VERSION_MAJOR, \
-                                               LIBAVFORMAT_VERSION_MINOR, \
-                                               LIBAVFORMAT_VERSION_MICRO);
-  LIBAVFORMAT_VERSION = AV_VERSION(LIBAVFORMAT_VERSION_MAJOR,   \
-                                           LIBAVFORMAT_VERSION_MINOR,   \
-                                           LIBAVFORMAT_VERSION_MICRO);
-  LIBAVFORMAT_BUILD = LIBAVFORMAT_VERSION_INT;
+var
+  LIBAVFORMAT_VERSION_INT: cint;
+  LIBAVFORMAT_VERSION: string;
+  LIBAVFORMAT_BUILD: string;
 
-  LIBAVFORMAT_IDENT = 'Lavf' + AV_STRINGIFY(LIBAVFORMAT_VERSION);
+  LIBAVFORMAT_IDENT: string;
 
 (**
  * FF_API_* defines may be placed below to indicate public API that will be

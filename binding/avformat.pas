@@ -27,15 +27,19 @@
 unit avformat;
 
 {$mode objfpc}{$H+}
+{$macro on}
 
 interface
 
 uses
   ctypes,
+  avcodec,
   avutil;
 
 const
   LIB_AVFORMAT = 'avformat-57.dll';
+
+{$include libavformat_avio.inc}
 
 // #ifndef AVFORMAT_AVFORMAT_H
 // #define AVFORMAT_AVFORMAT_H
@@ -355,6 +359,13 @@ type
   AVDeviceCapabilitiesQuery = record
   end;
 
+  PFFFrac = ^TFFFrac;
+  TFFFrac = record
+    val: cint64;
+    num: cint64;
+    den: cint64;
+  end;
+
 (**
  * @defgroup metadata_api Public Metadata API
  * @{
@@ -462,7 +473,7 @@ function av_get_packet(s: PAVIOContext; pkt: PAVPacket; size: cint): cint; cdecl
  *)
 function av_append_packet(s: PAVIOContext; pkt: PAVPacket; size: cint): cint; cdecl; external LIB_AVFORMAT;
 
-{$if FF_API_LAVF_FRAC}
+{$ifdef FF_API_LAVF_FRAC}
 (*************************************************)
 (* fractional numbers for exact pts handling *)
 
@@ -481,6 +492,7 @@ type
 (* input/output formats *)
 
 type
+  PPAVCodecTag = ^PAVCodecTag;
   PAVCodecTag = ^AVCodecTag;
   AVCodecTag = record
   end;
@@ -497,12 +509,12 @@ type
   end;
 
 const
-  AVPROBE_SCORE_RETRY = (AVPROBE_SCORE_MAX/4);
-  AVPROBE_SCORE_STREAM_RETRY = (AVPROBE_SCORE_MAX/4-1);
-
   AVPROBE_SCORE_EXTENSION = 50; ///< score for file extension
   AVPROBE_SCORE_MIME = 75; ///< score for file mime type
   AVPROBE_SCORE_MAX = 100; ///< maximum score
+
+  AVPROBE_SCORE_RETRY = (AVPROBE_SCORE_MAX/4);
+  AVPROBE_SCORE_STREAM_RETRY = (AVPROBE_SCORE_MAX/4-1);
 
   AVPROBE_PADDING_SIZE = 32; ///< extra allocated bytes at the end of the probe buffer
 
@@ -510,7 +522,7 @@ const
   AVFMT_NOFILE = $0001;
   AVFMT_NEEDNUMBER = $0002; (**< Needs '%d' in filename. *)
   AVFMT_SHOW_IDS = $0008; (**< Show format stream IDs numbers. *)
-{$if FF_API_LAVF_FMT_RAWPICTURE}
+{$ifdef FF_API_LAVF_FMT_RAWPICTURE}
   AVFMT_RAWPICTURE = $0020; (**< Format wants AVPicture structure for
                                  raw picture data. @deprecated Not used anymore *)
 {$endif}
@@ -544,20 +556,20 @@ const
  * @{
  *)
 type
-  write_header_func = function (s: PAVFormatContext): cint; cdecl;
-  write_packet_func = function (s: PAVFormatContext; pkt: PAVPacket): cint; cdecl;
-  write_trailer_func = function (s: PAVFormatContext): cint; cdecl;
-  interleave_packet_func = function (s: PAVFormatContext; out_: PAVPacket; in_: PAVPacket; flush: cint): cint; cdecl;
-  query_codec_func = function (id: AVCodecID; std_compliance: cint): cint; cdecl;
-  get_output_timestamp_proc = procedure (s: PAVFormatContext; stream: cint; dts: pcint64; wall: pcint64); cdecl;
-  control_message_func = function (s: PAVFormatContext; type_: cint; data: pointer; data_size: csize_t): cint; cdecl;
-  write_uncoded_frame_func = function (ctx: PAVFormatContext; stream_index: cint; frame: PPAVFrame; flags: cunsigned): cint; cdecl;
-  get_device_list_func = function (s: PAVFormatContext; device_list: PAVDeviceInfoList): cint; cdecl;
-  create_device_capabilities_func = function (s: PAVFormatContext; caps: PAVDeviceCapabilitiesQuery): cint; cdecl;
-  free_device_capabilities_func = function (s: PAVFormatContext; caps: PAVDeviceCapabilitiesQuery): cint; cdecl;
-  init_func = function (ctx: PAVFormatContext): cint; cdecl;
-  deinit_proc = procedure (ctx: PAVFormatContext); cdecl;
-  check_bitstream_func = function (ctx: PAVFormatContext; const pkt: PAVPacket): cint; cdecl;
+  AVOutputFormat_write_header_func = function (s: PAVFormatContext): cint; cdecl;
+  AVOutputFormat_write_packet_func = function (s: PAVFormatContext; pkt: PAVPacket): cint; cdecl;
+  AVOutputFormat_write_trailer_func = function (s: PAVFormatContext): cint; cdecl;
+  AVOutputFormat_interleave_packet_func = function (s: PAVFormatContext; out_: PAVPacket; in_: PAVPacket; flush: cint): cint; cdecl;
+  AVOutputFormat_query_codec_func = function (id: AVCodecID; std_compliance: cint): cint; cdecl;
+  AVOutputFormat_get_output_timestamp_proc = procedure (s: PAVFormatContext; stream: cint; dts: pcint64; wall: pcint64); cdecl;
+  AVOutputFormat_control_message_func = function (s: PAVFormatContext; type_: cint; data: pointer; data_size: csize_t): cint; cdecl;
+  AVOutputFormat_write_uncoded_frame_func = function (ctx: PAVFormatContext; stream_index: cint; frame: PPAVFrame; flags: cunsigned): cint; cdecl;
+  AVOutputFormat_get_device_list_func = function (s: PAVFormatContext; device_list: PAVDeviceInfoList): cint; cdecl;
+  AVOutputFormat_create_device_capabilities_func = function (s: PAVFormatContext; caps: PAVDeviceCapabilitiesQuery): cint; cdecl;
+  AVOutputFormat_free_device_capabilities_func = function (s: PAVFormatContext; caps: PAVDeviceCapabilitiesQuery): cint; cdecl;
+  AVOutputFormat_init_func = function (ctx: PAVFormatContext): cint; cdecl;
+  AVOutputFormat_deinit_proc = procedure (ctx: PAVFormatContext); cdecl;
+  AVOutputFormat_check_bitstream_func = function (ctx: PAVFormatContext; const pkt: PAVPacket): cint; cdecl;
 
   PAVOutputFormat = ^AVOutputFormat;
   AVOutputFormat = record
@@ -603,7 +615,7 @@ type
      *)
     priv_data_size: cint;
 
-    write_header: write_header_func;
+    write_header: AVOutputFormat_write_header_func;
     (**
      * Write a packet. If AVFMT_ALLOW_FLUSH is set in flags,
      * pkt can be NULL in order to flush data buffered in the muxer.
@@ -611,12 +623,12 @@ type
      * or 1 if everything was flushed and there is no more buffered
      * data.
      *)
-    write_packet: write_packet_func;
-    write_trailer: write_trailer_func;
+    write_packet: AVOutputFormat_write_packet_func;
+    write_trailer: AVOutputFormat_write_trailer_func;
     (**
      * Currently only used to set pixel format if not YUV420P.
      *)
-    interleave_packet: interleave_packet_func;
+    interleave_packet: AVOutputFormat_interleave_packet_func;
     (**
      * Test if the given codec can be stored in this container.
      *
@@ -624,13 +636,13 @@ type
      *         A negative number if unknown.
      *         MKTAG('A', 'P', 'I', 'C') if the codec is only supported as AV_DISPOSITION_ATTACHED_PIC
      *)
-    query_codec: query_codec_func;
+    query_codec: AVOutputFormat_query_codec_func;
 
-    get_output_timestamp: get_output_timestamp_proc;
+    get_output_timestamp: AVOutputFormat_get_output_timestamp_proc;
     (**
      * Allows sending messages from application to device.
      *)
-    control_message: control_message_func;
+    control_message: AVOutputFormat_control_message_func;
 
     (**
      * Write an uncoded AVFrame.
@@ -640,22 +652,22 @@ type
      * The library will free *frame afterwards, but the muxer can prevent it
      * by setting the pointer to NULL.
      *)
-    write_uncoded_frame: write_uncoded_frame_func;
+    write_uncoded_frame: AVOutputFormat_write_uncoded_frame_func;
     (**
      * Returns device list with it properties.
      * @see avdevice_list_devices() for more details.
      *)
-    get_device_list: get_device_list_func;
+    get_device_list: AVOutputFormat_get_device_list_func;
     (**
      * Initialize device capabilities submodule.
      * @see avdevice_capabilities_create() for more details.
      *)
-    create_device_capabilities: create_device_capabilities_func;
+    create_device_capabilities: AVOutputFormat_create_device_capabilities_func;
     (**
      * Free device capabilities submodule.
      * @see avdevice_capabilities_free() for more details.
      *)
-    free_device_capabilities: free_device_capabilities_func;
+    free_device_capabilities: AVOutputFormat_free_device_capabilities_func;
     data_codec: AVCodecID; (**< default data codec *)
     (**
      * Initialize format. May allocate data here, and set any AVFormatContext or
@@ -666,7 +678,7 @@ type
      *
      * Any allocations made here must be freed in deinit().
      *)
-    init: init_func;
+    init: AVOutputFormat_init_func;
     (**
      * Deinitialize format. If present, this is called whenever the muxer is being
      * destroyed, regardless of whether or not the header has been written.
@@ -675,13 +687,13 @@ type
      *
      * This is called if init() fails as well.
      *)
-    deinit: deinit_proc;
+    deinit: AVOutputFormat_deinit_proc;
     (**
      * Set up any necessary bitstream filtering and extract any extra data needed
      * for the global header.
      * Return 0 if more packets from this stream must be checked; 1 if not.
      *)
-    check_bitstream: check_bitstream_func;
+    check_bitstream: AVOutputFormat_check_bitstream_func;
   end;
 (**
  * @}
@@ -691,18 +703,18 @@ type
  * @addtogroup lavf_decoding
  * @{
  *)
-  read_probe_func = function (data: PAVProbeData): cint; cdecl;
-  read_header_func = function (s: PAVFormatContext): cint; cdecl;
-  read_packet_func = function (s: PAVFormatContext; pkt: PAVPacket): cint; cdecl;
-  read_close_func = function (s: PAVFormatContext): cint; cdecl;
-  read_seek_func = function (s: PAVFormatContext; stream_index: cint; timestamp: cint64; flags: cint): cint; cdecl;
-  read_timestamp_func = function (s: PAVFormatContext; stream_index: cint; pos: pcint64; pos_limit: cint64): cint64; cdecl;
-  read_play_func = function (s: PAVFormatContext): cint; cdecl;
-  read_pause_func = function (s: PAVFormatContext): cint; cdecl;
-  read_seek2_func = function (s: PAVFormatContext; stream_index: cint; min_ts: cint64; ts: cint64; max_ts: cint64; flags: cint): cint; cdecl;
-  get_device_list_func = function (s: PAVFormatContext; device_list: PAVDeviceInfoList): cint; cdecl;
-  create_device_capabilities_func = function (s: PAVFormatContext; caps: PAVDeviceCapabilitiesQuery): cint; cdecl;
-  free_device_capabilities_func = function (s: PAVFormatContext; caps: PAVDeviceCapabilitiesQuery): cint; cdecl;
+  AVInputFormat_read_probe_func = function (data: PAVProbeData): cint; cdecl;
+  AVInputFormat_read_header_func = function (s: PAVFormatContext): cint; cdecl;
+  AVInputFormat_read_packet_func = function (s: PAVFormatContext; pkt: PAVPacket): cint; cdecl;
+  AVInputFormat_read_close_func = function (s: PAVFormatContext): cint; cdecl;
+  AVInputFormat_read_seek_func = function (s: PAVFormatContext; stream_index: cint; timestamp: cint64; flags: cint): cint; cdecl;
+  AVInputFormat_read_timestamp_func = function (s: PAVFormatContext; stream_index: cint; pos: pcint64; pos_limit: cint64): cint64; cdecl;
+  AVInputFormat_read_play_func = function (s: PAVFormatContext): cint; cdecl;
+  AVInputFormat_read_pause_func = function (s: PAVFormatContext): cint; cdecl;
+  AVInputFormat_read_seek2_func = function (s: PAVFormatContext; stream_index: cint; min_ts: cint64; ts: cint64; max_ts: cint64; flags: cint): cint; cdecl;
+  AVInputFormat_get_device_list_func = function (s: PAVFormatContext; device_list: PAVDeviceInfoList): cint; cdecl;
+  AVInputFormat_create_device_capabilities_func = function (s: PAVFormatContext; caps: PAVDeviceCapabilitiesQuery): cint; cdecl;
+  AVInputFormat_free_device_capabilities_func = function (s: PAVFormatContext; caps: PAVDeviceCapabilitiesQuery): cint; cdecl;
 
   PAVInputFormat = ^AVInputFormat;
   AVInputFormat = record
@@ -768,14 +780,14 @@ type
      * The buffer provided is guaranteed to be AVPROBE_PADDING_SIZE bytes
      * big so you do not have to check for that unless you need more.
      *)
-    read_probe: read_probe_func;
+    read_probe: AVInputFormat_read_probe_func;
 
     (**
      * Read the format header and initialize the AVFormatContext
      * structure. Return 0 if OK. 'avformat_new_stream' should be
      * called to create new streams.
      *)
-    read_header: read_header_func;
+    read_header: AVInputFormat_read_header_func;
 
     (**
      * Read one packet and put it in 'pkt'. pts and flags are also
@@ -786,13 +798,13 @@ type
      *         When returning an error, pkt must not have been allocated
      *         or must be freed before returning
      *)
-    read_packet: read_packet_func;
+    read_packet: AVInputFormat_read_packet_func;
 
     (**
      * Close the stream. The AVFormatContext and AVStreams are not
      * freed by this function
      *)
-    read_close: read_close_func;
+    read_close: AVInputFormat_read_close_func;
 
     (**
      * Seek to a given timestamp relative to the frames in
@@ -802,25 +814,25 @@ type
      *              match is available.
      * @return >= 0 on success (but not necessarily the new offset)
      *)
-    read_seek: read_seek_func;
+    read_seek: AVInputFormat_read_seek_func;
 
     (**
      * Get the next timestamp in stream[stream_index].time_base units.
      * @return the timestamp or AV_NOPTS_VALUE if an error occurred
      *)
-    read_timestamp: read_timestamp_func;
+    read_timestamp: AVInputFormat_read_timestamp_func;
 
     (**
      * Start/resume playing - only meaningful if using a network-based format
      * (RTSP).
      *)
-    read_play: read_play_func;
+    read_play: AVInputFormat_read_play_func;
 
     (**
      * Pause playing - only meaningful if using a network-based format
      * (RTSP).
      *)
-    read_pause: read_pause_func;
+    read_pause: AVInputFormat_read_pause_func;
 
     (**
      * Seek to timestamp ts.
@@ -828,25 +840,25 @@ type
      * can be presented successfully will be closest to ts and within min/max_ts.
      * Active streams are all streams that have AVStream.discard < AVDISCARD_ALL.
      *)
-    read_seek2: read_seek2_func;
+    read_seek2: AVInputFormat_read_seek2_func;
 
     (**
      * Returns device list with it properties.
      * @see avdevice_list_devices() for more details.
      *)
-    get_device_list: get_device_list_func;
+    get_device_list: AVInputFormat_get_device_list_func;
 
     (**
      * Initialize device capabilities submodule.
      * @see avdevice_capabilities_create() for more details.
      *)
-    create_device_capabilities: create_device_capabilities_func;
+    create_device_capabilities: AVInputFormat_create_device_capabilities_func;
 
     (**
      * Free device capabilities submodule.
      * @see avdevice_capabilities_free() for more details.
      *)
-    free_device_capabilities: free_device_capabilities_func;
+    free_device_capabilities: AVInputFormat_free_device_capabilities_func;
   end;
 (**
  * @}
@@ -858,9 +870,10 @@ type
     AVSTREAM_PARSE_HEADERS, (**< Only parse headers, do not repack. *)
     AVSTREAM_PARSE_TIMESTAMPS, (**< full parsing and interpolation of timestamps for frames not starting on a packet boundary *)
     AVSTREAM_PARSE_FULL_ONCE, (**< full parsing and repack of the first frame only, only implemented for H.264 currently *)
-    AVSTREAM_PARSE_FULL_RAW = MKTAG(0,'R','A','W') (**< full parsing and repack with timestamp and position generation by parser for raw
-                                                        this assumes that each packet in the file contains no demuxer level headers and
-                                                       just codec level data, otherwise position generation would fail *)
+    //TODO MKTAG(0,'R','A','W')
+    AVSTREAM_PARSE_FULL_RAW = $57415230 (**< full parsing and repack with timestamp and position generation by parser for raw
+                                             this assumes that each packet in the file contains no demuxer level headers and
+                                             just codec level data, otherwise position generation would fail *)
   );
 
   PAVIndexEntry = ^AVIndexEntry;
@@ -946,6 +959,7 @@ type
     duration_gcd: cint64;
     duration_count: cint;
     rfps_duration_sum: cint64;
+{$define MAX_STD_TIMEBASES := (30*12+30+3+6)}
     duration_error: array[0..1, 0..MAX_STD_TIMEBASES-1] of cdouble;
     codec_info_duration: cint64;
     codec_info_duration_fields: cint64;
@@ -968,10 +982,17 @@ type
     fps_last_dts_idx: cint;
   end;
 
-  open_cb_func = function (s: PAVFormatContext; p: PPAVIOContext; const url: pchar; flags: cint; const int_cb: PAVIOInterruptCB; options: PPAVDictionary): cint; cdecl;
-  io_open_func = function (s: PAVFormatContext; pb: PPAVIOContext; const url: pchar; flags: cint; options: PPAVDictionary): cint; cdecl;
-  io_close_proc = procedure (s: PAVFormatContext; pb: PAVIOContext); cdecl;
+  PAVPacketList = ^AVPacketList;
+  AVPacketList = record
+    pkt: AVPacket;
+    next: PAVPacketList;
+  end;
 
+  AVStream_open_cb_func = function (s: PAVFormatContext; p: PPAVIOContext; const url: pchar; flags: cint; const int_cb: PAVIOInterruptCB; options: PPAVDictionary): cint; cdecl;
+  AVStream_io_open_func = function (s: PAVFormatContext; pb: PPAVIOContext; const url: pchar; flags: cint; options: PPAVDictionary): cint; cdecl;
+  AVStream_io_close_proc = procedure (s: PAVFormatContext; pb: PAVIOContext); cdecl;
+
+  PPAVStream = ^PAVStream;
   PAVStream = ^AVStream;
   AVStream = record
     index: cint; (**< stream index in AVFormatContext *)
@@ -1110,7 +1131,6 @@ type
     (**
      * Stream information used internally by avformat_find_stream_info()
      *)
-{$define MAX_STD_TIMEBASES := (30*12+30+3+6)}
     info: PAVStreamInfo;
 
     pts_wrap_bits: cint; (**< number of bits in pts (used for wrapping control) *)
@@ -1314,7 +1334,7 @@ type
   end;
 
 function av_stream_get_r_frame_rate(const s: PAVStream): AVRational; cdecl; external LIB_AVFORMAT;
-procedure av_stream_set_r_frame_rate(s: PAVStream, AVRational r); cdecl; external LIB_AVFORMAT;
+procedure av_stream_set_r_frame_rate(s: PAVStream; r: AVRational); cdecl; external LIB_AVFORMAT;
 function av_stream_get_parser(const s: PAVStream): PAVCodecParserContext; cdecl; external LIB_AVFORMAT;
 function av_stream_get_recommended_encoder_configuration(const s: PAVStream): pchar; cdecl; external LIB_AVFORMAT;
 procedure av_stream_set_recommended_encoder_configuration(s: PAVStream; configuration: pchar); cdecl; external LIB_AVFORMAT;
@@ -1336,6 +1356,7 @@ const
  * sizeof(AVProgram) must not be used outside libav*.
  *)
 type
+  PPAVProgram = ^PAVProgram;
   PAVProgram = ^AVProgram;
   AVProgram = record
     id: cint;
@@ -1367,7 +1388,8 @@ const
   AVFMTCTX_NOHEADER = $0001; (**< signal that no header is present
                                          (streams are added dynamically) *)
 
-typ
+type
+  PPAVChapter = ^PAVChapter;
   PAVChapter = ^AVChapter;
   AVChapter = record
     id: cint; ///< unique ID to identify the chapter
@@ -1380,7 +1402,7 @@ typ
  * Callback used by devices to communicate with application.
  *)
 type
-  av_format_control_message = function (s: PAVFormatContext: type_: cint; data: pointer; data_size: csize_t): cint; cdecl;
+  av_format_control_message = function (s: PAVFormatContext; type_: cint; data: pointer; data_size: csize_t): cint; cdecl;
 
   AVOpenCallback = function (s: PAVFormatContext; pb: PPAVIOContext; const url: pchar; flags: cint; const int_cb: PAVIOInterruptCB; options: PPAVDictionary): cint; cdecl;
 
@@ -1545,7 +1567,7 @@ type
 {$define AVFMT_FLAG_MP4A_LATM := $8000} ///< Enable RTP MP4A-LATM payload
 {$define AVFMT_FLAG_SORT_DTS := $10000} ///< try to interleave outputted packets by dts (using this flag can slow demuxing down)
 {$define AVFMT_FLAG_PRIV_OPT := $20000} ///< Enable use of private options by delaying codec open (this could be made default once all code is converted)
-{$if FF_API_LAVF_KEEPSIDE_FLAG}
+{$ifdef FF_API_LAVF_KEEPSIDE_FLAG}
 {$define AVFMT_FLAG_KEEP_SIDE_DATA := $40000} ///< Don't merge side data but keep it separate. Deprecated, will be the default.
 {$endif}
 {$define AVFMT_FLAG_FAST_SEEK := $80000} ///< Enable fast, but inaccurate seeks for some formats
@@ -1924,7 +1946,7 @@ type
      *)
     data_codec_id: AVCodecID;
 
-{$if FF_API_OLD_OPEN_CALLBACKS}
+{$ifdef FF_API_OLD_OPEN_CALLBACKS}
     (**
      * Called to open further IO contexts when needed for demuxing.
      *
@@ -1943,7 +1965,7 @@ type
      * @deprecated Use io_open and io_close.
      *)
     //TODO attribute_deprecated
-    open_cb: open_cb_func;
+    open_cb: AVStream_open_cb_func;
 {$endif}
 
     (**
@@ -1973,12 +1995,12 @@ type
      * passed to this callback may be different from the one facing the caller.
      * It will, however, have the same 'opaque' field.
      *)
-    io_open: io_open_func;
+    io_open: AVStream_io_open_func;
 
     (**
      * A callback for closing the streams opened with AVFormatContext.io_open().
      *)
-    io_close: io_close_proc;
+    io_close: AVStream_io_close_proc;
 
     (**
      * ',' separated list of disallowed protocols.
@@ -2014,7 +2036,7 @@ function av_format_get_opaque(const s: PAVFormatContext): pointer; cdecl; extern
 procedure av_format_set_opaque(s: PAVFormatContext; opaque: pointer); cdecl; external LIB_AVFORMAT;
 function av_format_get_control_message_cb(const s: PAVFormatContext): av_format_control_message; cdecl; external LIB_AVFORMAT;
 procedure av_format_set_control_message_cb(s: PAVFormatContext; callback: av_format_control_message); cdecl; external LIB_AVFORMAT;
-{$if FF_API_OLD_OPEN_CALLBACKS}
+{$ifdef FF_API_OLD_OPEN_CALLBACKS}
 //TODO attribute_deprecated
 function av_format_get_open_cb(const s: PAVFormatContext): AVOpenCallback; cdecl; external LIB_AVFORMAT;
 //TODO attribute_deprecated
@@ -2033,13 +2055,6 @@ procedure av_format_inject_global_side_data(s: PAVFormatContext); cdecl; externa
  * @return AVFMT_DURATION_FROM_PTS, AVFMT_DURATION_FROM_STREAM, or AVFMT_DURATION_FROM_BITRATE.
  *)
 function av_fmt_ctx_get_duration_estimation_method(const ctx: PAVFormatContext): AVDurationEstimationMethod; cdecl; external LIB_AVFORMAT;
-
-type
-  PAVPacketList = ^AVPacketList;
-  AVPacketList = record
-    pkt: AVPacket;
-    next: PAVPacketList;
-  end;
 
 (**
  * @defgroup lavf_core Core functions
@@ -2147,7 +2162,7 @@ function avformat_get_class(): PAVClass; cdecl; external LIB_AVFORMAT;
  *
  * @return newly created stream or NULL on error.
  *)
-function avformat_new_stream(s: PAVFormatContext, const c: PAVCodec): PAVStream; cdecl; external LIB_AVFORMAT;
+function avformat_new_stream(s: PAVFormatContext; const c: PAVCodec): PAVStream; cdecl; external LIB_AVFORMAT;
 
 (**
  * Wrap an existing array as stream side data.
@@ -2648,7 +2663,7 @@ function av_interleaved_write_uncoded_frame(s: PAVFormatContext; stream_index: c
  * @return  >=0 if an uncoded frame can be written to that muxer and stream,
  *          <0 if not
  *)
-function av_write_uncoded_frame_query(s: PAVFormatContext, stream_index: cint): cint; cdecl; external LIB_AVFORMAT;
+function av_write_uncoded_frame_query(s: PAVFormatContext; stream_index: cint): cint; cdecl; external LIB_AVFORMAT;
 
 (**
  * Write the stream trailer to an output media file and free the
@@ -2719,7 +2734,7 @@ function av_get_output_timestamp(s: PAVFormatContext; stream: cint; dts: pcint64
  *
  * @see av_hex_dump_log, av_pkt_dump2, av_pkt_dump_log2
  *)
-procedure av_hex_dump(f: file; const buf: pcuint8; size: cint); cdecl; external LIB_AVFORMAT;
+procedure av_hex_dump(var f: file; const buf: pcuint8; size: cint); cdecl; external LIB_AVFORMAT;
 
 (**
  * Send a nice hexadecimal dump of a buffer to the log.
@@ -2733,7 +2748,7 @@ procedure av_hex_dump(f: file; const buf: pcuint8; size: cint); cdecl; external 
  *
  * @see av_hex_dump, av_pkt_dump2, av_pkt_dump_log2
  *)
-procedure av_hex_dump_log(avcl: pointer; level: cint; const buf: pcuint8; size; cint); cdecl; external LIB_AVFORMAT;
+procedure av_hex_dump_log(avcl: pointer; level: cint; const buf: pcuint8; size: cint); cdecl; external LIB_AVFORMAT;
 
 (**
  * Send a nice dump of a packet to the specified file stream.
@@ -2743,7 +2758,7 @@ procedure av_hex_dump_log(avcl: pointer; level: cint; const buf: pcuint8; size; 
  * @param dump_payload True if the payload must be displayed, too.
  * @param st AVStream that the packet belongs to
  *)
-procedure av_pkt_dump2(f: file; const pkt: PAVPacket; dump_payload: cint; const st: PAVStream); cdecl; external LIB_AVFORMAT;
+procedure av_pkt_dump2(var f: file; const pkt: PAVPacket; dump_payload: cint; const st: PAVStream); cdecl; external LIB_AVFORMAT;
 
 (**
  * Send a nice dump of a packet to the log.
@@ -2992,7 +3007,7 @@ function avformat_match_stream_specifier(s: PAVFormatContext; st: PAVStream; con
 
 function avformat_queue_attached_pictures(s: PAVFormatContext): cint; cdecl; external LIB_AVFORMAT;
 
-{$if FF_API_OLD_BSF}
+{$ifdef FF_API_OLD_BSF}
 (**
  * Apply a list of bitstream filters to a packet.
  *
@@ -3012,7 +3027,7 @@ type
   AVTimebaseSource = (
     AVFMT_TBCF_AUTO = -1,
     AVFMT_TBCF_DECODER,
-    AVFMT_TBCF_DEMUXER{$if FF_API_R_FRAME_RATE},
+    AVFMT_TBCF_DEMUXER{$ifdef FF_API_R_FRAME_RATE},
     AVFMT_TBCF_R_FRAMERATE{$endif}
   );
 
@@ -3041,10 +3056,15 @@ function av_stream_get_codec_timebase(const st: PAVStream): AVRational; cdecl; e
 
 // #endif (* AVFORMAT_AVFORMAT_H *)
 
-{$include libavformat_avio.inc}
 {$include libavformat_version.inc}
 
 implementation
 
+begin
+  LIBAVFORMAT_VERSION_INT := AV_VERSION_INT(LIBAVFORMAT_VERSION_MAJOR, LIBAVFORMAT_VERSION_MINOR, LIBAVFORMAT_VERSION_MICRO);
+  LIBAVFORMAT_VERSION := AV_VERSION(LIBAVFORMAT_VERSION_MAJOR, LIBAVFORMAT_VERSION_MINOR, LIBAVFORMAT_VERSION_MICRO);
+  LIBAVFORMAT_BUILD := LIBAVFORMAT_VERSION;
+
+  LIBAVFORMAT_IDENT := 'Lavf' + LIBAVFORMAT_VERSION;
 end.
 

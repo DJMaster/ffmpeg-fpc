@@ -35,6 +35,7 @@
 // #include <stdint.h>
 
 type
+  PPAVVorbisParseContext = ^PAVVorbisParseContext;
   PAVVorbisParseContext = ^AVVorbisParseContext;
   AVVorbisParseContext = record
   end;

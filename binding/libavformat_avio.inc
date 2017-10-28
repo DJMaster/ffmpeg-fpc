@@ -597,7 +597,7 @@ function avio_size(s: PAVIOContext): cint64; cdecl; external LIB_AVFORMAT;
  * @return non zero if and only if end of file
  *)
 function avio_feof(s: PAVIOContext): cint; cdecl; external LIB_AVFORMAT;
-{$if FF_API_URL_FEOF}
+{$ifdef FF_API_URL_FEOF}
 (**
  * @deprecated use avio_feof()
  *)

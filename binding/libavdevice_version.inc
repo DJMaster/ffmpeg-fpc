@@ -38,15 +38,12 @@ const
   LIBAVDEVICE_VERSION_MINOR = 10;
   LIBAVDEVICE_VERSION_MICRO = 100;
 
-  LIBAVDEVICE_VERSION_INT = AV_VERSION_INT(LIBAVDEVICE_VERSION_MAJOR, \
-                                               LIBAVDEVICE_VERSION_MINOR, \
-                                               LIBAVDEVICE_VERSION_MICRO);
-  LIBAVDEVICE_VERSION = AV_VERSION(LIBAVDEVICE_VERSION_MAJOR, \
-                                           LIBAVDEVICE_VERSION_MINOR, \
-                                           LIBAVDEVICE_VERSION_MICRO);
-  LIBAVDEVICE_BUILD = LIBAVDEVICE_VERSION_INT;
+var
+  LIBAVDEVICE_VERSION_INT: cint;
+  LIBAVDEVICE_VERSION: string;
+  LIBAVDEVICE_BUILD: string;
 
-  LIBAVDEVICE_IDENT = 'Lavd' + AV_STRINGIFY(LIBAVDEVICE_VERSION);
+  LIBAVDEVICE_IDENT: string;
 
 (**
  * FF_API_* defines may be placed below to indicate public API that will be

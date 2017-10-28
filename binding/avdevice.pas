@@ -30,7 +30,8 @@ interface
 
 uses
   ctypes,
-  avutil;
+  avutil,
+  avformat;
 
 const
   LIB_AVDEVICE = 'avdevice-57.dll';
@@ -536,5 +537,11 @@ function avdevice_list_output_sinks(device: PAVOutputFormat; const device_name: 
 
 implementation
 
+begin
+  LIBAVDEVICE_VERSION_INT := AV_VERSION_INT(LIBAVDEVICE_VERSION_MAJOR, LIBAVDEVICE_VERSION_MINOR, LIBAVDEVICE_VERSION_MICRO);
+  LIBAVDEVICE_VERSION := AV_VERSION(LIBAVDEVICE_VERSION_MAJOR, LIBAVDEVICE_VERSION_MINOR, LIBAVDEVICE_VERSION_MICRO);
+  LIBAVDEVICE_BUILD := LIBAVDEVICE_VERSION;
+
+  LIBAVDEVICE_IDENT := 'Lavd' + LIBAVDEVICE_VERSION;
 end.
 

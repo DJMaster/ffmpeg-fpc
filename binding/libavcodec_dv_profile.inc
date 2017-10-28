@@ -74,17 +74,17 @@ type
  * @param buf_size size of the buffer in bytes
  * @return the DV profile for the supplied data or NULL on failure
  *)
-function av_dv_frame_profile(const sys: PAVDVProfile; const frame: pcuint8; buf_size: cunsigned): PAVDVProfile;
+function av_dv_frame_profile(const sys: PAVDVProfile; const frame: pcuint8; buf_size: cunsigned): PAVDVProfile; cdecl; external LIB_AVCODEC;
 
 (**
  * Get a DV profile for the provided stream parameters.
  *)
-function av_dv_codec_profile(width: cint; height: cint; pix_fmt: AVPixelFormat): PAVDVProfile;
+function av_dv_codec_profile(width: cint; height: cint; pix_fmt: AVPixelFormat): PAVDVProfile; cdecl; external LIB_AVCODEC;
 
 (**
  * Get a DV profile for the provided stream parameters.
  * The frame rate is used as a best-effort parameter.
  *)
-function av_dv_codec_profile2(width: cint; height: cint; pix_fmt: AVPixelFormat; frame_rate: AVRational): PAVDVProfile;
+function av_dv_codec_profile2(width: cint; height: cint; pix_fmt: AVPixelFormat; frame_rate: AVRational): PAVDVProfile; cdecl; external LIB_AVCODEC;
 
 // #endif (* AVCODEC_DV_PROFILE_H *)

@@ -40,15 +40,12 @@ const
   LIBAVFILTER_VERSION_MINOR = 107;
   LIBAVFILTER_VERSION_MICRO = 100;
 
-  LIBAVFILTER_VERSION_INT = AV_VERSION_INT(LIBAVFILTER_VERSION_MAJOR, \
-                                               LIBAVFILTER_VERSION_MINOR, \
-                                               LIBAVFILTER_VERSION_MICRO);
-  LIBAVFILTER_VERSION = AV_VERSION(LIBAVFILTER_VERSION_MAJOR,   \
-                                           LIBAVFILTER_VERSION_MINOR,   \
-                                           LIBAVFILTER_VERSION_MICRO);
-  LIBAVFILTER_BUILD = LIBAVFILTER_VERSION_INT;
+var
+  LIBAVFILTER_VERSION_INT: cint;
+  LIBAVFILTER_VERSION: string;
+  LIBAVFILTER_BUILD: string;
 
-  LIBAVFILTER_IDENT = 'Lavfi' + AV_STRINGIFY(LIBAVFILTER_VERSION);
+  LIBAVFILTER_IDENT: string;
 
 (**
  * FF_API_* defines may be placed below to indicate public API that will be
