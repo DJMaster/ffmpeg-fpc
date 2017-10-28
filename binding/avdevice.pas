@@ -31,7 +31,8 @@ interface
 uses
   ctypes,
   avutil,
-  avformat;
+  avformat,
+  avcodec;
 
 const
   LIB_AVDEVICE = 'avdevice-57.dll';
@@ -140,11 +141,6 @@ type
  *)
   AVAppToDevMessageType = (
     (**
-     * Dummy message.
-     *)
-    AV_APP_TO_DEV_NONE = MKBETAG('N','O','N','E'),
-
-    (**
      * Window size change message.
      *
      * Message is sent to the device every time the application changes the size
@@ -153,17 +149,12 @@ type
      *
      * data: AVDeviceRect: new window size.
      *)
-    AV_APP_TO_DEV_WINDOW_SIZE = MKBETAG('G','E','O','M'),
+    AV_APP_TO_DEV_WINDOW_SIZE = $47454F4D, // MKBETAG('G','E','O','M'),
 
     (**
-     * Repaint request message.
-     *
-     * Message is sent to the device when window has to be repainted.
-     *
-     * data: AVDeviceRect: area required to be repainted.
-     *       NULL: whole area is required to be repainted.
+     * Dummy message.
      *)
-    AV_APP_TO_DEV_WINDOW_REPAINT = MKBETAG('R','E','P','A'),
+    AV_APP_TO_DEV_NONE = $4E4F4E45, // MKBETAG('N','O','N','E'),
 
     (**
      * Request pause/play.
@@ -174,9 +165,19 @@ type
      *
      * data: NULL
      *)
-    AV_APP_TO_DEV_PAUSE = MKBETAG('P', 'A', 'U', ' '),
-    AV_APP_TO_DEV_PLAY = MKBETAG('P', 'L', 'A', 'Y'),
-    AV_APP_TO_DEV_TOGGLE_PAUSE = MKBETAG('P', 'A', 'U', 'T'),
+    AV_APP_TO_DEV_PAUSE = $50415520, // MKBETAG('P', 'A', 'U', ' '),
+    AV_APP_TO_DEV_PLAY = $504C4159, // MKBETAG('P', 'L', 'A', 'Y'),
+    AV_APP_TO_DEV_TOGGLE_PAUSE = $50415554, // MKBETAG('P', 'A', 'U', 'T'),
+
+    (**
+     * Repaint request message.
+     *
+     * Message is sent to the device when window has to be repainted.
+     *
+     * data: AVDeviceRect: area required to be repainted.
+     *       NULL: whole area is required to be repainted.
+     *)
+    AV_APP_TO_DEV_WINDOW_REPAINT = $52455041, // MKBETAG('R','E','P','A'),
 
     (**
      * Volume control message.
@@ -187,7 +188,7 @@ type
      *
      * data: double: new volume with range of 0.0 - 1.0.
      *)
-    AV_APP_TO_DEV_SET_VOLUME = MKBETAG('S', 'V', 'O', 'L'),
+    AV_APP_TO_DEV_SET_VOLUME = $53564F4C, // MKBETAG('S', 'V', 'O', 'L'),
 
     (**
      * Mute control messages.
@@ -198,9 +199,9 @@ type
      *
      * data: NULL.
      *)
-    AV_APP_TO_DEV_MUTE = MKBETAG(' ', 'M', 'U', 'T'),
-    AV_APP_TO_DEV_UNMUTE = MKBETAG('U', 'M', 'U', 'T'),
-    AV_APP_TO_DEV_TOGGLE_MUTE = MKBETAG('T', 'M', 'U', 'T'),
+    AV_APP_TO_DEV_MUTE = $204D5554, // MKBETAG(' ', 'M', 'U', 'T'),
+    AV_APP_TO_DEV_UNMUTE = $554D5554, // MKBETAG('U', 'M', 'U', 'T'),
+    AV_APP_TO_DEV_TOGGLE_MUTE = $544D5554, // MKBETAG('T', 'M', 'U', 'T'),
 
     (**
      * Get volume/mute messages.
@@ -210,8 +211,8 @@ type
      *
      * data: NULL.
      *)
-    AV_APP_TO_DEV_GET_VOLUME = MKBETAG('G', 'V', 'O', 'L'),
-    AV_APP_TO_DEV_GET_MUTE = MKBETAG('G', 'M', 'U', 'T')
+    AV_APP_TO_DEV_GET_VOLUME = $47564F4C, // MKBETAG('G', 'V', 'O', 'L'),
+    AV_APP_TO_DEV_GET_MUTE = $474D5554 // MKBETAG('G', 'M', 'U', 'T')
   );
 
 (**
@@ -221,7 +222,7 @@ type
     (**
      * Dummy message.
      *)
-    AV_DEV_TO_APP_NONE = MKBETAG('N','O','N','E'),
+    AV_DEV_TO_APP_NONE = $4E4F4E45, // MKBETAG('N','O','N','E'),
 
     (**
      * Create window buffer message.
@@ -237,7 +238,7 @@ type
      * data: AVDeviceRect: preferred size of the window buffer.
      *       NULL: no preferred size of the window buffer.
      *)
-    AV_DEV_TO_APP_CREATE_WINDOW_BUFFER = MKBETAG('B','C','R','E'),
+    AV_DEV_TO_APP_CREATE_WINDOW_BUFFER = $42435245, // MKBETAG('B','C','R','E'),
 
     (**
      * Prepare window buffer message.
@@ -248,7 +249,7 @@ type
      *
      * data: NULL.
      *)
-    AV_DEV_TO_APP_PREPARE_WINDOW_BUFFER = MKBETAG('B','P','R','E'),
+    AV_DEV_TO_APP_PREPARE_WINDOW_BUFFER = $42505245, // MKBETAG('B','P','R','E'),
 
     (**
      * Display window buffer message.
@@ -259,7 +260,7 @@ type
      *
      * data: NULL.
      *)
-    AV_DEV_TO_APP_DISPLAY_WINDOW_BUFFER = MKBETAG('B','D','I','S'),
+    AV_DEV_TO_APP_DISPLAY_WINDOW_BUFFER = $42444953, // MKBETAG('B','D','I','S'),
 
     (**
      * Destroy window buffer message.
@@ -270,7 +271,7 @@ type
      *
      * data: NULL.
      *)
-    AV_DEV_TO_APP_DESTROY_WINDOW_BUFFER = MKBETAG('B','D','E','S'),
+    AV_DEV_TO_APP_DESTROY_WINDOW_BUFFER = $42444553, // MKBETAG('B','D','E','S'),
 
     (**
      * Buffer fullness status messages.
@@ -279,8 +280,8 @@ type
      *
      * data: NULL.
      *)
-    AV_DEV_TO_APP_BUFFER_OVERFLOW = MKBETAG('B','O','F','L'),
-    AV_DEV_TO_APP_BUFFER_UNDERFLOW = MKBETAG('B','U','F','L'),
+    AV_DEV_TO_APP_BUFFER_OVERFLOW = $424F464C, // MKBETAG('B','O','F','L'),
+    AV_DEV_TO_APP_BUFFER_UNDERFLOW = $4255464C, // MKBETAG('B','U','F','L'),
 
     (**
      * Buffer readable/writable.
@@ -293,8 +294,8 @@ type
      * data: int64_t: amount of bytes available to read/write.
      *       NULL: amount of bytes available to read/write is not known.
      *)
-    AV_DEV_TO_APP_BUFFER_READABLE = MKBETAG('B','R','D',' '),
-    AV_DEV_TO_APP_BUFFER_WRITABLE = MKBETAG('B','W','R',' '),
+    AV_DEV_TO_APP_BUFFER_READABLE = $42524420, // MKBETAG('B','R','D',' '),
+    AV_DEV_TO_APP_BUFFER_WRITABLE = $42575220, // MKBETAG('B','W','R',' '),
 
     (**
      * Mute state change message.
@@ -303,7 +304,7 @@ type
      *
      * data: int: 0 for not muted state, non-zero for muted state.
      *)
-    AV_DEV_TO_APP_MUTE_STATE_CHANGED = MKBETAG('C','M','U','T'),
+    AV_DEV_TO_APP_MUTE_STATE_CHANGED = $434D5554, // MKBETAG('C','M','U','T'),
 
     (**
      * Volume level change message.
@@ -312,7 +313,7 @@ type
      *
      * data: double: new volume with range of 0.0 - 1.0.
      *)
-    AV_DEV_TO_APP_VOLUME_LEVEL_CHANGED = MKBETAG('C','V','O','L')
+    AV_DEV_TO_APP_VOLUME_LEVEL_CHANGED = $43564F4C // MKBETAG('C','V','O','L')
   );
 
 (**
@@ -416,6 +417,7 @@ function avdevice_dev_to_app_control_message(s: PAVFormatContext; type_: AVDevTo
  * to implement capabilities probing API based on AVOption API. Should not be used directly.
  *)
 type
+  PPAVDeviceCapabilitiesQuery = ^PAVDeviceCapabilitiesQuery;
   PAVDeviceCapabilitiesQuery = ^AVDeviceCapabilitiesQuery;
   AVDeviceCapabilitiesQuery = record
     av_class: PAVClass;
@@ -436,7 +438,8 @@ type
 (**
  * AVOption table used by devices to implement device capabilities API. Should not be used by a user.
  *)
-extern const AVOption av_device_capabilities[];
+var
+  av_device_capabilities: pointer{array of AVOption}; external LIB_AVDEVICE;
 
 (**
  * Initialize capabilities probing API based on AVOption API.
@@ -455,7 +458,7 @@ extern const AVOption av_device_capabilities[];
  *
  * @return >= 0 on success, negative otherwise.
  *)
-function cint avdevice_capabilities_create(caps: PPAVDeviceCapabilitiesQuery; s: PAVFormatContext; device_options: PPAVDictionary); cdecl; external LIB_AVDEVICE;
+function avdevice_capabilities_create(caps: PPAVDeviceCapabilitiesQuery; s: PAVFormatContext; device_options: PPAVDictionary): cint; cdecl; external LIB_AVDEVICE;
 
 (**
  * Free resources created by avdevice_capabilities_create()
@@ -469,6 +472,7 @@ procedure avdevice_capabilities_free(caps: PPAVDeviceCapabilitiesQuery; s: PAVFo
  * Structure describes basic parameters of the device.
  *)
 type
+  PPAVDeviceInfo = ^PAVDeviceInfo;
   PAVDeviceInfo = ^AVDeviceInfo;
   AVDeviceInfo = record
     device_name: pchar; (**< device name, format depends on device *)
@@ -478,6 +482,7 @@ type
 (**
  * List of devices.
  *)
+  PPAVDeviceInfoList = ^PAVDeviceInfoList;
   PAVDeviceInfoList = ^AVDeviceInfoList;
   AVDeviceInfoList = record
     devices: PPAVDeviceInfo; (**< list of autodetected devices *)

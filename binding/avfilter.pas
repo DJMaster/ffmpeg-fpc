@@ -28,6 +28,7 @@
 unit avfilter;
 
 {$mode objfpc}{$H+}
+{$macro on}
 
 interface
 
@@ -85,8 +86,7 @@ function avfilter_license(): pchar; cdecl; external LIB_AVFILTER;
 
 type
   PAVFilterContext = ^AVFilterContext;
-  AVFilterContext = record
-  end;
+  PPAVFilterLink = ^PAVFilterLink;
   PAVFilterLink = ^AVFilterLink;
   AVFilterLink = record
   end;
@@ -167,13 +167,19 @@ const
   AVFILTER_FLAG_SUPPORT_TIMELINE = (AVFILTER_FLAG_SUPPORT_TIMELINE_GENERIC or AVFILTER_FLAG_SUPPORT_TIMELINE_INTERNAL);
 
 (**
+ * Process multiple parts of the frame concurrently.
+ *)
+const
+  AVFILTER_THREAD_SLICE = (1 shl 0);
+
+(**
  * Filter definition. This defines the pads a filter contains, and all the
  * callback functions used to interact with the filter.
  *)
 type
   AVFilter_preinit_func = function (ctx: PAVFilterContext): cint; cdecl;
   AVFilter_init_func = function (ctx: PAVFilterContext): cint; cdecl;
-  AVFilter_init_dict_func = function (ctx: PAVFilterContext; options: PPAVDictionary); cdecl;
+  AVFilter_init_dict_func = function (ctx: PAVFilterContext; options: PPAVDictionary): cint; cdecl;
   AVFilter_uninit_proc = procedure (ctx: PAVFilterContext); cdecl;
   AVFilter_query_formats_func = function (ctx: PAVFilterContext): cint; cdecl;
   AVFilter_process_command_func = function (ctx: PAVFilterContext; const cmd: pchar; const arg: pchar; res: pchar; res_len: cint; flags: cint): cint; cdecl;
@@ -367,19 +373,11 @@ type
     activate: AVFilter_activate_func;
   end;
 
-(**
- * Process multiple parts of the frame concurrently.
- *)
-const
-  AVFILTER_THREAD_SLICE = (1 shl 0);
-
-type
   PAVFilterInternal = ^AVFilterInternal;
   AVFilterInternal = record
   end;
 
 (** An instance of a filter *)
-  PAVFilterContext = ^AVFilterContext;
   AVFilterContext = record
     av_class: PAVClass; ///< needed for av_log() and filters common options
 
@@ -451,7 +449,7 @@ type
      * a higher value suggests a more urgent activation.
      *)
     ready: cunsigned;
-  );
+  end;
 
 (**
  * A link between two filters. This contains pointers to the source and
@@ -728,7 +726,7 @@ function avfilter_process_command(filter: PAVFilterContext; const cmd: pchar; co
 (** Initialize the filter system. Register all builtin filters. *)
 procedure avfilter_register_all(); cdecl; external LIB_AVFILTER;
 
-{$if FF_API_OLD_FILTER_REGISTER}
+{$ifdef FF_API_OLD_FILTER_REGISTER}
 (** Uninitialize the filter system. Unregister all filters. *)
 //TODO attribute_deprecated
 procedure avfilter_uninit(); cdecl; external LIB_AVFILTER;
@@ -753,7 +751,7 @@ function avfilter_register(filter: PAVFilter): cint; cdecl; external LIB_AVFILTE
  * @return     the filter definition, if any matching one is registered.
  *             NULL if none found.
  *)
-{$if not FF_API_NOCONST_GET_NAME}
+{$ifdef not FF_API_NOCONST_GET_NAME}
 // const
 {$endif}
 function avfilter_get_by_name(const name: pchar): PAVFilter; cdecl; external LIB_AVFILTER;
@@ -765,7 +763,7 @@ function avfilter_get_by_name(const name: pchar): PAVFilter; cdecl; external LIB
  *)
 function avfilter_next(const prev: PAVFilter): PAVFilter; cdecl; external LIB_AVFILTER;
 
-{$if FF_API_OLD_FILTER_REGISTER}
+{$ifdef FF_API_OLD_FILTER_REGISTER}
 (**
  * If filter is NULL, returns a pointer to the first registered filter pointer,
  * if filter is non-NULL, returns the next pointer after filter.
@@ -777,7 +775,7 @@ function avfilter_next(const prev: PAVFilter): PAVFilter; cdecl; external LIB_AV
 function av_filter_next(filter: PPAVFilter): PPAVFilter; cdecl; external LIB_AVFILTER;
 {$endif}
 
-{$if FF_API_AVFILTER_OPEN}
+{$ifdef FF_API_AVFILTER_OPEN}
 (**
  * Create a filter instance.
  *
@@ -792,7 +790,7 @@ function av_filter_next(filter: PPAVFilter): PPAVFilter; cdecl; external LIB_AVF
 function avfilter_open(filter_ctx: PPAVFilterContext; filter: PAVFilter; const inst_name: pchar): cint; cdecl; external LIB_AVFILTER;
 {$endif}
 
-{$if FF_API_AVFILTER_INIT_FILTER}
+{$ifdef FF_API_AVFILTER_INIT_FILTER}
 (**
  * Initialize a filter.
  *
@@ -910,7 +908,7 @@ type
     nb_filters: cunsigned;
 
     scale_sws_opts: pchar; ///< sws options to use for the auto-inserted scale filters
-{$if FF_API_LAVR_OPTS}
+{$ifdef FF_API_LAVR_OPTS}
     //TODO attribute_deprecated
     resample_lavr_opts: pchar; ///< libavresample options to use for the auto-inserted resample filters
 {$endif}
@@ -1010,7 +1008,7 @@ function avfilter_graph_alloc_filter(graph: PAVFilterGraph; const filter: PAVFil
  *)
 function avfilter_graph_get_filter(graph: PAVFilterGraph; const name: pchar): PAVFilterContext; cdecl; external LIB_AVFILTER;
 
-{$if FF_API_AVFILTER_OPEN}
+{$ifdef FF_API_AVFILTER_OPEN}
 (**
  * Add an existing filter instance to a filter graph.
  *

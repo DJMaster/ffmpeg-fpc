@@ -1818,6 +1818,7 @@ type
   PPAVCodecContext = ^PAVCodecContext;
   PAVCodecContext = ^AVCodecContext;
   PAVHWAccel = ^AVHWAccel;
+  PPAVCodec = ^PAVCodec;
   PAVCodec = ^AVCodec_;
 
   draw_horiz_band_proc = procedure (s: PAVCodecContext; const src: PAVFrame; offset: array{[0..AV_NUM_DATA_POINTERS-1]} of cint; y: cint; type_: cint; height: cint); cdecl;
