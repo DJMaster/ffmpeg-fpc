@@ -84,47 +84,6 @@ function avfilter_configuration(): pchar; cdecl; external LIB_AVFILTER;
  *)
 function avfilter_license(): pchar; cdecl; external LIB_AVFILTER;
 
-type
-  PAVFilterContext = ^AVFilterContext;
-  PPAVFilterLink = ^PAVFilterLink;
-  PAVFilterLink = ^AVFilterLink;
-  AVFilterLink = record
-  end;
-  PAVFilterPad = ^AVFilterPad;
-  AVFilterPad = record
-  end;
-  PAVFilterFormats = ^AVFilterFormats;
-  AVFilterFormats = record
-  end;
-
-(**
- * Get the number of elements in a NULL-terminated array of AVFilterPads (e.g.
- * AVFilter.inputs/outputs).
- *)
-function avfilter_pad_count(const pads: PAVFilterPad): cint; cdecl; external LIB_AVFILTER;
-
-(**
- * Get the name of an AVFilterPad.
- *
- * @param pads an array of AVFilterPads
- * @param pad_idx index of the pad in the array it; is the caller's
- *                responsibility to ensure the index is valid
- *
- * @return name of the pad_idx'th pad in pads
- *)
-function avfilter_pad_get_name(const pads: PAVFilterPad; pad_idx: cint): pchar; cdecl; external LIB_AVFILTER;
-
-(**
- * Get the type of an AVFilterPad.
- *
- * @param pads an array of AVFilterPads
- * @param pad_idx index of the pad in the array; it is the caller's
- *                responsibility to ensure the index is valid
- *
- * @return type of the pad_idx'th pad in pads
- *)
-function avfilter_pad_get_type(const pads: PAVFilterPad; pad_idx: cint): AVMediaType; cdecl; external LIB_AVFILTER;
-
 (**
  * The number of the filter inputs is not determined just by AVFilter.inputs.
  * The filter might add additional inputs during initialization depending on the
@@ -172,11 +131,23 @@ const
 const
   AVFILTER_THREAD_SLICE = (1 shl 0);
 
+type
+  PPAVFilterLink = ^PAVFilterLink;
+
+  PAVFilterPad = ^AVFilterPad;
+  AVFilterPad = record
+  end;
+  PAVFilterFormats = ^AVFilterFormats;
+  AVFilterFormats = record
+  end;
+
+  PPAVFilterContext = ^PAVFilterContext;
+  PAVFilterContext = ^AVFilterContext;
+
 (**
  * Filter definition. This defines the pads a filter contains, and all the
  * callback functions used to interact with the filter.
  *)
-type
   AVFilter_preinit_func = function (ctx: PAVFilterContext): cint; cdecl;
   AVFilter_init_func = function (ctx: PAVFilterContext): cint; cdecl;
   AVFilter_init_dict_func = function (ctx: PAVFilterContext; options: PPAVDictionary): cint; cdecl;
@@ -377,6 +348,118 @@ type
   AVFilterInternal = record
   end;
 
+  PAVFilterGraphInternal = ^AVFilterGraphInternal;
+  AVFilterGraphInternal = record
+  end;
+
+(**
+ * A function pointer passed to the @ref AVFilterGraph.execute callback to be
+ * executed multiple times, possibly in parallel.
+ *
+ * @param ctx the filter context the job belongs to
+ * @param arg an opaque parameter passed through from @ref
+ *            AVFilterGraph.execute
+ * @param jobnr the index of the job being executed
+ * @param nb_jobs the total number of jobs
+ *
+ * @return 0 on success, a negative AVERROR on error
+ *)
+  Pavfilter_action_func = ^avfilter_action_func;
+  avfilter_action_func = function (ctx: PAVFilterContext; arg: pointer; jobnr: cint; nb_jobs: cint): cint; cdecl;
+
+(**
+ * A function executing multiple jobs, possibly in parallel.
+ *
+ * @param ctx the filter context to which the jobs belong
+ * @param func the function to be called multiple times
+ * @param arg the argument to be passed to func
+ * @param ret a nb_jobs-sized array to be filled with return values from each
+ *            invocation of func
+ * @param nb_jobs the number of jobs to execute
+ *
+ * @return 0 on success, a negative AVERROR on error
+ *)
+  AVFilterGraph_avfilter_execute_func = function (ctx: PAVFilterContext; func: Pavfilter_action_func; arg: pointer; ret: pcint; nb_jobs: cint): cint; cdecl;
+
+  PPAVFilterGraph = ^PAVFilterGraph;
+  PAVFilterGraph = ^AVFilterGraph;
+  AVFilterGraph = record
+    av_class: PAVClass;
+    filters: PPAVFilterContext;
+    nb_filters: cunsigned;
+
+    scale_sws_opts: pchar; ///< sws options to use for the auto-inserted scale filters
+{$ifdef FF_API_LAVR_OPTS}
+    //TODO attribute_deprecated
+    resample_lavr_opts: pchar; ///< libavresample options to use for the auto-inserted resample filters
+{$endif}
+
+    (**
+     * Type of multithreading allowed for filters in this graph. A combination
+     * of AVFILTER_THREAD_* flags.
+     *
+     * May be set by the caller at any point, the setting will apply to all
+     * filters initialized after that. The default is allowing everything.
+     *
+     * When a filter in this graph is initialized, this field is combined using
+     * bit AND with AVFilterContext.thread_type to get the final mask used for
+     * determining allowed threading types. I.e. a threading type needs to be
+     * set in both to be allowed.
+     *)
+    thread_type: cint;
+
+    (**
+     * Maximum number of threads used by filters in this graph. May be set by
+     * the caller before adding any filters to the filtergraph. Zero (the
+     * default) means that the number of threads is determined automatically.
+     *)
+    nb_threads: cint;
+
+    (**
+     * Opaque object for libavfilter internal use.
+     *)
+    internal: PAVFilterGraphInternal;
+
+    (**
+     * Opaque user data. May be set by the caller to an arbitrary value, e.g. to
+     * be used from callbacks like @ref AVFilterGraph.execute.
+     * Libavfilter will not touch this field in any way.
+     *)
+    opaque: pointer;
+
+    (**
+     * This callback may be set by the caller immediately after allocating the
+     * graph and before adding any filters to it, to provide a custom
+     * multithreading implementation.
+     *
+     * If set, filters with slice threading capability will call this callback
+     * to execute multiple jobs in parallel.
+     *
+     * If this field is left unset, libavfilter will use its internal
+     * implementation, which may or may not be multithreaded depending on the
+     * platform and build options.
+     *)
+    execute: AVFilterGraph_avfilter_execute_func;
+
+    aresample_swr_opts: pchar; ///< swr options to use for the auto-inserted aresample filters, Access ONLY through AVOptions
+
+    (**
+     * Private fields
+     *
+     * The following fields are for internal use only.
+     * Their type, offset, number and semantic can change without notice.
+     *)
+
+    sink_links: PPAVFilterLink;
+    sink_links_count: cint;
+
+    disable_auto_convert: cunsigned;
+  end;
+
+  PAVFilterCommand = ^AVFilterCommand;
+  AVFilterCommand = record
+  end;
+  
 (** An instance of a filter *)
   AVFilterContext = record
     av_class: PAVClass; ///< needed for av_log() and filters common options
@@ -463,7 +546,11 @@ type
  * In the future, access to the header may be reserved for filters
  * implementation.
  *)
-type
+ 
+  PAVFilterChannelLayouts = ^AVFilterChannelLayouts;
+  AVFilterChannelLayouts = record
+  end;
+
   init_state_enum = (
     AVLINK_UNINIT = 0, ///< not started
     AVLINK_STARTINIT, ///< started, but incomplete
@@ -677,6 +764,34 @@ type
   end;
 
 (**
+ * Get the number of elements in a NULL-terminated array of AVFilterPads (e.g.
+ * AVFilter.inputs/outputs).
+ *)
+function avfilter_pad_count(const pads: PAVFilterPad): cint; cdecl; external LIB_AVFILTER;
+
+(**
+ * Get the name of an AVFilterPad.
+ *
+ * @param pads an array of AVFilterPads
+ * @param pad_idx index of the pad in the array it; is the caller's
+ *                responsibility to ensure the index is valid
+ *
+ * @return name of the pad_idx'th pad in pads
+ *)
+function avfilter_pad_get_name(const pads: PAVFilterPad; pad_idx: cint): pchar; cdecl; external LIB_AVFILTER;
+
+(**
+ * Get the type of an AVFilterPad.
+ *
+ * @param pads an array of AVFilterPads
+ * @param pad_idx index of the pad in the array; it is the caller's
+ *                responsibility to ensure the index is valid
+ *
+ * @return type of the pad_idx'th pad in pads
+ *)
+function avfilter_pad_get_type(const pads: PAVFilterPad; pad_idx: cint): AVMediaType; cdecl; external LIB_AVFILTER;
+
+(**
  * Link two filters together.
  *
  * @param src    the source filter
@@ -865,116 +980,6 @@ function avfilter_insert_filter(link: PAVFilterLink; filt: PAVFilterContext; fil
  *)
 function avfilter_get_class(): PAVClass; cdecl; external LIB_AVFILTER;
 
-type
-  PAVFilterGraphInternal = ^AVFilterGraphInternal;
-  AVFilterGraphInternal = record
-  end;
-
-(**
- * A function pointer passed to the @ref AVFilterGraph.execute callback to be
- * executed multiple times, possibly in parallel.
- *
- * @param ctx the filter context the job belongs to
- * @param arg an opaque parameter passed through from @ref
- *            AVFilterGraph.execute
- * @param jobnr the index of the job being executed
- * @param nb_jobs the total number of jobs
- *
- * @return 0 on success, a negative AVERROR on error
- *)
-type
-  Pavfilter_action_func = ^avfilter_action_func;
-  avfilter_action_func = function (ctx: PAVFilterContext; arg: pointer; jobnr: cint; nb_jobs: cint): cint; cdecl;
-
-(**
- * A function executing multiple jobs, possibly in parallel.
- *
- * @param ctx the filter context to which the jobs belong
- * @param func the function to be called multiple times
- * @param arg the argument to be passed to func
- * @param ret a nb_jobs-sized array to be filled with return values from each
- *            invocation of func
- * @param nb_jobs the number of jobs to execute
- *
- * @return 0 on success, a negative AVERROR on error
- *)
-type
-  avfilter_execute_func = function (ctx: PAVFilterContext; func: Pavfilter_action_func; arg: pointer; ret: pcint; nb_jobs: cint): cint; cdecl;
-
-  PAVFilterGraph = ^AVFilterGraph;
-  AVFilterGraph = record
-    av_class: PAVClass;
-    filters: PPAVFilterContext;
-    nb_filters: cunsigned;
-
-    scale_sws_opts: pchar; ///< sws options to use for the auto-inserted scale filters
-{$ifdef FF_API_LAVR_OPTS}
-    //TODO attribute_deprecated
-    resample_lavr_opts: pchar; ///< libavresample options to use for the auto-inserted resample filters
-{$endif}
-
-    (**
-     * Type of multithreading allowed for filters in this graph. A combination
-     * of AVFILTER_THREAD_* flags.
-     *
-     * May be set by the caller at any point, the setting will apply to all
-     * filters initialized after that. The default is allowing everything.
-     *
-     * When a filter in this graph is initialized, this field is combined using
-     * bit AND with AVFilterContext.thread_type to get the final mask used for
-     * determining allowed threading types. I.e. a threading type needs to be
-     * set in both to be allowed.
-     *)
-    thread_type: cint;
-
-    (**
-     * Maximum number of threads used by filters in this graph. May be set by
-     * the caller before adding any filters to the filtergraph. Zero (the
-     * default) means that the number of threads is determined automatically.
-     *)
-    nb_threads: cint;
-
-    (**
-     * Opaque object for libavfilter internal use.
-     *)
-    internal: PAVFilterGraphInternal;
-
-    (**
-     * Opaque user data. May be set by the caller to an arbitrary value, e.g. to
-     * be used from callbacks like @ref AVFilterGraph.execute.
-     * Libavfilter will not touch this field in any way.
-     *)
-    opaque: pointer;
-
-    (**
-     * This callback may be set by the caller immediately after allocating the
-     * graph and before adding any filters to it, to provide a custom
-     * multithreading implementation.
-     *
-     * If set, filters with slice threading capability will call this callback
-     * to execute multiple jobs in parallel.
-     *
-     * If this field is left unset, libavfilter will use its internal
-     * implementation, which may or may not be multithreaded depending on the
-     * platform and build options.
-     *)
-    execute: Pavfilter_execute_func;
-
-    aresample_swr_opts: pchar; ///< swr options to use for the auto-inserted aresample filters, Access ONLY through AVOptions
-
-    (**
-     * Private fields
-     *
-     * The following fields are for internal use only.
-     * Their type, offset, number and semantic can change without notice.
-     *)
-
-    sink_links: PPAVFilterLink;
-    sink_links_count: cint;
-
-    disable_auto_convert: cunsigned;
-  end;
-
 (**
  * Allocate a filter graph.
  *
@@ -1076,6 +1081,7 @@ procedure avfilter_graph_free(graph: PPAVFilterGraph); cdecl; external LIB_AVFIL
  * filter context and the pad index required for establishing a link.
  *)
 type
+  PPAVFilterInOut = ^PAVFilterInOut;
   PAVFilterInOut = ^AVFilterInOut;
   AVFilterInOut = record
     (** unique name for this input/output in the list *)

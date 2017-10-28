@@ -82,12 +82,14 @@ type
 // #include <inttypes.h>
 
 type
+  Ppp_context = ^pp_context;
   pp_context = record
   end;
+  Ppp_mode = ^pp_mode;
   pp_mode = record
   end;
 
-{$if (LIBPOSTPROC_VERSION_INT < (52 shl 16))}
+{$if (LIBPOSTPROC_VERSION_MAJOR < 52)}
 type
   pp_context_t = ^pp_context;
   pp_mode_t = ^pp_mode;
@@ -99,7 +101,7 @@ var
   pp_help: array of char; external LIB_POSTPROCESS; ///< a simple help text
 {$endif}
 
-procedure pp_postprocess(const src: array[0..2] of pcuint8; const srcStride: array[0..2] of cint; dst: array[0..2] of pcuint8; const dstStride: array[0..2] of cint; horizontalSize: cint; verticalSize: cint; const QP_store: pcint8; QP_stride: cint; mode: Ppp_mode; ppContext: Ppp_context; pict_type: cint); cdecl; external LIB_POSTPROCESS;
+procedure pp_postprocess(const src: array{[0..2]} of pcuint8; const srcStride: array{[0..2]} of cint; dst: array{[0..2]} of pcuint8; const dstStride: array{[0..2]} of cint; horizontalSize: cint; verticalSize: cint; const QP_store: pcint8; QP_stride: cint; mode: Ppp_mode; ppContext: Ppp_context; pict_type: cint); cdecl; external LIB_POSTPROCESS;
 
 (**
  * Return a pp_mode or NULL if an error occurred.
@@ -135,14 +137,12 @@ const
 
 // #endif (* POSTPROC_POSTPROCESS_H *)
 
-{$include libpostproc_version.inc}
-
 implementation
 
 begin
   LIBPOSTPROC_VERSION_INT := AV_VERSION_INT(LIBPOSTPROC_VERSION_MAJOR, LIBPOSTPROC_VERSION_MINOR, LIBPOSTPROC_VERSION_MICRO);
   LIBPOSTPROC_VERSION := AV_VERSION(LIBPOSTPROC_VERSION_MAJOR, LIBPOSTPROC_VERSION_MINOR, LIBPOSTPROC_VERSION_MICRO);
-  LIBPOSTPROC_BUILD := LIBPOSTPROC_VERSION_INT;
+  LIBPOSTPROC_BUILD := LIBPOSTPROC_VERSION;
 
   LIBPOSTPROC_IDENT := 'postproc' + LIBPOSTPROC_VERSION;
 end.

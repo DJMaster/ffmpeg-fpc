@@ -110,7 +110,7 @@ function av_abuffersink_params_alloc(): PAVABufferSinkParams; cdecl; external LI
  * exactly the specified number of samples, or AVERROR(EAGAIN) if there is
  * not enough. The last buffer at EOF will be padded with 0.
  *)
-procedure av_buffersink_set_frame_size(ctx: PAVFilterContex; frame_size: cunsigned); cdecl; external LIB_AVFILTER;
+procedure av_buffersink_set_frame_size(ctx: PAVFilterContext; frame_size: cunsigned); cdecl; external LIB_AVFILTER;
 
 (**
  * @defgroup lavfi_buffersink_accessors Buffer sink accessors
