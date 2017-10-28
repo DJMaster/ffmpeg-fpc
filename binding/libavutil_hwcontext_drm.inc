@@ -32,35 +32,36 @@
  * added in future.
  *)
 
-enum {
-    (**
-     * The maximum number of layers/planes in a DRM frame.
-     *)
-    AV_DRM_MAX_PLANES = 4
-};
+const
+  (**
+   * The maximum number of layers/planes in a DRM frame.
+   *)
+  AV_DRM_MAX_PLANES = 4;
 
+type
 (**
  * DRM object descriptor.
  *
  * Describes a single DRM object, addressing it as a PRIME file
  * descriptor.
  *)
-typedef struct AVDRMObjectDescriptor {
+  PAVDRMObjectDescriptor = ^AVDRMObjectDescriptor;
+  AVDRMObjectDescriptor = record
     (**
      * DRM PRIME fd for the object.
      *)
-    int fd;
+    fd: cint;
     (**
      * Total size of the object.
      *
      * (This includes any parts not which do not contain image data.)
      *)
-    size_t size;
+    size: csize_t;
     (**
-     * Format modifier applied to the object (DRM_FORMAT_MOD_*).
+     * Format modifier applied to the object (DRM_FORMAT_MOD_* ).
      *)
-    uint64_t format_modifier;
-} AVDRMObjectDescriptor;
+    format_modifier: cuint64;
+  );
 
 (**
  * DRM plane descriptor.
@@ -68,21 +69,22 @@ typedef struct AVDRMObjectDescriptor {
  * Describes a single plane of a layer, which is contained within
  * a single object.
  *)
-typedef struct AVDRMPlaneDescriptor {
+  PAVDRMPlaneDescriptor = ^AVDRMPlaneDescriptor;
+  AVDRMPlaneDescriptor = record
     (**
      * Index of the object containing this plane in the objects
      * array of the enclosing frame descriptor.
      *)
-    int object_index;
+    object_index: cint;
     (**
      * Offset within that object of this plane.
      *)
-    ptrdiff_t offset;
+    offset: csize_t;
     (**
      * Pitch (linesize) of this plane.
      *)
-    ptrdiff_t pitch;
-} AVDRMPlaneDescriptor;
+    pitch: csize_t;
+  );
 
 (**
  * DRM layer descriptor.
@@ -90,22 +92,23 @@ typedef struct AVDRMPlaneDescriptor {
  * Describes a single layer within a frame.  This has the structure
  * defined by its format, and will contain one or more planes.
  *)
-typedef struct AVDRMLayerDescriptor {
+  PAVDRMLayerDescriptor = ^AVDRMLayerDescriptor;
+  AVDRMLayerDescriptor = record
     (**
-     * Format of the layer (DRM_FORMAT_*).
+     * Format of the layer (DRM_FORMAT_* ).
      *)
-    uint32_t format;
+    format: cuint32;
     (**
      * Number of planes in the layer.
      *
      * This must match the number of planes required by format.
      *)
-    int nb_planes;
+    nb_planes: cint;
     (**
      * Array of planes in this layer.
      *)
-    AVDRMPlaneDescriptor planes[AV_DRM_MAX_PLANES];
-} AVDRMLayerDescriptor;
+    planes: array[0..AV_DRM_MAX_PLANES-1] of AVDRMPlaneDescriptor;
+  );
 
 (**
  * DRM frame descriptor.
@@ -127,31 +130,33 @@ typedef struct AVDRMLayerDescriptor {
  * increasing plane index must be the same as the order which would
  * be used for the data pointers in the equivalent software format.
  *)
-typedef struct AVDRMFrameDescriptor {
+  PAVDRMFrameDescriptor = ^AVDRMFrameDescriptor;
+  AVDRMFrameDescriptor = record
     (**
      * Number of DRM objects making up this frame.
      *)
-    int nb_objects;
+    nb_objects: cint;
     (**
      * Array of objects making up the frame.
      *)
-    AVDRMObjectDescriptor objects[AV_DRM_MAX_PLANES];
+    objects: array[0..AV_DRM_MAX_PLANES-1] of AVDRMObjectDescriptor;
     (**
      * Number of layers in the frame.
      *)
-    int nb_layers;
+    nb_layers: cint;
     (**
      * Array of layers in the frame.
      *)
-    AVDRMLayerDescriptor layers[AV_DRM_MAX_PLANES];
-} AVDRMFrameDescriptor;
+    layers: array[0..AV_DRM_MAX_PLANES-1] of AVDRMLayerDescriptor;
+  );
 
 (**
  * DRM device.
  *
  * Allocated as AVHWDeviceContext.hwctx.
  *)
-typedef struct AVDRMDeviceContext {
+  PAVDRMDeviceContext = ^AVDRMDeviceContext;
+  AVDRMDeviceContext = record
     (**
      * File descriptor of DRM device.
      *
@@ -160,7 +165,7 @@ typedef struct AVDRMDeviceContext {
      *
      * If no device is required, set to -1.
      *)
-    int fd;
-} AVDRMDeviceContext;
+    fd: cint;
+  );
 
 // #endif (* AVUTIL_HWCONTEXT_DRM_H *)

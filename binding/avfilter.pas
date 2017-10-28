@@ -171,6 +171,15 @@ const
  * callback functions used to interact with the filter.
  *)
 type
+  AVFilter_preinit_func = function (ctx: PAVFilterContext): cint; cdecl;
+  AVFilter_init_func = function (ctx: PAVFilterContext): cint; cdecl;
+  AVFilter_init_dict_func = function (ctx: PAVFilterContext; options: PPAVDictionary); cdecl;
+  AVFilter_uninit_proc = procedure (ctx: PAVFilterContext); cdecl;
+  AVFilter_query_formats_func = function (ctx: PAVFilterContext): cint; cdecl;
+  AVFilter_process_command_func = function (ctx: PAVFilterContext; const cmd: pchar; const arg: pchar; res: pchar; res_len: cint; flags: cint): cint; cdecl;
+  AVFilter_init_opaque_func = function (ctx: PAVFilterContext; opaque: pointer): cint; cdecl;
+  AVFilter_activate_func = function (ctx: PAVFilterContext): cint; cdecl;
+
   PAVFilter = ^AVFilter_;
   AVFilter_ = record
     (**
@@ -238,7 +247,7 @@ type
      *         AVERROR code on failure (but the code will be
      *           dropped and treated as ENOMEM by the calling code)
      *)
-    int (*preinit)(AVFilterContext *ctx);
+    preinit: AVFilter_preinit_func;
 
     (**
      * Filter initialization function.
@@ -261,7 +270,7 @@ type
      *
      * @return 0 on success, a negative AVERROR on failure
      *)
-    int (*init)(AVFilterContext *ctx);
+    init: AVFilter_init_func;
 
     (**
      * Should be set instead of @ref AVFilter.init "init" by the filters that
@@ -274,7 +283,7 @@ type
      *
      * Otherwise the semantics is the same as for @ref AVFilter.init "init".
      *)
-    int (*init_dict)(AVFilterContext *ctx, AVDictionary **options);
+    init_dict: AVFilter_init_dict_func;
 
     (**
      * Filter uninitialization function.
@@ -286,7 +295,7 @@ type
      * This callback may be called even if @ref AVFilter.init "init" was not
      * called or failed, so it must be prepared to handle such a situation.
      *)
-    procedure (*uninit)(AVFilterContext *ctx);
+    uninit: AVFilter_uninit_proc;
 
     (**
      * Query formats supported by the filter on its inputs and outputs.
@@ -310,7 +319,7 @@ type
      * @return zero on success, a negative value corresponding to an
      * AVERROR code otherwise
      *)
-    int (*query_formats)(AVFilterContext *);
+    query_formats: AVFilter_query_formats_func;
 
     priv_size: cint; ///< size of private data to allocate for the filter
 
@@ -334,14 +343,14 @@ type
      * @returns >=0 on success otherwise an error code.
      *          AVERROR(ENOSYS) on unsupported commands
      *)
-    int (*process_command)(AVFilterContext *, const pchar cmd, const pchar arg, char *res, int res_len, int flags);
+    process_command: AVFilter_process_command_func;
 
     (**
      * Filter initialization function, alternative to the init()
      * callback. Args contains the user-supplied parameters, opaque is
      * used for providing binary data.
      *)
-    int (*init_opaque)(AVFilterContext *ctx, void *opaque);
+    init_opaque: AVFilter_init_opaque_func;
 
     (**
      * Filter activation function.
@@ -355,7 +364,7 @@ type
      * possible, it must use ff_filter_set_ready() to schedule another
      * activation.
      *)
-    int (*activate)(AVFilterContext *ctx);
+    activate: AVFilter_activate_func;
   end;
 
 (**
@@ -370,24 +379,25 @@ type
   end;
 
 (** An instance of a filter *)
-struct AVFilterContext {
-    PAVClass av_class; ///< needed for av_log() and filters common options
+  PAVFilterContext = ^AVFilterContext;
+  AVFilterContext = record
+    av_class: PAVClass; ///< needed for av_log() and filters common options
 
-    PAVFilter filter; ///< the AVFilter of which this is an instance
+    filter: PAVFilter; ///< the AVFilter of which this is an instance
 
-    char *name; ///< name of this filter instance
+    name: pchar; ///< name of this filter instance
 
-    AVFilterPad   *input_pads; ///< array of input pads
-    AVFilterLink **inputs; ///< array of pointers to input links
-    unsigned    nb_inputs; ///< number of input pads
+    input_pads: PAVFilterPad; ///< array of input pads
+    inputs: PPAVFilterLink; ///< array of pointers to input links
+    nb_inputs: cunsigned; ///< number of input pads
 
-    AVFilterPad   *output_pads; ///< array of output pads
-    AVFilterLink **outputs; ///< array of pointers to output links
-    unsigned    nb_outputs; ///< number of output pads
+    output_pads: PAVFilterPad; ///< array of output pads
+    outputs: PPAVFilterLink; ///< array of pointers to output links
+    nb_outputs: cunsigned; ///< number of output pads
 
-    void *priv; ///< private data for use by the filter
+    priv: pointer; ///< private data for use by the filter
 
-    struct graph: PAVFilterGraph; ///< filtergraph this filter belongs to
+    graph: PAVFilterGraph; ///< filtergraph this filter belongs to
 
     (**
      * Type of multithreading being allowed/used. A combination of
@@ -405,19 +415,19 @@ struct AVFilterContext {
      * After the filter is initialized, libavfilter sets this field to the
      * threading type that is actually used (0 for no multithreading).
      *)
-    int thread_type;
+    thread_type: cint;
 
     (**
      * An opaque struct for libavfilter internal use.
      *)
-    AVFilterInternal *internal;
+    internal: PAVFilterInternal;
 
-    struct AVFilterCommand *command_queue;
+    command_queue: PAVFilterCommand;
 
-    char *enable_str; ///< enable expression string
-    void *enable; ///< parsed expression (AVExpr*)
-    double *var_values; ///< variable values for the enable expression
-    int is_disabled; ///< the enabled state from the last expression evaluation
+    enable_str: pchar; ///< enable expression string
+    enable: pointer; ///< parsed expression (AVExpr*)
+    var_values: pcdouble; ///< variable values for the enable expression
+    is_disabled: cint; ///< the enabled state from the last expression evaluation
 
     (**
      * For filters which will create hardware frames, sets the device the
@@ -426,22 +436,22 @@ struct AVFilterContext {
      * instead use the hw_frames_ctx field in AVFilterLink to carry the
      * hardware context information.
      *)
-    AVBufferRef *hw_device_ctx;
+    hw_device_ctx: PAVBufferRef;
 
     (**
      * Max number of threads allowed in this filter instance.
      * If <= 0, its value is ignored.
      * Overrides global number of threads set per filter graph.
      *)
-    int nb_threads;
+    nb_threads: cint;
 
     (**
      * Ready status of the filter.
      * A non-0 value means that the filter needs activating;
      * a higher value suggests a more urgent activation.
      *)
-    unsigned ready;
-};
+    ready: cunsigned;
+  );
 
 (**
  * A link between two filters. This contains pointers to the source and
@@ -1174,7 +1184,7 @@ function avfilter_graph_parse2(graph: PAVFilterGraph; const filters: pchar; inpu
  * @returns >=0 on success otherwise an error code.
  *              AVERROR(ENOSYS) on unsupported commands
  *)
-function avfilter_graph_send_command(graph: PAVFilterGraph; const target: pchar; const cmd: pchar; const arg: pchar; res: pchar; res_len: cint; flags: int): cint; cdecl; external LIB_AVFILTER;
+function avfilter_graph_send_command(graph: PAVFilterGraph; const target: pchar; const cmd: pchar; const arg: pchar; res: pchar; res_len: cint; flags: cint): cint; cdecl; external LIB_AVFILTER;
 
 (**
  * Queue a command for one or more filter instances.
